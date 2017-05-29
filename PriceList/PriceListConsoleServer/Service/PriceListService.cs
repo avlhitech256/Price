@@ -1,19 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using Common.Domain;
+using System.ServiceModel;
 using Common.Domain.Implementation;
 using Common.ServiceContract;
+using PriceListItem = Common.Domain.Implementation.PriceListItem;
 
-namespace PriceListConsoleServer.PriceListService
+namespace PriceListConsoleServer.Service
 {
     public class PriceListService : IPriceList
     {
-        public IEnumerable<IPriceListItem> UpdatePriceList(string securityString, DateTime? lastUpdateDateTime)
+        public PriceList UpdatePriceList(string securityString, DateTime? lastUpdateDateTime)
         {
-            List<IPriceListItem> result = new List<IPriceListItem>();
+            Console.WriteLine(OperationContext.Current.RequestContext.RequestMessage + "\n");
 
-            IPriceListItem item = new PriceListItem();
-            result.Add(item);
+            PriceList result = new PriceList();
+            List<PriceListItem> items = new List<PriceListItem>();
+
+            PriceListItem item = new PriceListItem();
+            items.Add(item);
             item.Code = "04157";
             item.VendorCode = "11180-1108054-00";
             item.Manufacturer = "АВТОПАРТНЕР ООО Г.ДИМИТРОВГРАД";
@@ -24,7 +28,7 @@ namespace PriceListConsoleServer.PriceListService
             item.Unit = "шт.";
 
             item = new PriceListItem();
-            result.Add(item);
+            items.Add(item);
             item.Code = "09251";
             item.VendorCode = "1119-1108054";
             item.Manufacturer = "АВТОПАРТНЕР ООО Г.ДИМИТРОВГРАД";
@@ -34,7 +38,15 @@ namespace PriceListConsoleServer.PriceListService
             item.Price = 55.14f;
             item.Unit = "шт.";
 
+            result.Items = items;
+            result.LastModify = DateTime.Now;
+
+            Console.WriteLine("Security string: {0}", securityString);
+            Console.WriteLine("Data: {0}", lastUpdateDateTime);
+
+            //return item;
             return result;
+            //return (securityString.GetHashCode() + 339*lastUpdateDateTime.GetHashCode()).ToString();
         }
     }
 }

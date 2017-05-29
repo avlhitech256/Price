@@ -1,0 +1,160 @@
+System.ServiceModel.CommunicationException не обработано
+  HResult=-2146233087
+  Message=Ошибка при получении ответа HTTP на http://localhost:48057/IPriceList. Возможно, это вызвано тем, что привязка конечной точки службы не использует протокол HTTP. Это может быть также вызвано тем, что контекст запроса HTTP прерван сервером (возможно, из-за отключения службы). Подробнее см. в журналах сервера.
+  Source=mscorlib
+  StackTrace:
+    Server stack trace: 
+       в System.ServiceModel.Channels.HttpChannelUtilities.ProcessGetResponseWebException(WebException webException, HttpWebRequest request, HttpAbortReason abortReason)
+       в System.ServiceModel.Channels.HttpChannelFactory`1.HttpRequestChannel.HttpChannelRequest.WaitForReply(TimeSpan timeout)
+       в System.ServiceModel.Channels.RequestChannel.Request(Message message, TimeSpan timeout)
+       в System.ServiceModel.Dispatcher.RequestChannelBinder.Request(Message message, TimeSpan timeout)
+       в System.ServiceModel.Channels.ServiceChannel.Call(String action, Boolean oneway, ProxyOperationRuntime operation, Object[] ins, Object[] outs, TimeSpan timeout)
+       в System.ServiceModel.Channels.ServiceChannelProxy.InvokeService(IMethodCallMessage methodCall, ProxyOperationRuntime operation)
+       в System.ServiceModel.Channels.ServiceChannelProxy.Invoke(IMessage message)
+    Exception rethrown at [0]: 
+       в System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+       в System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+       в Common.ServiceContract.IPriceList.UpdatePriceList(String securityString, Nullable`1 lastUpdateDateTime)
+       в PriceList.MainWindow.ButtonBase_OnClick(Object sender, RoutedEventArgs e) в D:\Projects\C#\Price\PriceList\PriceList\MainWindow.xaml.cs:строка 29
+       в System.Windows.RoutedEventHandlerInfo.InvokeHandler(Object target, RoutedEventArgs routedEventArgs)
+       в System.Windows.EventRoute.InvokeHandlersImpl(Object source, RoutedEventArgs args, Boolean reRaised)
+       в System.Windows.UIElement.RaiseEventImpl(DependencyObject sender, RoutedEventArgs args)
+       в System.Windows.UIElement.RaiseEvent(RoutedEventArgs e)
+       в System.Windows.Controls.Primitives.ButtonBase.OnClick()
+       в System.Windows.Controls.Button.OnClick()
+       в System.Windows.Controls.Primitives.ButtonBase.OnMouseLeftButtonUp(MouseButtonEventArgs e)
+       в System.Windows.UIElement.OnMouseLeftButtonUpThunk(Object sender, MouseButtonEventArgs e)
+       в System.Windows.Input.MouseButtonEventArgs.InvokeEventHandler(Delegate genericHandler, Object genericTarget)
+       в System.Windows.RoutedEventArgs.InvokeHandler(Delegate handler, Object target)
+       в System.Windows.RoutedEventHandlerInfo.InvokeHandler(Object target, RoutedEventArgs routedEventArgs)
+       в System.Windows.EventRoute.InvokeHandlersImpl(Object source, RoutedEventArgs args, Boolean reRaised)
+       в System.Windows.UIElement.ReRaiseEventAs(DependencyObject sender, RoutedEventArgs args, RoutedEvent newEvent)
+       в System.Windows.UIElement.OnMouseUpThunk(Object sender, MouseButtonEventArgs e)
+       в System.Windows.Input.MouseButtonEventArgs.InvokeEventHandler(Delegate genericHandler, Object genericTarget)
+       в System.Windows.RoutedEventArgs.InvokeHandler(Delegate handler, Object target)
+       в System.Windows.RoutedEventHandlerInfo.InvokeHandler(Object target, RoutedEventArgs routedEventArgs)
+       в System.Windows.EventRoute.InvokeHandlersImpl(Object source, RoutedEventArgs args, Boolean reRaised)
+       в System.Windows.UIElement.RaiseEventImpl(DependencyObject sender, RoutedEventArgs args)
+       в System.Windows.UIElement.RaiseTrustedEvent(RoutedEventArgs args)
+       в System.Windows.UIElement.RaiseEvent(RoutedEventArgs args, Boolean trusted)
+       в System.Windows.Input.InputManager.ProcessStagingArea()
+       в System.Windows.Input.InputManager.ProcessInput(InputEventArgs input)
+       в System.Windows.Input.InputProviderSite.ReportInput(InputReport inputReport)
+       в System.Windows.Interop.HwndMouseInputProvider.ReportInput(IntPtr hwnd, InputMode mode, Int32 timestamp, RawMouseActions actions, Int32 x, Int32 y, Int32 wheel)
+       в System.Windows.Interop.HwndMouseInputProvider.FilterMessage(IntPtr hwnd, WindowMessage msg, IntPtr wParam, IntPtr lParam, Boolean& handled)
+       в System.Windows.Interop.HwndSource.InputFilterMessage(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam, Boolean& handled)
+       в MS.Win32.HwndWrapper.WndProc(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam, Boolean& handled)
+       в MS.Win32.HwndSubclass.DispatcherCallbackOperation(Object o)
+       в System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+       в System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+       в System.Windows.Threading.Dispatcher.LegacyInvokeImpl(DispatcherPriority priority, TimeSpan timeout, Delegate method, Object args, Int32 numArgs)
+       в MS.Win32.HwndSubclass.SubclassWndProc(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam)
+       в MS.Win32.UnsafeNativeMethods.DispatchMessage(MSG& msg)
+       в System.Windows.Threading.Dispatcher.PushFrameImpl(DispatcherFrame frame)
+       в System.Windows.Threading.Dispatcher.PushFrame(DispatcherFrame frame)
+       в System.Windows.Application.RunDispatcher(Object ignore)
+       в System.Windows.Application.RunInternal(Window window)
+       в System.Windows.Application.Run(Window window)
+       в System.Windows.Application.Run()
+       в PriceList.App.Main()
+       в System.AppDomain._nExecuteAssembly(RuntimeAssembly assembly, String[] args)
+       в System.AppDomain.ExecuteAssembly(String assemblyFile, Evidence assemblySecurity, String[] args)
+       в Microsoft.VisualStudio.HostingProcess.HostProc.RunUsersAssembly()
+       в System.Threading.ThreadHelper.ThreadStart_Context(Object state)
+       в System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+       в System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+       в System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state)
+       в System.Threading.ThreadHelper.ThreadStart()
+  InnerException: 
+       HResult=-2146233079
+       Message=Базовое соединение закрыто: Непредвиденная ошибка при приеме.
+       Source=System
+       StackTrace:
+            в System.Net.HttpWebRequest.GetResponse()
+            в System.ServiceModel.Channels.HttpChannelFactory`1.HttpRequestChannel.HttpChannelRequest.WaitForReply(TimeSpan timeout)
+       InnerException: 
+            HResult=-2146232800
+            Message=Не удается прочитать данные из транспортного соединения: Удаленный хост принудительно разорвал существующее подключение.
+            Source=System
+            StackTrace:
+                 в System.Net.Sockets.NetworkStream.Read(Byte[] buffer, Int32 offset, Int32 size)
+                 в System.Net.PooledStream.Read(Byte[] buffer, Int32 offset, Int32 size)
+                 в System.Net.Connection.SyncRead(HttpWebRequest request, Boolean userRetrievedStream, Boolean probeRead)
+            InnerException: 
+                 ErrorCode=10054
+                 HResult=-2147467259
+                 Message=Удаленный хост принудительно разорвал существующее подключение
+                 NativeErrorCode=10054
+                 Source=System
+                 StackTrace:
+                      в System.Net.Sockets.Socket.Receive(Byte[] buffer, Int32 offset, Int32 size, SocketFlags socketFlags)
+                      в System.Net.Sockets.NetworkStream.Read(Byte[] buffer, Int32 offset, Int32 size)
+                 InnerException: 
+
+
+
+
+
+
+
+
+System.InvalidOperationException не обработано
+  HResult=-2146233079
+  Message=Коммуникационный объект System.ServiceModel.ChannelFactory`1[PriceListConsoleServer.ServiceContract.IPriceList] в состоянии Opened изменить нельзя.
+  Source=System.ServiceModel
+  StackTrace:
+       в System.ServiceModel.Channels.CommunicationObject.ThrowIfDisposedOrImmutable()
+       в System.ServiceModel.Channels.CommunicationObject.Open(TimeSpan timeout)
+       в System.ServiceModel.Channels.CommunicationObject.Open()
+       в PriceList.MainWindow.ButtonBase_OnClick(Object sender, RoutedEventArgs e) в D:\Projects\C#\Price\PriceList\PriceList\MainWindow.xaml.cs:строка 27
+       в System.Windows.RoutedEventHandlerInfo.InvokeHandler(Object target, RoutedEventArgs routedEventArgs)
+       в System.Windows.EventRoute.InvokeHandlersImpl(Object source, RoutedEventArgs args, Boolean reRaised)
+       в System.Windows.UIElement.RaiseEventImpl(DependencyObject sender, RoutedEventArgs args)
+       в System.Windows.UIElement.RaiseEvent(RoutedEventArgs e)
+       в System.Windows.Controls.Primitives.ButtonBase.OnClick()
+       в System.Windows.Controls.Button.OnClick()
+       в System.Windows.Controls.Primitives.ButtonBase.OnMouseLeftButtonUp(MouseButtonEventArgs e)
+       в System.Windows.UIElement.OnMouseLeftButtonUpThunk(Object sender, MouseButtonEventArgs e)
+       в System.Windows.Input.MouseButtonEventArgs.InvokeEventHandler(Delegate genericHandler, Object genericTarget)
+       в System.Windows.RoutedEventArgs.InvokeHandler(Delegate handler, Object target)
+       в System.Windows.RoutedEventHandlerInfo.InvokeHandler(Object target, RoutedEventArgs routedEventArgs)
+       в System.Windows.EventRoute.InvokeHandlersImpl(Object source, RoutedEventArgs args, Boolean reRaised)
+       в System.Windows.UIElement.ReRaiseEventAs(DependencyObject sender, RoutedEventArgs args, RoutedEvent newEvent)
+       в System.Windows.UIElement.OnMouseUpThunk(Object sender, MouseButtonEventArgs e)
+       в System.Windows.Input.MouseButtonEventArgs.InvokeEventHandler(Delegate genericHandler, Object genericTarget)
+       в System.Windows.RoutedEventArgs.InvokeHandler(Delegate handler, Object target)
+       в System.Windows.RoutedEventHandlerInfo.InvokeHandler(Object target, RoutedEventArgs routedEventArgs)
+       в System.Windows.EventRoute.InvokeHandlersImpl(Object source, RoutedEventArgs args, Boolean reRaised)
+       в System.Windows.UIElement.RaiseEventImpl(DependencyObject sender, RoutedEventArgs args)
+       в System.Windows.UIElement.RaiseTrustedEvent(RoutedEventArgs args)
+       в System.Windows.UIElement.RaiseEvent(RoutedEventArgs args, Boolean trusted)
+       в System.Windows.Input.InputManager.ProcessStagingArea()
+       в System.Windows.Input.InputManager.ProcessInput(InputEventArgs input)
+       в System.Windows.Input.InputProviderSite.ReportInput(InputReport inputReport)
+       в System.Windows.Interop.HwndMouseInputProvider.ReportInput(IntPtr hwnd, InputMode mode, Int32 timestamp, RawMouseActions actions, Int32 x, Int32 y, Int32 wheel)
+       в System.Windows.Interop.HwndMouseInputProvider.FilterMessage(IntPtr hwnd, WindowMessage msg, IntPtr wParam, IntPtr lParam, Boolean& handled)
+       в System.Windows.Interop.HwndSource.InputFilterMessage(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam, Boolean& handled)
+       в MS.Win32.HwndWrapper.WndProc(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam, Boolean& handled)
+       в MS.Win32.HwndSubclass.DispatcherCallbackOperation(Object o)
+       в System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+       в System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+       в System.Windows.Threading.Dispatcher.LegacyInvokeImpl(DispatcherPriority priority, TimeSpan timeout, Delegate method, Object args, Int32 numArgs)
+       в MS.Win32.HwndSubclass.SubclassWndProc(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam)
+       в MS.Win32.UnsafeNativeMethods.DispatchMessage(MSG& msg)
+       в System.Windows.Threading.Dispatcher.PushFrameImpl(DispatcherFrame frame)
+       в System.Windows.Threading.Dispatcher.PushFrame(DispatcherFrame frame)
+       в System.Windows.Application.RunDispatcher(Object ignore)
+       в System.Windows.Application.RunInternal(Window window)
+       в System.Windows.Application.Run(Window window)
+       в System.Windows.Application.Run()
+       в PriceList.App.Main()
+       в System.AppDomain._nExecuteAssembly(RuntimeAssembly assembly, String[] args)
+       в System.AppDomain.ExecuteAssembly(String assemblyFile, Evidence assemblySecurity, String[] args)
+       в Microsoft.VisualStudio.HostingProcess.HostProc.RunUsersAssembly()
+       в System.Threading.ThreadHelper.ThreadStart_Context(Object state)
+       в System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+       в System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+       в System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state)
+       в System.Threading.ThreadHelper.ThreadStart()
+  InnerException: 
+

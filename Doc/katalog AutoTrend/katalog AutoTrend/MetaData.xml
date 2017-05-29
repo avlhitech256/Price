@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MetaData>
+	<PriceGroups>
+		<PriceGroup>
+			<UID>7b1165c1-627c-11e3-9c4d-00163e6b9045</UID>
+			<Name>Иномарка</Name>
+		</PriceGroup>
+		<PriceGroup>
+			<UID>7b1165c2-627c-11e3-9c4d-00163e6b9045</UID>
+			<Name>ГБО (ЦГ)</Name>
+		</PriceGroup>
+		<PriceGroup>
+			<UID>7b1165c3-627c-11e3-9c4d-00163e6b9045</UID>
+			<Name>DAEWOO, CHEVROLET</Name>
+		</PriceGroup>
+		<PriceGroup>
+			<UID>819d9933-6910-11e3-9c4d-00163e6b9045</UID>
+			<Name>Аксессуары</Name>
+		</PriceGroup>
+		<PriceGroup>
+			<UID>303d0da8-4adb-11e3-ace2-00163e21d963</UID>
+			<Name>ВАЗ</Name>
+		</PriceGroup>
+		<PriceGroup>
+			<UID>9a09cf0c-1604-11e5-bcd2-0025909a3c49</UID>
+			<Name>Шиноремонт</Name>
+		</PriceGroup>
+		<PriceGroup>
+			<UID>39ff90e0-55fa-11e5-bd19-0025909a3c49</UID>
+			<Name>Автохимия, масла</Name>
+		</PriceGroup>
+	</PriceGroups>
+	<NomenclatureGroups>
+		<NomenclatureGroup>
+			<UID>85c7458c-51d4-11df-89cd-00248c1ddd9c</UID>
+			<Name>ИНОМАРКА</Name>
+		</NomenclatureGroup>
+		<NomenclatureGroup>
+			<UID>47a8be5c-0546-11e1-9189-406186c674ef</UID>
+			<Name>ГБО (НГ)</Name>
+		</NomenclatureGroup>
+		<NomenclatureGroup>
+			<UID>57f6a2e6-3179-11e3-8929-00163e502eec</UID>
+			<Name>ПРАМО (трамблеры)</Name>
+		</NomenclatureGroup>
+		<NomenclatureGroup>
+			<UID>64267029-fdbf-11e2-9713-00163e1157e0</UID>
+			<Name>ПРАМО (вентиляторы+электробензонасосы)</Name>
+		</NomenclatureGroup>
+		<NomenclatureGroup>
+			<UID>6426703c-fdbf-11e2-9713-00163e1157e0</UID>
+			<Name>ПРАМО (водяные насосы)</Name>
+		</NomenclatureGroup>
+		<NomenclatureGroup>
+			<UID>42cbd142-5720-11e1-a7ab-bcaec52cc535</UID>
+			<Name>ПРАМО (АТЭ-1)</Name>
+		</NomenclatureGroup>
+		<NomenclatureGroup>
+			<UID>42cbd144-5720-11e1-a7ab-bcaec52cc535</UID>
+			<Name>ПРАМО (радиаторы)</Name>
+		</NomenclatureGroup>
+	</NomenclatureGroups>
+	<TypesOfPrices>
+		<PriceType>
+			<UID>4d0e6bf4-7494-4f0c-8835-f5b211e95e95</UID>
+			<Name>ДИЛ</Name>
+		</PriceType>
+		<PriceType>
+			<UID>35a5f6b6-cad4-11e3-95b9-00163e6000f8</UID>
+			<Name>ДИЛ2</Name>
+		</PriceType>
+		<PriceType>
+			<UID>d36bad42-237c-4139-a005-9b132e480fbb</UID>
+			<Name>ОПТ1</Name>
+		</PriceType>
+		<PriceType>
+			<UID>400ea998-3171-11e1-b1a3-406186c674ef</UID>
+			<Name>ОПТ2</Name>
+		</PriceType>
+		<PriceType>
+			<UID>400ea999-3171-11e1-b1a3-406186c674ef</UID>
+			<Name>ОПТ3</Name>
+		</PriceType>
+		<PriceType>
+			<UID>497d7f83-2a60-11e2-bf99-00163e4bc2bf</UID>
+			<Name>ОПТ1 (EUR)</Name>
+		</PriceType>
+	</TypesOfPrices>
+</MetaData>

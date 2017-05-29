@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ServiceModel;
-using Common.Domain;
+using Common.Domain.Implementation;
 
 namespace Common.ServiceContract
 {
     [ServiceContract]
     public interface IPriceList
     {
-        [OperationContract]
-        IEnumerable<IPriceListItem> UpdatePriceList(string securityString, DateTime? lastUpdateDateTime);
+        [OperationContract(Name = "UpdatePriceList")]
+        PriceList UpdatePriceList(string securityString, DateTime? lastUpdateDateTime);
     }
 }

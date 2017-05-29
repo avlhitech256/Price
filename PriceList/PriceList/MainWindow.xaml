@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        
+        <Button Margin="392,61,23,222" Click="ButtonBase_OnClick">Connect</Button>
+        <Label x:Name="LabelResult" Margin="28,61,173,222"></Label>
     </Grid>
 </Window>

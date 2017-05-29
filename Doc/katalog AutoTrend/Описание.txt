@@ -1,0 +1,81 @@
+﻿
+Структура файла PriceList.xml
+Файл содержит в себе номенклатуру с фотографиями и ценами по типам цен
+
+<?xml version="1.0" encoding="UTF-8"?>
+<PriceList>
+	<Nomenclature>
+		<UID></UID>				// Уникальный идентификатор
+		<Code></Code>				// Внутренний код 1С 
+		<Name></Name>				// Наименование
+		<PriceGroup></PriceGroup>		// Ценовая группа к которой принадлежит номенклатура
+		<NomenclatureGroup></NomenclatureGroup>	// Номенклатурная группа к которой принадлежит номенклатура
+		<Photos>				// Список фотографий
+			<Photo></Photo>			// Наименование файла с фотографией (без расширения)
+		</Photos>
+		<TypesOfPrices>
+			<PriceType>			// Тип цены номенклатуры
+				<UID></UID>		// Уникальный идентификатор типа цены
+				<Price></Price>		// Цена с валютой
+			</PriceType>
+		</TypesOfPrices>
+	</Nomenclature>
+</PriceList>
+
+Структура файла Clients.xml
+Файл содержит в себе контрагентов с их типами цен и скидками\наценками
+
+<?xml version="1.0" encoding="UTF-8"?>
+<Clients>
+	<Client>
+		<UID></UID>							// Уникальный идентификатор
+		<Code></Code>							// Внутренний код 1С
+		<Name></Name>							// Наименование
+		<TypesOfPrices>							
+			<PriceType>						// Типы цен, в теге всегда будет заполнен уникальный идентификатор либо ценовой группы
+										// либо номенклатурной, оба заполнены не могут быть!
+				<NomenclatureGroupUID></NomenclatureGroupUID>	// Уникальный идентификатор номенклатурной группы
+				<PriceGroupUID></PriceGroupUID>			// Уникальный идентификатор ценовой группы
+				<PriceTypeUID></PriceTypeUID>			// Уникальный идентификатор типа цены
+			</PriceType>
+		</TypesOfPrices>
+		<Discounts>
+			<DiscountRate></DiscountRate>				// Процент скидки(отрицательное значение)\наценки(положительное значение). 
+			<Nomenclature>
+				<UID></UID>					// Уникальный идентификатор номенклатуры
+			</Nomenclature>
+		</Discounts>
+	</Client>
+</Clients>
+
+Структура файла MetaData.xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<MetaData>
+	<PriceGroups>
+		<PriceGroup>			// Ценовая группа
+			<UID></UID>		// Уникальный идентификатор
+			<Name></Name>		// Наименование
+		</PriceGroup>
+	</PriceGroups>
+	<NomenclatureGroups>
+		<NomenclatureGroup>		// Номенклатурная группа
+			<UID></UID>		// Уникальный идентификатор
+			<Name></Name>		// Наименование
+		</NomenclatureGroup>	
+	</NomenclatureGroups>
+	<TypesOfPrices>
+		<PriceType>			// Тип цены
+			<UID></UID>		// Уникальный идентификатор
+			<Name></Name>		// Наименование
+		</PriceType>
+	</TypesOfPrices>
+</MetaData>
+
+
+Логика расчета цены для контрагента:
+У каждой номенклатуры указана Ценовая и Номенклатурная группы.
+У контрагента в свою очередь установлены типы цен либо на номенклатурную группу либо на ценовую, 
+если у контрагента нету типа цены не на одну из групп, то цена нулевая.
+Номенклатурная группа приоритетней ценовой, следовательно если у контрагента есть тип цены по номенклатурной группе 
+то она перекрывает цену по ценовой группе.
