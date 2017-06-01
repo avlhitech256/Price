@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.ServiceModel;
 using System.Windows;
 using Common.ServiceContract;
 using PriceList.Service;
@@ -19,7 +18,7 @@ namespace PriceList
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
-            IPriceList service = PriceListService.GetFactory().CreateChannel();
+            IPriceListService service = PriceListService.GetFactory().CreateChannel();
 
             using (service as IDisposable)
             {

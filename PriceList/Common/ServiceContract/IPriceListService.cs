@@ -5,7 +5,7 @@ using Common.Domain.Implementation;
 namespace Common.ServiceContract
 {
     [ServiceContract]
-    public interface IPriceList
+    public interface IPriceListService
     {
         [OperationContract(Name = "UpdatePriceList")]
         PriceList UpdatePriceList(string securityString, DateTime? lastUpdateDateTime);

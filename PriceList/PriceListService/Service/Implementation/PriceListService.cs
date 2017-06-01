@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.ServiceModel;
 using Common.Domain.Implementation;
-using Common.ServiceContract;
-using PriceListItem = Common.Domain.Implementation.PriceListItem;
 
-namespace PriceListConsoleServer.Service
+namespace PriceListService.Service.Implementation
 {
+    // ПРИМЕЧАНИЕ. Команду "Переименовать" в меню "Рефакторинг" можно использовать для одновременного изменения имени класса "PriceListService" в коде и файле конфигурации.
     public class PriceListService : IPriceListService
     {
         public PriceList UpdatePriceList(string securityString, DateTime? lastUpdateDateTime)
@@ -44,9 +43,7 @@ namespace PriceListConsoleServer.Service
             Console.WriteLine("Security string: {0}", securityString);
             Console.WriteLine("Data: {0}", lastUpdateDateTime);
 
-            //return item;
             return result;
-            //return (securityString.GetHashCode() + 339*lastUpdateDateTime.GetHashCode()).ToString();
         }
     }
 }

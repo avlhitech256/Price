@@ -7,7 +7,7 @@ namespace PriceList.Service
     public class PriceListService
     {
         private static PriceListService service;
-        private readonly ChannelFactory<IPriceList> factory;
+        private readonly ChannelFactory<IPriceListService> factory;
 
         private PriceListService()
         {
@@ -15,11 +15,11 @@ namespace PriceList.Service
             BasicHttpBinding binding = new BasicHttpBinding();
             EndpointAddress endpoint = new EndpointAddress(address);
 
-            factory = new ChannelFactory<IPriceList>(binding, endpoint);
+            factory = new ChannelFactory<IPriceListService>(binding, endpoint);
             //IPriceList channel = factory.CreateChannel();
         }
 
-        public static ChannelFactory<IPriceList> GetFactory()
+        public static ChannelFactory<IPriceListService> GetFactory()
         {
             if (service == null)
             {

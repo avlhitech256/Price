@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.ServiceModel;
-using PriceListConsoleServer.Service;
+using DataService.Model;
 
 
 namespace PriceListConsoleServer
@@ -10,6 +10,10 @@ namespace PriceListConsoleServer
     {
         static void Main(string[] args)
         {
+            DBContext context =  new DBContext();
+            Client client = context.Client.Create();
+            context.Client.Add(client);
+            context.SaveChanges();
             Console.Title = "PriceList Application Server";
             Console.WriteLine("Servrer is started");
 
@@ -28,7 +32,7 @@ namespace PriceListConsoleServer
             //Console.WriteLine("Contract was created.");
             //Console.WriteLine("Contract = {0}", contract.ToString());
 
-            ServiceHost host = new ServiceHost(typeof(PriceListService)); //, address);
+            ServiceHost host = new ServiceHost(typeof(PriceListService.Service.Implementation.PriceListService)); //, address);
 
             Console.WriteLine("Host war created.");
             Console.WriteLine("Host = {0}", host?.BaseAddresses?.FirstOrDefault()?.Host);
@@ -40,6 +44,7 @@ namespace PriceListConsoleServer
             host.Open();
             Console.WriteLine("Host is open.");
             Console.WriteLine("Server is runing.");
+            Console.WriteLine("Press [Ctrl-C] to stop server");
 
             ConsoleKeyInfo keyInfo = Console.ReadKey();
             while (keyInfo.Modifiers != ConsoleModifiers.Control || keyInfo.Key == ConsoleKey.C)

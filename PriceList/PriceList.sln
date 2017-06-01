@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceListConsoleServer", "P
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{8F428F85-1B5B-435C-8640-C4A34883E10E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PriceListService", "PriceListService\PriceListService.csproj", "{6ADEB1F5-4BA3-458F-8239-841E048EFE3A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataService", "DataService\DataService.csproj", "{CB1B4E13-2D42-473E-AC55-5D2E3E08F143}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{8F428F85-1B5B-435C-8640-C4A34883E10E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F428F85-1B5B-435C-8640-C4A34883E10E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F428F85-1B5B-435C-8640-C4A34883E10E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6ADEB1F5-4BA3-458F-8239-841E048EFE3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6ADEB1F5-4BA3-458F-8239-841E048EFE3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6ADEB1F5-4BA3-458F-8239-841E048EFE3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6ADEB1F5-4BA3-458F-8239-841E048EFE3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CB1B4E13-2D42-473E-AC55-5D2E3E08F143}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB1B4E13-2D42-473E-AC55-5D2E3E08F143}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB1B4E13-2D42-473E-AC55-5D2E3E08F143}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB1B4E13-2D42-473E-AC55-5D2E3E08F143}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
