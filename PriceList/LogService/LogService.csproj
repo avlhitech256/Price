@@ -50,6 +50,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\ConsoleColorConfig.cs" />
+    <Compile Include="Service\ConsoleColorItem.cs" />
     <Compile Include="Service\IConsoleLogService.cs" />
     <Compile Include="Service\IFileLogService.cs" />
     <Compile Include="Service\ILogService.cs" />

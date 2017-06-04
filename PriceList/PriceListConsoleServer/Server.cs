@@ -37,7 +37,6 @@ namespace PriceListConsoleServer
             }
             catch (Exception e)
             {
-                e.GetType()
                 throw;
             }
             Client client = context.Client.Create();

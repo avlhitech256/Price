@@ -9,7 +9,7 @@ namespace LogService.Service.Implementation
         private IFileLogService fileLogService;
         private IDatabaseLogService databaseLogService;
         public LogService(string filePath, DBContext context) :
-            this(filePath, context, MessageType.Info, MessageLevel.Low)
+            this(filePath, context, MessageType.Info)
         { }
 
         public LogService(string filePath, DBContext context, MessageType type) :
