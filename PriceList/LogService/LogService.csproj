@@ -50,7 +50,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\IConsoleLogService.cs" />
+    <Compile Include="Service\IFileLogService.cs" />
     <Compile Include="Service\ILogService.cs" />
+    <Compile Include="Service\IDatabaseLogService.cs" />
+    <Compile Include="Service\Implementation\ConsoleLogService.cs" />
+    <Compile Include="Service\Implementation\DatabaseLogService.cs" />
+    <Compile Include="Service\Implementation\FileLogService.cs" />
     <Compile Include="Service\Implementation\LogService.cs" />
     <Compile Include="Service\MessageLevel.cs" />
     <Compile Include="Service\MessageType.cs" />
