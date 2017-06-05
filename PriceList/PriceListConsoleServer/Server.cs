@@ -2,7 +2,11 @@
 using System.Data;
 using System.Linq;
 using System.ServiceModel;
+using System.Timers;
+using Common.Domain;
 using DataService.Model;
+using LogService.Service;
+using LogService = LogService.Service.Implementation.LogService;
 
 
 namespace PriceListConsoleServer
@@ -10,28 +14,29 @@ namespace PriceListConsoleServer
     class Server
     {
         private static DBContext context;
+        private static ILogService logService;
+        private static Timer timer;
         static void Main(string[] args)
         {
-            ConsoleColor color = Console.ForegroundColor;
+            logService = new global::LogService.Service.Implementation.LogService();
             Console.Title = "PriceList Application Server";
             Console.WriteLine("");
-            Console.WriteLine("Servrer is started");
-            Console.WriteLine("");
-            Console.WriteLine("Connect to/create DataBse.");
+            logService.SendMessage("Servrer is started", MessageType.Info, MessageLevel.High);
             
             try
             {
                 context = new DBContext();
-                Console.WriteLine("SQL-Server Name = \"{0}\"", context.Database.Connection.DataSource);
-                Console.WriteLine("SQL-Server Version = \"{0}\"", context.Database.Connection.ServerVersion);
-                Console.WriteLine("DataBase Name = \"{0}\"", context.Database.Connection.Database);
                 context.Database.Connection.Open();
                 while (context.Database.Connection.State == ConnectionState.Connecting ||
                        context.Database.Connection.State == ConnectionState.Executing ||
                        context.Database.Connection.State == ConnectionState.Fetching) {}
                 if (context.Database.Connection.State == ConnectionState.Open)
                 {
-                    Console.WriteLine("State = \"{0}\"", context.Database.Connection.State);
+                    logService.SendMessage($"State = \"{context.Database.Connection.State}\"");
+                }
+                else
+                {
+                    
                 }
                 Console.WriteLine("");
             }

@@ -1,4 +1,4 @@
-﻿namespace LogService.Service
+﻿namespace Common.Domain
 {
     public enum MessageType
     {

@@ -1,4 +1,5 @@
 ﻿using System;
+using Common.Domain;
 using DataService.Model;
 
 namespace LogService.Service.Implementation

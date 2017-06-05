@@ -1,24 +1,35 @@
 ﻿using System;
+using Common.Domain;
 using DataService.Model;
+using DataService.Service;
+using DataService = DataService.Service.Implementation.DataService;
 
 namespace LogService.Service.Implementation
 {
     public class LogService : ILogService
     {
-        private IConsoleLogService consoleLogService;
-        private IFileLogService fileLogService;
-        private IDatabaseLogService databaseLogService;
-        public LogService(string filePath, DBContext context) :
-            this(filePath, context, MessageType.Info)
-        { }
+        #region Members
 
-        public LogService(string filePath, DBContext context, MessageType type) :
-            this(filePath, context, type, MessageLevel.Low) {}
+        private IDataService dataService;
+        private readonly IConsoleLogService consoleLogService;
+        private readonly IFileLogService fileLogService;
+        private readonly IDatabaseLogService databaseLogService;
 
-        public LogService(string filePath, DBContext context, MessageType type, MessageLevel level)
+        #endregion
+
+        #region Constructors
+
+        public LogService() : this(String.Empty, null) { }
+        public LogService(string filePath, IDataService dataService) :
+            this(filePath, dataService, MessageType.Info) { }
+
+        public LogService(string filePath, IDataService dataService, MessageType type) :
+            this(filePath, dataService, type, MessageLevel.Low) {}
+
+        public LogService(string filePath, IDataService dataService, MessageType type, MessageLevel level)
         {
             LogFilePath = filePath;
-            DBContext = context;
+            this.dataService = dataService?? new global::DataService.Service.Implementation.DataService((ILogService)this);
             LogType = type;
             LogLevel = level;
             SaveIntoConsole = true;
@@ -28,13 +39,31 @@ namespace LogService.Service.Implementation
             fileLogService = new FileLogService();
             databaseLogService = new DatabaseLogService();
         }
+
+        #endregion
+
+        #region Properties
+
         public MessageLevel LogLevel { get; set; }
+
         public MessageType LogType { get; set; }
+
         public bool SaveIntoDatabace { get; set; }
+
         public bool SaveIntoConsole { get; set; }
+
         public bool SaveIntoFile { get; set; }
+
         public string LogFilePath { get; set; }
-        public DBContext DBContext { get; set; }
+
+        public 
+
+        private DBContext DBContext { get; set; }
+
+        #endregion
+
+        #region Methods
+
         public bool SendMessage(string message, MessageType type = MessageType.Info, MessageLevel level = MessageLevel.Low)
         {
             bool result = true;
@@ -78,5 +107,7 @@ namespace LogService.Service.Implementation
 
             return result;
         }
+
+        #endregion
     }
 }

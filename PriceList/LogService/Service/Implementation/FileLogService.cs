@@ -1,4 +1,5 @@
 ﻿using System;
+using Common.Domain;
 
 namespace LogService.Service.Implementation
 {

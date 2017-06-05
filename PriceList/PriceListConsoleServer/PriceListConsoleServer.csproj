@@ -89,6 +89,10 @@
       <Project>{cb1b4e13-2d42-473e-ac55-5d2e3e08f143}</Project>
       <Name>DataService</Name>
     </ProjectReference>
+    <ProjectReference Include="..\LogService\LogService.csproj">
+      <Project>{ab47757f-36c5-4714-aa76-f4b3a6aa4d69}</Project>
+      <Name>LogService</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PriceListService\PriceListService.csproj">
       <Project>{6adeb1f5-4ba3-458f-8239-841e048efe3a}</Project>
       <Name>PriceListService</Name>
