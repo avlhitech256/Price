@@ -56,7 +56,7 @@ namespace LogService.Service.Implementation
 
         public string LogFilePath { get; set; }
 
-        public 
+        //public 
 
         private DBContext DBContext { get; set; }
 

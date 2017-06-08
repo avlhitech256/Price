@@ -22,7 +22,7 @@ namespace DataService.Service.Implementation
         {
             this.logService = logService;
             attempt = 0;
-            interval = 0;
+            interval = 10;
             timer = new Timer {Enabled = false, Interval = interval, AutoReset = false};
             timer.Stop();
             timer.Elapsed += Timer_Elapsed;

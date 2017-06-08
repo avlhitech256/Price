@@ -4,6 +4,7 @@ using System.Linq;
 using System.ServiceModel;
 using System.Timers;
 using Common.Domain;
+//using DatabaseService.Service.Implementation;
 using DataService.Model;
 using LogService.Service;
 using LogService = LogService.Service.Implementation.LogService;
@@ -18,25 +19,31 @@ namespace PriceListConsoleServer
         private static Timer timer;
         static void Main(string[] args)
         {
+            //DBService dbService = new DBService();
+            //dbService.DBContext.Database.Connection.Open();
+            //DatabaseService.Model.Nomenclature nomencl = dbService.DBContext.Nomenclature.Create();
+            //nomencl.UID = Guid.NewGuid();
+            //dbService.DBContext.Nomenclature.Add(nomencl);
+            //dbService.DBContext.Database.Connection.Close();
             logService = new global::LogService.Service.Implementation.LogService();
             Console.Title = "PriceList Application Server";
             Console.WriteLine("");
             logService.SendMessage("Servrer is started", MessageType.Info, MessageLevel.High);
-            
+
             try
             {
                 context = new DBContext();
                 context.Database.Connection.Open();
                 while (context.Database.Connection.State == ConnectionState.Connecting ||
                        context.Database.Connection.State == ConnectionState.Executing ||
-                       context.Database.Connection.State == ConnectionState.Fetching) {}
+                       context.Database.Connection.State == ConnectionState.Fetching) { }
                 if (context.Database.Connection.State == ConnectionState.Open)
                 {
                     logService.SendMessage($"State = \"{context.Database.Connection.State}\"");
                 }
                 else
                 {
-                    
+
                 }
                 Console.WriteLine("");
             }
@@ -78,7 +85,7 @@ namespace PriceListConsoleServer
             Console.WriteLine("");
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("Press [Ctrl-C] to stop server");
-            Console.ForegroundColor = color;
+            //Console.ForegroundColor = color;
             ConsoleKeyInfo keyInfo = Console.ReadKey();
             while (keyInfo.Modifiers != ConsoleModifiers.Control || keyInfo.Key == ConsoleKey.C)
             {

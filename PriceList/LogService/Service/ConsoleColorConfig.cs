@@ -92,13 +92,13 @@ namespace LogService.Service
             if (!ColorMap.TryGetValue(MessageType.Warning, out item))
             {
                 item = new ConsoleColorItem(ConsoleColor.DarkRed, ConsoleColor.DarkYellow, ConsoleColor.DarkBlue);
-                ColorMap.Add(MessageType.Error, item);
+                ColorMap.Add(MessageType.Warning, item);
             }
 
             if (!ColorMap.TryGetValue(MessageType.Info, out item))
             {
                 item = new ConsoleColorItem(ConsoleColor.White, ConsoleColor.Gray, ConsoleColor.DarkGray);
-                ColorMap.Add(MessageType.Error, item);
+                ColorMap.Add(MessageType.Info, item);
             }
         }
 
