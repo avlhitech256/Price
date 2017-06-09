@@ -15,7 +15,7 @@ namespace DataBaseService.Service.Implementation
         {
             Database.SetInitializer(new DropCreateDatabaseIfModelChanges<DBContext>());
             DBContext = new DBContext();
-            DBContext.Database.Connection.Open();
+            //DBContext.Database.Connection.Open();
         }
 
         #endregion

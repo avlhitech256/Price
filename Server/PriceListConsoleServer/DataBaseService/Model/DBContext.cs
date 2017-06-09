@@ -28,6 +28,7 @@
         public virtual DbSet<PriceList> PriceList { get; set; }
         public virtual DbSet<PriceType> PriceType { get; set; }
         public virtual DbSet<PriceTypeSetup> PriceTypeSetup { get; set; }
+        public virtual DbSet<Updates> Updates { get; set; }
     }
 
     //public class MyEntity
