@@ -1,0 +1,47 @@
+﻿<UserControl x:Class="PriceList.Presentation.HeaderControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PriceList.Presentation"
+             mc:Ignorable="d" 
+             d:DesignHeight="160" d:DesignWidth="700">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="20"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Image x:Name="Image" Grid.Column="0" HorizontalAlignment="Left" Height="100" Margin="10,10,10,0" VerticalAlignment="Top" Width="100" Source="/PriceList;component/Picture/logo.png" />
+            <Grid Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" Content="РАБОТАЕМ ДЛЯ ПРОФЕССИОНАЛОВ" Foreground="#FF372A8B" Margin="5" FontFamily="Nirmala UI" FontSize="14"/>
+                <DockPanel Grid.Column="1">
+                    <Label DockPanel.Dock="Top" Content=""></Label>
+                    <Label DockPanel.Dock="Bottom" Content="Тел.: +380 (57) 784-18-81" VerticalAlignment="Bottom" Margin="0,0,10,20"></Label>
+                </DockPanel>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="1" Background="Red">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Menu x:Name="Menu" HorizontalAlignment="Center" Height="20" Grid.Column="1" VerticalAlignment="Top" Width="Auto" Foreground="White" Background="Red">
+                <MenuItem Header="Прайс лист" />
+                <MenuItem Header="Мои заказы" />
+                <MenuItem Header="Накладные" />
+                <MenuItem Header="Синхронизация" />
+            </Menu>
+        </Grid>
+    </Grid>
+</UserControl>
