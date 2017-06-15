@@ -23,20 +23,44 @@
                     <ColumnDefinition Width="*"></ColumnDefinition>
                     <ColumnDefinition Width="Auto"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Label Grid.Column="0" Content="РАБОТАЕМ ДЛЯ ПРОФЕССИОНАЛОВ" Foreground="#FF372A8B" Margin="5" FontFamily="Nirmala UI" FontSize="14"/>
+                <Label Grid.Column="0" Content="РАБОТАЕМ ДЛЯ ПРОФЕССИОНАЛОВ" Foreground="#FF284199" Margin="5" FontFamily="Nirmala UI" FontSize="14"/>
                 <DockPanel Grid.Column="1">
                     <Label DockPanel.Dock="Top" Content=""></Label>
                     <Label DockPanel.Dock="Bottom" Content="Тел.: +380 (57) 784-18-81" VerticalAlignment="Bottom" Margin="0,0,10,20"></Label>
                 </DockPanel>
             </Grid>
         </Grid>
-        <Grid Grid.Row="1" Background="Red">
+        <Grid Grid.Row="1">
+            <Grid.OpacityMask>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF07183E" Offset="0"/>
+                    <GradientStop Color="#FF2A58B9" Offset="1"/>
+                </LinearGradientBrush>
+            </Grid.OpacityMask>
+            <Grid.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="Black" Offset="0"/>
+                    <GradientStop Color="#FFC1D5FF"/>
+                    <GradientStop Color="#FF2B3E80"/>
+                    <GradientStop Color="#FF2B3E80" Offset="1"/>
+                    <GradientStop Color="#FF4A5DD4" Offset="0.5"/>
+                </LinearGradientBrush>
+            </Grid.Background>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Menu x:Name="Menu" HorizontalAlignment="Center" Height="20" Grid.Column="1" VerticalAlignment="Top" Width="Auto" Foreground="White" Background="Red">
+            <Menu x:Name="Menu" HorizontalAlignment="Center" Height="20" Grid.Column="1" VerticalAlignment="Top" Width="Auto" Foreground="White" BorderBrush="#FF4CD337" OpacityMask="#FF2A33F1">
+                <Menu.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="Black" Offset="0"/>
+                        <GradientStop Color="#FFC1D5FF"/>
+                        <GradientStop Color="#FF2B3E80"/>
+                        <GradientStop Color="#FF2B3E80" Offset="1"/>
+                        <GradientStop Color="#FF4A5DD4" Offset="0.5"/>
+                    </LinearGradientBrush>
+                </Menu.Background>
                 <MenuItem Header="Прайс лист" />
                 <MenuItem Header="Мои заказы" />
                 <MenuItem Header="Накладные" />
