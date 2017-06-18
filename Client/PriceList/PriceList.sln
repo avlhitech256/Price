@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{FC5AA2B4-3B40-468F-B13E-F16B2EE8FDEA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Media", "Media\Media.csproj", "{B7FC1012-787D-489F-A846-32062538CB77}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{FC5AA2B4-3B40-468F-B13E-F16B2EE8FDEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC5AA2B4-3B40-468F-B13E-F16B2EE8FDEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC5AA2B4-3B40-468F-B13E-F16B2EE8FDEA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7FC1012-787D-489F-A846-32062538CB77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7FC1012-787D-489F-A846-32062538CB77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7FC1012-787D-489F-A846-32062538CB77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7FC1012-787D-489F-A846-32062538CB77}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

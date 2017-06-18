@@ -5,17 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PriceList"
         xmlns:presentation="clr-namespace:PriceList.Presentation"
+        xmlns:footerStatusBar="clr-namespace:PriceList.Presentation.FooterStatusBar"
         mc:Ignorable="d"
         Title="Прайс лист «Авто Тренд»" Height="350" Width="570" MinWidth="570">
     <DockPanel>
-        <Grid DockPanel.Dock="Bottom">
+        <footerStatusBar:FooterStatusBarControl x:Name="FooterStatusBarControl" DockPanel.Dock="Bottom" />
+        <Grid DockPanel.Dock="Top">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
             <presentation:HeaderControl x:Name="HeaderControl" Grid.Row="0"/>
-            <presentation:TopMenuControl x:Name="TopMenuControl" Grid.Row="1"></presentation:TopMenuControl>
+            <presentation:TopMenuControl x:Name="TopMenuControl" Grid.Row="1" />
+            <UserControl x:Name="MainEntryControl" Grid.Row="0" />
         </Grid>
     </DockPanel>
 </Window>

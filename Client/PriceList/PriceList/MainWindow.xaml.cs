@@ -34,7 +34,7 @@ namespace PriceList
         private void SetDomainContext()
         {
             TopMenuControl.DomainContext = DomainContext;
-            //FooterBarControl.DomainContext = DomainContext;
+            FooterStatusBarControl.DomainContext = DomainContext;
         }
 
         #endregion

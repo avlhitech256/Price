@@ -1,5 +1,8 @@
-﻿using Common.Data.Notifier;
+﻿using System.Windows.Media;
+using Common.Data.Notifier;
 using Domain.Data.Enum;
+using Domain.DomainContext;
+using Media.Color;
 
 namespace PriceList.ViewModel.TopMenu
 {
@@ -8,11 +11,11 @@ namespace PriceList.ViewModel.TopMenu
         #region Members
 
         private MenuItemName name;
-        private string backgroundColorString;
-        private string notSelectedAndMouseIsNotOverColorString;
-        private string notSelectedAndMouseIsOverColorString;
-        private string selectedAndMouseIsNotOverColorString;
-        private string selectedAndMouseIsOverColorString;
+        private LinearGradientBrush backgroundColorBrush;
+        private LinearGradientBrush notSelectedAndMouseIsNotOverColorBrush;
+        private LinearGradientBrush notSelectedAndMouseIsOverColorBrush;
+        private LinearGradientBrush selectedAndMouseIsNotOverColorBrush;
+        private LinearGradientBrush selectedAndMouseIsOverColorBrush;
 
         private bool selected;
         private bool isMouseOver;
@@ -21,24 +24,25 @@ namespace PriceList.ViewModel.TopMenu
 
         #region Constructors
 
-        public MenuItemStyle() : this(MenuItemName.PriceList, null, null, null, null)
+        public MenuItemStyle(IDomainContext domainContext) : this(MenuItemName.PriceList, domainContext, null, null, null, null)
         {
         }
 
-        public MenuItemStyle(MenuItemName name,
-                             string notSelectedAndMouseIsNotOverColorString,
-                             string notSelectedAndMouseIsOverColorString,
-                             string selectedAndMouseIsNotOverColorString,
-                             string selectedAndMouseIsOverColorString)
+        public MenuItemStyle(MenuItemName name, IDomainContext domainContext,
+                             LinearGradientBrush notSelectedAndMouseIsNotOverColorBrush,
+                             LinearGradientBrush notSelectedAndMouseIsOverColorBrush,
+                             LinearGradientBrush selectedAndMouseIsNotOverColorBrush,
+                             LinearGradientBrush selectedAndMouseIsOverColorBrush)
         {
             this.name = name;
-            this.notSelectedAndMouseIsNotOverColorString = notSelectedAndMouseIsNotOverColorString;
-            this.notSelectedAndMouseIsOverColorString = notSelectedAndMouseIsOverColorString;
-            this.selectedAndMouseIsNotOverColorString = selectedAndMouseIsNotOverColorString;
-            this.selectedAndMouseIsOverColorString = selectedAndMouseIsOverColorString;
+            DomainContext = domainContext;
+            this.notSelectedAndMouseIsNotOverColorBrush = notSelectedAndMouseIsNotOverColorBrush;
+            this.notSelectedAndMouseIsOverColorBrush = notSelectedAndMouseIsOverColorBrush;
+            this.selectedAndMouseIsNotOverColorBrush = selectedAndMouseIsNotOverColorBrush;
+            this.selectedAndMouseIsOverColorBrush = selectedAndMouseIsOverColorBrush;
             SetDefaultBackgroundColors();
 
-            backgroundColorString = notSelectedAndMouseIsNotOverColorString;
+            backgroundColorBrush = notSelectedAndMouseIsNotOverColorBrush;
             selected = false;
             isMouseOver = false;
         }
@@ -46,6 +50,10 @@ namespace PriceList.ViewModel.TopMenu
         #endregion
 
         #region Properties
+
+        private IDomainContext DomainContext { get; }
+
+        private IColorService ColorService => DomainContext?.ColorService;
 
         public MenuItemName Name
         {
@@ -66,56 +74,36 @@ namespace PriceList.ViewModel.TopMenu
 
         }
 
-        public string NotSelectedAndMouseIsNotOverBackgroundColor
+        public LinearGradientBrush NotSelectedAndMouseIsNotOverBackgroundColor
         {
             get
             {
-                return notSelectedAndMouseIsNotOverColorString;
+                return notSelectedAndMouseIsNotOverColorBrush;
             }
 
             set
             {
-                if (notSelectedAndMouseIsNotOverColorString != value)
+                if (notSelectedAndMouseIsNotOverColorBrush != value)
                 {
-                    notSelectedAndMouseIsNotOverColorString = value;
+                    notSelectedAndMouseIsNotOverColorBrush = value;
                     OnPropertyChanged();
                     ChangeBackgroundBrush();
                 }
             }
         }
 
-        public string NotSelectedAndMouseIsOverBackgroundColor
+        public LinearGradientBrush NotSelectedAndMouseIsOverBackgroundColor
         {
             get
             {
-                return notSelectedAndMouseIsOverColorString;
+                return notSelectedAndMouseIsOverColorBrush;
             }
 
             set
             {
-                if (notSelectedAndMouseIsOverColorString != value)
+                if (notSelectedAndMouseIsOverColorBrush != value)
                 {
-                    notSelectedAndMouseIsOverColorString = value;
-                    OnPropertyChanged();
-                    ChangeBackgroundBrush();
-                }
-
-            }
-
-        }
-
-        public string SelectedAndMouseIsNotOverBackgroundColor
-        {
-            get
-            {
-                return selectedAndMouseIsNotOverColorString;
-            }
-
-            set
-            {
-                if (selectedAndMouseIsNotOverColorString != value)
-                {
-                    selectedAndMouseIsNotOverColorString = value;
+                    notSelectedAndMouseIsOverColorBrush = value;
                     OnPropertyChanged();
                     ChangeBackgroundBrush();
                 }
@@ -124,18 +112,38 @@ namespace PriceList.ViewModel.TopMenu
 
         }
 
-        public string SelectedAndMouseIsOverBackgroundColor
+        public LinearGradientBrush SelectedAndMouseIsNotOverBackgroundColor
         {
             get
             {
-                return selectedAndMouseIsOverColorString;
+                return selectedAndMouseIsNotOverColorBrush;
             }
 
             set
             {
-                if (selectedAndMouseIsOverColorString != value)
+                if (selectedAndMouseIsNotOverColorBrush != value)
                 {
-                    selectedAndMouseIsOverColorString = value;
+                    selectedAndMouseIsNotOverColorBrush = value;
+                    OnPropertyChanged();
+                    ChangeBackgroundBrush();
+                }
+
+            }
+
+        }
+
+        public LinearGradientBrush SelectedAndMouseIsOverBackgroundColor
+        {
+            get
+            {
+                return selectedAndMouseIsOverColorBrush;
+            }
+
+            set
+            {
+                if (selectedAndMouseIsOverColorBrush != value)
+                {
+                    selectedAndMouseIsOverColorBrush = value;
                     OnPropertyChanged();
                     ChangeBackgroundBrush();
                 }
@@ -184,18 +192,18 @@ namespace PriceList.ViewModel.TopMenu
 
         }
 
-        public string Background
+        public LinearGradientBrush Background
         {
             get
             {
-                return backgroundColorString;
+                return backgroundColorBrush;
             }
 
             set
             {
-                if (backgroundColorString != value)
+                if (backgroundColorBrush != value)
                 {
-                    backgroundColorString = value;
+                    backgroundColorBrush = value;
                     OnPropertyChanged();
                 }
 
@@ -211,22 +219,22 @@ namespace PriceList.ViewModel.TopMenu
         {
             if (NotSelectedAndMouseIsNotOverBackgroundColor == null)
             {
-                NotSelectedAndMouseIsNotOverBackgroundColor = "#FF808080";
+                NotSelectedAndMouseIsNotOverBackgroundColor = ColorService.CreateBrush(0x80, 0x80, 0x80);
             }
 
             if (NotSelectedAndMouseIsOverBackgroundColor == null)
             {
-                NotSelectedAndMouseIsOverBackgroundColor = "#FF646464";
+                NotSelectedAndMouseIsOverBackgroundColor = ColorService.CreateBrush(0x64, 0x64, 0x64);
             }
 
             if (SelectedAndMouseIsNotOverBackgroundColor == null)
             {
-                SelectedAndMouseIsNotOverBackgroundColor = "#FF4747B8";
+                SelectedAndMouseIsNotOverBackgroundColor = ColorService.CreateBrush(0x47, 0x47, 0xB8);
             }
 
             if (SelectedAndMouseIsOverBackgroundColor == null)
             {
-                SelectedAndMouseIsOverBackgroundColor = "#FF6767D8";
+                SelectedAndMouseIsOverBackgroundColor = ColorService.CreateBrush(0x67, 0x67, 0xD8);
             }
 
         }

@@ -3,11 +3,11 @@
 namespace PriceList.Presentation
 {
     /// <summary>
-    /// Логика взаимодействия для HeaderLeftControl.xaml
+    /// Логика взаимодействия для HeaderRightControl.xaml
     /// </summary>
-    public partial class HeaderLeftControl : UserControl
+    public partial class HeaderRightControl : UserControl
     {
-        public HeaderLeftControl()
+        public HeaderRightControl()
         {
             InitializeComponent();
         }

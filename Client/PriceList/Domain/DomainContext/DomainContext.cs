@@ -3,6 +3,7 @@ using Common.Annotations;
 using Common.Data.Notifier;
 using Common.Messenger;
 using Common.Messenger.Implementation;
+using Media.Color;
 
 namespace Domain.DomainContext
 {
@@ -19,6 +20,7 @@ namespace Domain.DomainContext
         public DomainContext()
         {
             Messenger = new Messenger();
+            ColorService = new ColorService();
             UserName = Environment.UserName;
             UserDomain = Environment.UserDomainName;
             Workstation = Environment.MachineName;
@@ -30,6 +32,7 @@ namespace Domain.DomainContext
         #region Properties
 
         public IMessenger Messenger { get; }
+        public IColorService ColorService { get; }
 
         [CanBeNull]
         public string UserName { get; }

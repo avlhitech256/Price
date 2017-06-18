@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows.Media;
 using Common.Data.Notifier;
 using Domain.Data.Enum;
+using Domain.DomainContext;
 using Domain.Event;
 
 namespace PriceList.ViewModel.TopMenu
@@ -11,10 +13,10 @@ namespace PriceList.ViewModel.TopMenu
     {
         #region Members
 
-        private string notSelectedAndMouseIsNotOverBackgroundColor;
-        private string notSelectedAndMouseIsOverBackgroundColor;
-        private string selectedAndMouseIsNotOverBackgroundColor;
-        private string selectedAndMouseIsOverBackgroundColor;
+        private LinearGradientBrush notSelectedAndMouseIsNotOverBackgroundColor;
+        private LinearGradientBrush notSelectedAndMouseIsOverBackgroundColor;
+        private LinearGradientBrush selectedAndMouseIsNotOverBackgroundColor;
+        private LinearGradientBrush selectedAndMouseIsOverBackgroundColor;
 
         private List<MenuItemStyle> menuItems;
         private MenuItemStyle priceListMenuItemStyle;
@@ -27,45 +29,46 @@ namespace PriceList.ViewModel.TopMenu
 
         #region Constructors
 
-        public MenuItemsStyle() : this(null, null, null, null)
+        public MenuItemsStyle(IDomainContext domainContext) : this(domainContext, null, null, null, null)
         {
         }
 
-        public MenuItemsStyle(string notSelectedAndMouseIsNotOverColorString,
-                             string notSelectedAndMouseIsOverColorString,
-                             string selectedAndMouseIsNotOverColorString,
-                             string selectedAndMouseIsOverColorString)
+        public MenuItemsStyle(IDomainContext domainContext,
+                              LinearGradientBrush notSelectedAndMouseIsNotOverColorBrush,
+                              LinearGradientBrush notSelectedAndMouseIsOverColorBrush,
+                              LinearGradientBrush selectedAndMouseIsNotOverColorBrush,
+                              LinearGradientBrush selectedAndMouseIsOverColorBrush)
         {
-            notSelectedAndMouseIsNotOverBackgroundColor = notSelectedAndMouseIsNotOverColorString;
-            notSelectedAndMouseIsOverBackgroundColor = notSelectedAndMouseIsOverColorString;
-            selectedAndMouseIsNotOverBackgroundColor = selectedAndMouseIsNotOverColorString;
-            selectedAndMouseIsOverBackgroundColor = selectedAndMouseIsOverColorString;
+            notSelectedAndMouseIsNotOverBackgroundColor = notSelectedAndMouseIsNotOverColorBrush;
+            notSelectedAndMouseIsOverBackgroundColor = notSelectedAndMouseIsOverColorBrush;
+            selectedAndMouseIsNotOverBackgroundColor = selectedAndMouseIsNotOverColorBrush;
+            selectedAndMouseIsOverBackgroundColor = selectedAndMouseIsOverColorBrush;
 
-            priceListMenuItemStyle = new MenuItemStyle(MenuItemName.PriceList,
-                                                       notSelectedAndMouseIsNotOverColorString,
-                                                       notSelectedAndMouseIsOverColorString,
-                                                       selectedAndMouseIsNotOverColorString,
-                                                       selectedAndMouseIsOverColorString);
-            ordersMenuItemStyle = new MenuItemStyle(MenuItemName.Orders,
-                                                    notSelectedAndMouseIsNotOverColorString,
-                                                    notSelectedAndMouseIsOverColorString,
-                                                    selectedAndMouseIsNotOverColorString,
-                                                    selectedAndMouseIsOverColorString);
-            documentsMenuItemStyle = new MenuItemStyle(MenuItemName.Documents,
-                                                       notSelectedAndMouseIsNotOverColorString,
-                                                       notSelectedAndMouseIsOverColorString,
-                                                       selectedAndMouseIsNotOverColorString,
-                                                       selectedAndMouseIsOverColorString);
-            syncMenuItemStyle = new MenuItemStyle(MenuItemName.Sync,
-                                                  notSelectedAndMouseIsNotOverColorString,
-                                                  notSelectedAndMouseIsOverColorString,
-                                                  selectedAndMouseIsNotOverColorString,
-                                                  selectedAndMouseIsOverColorString);
-            settingsMenuItemStyle = new MenuItemStyle(MenuItemName.Settings,
-                                                            notSelectedAndMouseIsNotOverColorString,
-                                                            notSelectedAndMouseIsOverColorString,
-                                                            selectedAndMouseIsNotOverColorString,
-                                                            selectedAndMouseIsOverColorString);
+            priceListMenuItemStyle = new MenuItemStyle(MenuItemName.PriceList, domainContext,
+                                                       notSelectedAndMouseIsNotOverColorBrush,
+                                                       notSelectedAndMouseIsOverColorBrush,
+                                                       selectedAndMouseIsNotOverColorBrush,
+                                                       selectedAndMouseIsOverColorBrush);
+            ordersMenuItemStyle = new MenuItemStyle(MenuItemName.Orders, domainContext,
+                                                    notSelectedAndMouseIsNotOverColorBrush,
+                                                    notSelectedAndMouseIsOverColorBrush,
+                                                    selectedAndMouseIsNotOverColorBrush,
+                                                    selectedAndMouseIsOverColorBrush);
+            documentsMenuItemStyle = new MenuItemStyle(MenuItemName.Documents, domainContext,
+                                                       notSelectedAndMouseIsNotOverColorBrush,
+                                                       notSelectedAndMouseIsOverColorBrush,
+                                                       selectedAndMouseIsNotOverColorBrush,
+                                                       selectedAndMouseIsOverColorBrush);
+            syncMenuItemStyle = new MenuItemStyle(MenuItemName.Sync, domainContext,
+                                                  notSelectedAndMouseIsNotOverColorBrush,
+                                                  notSelectedAndMouseIsOverColorBrush,
+                                                  selectedAndMouseIsNotOverColorBrush,
+                                                  selectedAndMouseIsOverColorBrush);
+            settingsMenuItemStyle = new MenuItemStyle(MenuItemName.Settings, domainContext,
+                                                            notSelectedAndMouseIsNotOverColorBrush,
+                                                            notSelectedAndMouseIsOverColorBrush,
+                                                            selectedAndMouseIsNotOverColorBrush,
+                                                            selectedAndMouseIsOverColorBrush);
 
             menuItems = new List<MenuItemStyle>();
 
@@ -80,7 +83,7 @@ namespace PriceList.ViewModel.TopMenu
 
         #region Properties
 
-        public string NotSelectedAndMouseIsNotOverBackgroundColor
+        public LinearGradientBrush NotSelectedAndMouseIsNotOverBackgroundColor
         {
             get
             {
@@ -102,7 +105,7 @@ namespace PriceList.ViewModel.TopMenu
             }
         }
 
-        public string NotSelectedAndMouseIsOverBackgroundColor
+        public LinearGradientBrush NotSelectedAndMouseIsOverBackgroundColor
         {
             get
             {
@@ -126,7 +129,7 @@ namespace PriceList.ViewModel.TopMenu
 
         }
 
-        public string SelectedAndMouseIsNotOverBackgroundColor
+        public LinearGradientBrush SelectedAndMouseIsNotOverBackgroundColor
         {
             get
             {
@@ -150,7 +153,7 @@ namespace PriceList.ViewModel.TopMenu
 
         }
 
-        public string SelectedAndMouseIsOverBackgroundColor
+        public LinearGradientBrush SelectedAndMouseIsOverBackgroundColor
         {
             get
             {

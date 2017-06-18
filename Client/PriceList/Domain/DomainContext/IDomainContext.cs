@@ -1,5 +1,6 @@
 ﻿using Common.Annotations;
 using Common.Messenger;
+using Media.Color;
 
 namespace Domain.DomainContext
 {
@@ -7,9 +8,16 @@ namespace Domain.DomainContext
     {
         [CanBeNull]
         IMessenger Messenger { get; }
+
+        [CanBeNull]
+        IColorService ColorService { get; }
+
         string UserName { get; }
+
         string UserDomain { get; }
+
         string Workstation { get; }
+
         string DataBaseServer { get; set; }
     }
 }

@@ -154,16 +154,6 @@ namespace PriceList.Presentation
 
         #endregion
 
-        private void MenuItem_OnKeyUp(object sender, KeyEventArgs e)
-        {
-            SetMouseUp(e);
-        }
-
-        private void MenuItem_OnMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            SetMouseUp(e);
-        }
-
         private void MenuItem_OnMouseEnter(object sender, MouseEventArgs e)
         {
             SetMouseOver(e, true);
@@ -174,9 +164,9 @@ namespace PriceList.Presentation
             SetMouseOver(e, false);
         }
 
-        private void MenuItem_OnMouseDown(object sender, MouseButtonEventArgs e)
+        private void Menu_OnGotFocus(object sender, RoutedEventArgs e)
         {
-            SetMouseUp(e);
+            SetMouseUp(e.OriginalSource);
         }
     }
 }

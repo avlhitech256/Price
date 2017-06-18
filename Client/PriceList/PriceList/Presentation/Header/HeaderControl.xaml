@@ -18,7 +18,7 @@
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Label Grid.Column="0" Content="РАБОТАЕМ ДЛЯ ПРОФЕССИОНАЛОВ" Foreground="#FF284199" Margin="5" FontFamily="Nirmala UI" FontSize="14"/>
-            <local:HeaderLeftControl Grid.Column="1"/>
+            <local:HeaderRightControl Grid.Column="1"/>
         </Grid>
     </Grid>
 </UserControl>

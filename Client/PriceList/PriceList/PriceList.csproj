@@ -55,6 +55,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Presentation\FooterStatusBar\FooterStatusBarControl.xaml.cs">
+      <DependentUpon>FooterStatusBarControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\TopMenu\MenuItemsStyle.cs" />
     <Compile Include="ViewModel\TopMenu\MenuItemStyle.cs" />
     <Compile Include="ViewModel\TopMenu\TopMenuViewModel.cs" />
@@ -70,27 +73,31 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Presentation\HeaderControl.xaml">
+    <Page Include="Presentation\FooterStatusBar\FooterStatusBarControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Presentation\HeaderLeftControl.xaml">
+    <Page Include="Presentation\Header\HeaderControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Presentation\TopMenuControl.xaml">
+    <Page Include="Presentation\Header\HeaderRightControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Presentation\TopMenu\TopMenuControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Presentation\HeaderControl.xaml.cs">
+    <Compile Include="Presentation\Header\HeaderControl.xaml.cs">
       <DependentUpon>HeaderControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\HeaderLeftControl.xaml.cs">
-      <DependentUpon>HeaderLeftControl.xaml</DependentUpon>
+    <Compile Include="Presentation\Header\HeaderRightControl.xaml.cs">
+      <DependentUpon>HeaderRightControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\TopMenuControl.xaml.cs">
+    <Compile Include="Presentation\TopMenu\TopMenuControl.xaml.cs">
       <DependentUpon>TopMenuControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -306,6 +313,10 @@
     <ProjectReference Include="..\Domain\Domain.csproj">
       <Project>{65b9a8c3-c1c1-4195-8eb6-cba4c7345c76}</Project>
       <Name>Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Media\Media.csproj">
+      <Project>{b7fc1012-787d-489f-a846-32062538cb77}</Project>
+      <Name>Media</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

@@ -1,8 +1,12 @@
-﻿using Common.Data.Notifier;
+﻿using System;
+using System.Windows;
+using System.Windows.Media;
+using Common.Data.Notifier;
 using Common.Messenger;
 using Common.Messenger.Implementation;
 using Domain.DomainContext;
 using Domain.Event;
+using Media.Color;
 
 namespace PriceList.ViewModel.TopMenu
 {
@@ -19,7 +23,11 @@ namespace PriceList.ViewModel.TopMenu
         public TopMenuViewModel(IDomainContext domainContext)
         {
             DomainContext = domainContext;
-            menuItemsStyle = new MenuItemsStyle("#FF808080", "#FF646464", "#FF4747B8", "#FF6767D8");
+            menuItemsStyle = new MenuItemsStyle(DomainContext,
+                                                ColorService.CreateBrush(0x2B, 0x3E, 0x80), 
+                                                ColorService.CreateBrush(0x3B, 0x4E, 0x90),
+                                                ColorService.CreateBrush(0x4B, 0x5E, 0xA0),
+                                                ColorService.CreateBrush(0x5B, 0x6E, 0xB0));
             SubscribeMessenger();
         }
 
@@ -30,6 +38,8 @@ namespace PriceList.ViewModel.TopMenu
         private IDomainContext DomainContext { get; }
 
         private IMessenger Messenger => DomainContext?.Messenger;
+
+        private IColorService ColorService => DomainContext?.ColorService;
         public MenuItemsStyle MenuItemsStyle
         {
             get
