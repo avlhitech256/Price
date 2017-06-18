@@ -40,8 +40,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Enum\MenuItemName.cs" />
     <Compile Include="DomainContext\DomainContext.cs" />
     <Compile Include="DomainContext\IDomainContext.cs" />
+    <Compile Include="Event\MenuChangedEventArgs.cs" />
+    <Compile Include="Event\TopMenuMouseOverEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
