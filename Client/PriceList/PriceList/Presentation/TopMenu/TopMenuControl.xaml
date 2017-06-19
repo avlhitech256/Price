@@ -5,7 +5,77 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PriceList.Presentation"
              mc:Ignorable="d" 
-             d:DesignHeight="20" d:DesignWidth="600">
+             d:DesignHeight="30" d:DesignWidth="700">
+    <UserControl.Resources>
+        <Style x:Key="TopMenuStyle" TargetType="MenuItem">
+            <Style.Setters>
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#FFB6B6B6" Offset="0"/>
+                            <GradientStop Color="#FF3C3C3C" Offset="1"/>
+                            <GradientStop Color="#FFBDBDBD" Offset="0.3"/>
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="Height" Value="30" />
+            </Style.Setters>
+            <Style.Triggers>
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <!--<Condition Property="IsHighlighted" Value="True" />
+                        <Condition Property="IsFocused" Value="False" />-->
+                        <Condition Property="IsHighlighted" Value="True" />
+                    </MultiTrigger.Conditions>
+                    <MultiTrigger.Setters>
+                        <Setter Property="Background">
+                            <Setter.Value>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FFEE8080" Offset="0"/>
+                                    <GradientStop Color="#FFC30000" Offset="1"/>
+                                    <GradientStop Color="#FFFF8F8F" Offset="0.3"/>
+                                </LinearGradientBrush>
+                            </Setter.Value>
+                        </Setter>
+                    </MultiTrigger.Setters>
+                </MultiTrigger>
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="IsMouseOver" Value="False" />
+                        <Condition Property="IsFocused" Value="True" />
+                    </MultiTrigger.Conditions>
+                    <MultiTrigger.Setters>
+                        <Setter Property="Background">
+                            <Setter.Value>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FFE8A1A1" Offset="0"/>
+                                    <GradientStop Color="#FFC11717" Offset="1"/>
+                                    <GradientStop Color="#FFFBA4A4" Offset="0.3"/>
+                                </LinearGradientBrush>
+                            </Setter.Value>
+                        </Setter>
+                    </MultiTrigger.Setters>
+                </MultiTrigger>
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="IsHighlighted" Value="True" />
+                    </MultiTrigger.Conditions>
+                    <MultiTrigger.Setters>
+                        <Setter Property="Background">
+                            <Setter.Value>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FFEAA4A4" Offset="0"/>
+                                    <GradientStop Color="#FFCD3636" Offset="1"/>
+                                    <GradientStop Color="#FFFFC5C5" Offset="0.3"/>
+                                </LinearGradientBrush>
+                            </Setter.Value>
+                        </Setter>
+                    </MultiTrigger.Setters>
+                </MultiTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
     <Grid>
         <Grid.OpacityMask>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -15,11 +85,9 @@
         </Grid.OpacityMask>
         <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                <GradientStop Color="Black" Offset="0"/>
-                <GradientStop Color="#FFC1D5FF"/>
-                <GradientStop Color="#FF4360C5"/>
-                <GradientStop Color="#FF2B3E80" Offset="1"/>
-                <GradientStop Color="#FF7F90FF" Offset="0.099"/>
+                <GradientStop Color="#FFB6B6B6" Offset="0"/>
+                <GradientStop Color="#FF3C3C3C" Offset="1"/>
+                <GradientStop Color="#FFBDBDBD" Offset="0.3"/>
             </LinearGradientBrush>
         </Grid.Background>
         <Grid.ColumnDefinitions>
@@ -29,25 +97,21 @@
         </Grid.ColumnDefinitions>
         <Menu x:Name="Menu"  
               HorizontalAlignment="Center" 
-              Height="20" 
+              Height="Auto" 
               Grid.Column="1" 
               VerticalAlignment="Top" 
               Width="Auto" 
               Foreground="White" 
               BorderBrush="#FF4CD337" 
-              OpacityMask="#FF2A33F1" 
               GotFocus="Menu_OnGotFocus">
-            <Menu.Background>
+            <Menu.OpacityMask>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FF4360C5" Offset="0"/>
-                    <GradientStop Color="#FF2B3E80" Offset="1"/>
-                    <GradientStop Color="#FF7F90FF" Offset="0.1"/>
+                    <GradientStop Color="#FFFF7979" Offset="0"/>
+                    <GradientStop Color="#FFFF0101" Offset="1"/>
+                    <GradientStop Color="#FFFF9E9E" Offset="0.3"/>
                 </LinearGradientBrush>
-            </Menu.Background>
-            <MenuItem x:Name="Pricelist" 
-                      MouseEnter="MenuItem_OnMouseEnter" 
-                      MouseLeave="MenuItem_OnMouseLeave"
-                      Background="{Binding Path=MenuItemsStyle.PriceListMenuItemStyle.Background}" >
+            </Menu.OpacityMask>
+            <MenuItem x:Name="Pricelist" Style="{StaticResource TopMenuStyle}">
                 <MenuItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <Image Height="20" Width="20" Source="/PriceList;component/Picture/price1.png" Margin="0,0,5,0"></Image>
@@ -55,7 +119,7 @@
                     </StackPanel>
                 </MenuItem.Header>
             </MenuItem>
-            <MenuItem x:Name="Orders" MouseEnter="MenuItem_OnMouseEnter" MouseLeave="MenuItem_OnMouseLeave">
+            <MenuItem x:Name="Orders" Style="{StaticResource TopMenuStyle}">
                 <MenuItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <Image Height="20" Width="20" Source="/PriceList;component/Picture/order.png" Margin="0,0,5,0"></Image>
@@ -63,7 +127,7 @@
                     </StackPanel>
                 </MenuItem.Header>
             </MenuItem>
-            <MenuItem x:Name="Documents" MouseEnter="MenuItem_OnMouseEnter" MouseLeave="MenuItem_OnMouseLeave">
+            <MenuItem x:Name="Documents" Style="{StaticResource TopMenuStyle}">
                 <MenuItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <Image Height="20" Width="20" Source="/PriceList;component/Picture/document.png" Margin="0,0,5,0"></Image>
@@ -71,7 +135,7 @@
                     </StackPanel>
                 </MenuItem.Header>
             </MenuItem>
-            <MenuItem x:Name="Sync" MouseEnter="MenuItem_OnMouseEnter" MouseLeave="MenuItem_OnMouseLeave">
+            <MenuItem x:Name="Sync" Style="{StaticResource TopMenuStyle}">
                 <MenuItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <Image Height="20" Width="20" Source="/PriceList;component/Picture/sync.png" Margin="0,0,5,0"></Image>
@@ -79,7 +143,7 @@
                     </StackPanel>
                 </MenuItem.Header>
             </MenuItem>
-            <MenuItem x:Name="Settings" MouseEnter="MenuItem_OnMouseEnter" MouseLeave="MenuItem_OnMouseLeave">
+            <MenuItem x:Name="Settings" Style="{StaticResource TopMenuStyle}">
                 <MenuItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <Image Height="20" Width="20" Source="/PriceList;component/Picture/settings.png" Margin="0,0,5,0"></Image>

@@ -25,9 +25,9 @@ namespace PriceList.ViewModel.TopMenu
             DomainContext = domainContext;
             menuItemsStyle = new MenuItemsStyle(DomainContext,
                                                 ColorService.CreateBrush(0x2B, 0x3E, 0x80), 
-                                                ColorService.CreateBrush(0x3B, 0x4E, 0x90),
-                                                ColorService.CreateBrush(0x4B, 0x5E, 0xA0),
-                                                ColorService.CreateBrush(0x5B, 0x6E, 0xB0));
+                                                ColorService.CreateBrush(0x5B, 0x6E, 0xA0),
+                                                ColorService.CreateBrush(0x8B, 0x9E, 0xF0),
+                                                ColorService.CreateBrush(0xDB, 0xEE, 0xFF));
             SubscribeMessenger();
         }
 

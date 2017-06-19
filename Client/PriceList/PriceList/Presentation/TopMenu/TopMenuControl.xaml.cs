@@ -156,12 +156,12 @@ namespace PriceList.Presentation
 
         private void MenuItem_OnMouseEnter(object sender, MouseEventArgs e)
         {
-            SetMouseOver(e, true);
+            SetMouseOver(sender, true);
         }
 
         private void MenuItem_OnMouseLeave(object sender, MouseEventArgs e)
         {
-            SetMouseOver(e, false);
+            SetMouseOver(sender, false);
         }
 
         private void Menu_OnGotFocus(object sender, RoutedEventArgs e)

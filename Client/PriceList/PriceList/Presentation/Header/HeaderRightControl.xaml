@@ -22,9 +22,9 @@
             <Image Grid.Row="1" Grid.Column="0" Source="/PriceList;component/Picture/internet.png"></Image>
             <Image Grid.Row="2" Grid.Column="0" Source="/PriceList;component/Picture/e-mail.png"></Image>
             <Image Grid.Row="3" Grid.Column="0" Source="/PriceList;component/Picture/phone.png"></Image>
-            <Label Grid.Row="1" Grid.Column="1" Content="http://autotrend.ua/" />
-            <Label Grid.Row="2" Grid.Column="1" Content="office@autotrend.ua" />
-            <Label Grid.Row="3" Grid.Column="1" Content="Тел.: +380 (57) 784-18-81" />
+            <Label Grid.Row="1" Grid.Column="1" Content="WEB: http://autotrend.ua/" />
+            <Label Grid.Row="2" Grid.Column="1" Content="E-mail: office@autotrend.ua" />
+            <Label Grid.Row="3" Grid.Column="1" Content="Тел.:+380 (57) 784-18-81" />
         </Grid>
     </DockPanel>
 </UserControl>
