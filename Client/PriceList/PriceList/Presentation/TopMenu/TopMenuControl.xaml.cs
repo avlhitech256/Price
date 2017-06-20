@@ -31,11 +31,11 @@ namespace PriceList.Presentation
             menuItemMap =
                 new Dictionary<MenuItem, MenuItemName>
                 {
-                    { Pricelist, MenuItemName.PriceList },
-                    { Orders, MenuItemName.Orders},
-                    { Documents, MenuItemName.Documents },
-                    { Sync, MenuItemName.Sync },
-                    { Settings, MenuItemName.Settings }
+                    { PricelistMenuItem, MenuItemName.PriceList },
+                    { OrdersMenuItem, MenuItemName.Orders},
+                    { DocumentsMenuItem, MenuItemName.Documents },
+                    { SyncMenuItem, MenuItemName.Sync },
+                    { SettingsMenuItem, MenuItemName.Settings }
                 };
         }
 
