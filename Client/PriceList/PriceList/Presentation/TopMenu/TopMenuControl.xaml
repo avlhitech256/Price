@@ -146,42 +146,6 @@
             </ControlTemplate.Triggers>
         </ControlTemplate>
 
-        <Style x:Key="TopMenuStyle" TargetType="MenuItem">
-            <Style.Setters>
-                <Setter Property="Background" Value="{StaticResource DefaultGradientBrush}" />
-                <Setter Property="FontSize" Value="14" />
-                <Setter Property="Height" Value="30" />
-            </Style.Setters>
-            <Style.Triggers>
-                <MultiTrigger>
-                    <MultiTrigger.Conditions>
-                        <!--<Condition Property="IsHighlighted" Value="True" />
-                        <Condition Property="IsFocused" Value="False" />-->
-                        <Condition Property="IsHighlighted" Value="True" />
-                    </MultiTrigger.Conditions>
-                    <MultiTrigger.Setters>
-                        <Setter Property="Background" Value="{StaticResource MouseOverAndNotSelectedGradientBrush}" />
-                    </MultiTrigger.Setters>
-                </MultiTrigger>
-                <MultiTrigger>
-                    <MultiTrigger.Conditions>
-                        <Condition Property="IsMouseOver" Value="False" />
-                        <Condition Property="IsFocused" Value="True" />
-                    </MultiTrigger.Conditions>
-                    <MultiTrigger.Setters>
-                        <Setter Property="Background" Value="{StaticResource MouseOverAndSelectedGradientBrush}" />
-                    </MultiTrigger.Setters>
-                </MultiTrigger>
-                <MultiTrigger>
-                    <MultiTrigger.Conditions>
-                        <Condition Property="IsHighlighted" Value="True" />
-                    </MultiTrigger.Conditions>
-                    <MultiTrigger.Setters>
-                        <Setter Property="Background" Value="{StaticResource SelectedGradientBrush}" />
-                    </MultiTrigger.Setters>
-                </MultiTrigger>
-            </Style.Triggers>
-        </Style>
     </UserControl.Resources>
     
     <Grid Background="{StaticResource DefaultGradientBrush}">
