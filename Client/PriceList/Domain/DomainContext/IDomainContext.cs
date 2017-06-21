@@ -1,5 +1,6 @@
 ﻿using Common.Annotations;
 using Common.Messenger;
+using Domain.ViewModel;
 using Media.Color;
 
 namespace Domain.DomainContext
@@ -11,6 +12,11 @@ namespace Domain.DomainContext
 
         [CanBeNull]
         IColorService ColorService { get; }
+
+        [CanBeNull]
+        IControlViewModel ViewModel { get; set; }
+
+        bool IsEditControl { get; set; }
 
         string UserName { get; }
 

@@ -3,6 +3,7 @@ using Common.Annotations;
 using Common.Data.Notifier;
 using Common.Messenger;
 using Common.Messenger.Implementation;
+using Domain.ViewModel;
 using Media.Color;
 
 namespace Domain.DomainContext
@@ -12,6 +13,8 @@ namespace Domain.DomainContext
         #region Members
 
         private string dataBaseServer;
+        private IControlViewModel viewModel;
+        private bool isEditControl;
 
         #endregion
 
@@ -33,7 +36,41 @@ namespace Domain.DomainContext
 
         public IMessenger Messenger { get; }
         public IColorService ColorService { get; }
+        public IControlViewModel ViewModel
+        {
+            get
+            {
+                return viewModel;
+            }
 
+            set
+            {
+                if (viewModel != value)
+                {
+                    viewModel = value;
+                    OnPropertyChanged();
+                }
+            }
+
+        }
+
+        public bool IsEditControl
+        {
+            get
+            {
+                return isEditControl;
+            }
+
+            set
+            {
+                if (isEditControl != value)
+                {
+                    isEditControl = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        
         [CanBeNull]
         public string UserName { get; }
 

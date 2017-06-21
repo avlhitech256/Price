@@ -164,9 +164,9 @@ namespace PriceList.Presentation
             SetMouseOver(sender, false);
         }
 
-        private void Menu_OnGotFocus(object sender, RoutedEventArgs e)
+        private void MenuItem_OnClick(object sender, RoutedEventArgs e)
         {
-            SetMouseUp(e.OriginalSource);
+            SetMouseUp(sender);
         }
     }
 }

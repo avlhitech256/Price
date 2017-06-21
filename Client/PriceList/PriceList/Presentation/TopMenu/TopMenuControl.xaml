@@ -169,8 +169,7 @@
               Width="Auto" 
               Foreground="White" 
               BorderBrush="#FF4CD337" 
-              Background="{StaticResource DefaultGradientBrush}"
-              GotFocus="Menu_OnGotFocus">
+              Background="{StaticResource DefaultGradientBrush}">
             <Menu.OpacityMask>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFFF7979" Offset="0"/>
@@ -178,11 +177,31 @@
                     <GradientStop Color="#FFFF9E9E" Offset="0.3"/>
                 </LinearGradientBrush>
             </Menu.OpacityMask>
-            <MenuItem x:Name="PricelistMenuItem" Header="Прайс лист" Icon="{DynamicResource PriceListIcon}" Template="{DynamicResource MenuItemControlTemplate}" />
-            <MenuItem x:Name="OrdersMenuItem" Header="Мои заказы" Icon="{DynamicResource OrderIcon}" Template="{DynamicResource MenuItemControlTemplate}" />
-            <MenuItem x:Name="DocumentsMenuItem" Header="Накладные" Icon="{DynamicResource DocumentIcon}" Template="{DynamicResource MenuItemControlTemplate}" />
-            <MenuItem x:Name="SyncMenuItem" Header="Синхронизация"  Icon="{DynamicResource SynkIcon}" Template="{DynamicResource MenuItemControlTemplate}" />
-            <MenuItem x:Name="SettingsMenuItem" Header="Настройки" Template="{DynamicResource MenuItemControlTemplate}" Icon="{DynamicResource SettingsIcon}" />
+            <MenuItem x:Name="PricelistMenuItem" 
+                      Header="Прайс лист" 
+                      Icon="{DynamicResource PriceListIcon}" 
+                      Template="{DynamicResource MenuItemControlTemplate}" 
+                      Click="MenuItem_OnClick"/>
+            <MenuItem x:Name="OrdersMenuItem" 
+                      Header="Мои заказы" 
+                      Icon="{DynamicResource OrderIcon}" 
+                      Template="{DynamicResource MenuItemControlTemplate}" 
+                      Click="MenuItem_OnClick"/>
+            <MenuItem x:Name="DocumentsMenuItem" 
+                      Header="Накладные" 
+                      Icon="{DynamicResource DocumentIcon}" 
+                      Template="{DynamicResource MenuItemControlTemplate}" 
+                      Click="MenuItem_OnClick"/>
+            <MenuItem x:Name="SyncMenuItem" 
+                      Header="Синхронизация"  
+                      Icon="{DynamicResource SynkIcon}" 
+                      Template="{DynamicResource MenuItemControlTemplate}" 
+                      Click="MenuItem_OnClick"/>
+            <MenuItem x:Name="SettingsMenuItem" 
+                      Header="Настройки" 
+                      Template="{DynamicResource MenuItemControlTemplate}" 
+                      Icon="{DynamicResource SettingsIcon}" 
+                      Click="MenuItem_OnClick"/>
         </Menu>
     </Grid>
 </UserControl>

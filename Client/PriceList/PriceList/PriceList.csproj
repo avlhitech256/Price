@@ -58,6 +58,10 @@
     <Compile Include="Presentation\FooterStatusBar\FooterStatusBarControl.xaml.cs">
       <DependentUpon>FooterStatusBarControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\MainWindow\MainWindowViewModel.cs" />
+    <Compile Include="ViewModel\MainWindow\ViewFactory.cs" />
+    <Compile Include="ViewModel\MainWindow\ViewModelFactory.cs" />
+    <Compile Include="ViewModel\MainWindow\ViewModelRouter.cs" />
     <Compile Include="ViewModel\TopMenu\MenuItemsStyle.cs" />
     <Compile Include="ViewModel\TopMenu\MenuItemStyle.cs" />
     <Compile Include="ViewModel\TopMenu\TopMenuViewModel.cs" />
@@ -306,6 +310,14 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Catalog\Catalog.csproj">
+      <Project>{f0c9eb97-38e2-49c8-879b-660cc16acb2a}</Project>
+      <Name>Catalog</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CommonControl\CommonControl.csproj">
+      <Project>{9c178753-f272-451b-8cc3-8b78a275bc48}</Project>
+      <Name>CommonControl</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{fc5aa2b4-3b40-468f-b13e-f16b2ee8fdea}</Project>
       <Name>Common</Name>

@@ -14,11 +14,10 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
             <presentation:HeaderControl x:Name="HeaderControl" Grid.Row="0"/>
             <presentation:TopMenuControl x:Name="TopMenuControl" Grid.Row="1" />
-            <UserControl x:Name="MainEntryControl" Grid.Row="0" />
         </Grid>
+        <UserControl x:Name="EntryControl" Content="{Binding Path=View}"/>
     </DockPanel>
 </Window>

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Media;
-using Common.Data.Notifier;
+﻿using Common.Data.Notifier;
 using Common.Messenger;
 using Common.Messenger.Implementation;
 using Domain.DomainContext;

@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Media", "Media\Media.csproj", "{B7FC1012-787D-489F-A846-32062538CB77}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonControl", "CommonControl\CommonControl.csproj", "{9C178753-F272-451B-8CC3-8B78A275BC48}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catalog", "Catalog\Catalog.csproj", "{F0C9EB97-38E2-49C8-879B-660CC16ACB2A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{B7FC1012-787D-489F-A846-32062538CB77}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B7FC1012-787D-489F-A846-32062538CB77}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B7FC1012-787D-489F-A846-32062538CB77}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C178753-F272-451B-8CC3-8B78A275BC48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C178753-F272-451B-8CC3-8B78A275BC48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C178753-F272-451B-8CC3-8B78A275BC48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C178753-F272-451B-8CC3-8B78A275BC48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0C9EB97-38E2-49C8-879B-660CC16ACB2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0C9EB97-38E2-49C8-879B-660CC16ACB2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0C9EB97-38E2-49C8-879B-660CC16ACB2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0C9EB97-38E2-49C8-879B-660CC16ACB2A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
