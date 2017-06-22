@@ -47,6 +47,9 @@
     <Compile Include="Presentation\CatalogControl.xaml.cs">
       <DependentUpon>CatalogControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Presentation\ResultSearchGridControl.xaml.cs">
+      <DependentUpon>ResultSearchGridControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\CatalogViewModel.cs" />
   </ItemGroup>
@@ -70,6 +73,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Presentation\CatalogControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Presentation\ResultSearchGridControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
