@@ -6,8 +6,23 @@
              xmlns:local="clr-namespace:Catalog.Presentation"
              xmlns:searchControl="clr-namespace:CommonControl.SearchControl;assembly=CommonControl"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-         <Label Content="Hello"></Label>   
-    </Grid>
+             d:DesignHeight="450" d:DesignWidth="900">
+    <Border CornerRadius="3" BorderThickness="1">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <local:MainSearchControl Grid.Row="0"></local:MainSearchControl>
+                <local:DetailControl Grid.Row="1"/>
+                <local:ResultSearchGridControl Grid.Row="2"></local:ResultSearchGridControl>
+            </Grid>
+        </Grid>
+    </Border>
 </searchControl:SearchControl>
