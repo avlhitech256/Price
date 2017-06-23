@@ -86,3 +86,14 @@
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
+
+
+Красивый светло зеленый
+            <Label.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF28CB3E" Offset="0"/>
+                    <GradientStop Color="#FF008512" Offset="1"/>
+                    <GradientStop Color="#FFADFFB8" Offset="0.3"/>
+                </LinearGradientBrush>
+            </Label.Background>
+

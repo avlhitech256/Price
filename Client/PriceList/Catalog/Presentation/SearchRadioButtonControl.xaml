@@ -6,8 +6,15 @@
              xmlns:local="clr-namespace:Catalog.Presentation"
              mc:Ignorable="d" 
              d:DesignHeight="100" d:DesignWidth="600">
-    <Border BorderThickness="1" BorderBrush="Black" CornerRadius="3">
-        <Grid>
+    <Border BorderThickness="0.1" BorderBrush="#FF646464" CornerRadius="5">
+        <Border.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="WhiteSmoke" Offset="0.01"/>
+                <GradientStop Color="Gainsboro" Offset="1"/>
+                <GradientStop Color="White" Offset="0.3"/>
+            </LinearGradientBrush>
+        </Border.Background>
+        <Grid Margin="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
@@ -19,13 +26,13 @@
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
-            <RadioButton Grid.Row="0" Grid.Column="0" Content="ВАЗ" Margin="3"/>
-            <RadioButton Grid.Row="1" Grid.Column="0" Content="ГАЗ/УАЗ" Margin="3"/>
-            <RadioButton Grid.Row="2" Grid.Column="0" Content="Daewoo-ZAZ" Margin="3"/>
-            <RadioButton Grid.Row="3" Grid.Column="0" Content="Автохимия, масла и аксессуары" Margin="3"/>
-            <RadioButton Grid.Row="0" Grid.Column="1" Content="АКБ" Margin="3"/>
-            <RadioButton Grid.Row="1" Grid.Column="1" Content="ГБО" Margin="3"/>
-            <RadioButton Grid.Row="2" Grid.Column="1" Content="Материалы и оборудование для ремонта шин" Margin="3"/>
+            <CheckBox Grid.Row="0" Grid.Column="0" Content="ВАЗ" Margin="3"/>
+            <CheckBox Grid.Row="1" Grid.Column="0" Content="ГАЗ/УАЗ" Margin="3"/>
+            <CheckBox Grid.Row="2" Grid.Column="0" Content="Daewoo-ZAZ" Margin="3"/>
+            <CheckBox Grid.Row="3" Grid.Column="0" Content="Автохимия, масла и аксессуары" Margin="3"/>
+            <CheckBox Grid.Row="0" Grid.Column="1" Content="АКБ" Margin="3"/>
+            <CheckBox Grid.Row="1" Grid.Column="1" Content="ГБО" Margin="3"/>
+            <CheckBox Grid.Row="2" Grid.Column="1" Content="Материалы и оборудование для ремонта шин" Margin="3"/>
         </Grid>
     </Border>
 </UserControl>

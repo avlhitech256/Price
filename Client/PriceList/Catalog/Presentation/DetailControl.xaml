@@ -5,28 +5,61 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Catalog.Presentation"
              mc:Ignorable="d" 
-             d:DesignHeight="250" d:DesignWidth="900">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-        </Grid.RowDefinitions>
-        <Label Name="TitleResult" Content="Детальная информация о товаре" Grid.Row="0" Margin="1" HorizontalAlignment="Stretch" FontWeight="Bold" Foreground="White" HorizontalContentAlignment="Center">
-            <Label.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FF28CB3E" Offset="0"/>
-                    <GradientStop Color="#FF008512" Offset="1"/>
-                    <GradientStop Color="#FFADFFB8" Offset="0.3"/>
-                </LinearGradientBrush>
-            </Label.Background>
-        </Label>
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="3*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <local:DetailFieldsControl Grid.Column="1"></local:DetailFieldsControl>
-            <Image Grid.Column="0" Stretch="Uniform"  Source="87930_F.jpg"/>
+             d:DesignHeight="200" d:DesignWidth="900">
+    <UserControl.Resources>
+        <LinearGradientBrush x:Key="DefaultGradientBrush"  StartPoint="0.5,0" EndPoint="0.5,1">
+            <GradientBrush.GradientStops>
+                <GradientStopCollection>
+                    <GradientStop Color="#FFB6B6B6" Offset="0"/>
+                    <GradientStop Color="#FF3C3C3C" Offset="1"/>
+                    <GradientStop Color="#FFBDBDBD" Offset="0.3"/>
+                </GradientStopCollection>
+            </GradientBrush.GradientStops>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="SelectedGradientBrush" StartPoint="0.5,0" EndPoint="0.5,1">
+            <GradientBrush.GradientStops>
+                <GradientStopCollection>
+                    <GradientStop Color="#FFE8A1A1" Offset="0"/>
+                    <GradientStop Color="#FFC11717" Offset="1"/>
+                    <GradientStop Color="#FFFBA4A4" Offset="0.3"/>
+                </GradientStopCollection>
+            </GradientBrush.GradientStops>
+        </LinearGradientBrush>
+
+    </UserControl.Resources>
+    <Border BorderBrush="CadetBlue" BorderThickness="1">
+        <Grid Height="180">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Label Name="TitleResult" 
+               Content="Детальная информация о товаре" 
+               Grid.Row="0" 
+               Margin="1" 
+               HorizontalAlignment="Stretch" 
+               FontWeight="Bold" 
+               Foreground="White" 
+               Background="{StaticResource DefaultGradientBrush}"
+               HorizontalContentAlignment="Center" />
+            <Grid Grid.Row="1" >
+                <Grid.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FFFDFDFD" Offset="0"/>
+                        <GradientStop Color="WhiteSmoke" Offset="1"/>
+                        <GradientStop Color="White" Offset="0.3"/>
+                    </LinearGradientBrush>
+                </Grid.Background>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <local:DetailFieldsControl Grid.Column="1"></local:DetailFieldsControl>
+                <Border Grid.Column="0" Margin="5" Background="White" BorderBrush="Black" BorderThickness="1">
+                    <Image Stretch="Uniform"  Source="87930_F.jpg"/>
+                </Border>
+            </Grid>
         </Grid>
-    </Grid>
+    </Border>
 </UserControl>
