@@ -14,46 +14,6 @@
         <Image x:Key="SynkIcon" Source="/PriceList;component/Picture/sync.png" />
         <Image x:Key="SettingsIcon" Source="/PriceList;component/Picture/settings.png" />
 
-        <LinearGradientBrush x:Key="DefaultGradientBrush"  StartPoint="0.5,0" EndPoint="0.5,1">
-            <GradientBrush.GradientStops>
-                <GradientStopCollection>
-                    <GradientStop Color="#FFB6B6B6" Offset="0"/>
-                    <GradientStop Color="#FF3C3C3C" Offset="1"/>
-                    <GradientStop Color="#FFBDBDBD" Offset="0.3"/>
-                </GradientStopCollection>
-            </GradientBrush.GradientStops>
-        </LinearGradientBrush>
-
-        <LinearGradientBrush x:Key="SelectedGradientBrush" StartPoint="0.5,0" EndPoint="0.5,1">
-            <GradientBrush.GradientStops>
-                <GradientStopCollection>
-                    <GradientStop Color="#FFE8A1A1" Offset="0"/>
-                    <GradientStop Color="#FFC11717" Offset="1"/>
-                    <GradientStop Color="#FFFBA4A4" Offset="0.3"/>
-                </GradientStopCollection>
-            </GradientBrush.GradientStops>
-        </LinearGradientBrush>
-
-        <LinearGradientBrush x:Key="MouseOverAndNotSelectedGradientBrush" EndPoint="0.5,1" StartPoint="0.5,0">
-            <GradientBrush.GradientStops>
-                <GradientStopCollection>
-                    <GradientStop Color="#8FEE8080" Offset="0"/>
-                    <GradientStop Color="#8FC30000" Offset="1"/>
-                    <GradientStop Color="#8FFF8F8F" Offset="0.3"/>
-                </GradientStopCollection>
-            </GradientBrush.GradientStops>
-        </LinearGradientBrush>
-
-        <LinearGradientBrush x:Key="MouseOverAndSelectedGradientBrush" EndPoint="0.5,1" StartPoint="0.5,0">
-            <GradientBrush.GradientStops>
-                <GradientStopCollection>
-                    <GradientStop Color="#FFEAA4A4" Offset="0"/>
-                    <GradientStop Color="#FFCD3636" Offset="1"/>
-                    <GradientStop Color="#FFFFC5C5" Offset="0.3"/>
-                </GradientStopCollection>
-            </GradientBrush.GradientStops>
-        </LinearGradientBrush>
-
         <ControlTemplate x:Key="MenuItemControlTemplate" TargetType="{x:Type MenuItem}">
             <Border x:Name="templateRoot" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
                 <Grid Margin="-1" Height="30">
@@ -87,7 +47,7 @@
                         <Condition Property="IsFocused" Value="True" />
                     </MultiTrigger.Conditions>
                     <Setter Property="BorderBrush" TargetName="templateRoot" Value="Red"/>
-                    <Setter Property="Background" TargetName="templateRoot" Value="{StaticResource MouseOverAndSelectedGradientBrush}"/>
+                    <Setter Property="Background" TargetName="templateRoot" Value="{DynamicResource MouseOverAndSelectedGradientBrush}"/>
                     <Setter Property="TextBlock.Foreground" TargetName="menuHeaderContainer" Value="White" />
                 </MultiTrigger>
                 <MultiTrigger>
@@ -96,7 +56,7 @@
                         <Condition Property="IsFocused" Value="False" />
                     </MultiTrigger.Conditions>
                     <Setter Property="BorderBrush" TargetName="templateRoot" Value="Red"/>
-                    <Setter Property="Background" TargetName="templateRoot" Value="{StaticResource MouseOverAndNotSelectedGradientBrush}"/>
+                    <Setter Property="Background" TargetName="templateRoot" Value="{DynamicResource MouseOverAndNotSelectedGradientBrush}"/>
                     <Setter Property="TextBlock.Foreground" TargetName="menuHeaderContainer" Value="White" />
                 </MultiTrigger>
                 <MultiTrigger>
@@ -105,7 +65,7 @@
                         <Condition Property="IsFocused" Value="True" />
                     </MultiTrigger.Conditions>
                     <Setter Property="BorderBrush" TargetName="templateRoot" Value="Red"/>
-                    <Setter Property="Background" TargetName="templateRoot" Value="{StaticResource SelectedGradientBrush}"/>
+                    <Setter Property="Background" TargetName="templateRoot" Value="{DynamicResource SelectedGradientBrush}"/>
                     <Setter Property="TextBlock.Foreground" TargetName="menuHeaderContainer" Value="White" />
                 </MultiTrigger>
                 <Trigger Property="IsEnabled" Value="False">
@@ -147,8 +107,8 @@
         </ControlTemplate>
 
     </UserControl.Resources>
-    
-    <Grid Background="{StaticResource DefaultGradientBrush}">
+
+    <Grid Background="{DynamicResource DefaultGradientBrush}">
         <Grid.OpacityMask>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                 <GradientStop Color="#FF07183E" Offset="0"/>
@@ -169,7 +129,7 @@
               Width="Auto" 
               Foreground="White" 
               BorderBrush="#FF4CD337" 
-              Background="{StaticResource DefaultGradientBrush}">
+              Background="{DynamicResource DefaultGradientBrush}">
             <Menu.OpacityMask>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFFF7979" Offset="0"/>

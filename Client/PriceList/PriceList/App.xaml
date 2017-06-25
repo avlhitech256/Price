@@ -4,6 +4,70 @@
              xmlns:local="clr-namespace:PriceList"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+
+        <BitmapImage x:Key="AutoVaz" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="D:\Projects\C#\Price\Client\PriceList\Catalog\Picture\avtoVaz.jpg"/>
+        <BitmapImage x:Key="Gaz" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="D:\Projects\C#\Price\Client\PriceList\Catalog\Picture\gaz.jpg"/>
+        <BitmapImage x:Key="Daewoo-ZAZ" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="D:\Projects\C#\Price\Client\PriceList\Catalog\Picture\daewoo-zaz.jpg"/>
+        <BitmapImage x:Key="Chemistry" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="D:\Projects\C#\Price\Client\PriceList\Catalog\Picture\chemistry-oil.jpg"/>
+        <BitmapImage x:Key="Battery" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="D:\Projects\C#\Price\Client\PriceList\Catalog\Picture\battery.jpeg"/>
+        <BitmapImage x:Key="Gas" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="D:\Projects\C#\Price\Client\PriceList\Catalog\Picture\gas.jpg"/>
+        <BitmapImage x:Key="Instrument" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="D:\Projects\C#\Price\Client\PriceList\Catalog\Picture\instruments.jpg"/>
+        
+        <Style x:Key="Border" TargetType="Border">
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#FF150070"/>
+            <Setter Property="CornerRadius" Value="3"/>
+        </Style>
+
+        <LinearGradientBrush x:Key="YellowGradientBrush" EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientBrush.GradientStops>
+                <GradientStopCollection>
+                    <GradientStop Color="#FFE8D300" Offset="0.003"/>
+                    <GradientStop Color="#FFCBAF00" Offset="1"/>
+                    <GradientStop Color="#FFFFFFAD" Offset="0.3"/>
+                </GradientStopCollection>
+            </GradientBrush.GradientStops>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="DefaultGradientBrush"  StartPoint="0.5,0" EndPoint="0.5,1">
+            <GradientBrush.GradientStops>
+                <GradientStopCollection>
+                    <GradientStop Color="#FFB6B6B6" Offset="0"/>
+                    <GradientStop Color="#FF3C3C3C" Offset="1"/>
+                    <GradientStop Color="#FFBDBDBD" Offset="0.3"/>
+                </GradientStopCollection>
+            </GradientBrush.GradientStops>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="SelectedGradientBrush" StartPoint="0.5,0" EndPoint="0.5,1">
+            <GradientBrush.GradientStops>
+                <GradientStopCollection>
+                    <GradientStop Color="#FFE8A1A1" Offset="0"/>
+                    <GradientStop Color="#FFC11717" Offset="1"/>
+                    <GradientStop Color="#FFFBA4A4" Offset="0.3"/>
+                </GradientStopCollection>
+            </GradientBrush.GradientStops>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="MouseOverAndNotSelectedGradientBrush" EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientBrush.GradientStops>
+                <GradientStopCollection>
+                    <GradientStop Color="#8FEE8080" Offset="0"/>
+                    <GradientStop Color="#8FC30000" Offset="1"/>
+                    <GradientStop Color="#8FFF8F8F" Offset="0.3"/>
+                </GradientStopCollection>
+            </GradientBrush.GradientStops>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush x:Key="MouseOverAndSelectedGradientBrush" EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientBrush.GradientStops>
+                <GradientStopCollection>
+                    <GradientStop Color="#FFEAA4A4" Offset="0"/>
+                    <GradientStop Color="#FFCD3636" Offset="1"/>
+                    <GradientStop Color="#FFFFC5C5" Offset="0.3"/>
+                </GradientStopCollection>
+            </GradientBrush.GradientStops>
+        </LinearGradientBrush>
+
     </Application.Resources>
 </Application>

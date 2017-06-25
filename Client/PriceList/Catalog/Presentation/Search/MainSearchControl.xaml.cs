@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace Catalog.Presentation
+namespace Catalog.Presentation.Search
 {
     /// <summary>
     /// Логика взаимодействия для MainSearchControl.xaml

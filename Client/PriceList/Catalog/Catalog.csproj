@@ -34,6 +34,7 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -47,20 +48,23 @@
     <Compile Include="Presentation\CatalogControl.xaml.cs">
       <DependentUpon>CatalogControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\DetailControl.xaml.cs">
+    <Compile Include="Presentation\Detail\DetailControl.xaml.cs">
       <DependentUpon>DetailControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\DetailFieldsControl.xaml.cs">
+    <Compile Include="Presentation\Detail\DetailFieldsControl.xaml.cs">
       <DependentUpon>DetailFieldsControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\ResultSearchGridControl.xaml.cs">
+    <Compile Include="Presentation\ResultSearch\ResultSearchGridControl.xaml.cs">
       <DependentUpon>ResultSearchGridControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\SearchRadioButtonControl.xaml.cs">
-      <DependentUpon>SearchRadioButtonControl.xaml</DependentUpon>
+    <Compile Include="Presentation\Search\SearchCheckButtonControl.xaml.cs">
+      <DependentUpon>SearchCheckButtonControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\MainSearchControl.xaml.cs">
+    <Compile Include="Presentation\Search\MainSearchControl.xaml.cs">
       <DependentUpon>MainSearchControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Search\SearchFieldsControl.xaml.cs">
+      <DependentUpon>SearchFieldsControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\CatalogViewModel.cs" />
@@ -88,32 +92,57 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Presentation\DetailControl.xaml">
+    <Page Include="Presentation\Detail\DetailControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Presentation\DetailFieldsControl.xaml">
+    <Page Include="Presentation\Detail\DetailFieldsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Presentation\ResultSearchGridControl.xaml">
+    <Page Include="Presentation\ResultSearch\ResultSearchGridControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Presentation\SearchRadioButtonControl.xaml">
+    <Page Include="Presentation\Search\SearchCheckButtonControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Presentation\MainSearchControl.xaml">
+    <Page Include="Presentation\Search\MainSearchControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Presentation\Search\SearchFieldsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Presentation\87930_F.jpg">
+    <Resource Include="Picture\87930_F.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Content Include="Presentation\images15.jpg" />
+    <Resource Include="Picture\avtoVaz.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Picture\gaz.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Picture\daewoo-zaz.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Picture\battery.jpeg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Picture\chemistry-oil.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Picture\gas.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Picture\instruments.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Content Include="Picture\images15.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

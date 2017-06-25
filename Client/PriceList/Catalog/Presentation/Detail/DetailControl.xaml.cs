@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace Catalog.Presentation
+namespace Catalog.Presentation.Detail
 {
     /// <summary>
     /// Логика взаимодействия для DetailControl.xaml

@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace Catalog.Presentation
+namespace Catalog.Presentation.ResultSearch
 {
     /// <summary>
     /// Логика взаимодействия для ResultSearchGridControl.xaml

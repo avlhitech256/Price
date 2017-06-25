@@ -5,6 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Catalog.Presentation"
              xmlns:searchControl="clr-namespace:CommonControl.SearchControl;assembly=CommonControl"
+             xmlns:search="clr-namespace:Catalog.Presentation.Search"
+             xmlns:detail="clr-namespace:Catalog.Presentation.Detail"
+             xmlns:resultSearch="clr-namespace:Catalog.Presentation.ResultSearch"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="900">
     <Border CornerRadius="3" BorderThickness="1">
@@ -19,9 +22,9 @@
                     <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
-                <local:MainSearchControl Grid.Row="0"></local:MainSearchControl>
-                <local:DetailControl Grid.Row="1"/>
-                <local:ResultSearchGridControl Grid.Row="2"></local:ResultSearchGridControl>
+                <search:MainSearchControl Grid.Row="0"></search:MainSearchControl>
+                <detail:DetailControl Grid.Row="1"/>
+                <resultSearch:ResultSearchGridControl Grid.Row="2"></resultSearch:ResultSearchGridControl>
             </Grid>
         </Grid>
     </Border>
