@@ -57,6 +57,9 @@
     <Compile Include="Presentation\ResultSearch\ResultSearchGridControl.xaml.cs">
       <DependentUpon>ResultSearchGridControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Presentation\Search\ButtonSearchControl.xaml.cs">
+      <DependentUpon>ButtonSearchControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Presentation\Search\SearchCheckButtonControl.xaml.cs">
       <DependentUpon>SearchCheckButtonControl.xaml</DependentUpon>
     </Compile>
@@ -101,6 +104,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Presentation\ResultSearch\ResultSearchGridControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Presentation\Search\ButtonSearchControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

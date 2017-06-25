@@ -13,15 +13,14 @@
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
-            <Label Name="TitleResult" Content="Результаты поиска" Grid.Row="0" Margin="1" HorizontalAlignment="Stretch" FontWeight="Bold" Foreground="White" HorizontalContentAlignment="Center">
-                <Label.Background>
-                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                        <GradientStop Color="#FF9786FF" Offset="0"/>
-                        <GradientStop Color="#FF1700A8" Offset="1"/>
-                        <GradientStop Color="#FFCBC2FF" Offset="0.3"/>
-                    </LinearGradientBrush>
-                </Label.Background>
-            </Label>
+            <Label Name="TitleResult" 
+                   Content="Результаты поиска" 
+                   Grid.Row="0" Margin="1" 
+                   HorizontalAlignment="Stretch" 
+                   FontWeight="Bold" 
+                   Foreground="White" 
+                   HorizontalContentAlignment="Center"
+                   Background="{DynamicResource DefaultGradientBrush}"/>
             <DataGrid Name="ResultSearchDataGrid" 
                   AutoGenerateColumns="False"
                   VerticalAlignment="Stretch"

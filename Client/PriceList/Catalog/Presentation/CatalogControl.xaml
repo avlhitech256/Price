@@ -9,7 +9,7 @@
              xmlns:detail="clr-namespace:Catalog.Presentation.Detail"
              xmlns:resultSearch="clr-namespace:Catalog.Presentation.ResultSearch"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="900">
+             d:DesignHeight="650" d:DesignWidth="1050">
     <Border CornerRadius="3" BorderThickness="1">
         <Grid>
             <Grid.ColumnDefinitions>
