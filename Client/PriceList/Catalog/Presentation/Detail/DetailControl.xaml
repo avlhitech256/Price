@@ -29,13 +29,12 @@
         </LinearGradientBrush>
 
     </UserControl.Resources>
-    <Border BorderBrush="CadetBlue" BorderThickness="1">
-        <Grid Height="180">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-            </Grid.RowDefinitions>
-            <Label Name="TitleResult" 
+    <Grid Height="180">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Label Name="TitleResult" 
                Content="Детальная информация о товаре" 
                Grid.Row="0" 
                Margin="1" 
@@ -44,7 +43,11 @@
                Foreground="White" 
                Background="{StaticResource DefaultGradientBrush}"
                HorizontalContentAlignment="Center" />
-            <Grid Grid.Row="1" >
+        <Border Grid.Row="1" 
+                Margin="2"
+                BorderBrush="CadetBlue" 
+                BorderThickness="1">
+            <Grid >
                 <Grid.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="#FFFDFDFD" Offset="0"/>
@@ -56,11 +59,11 @@
                     <ColumnDefinition Width="*"></ColumnDefinition>
                     <ColumnDefinition Width="3*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <detail:DetailFieldsControl Grid.Column="1"></detail:DetailFieldsControl>
+                <detail:DetailFieldsControl Grid.Column="1"/>
                 <Border Grid.Column="0" Margin="5" Background="White" BorderBrush="Black" BorderThickness="1">
                     <Image Stretch="Uniform"  Source="../../Picture/87930_F.jpg"/>
                 </Border>
             </Grid>
-        </Grid>
-    </Border>
+        </Border>
+    </Grid>
 </UserControl>

@@ -3,11 +3,11 @@
 namespace Catalog.Presentation.Search
 {
     /// <summary>
-    /// Логика взаимодействия для ButtonSearchControl.xaml
+    /// Логика взаимодействия для EdvanceSearchControl.xaml
     /// </summary>
-    public partial class ButtonSearchControl : UserControl
+    public partial class EdvanceSearchControl : UserControl
     {
-        public ButtonSearchControl()
+        public EdvanceSearchControl()
         {
             InitializeComponent();
         }

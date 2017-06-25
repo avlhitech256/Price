@@ -1,19 +1,50 @@
-﻿using System.ComponentModel;
+﻿using System;
+using Common.Data.Notifier;
 using Common.Messenger;
+using Common.Messenger.Implementation;
 using Domain.DomainContext;
+using Domain.Event;
 using Domain.ViewModel;
 
 namespace Catalog.ViewModel
 {
-    public class CatalogViewModel : IControlViewModel
+    public class CatalogViewModel : Notifier, IControlViewModel
     {
+        #region Members
+
+        private bool vaz;
+        private bool gaz;
+        private bool zaz;
+        private bool chemistry;
+        private bool battery;
+        private bool gas;
+        private bool instrument;
+        private int edvanceSearchWidth;
+        private bool enabledEdvanceSearch;
+
+        #endregion
+
+        #region Constructors
+
         public CatalogViewModel(IDomainContext domainContext)
         {
             DomainContext = domainContext;
             HasChanges = false;
+            Vaz = false;
+            Gaz = false;
+            Zaz = false;
+            Chemistry = false;
+            Battery = false;
+            Gas = false;
+            Instrument = false;
+            edvanceSearchWidth = 0;
+            enabledEdvanceSearch = false;
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        #endregion
+
+        #region Properties
+
         public IDomainContext DomainContext { get; }
         public IMessenger Messenger => DomainContext?.Messenger;
         public bool ReadOnly { get; set; }
@@ -54,5 +85,170 @@ namespace Catalog.ViewModel
         {
             throw new System.NotImplementedException();
         }
+
+        public bool Vaz
+        {
+            get
+            {
+                return vaz;
+            }
+            set
+            {
+                if (vaz != value)
+                {
+                    vaz = value;
+                    OnPropertyChanged();
+                    CalculateEdvanceSearchWidth();
+                }
+            }
+        }
+
+        public bool Gaz
+        {
+            get
+            {
+                return gaz;
+            }
+            set
+            {
+                if (gaz != value)
+                {
+                    gaz = value;
+                    OnPropertyChanged();
+                    CalculateEdvanceSearchWidth();
+                }
+            }
+        }
+
+        public bool Zaz
+        {
+            get
+            {
+                return zaz;
+            }
+            set
+            {
+                if (zaz != value)
+                {
+                    zaz = value;
+                    OnPropertyChanged();
+                    CalculateEdvanceSearchWidth();
+                }
+            }
+        }
+
+        public bool Chemistry
+        {
+            get
+            {
+                return chemistry;
+            }
+            set
+            {
+                if (chemistry != value)
+                {
+                    chemistry = value;
+                    OnPropertyChanged();
+                    CalculateEdvanceSearchWidth();
+                }
+            }
+        }
+
+        public bool Battery
+        {
+            get
+            {
+                return battery;
+            }
+            set
+            {
+                if (battery != value)
+                {
+                    battery = value;
+                    OnPropertyChanged();
+                    CalculateEdvanceSearchWidth();
+                }
+            }
+        }
+
+        public bool Gas
+        {
+            get
+            {
+                return gas;
+            }
+            set
+            {
+                if (gas != value)
+                {
+                    gas = value;
+                    OnPropertyChanged();
+                    CalculateEdvanceSearchWidth();
+                }
+            }
+        }
+
+        public bool Instrument
+        {
+            get
+            {
+                return instrument;
+            }
+            set
+            {
+                if (instrument != value)
+                {
+                    instrument = value;
+                    OnPropertyChanged();
+                    CalculateEdvanceSearchWidth();
+                }
+            }
+        }
+
+        public bool EnabledEdvanceSearch
+        {
+            get
+            {
+                return enabledEdvanceSearch;
+            }
+            set
+            {
+                if (enabledEdvanceSearch != value)
+                {
+                    enabledEdvanceSearch = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public int EdvanceSearchWidth
+        {
+            get
+            {
+                return edvanceSearchWidth;
+            }
+            set
+            {
+                if (edvanceSearchWidth != value)
+                {
+                    edvanceSearchWidth = value;
+                    OnPropertyChanged();
+                    int minWidth = 1070 + EdvanceSearchWidth;
+                    Messenger?.Send(CommandName.SetMinWidth, new MinWidthEventArgs(minWidth));
+                }
+            }
+        }
+
+        #endregion
+
+        #region Methods
+
+        private void CalculateEdvanceSearchWidth()
+        {
+            EnabledEdvanceSearch = Vaz || Gaz || Zaz || Chemistry || Battery || Gas || Instrument;
+            EdvanceSearchWidth = EnabledEdvanceSearch ? 150 : 0;
+        }
+
+        #endregion
     }
 }

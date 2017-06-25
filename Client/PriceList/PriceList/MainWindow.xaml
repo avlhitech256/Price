@@ -7,7 +7,7 @@
         xmlns:presentation="clr-namespace:PriceList.Presentation"
         xmlns:footerStatusBar="clr-namespace:PriceList.Presentation.FooterStatusBar"
         mc:Ignorable="d"
-        Title="Прайс лист «Авто Тренд»" Height="650" Width="1150" MinHeight="650"  MinWidth="1070" WindowState="Maximized">
+        Title="Прайс лист «Авто Тренд»" Height="650" Width="1170" MinHeight="650"  MinWidth="1070" WindowState="Maximized">
     <DockPanel>
         <footerStatusBar:FooterStatusBarControl x:Name="FooterStatusBarControl" DockPanel.Dock="Bottom" />
         <Grid DockPanel.Dock="Top">

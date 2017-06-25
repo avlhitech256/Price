@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Windows;
 using Common.Messenger;
+using Common.Messenger.Implementation;
 using Domain.DomainContext;
+using Domain.Event;
 using PriceList.ViewModel.MainWindow;
 
 namespace PriceList
@@ -24,6 +26,7 @@ namespace PriceList
             DataContext = new MainWindowViewModel(DomainContext);
 
             SetDomainContext();
+            SubscribeMessenger();
 
             if (splashScreen != null)
             {
@@ -48,6 +51,25 @@ namespace PriceList
         {
             TopMenuControl.DomainContext = DomainContext;
             FooterStatusBarControl.DomainContext = DomainContext;
+        }
+
+        private void SubscribeMessenger()
+        {
+            if (Messenger != null)
+            {
+                Messenger.Register<MinWidthEventArgs>(CommandName.SetMinWidth, SetMinWidth, CanSetMinWidth);
+            }
+
+        }
+
+        private void SetMinWidth(MinWidthEventArgs args)
+        {
+            MinWidth = args.MinWidth;
+        }
+
+        private bool CanSetMinWidth(MinWidthEventArgs args)
+        {
+            return args != null;
         }
 
         private List<string> CreatePicturesList()

@@ -15,6 +15,7 @@
         ShowInvalidateUniqueCodeMessage,
         ShowMismatchSearchCriteriaMessage,
         RequestForBack,
-        RequestForDelete
+        RequestForDelete,
+        SetMinWidth
     }
 }
