@@ -5,14 +5,6 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
 
-        <BitmapImage x:Key="AutoVaz" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="D:\Projects\C#\Price\Client\PriceList\Catalog\Picture\avtoVaz.jpg"/>
-        <BitmapImage x:Key="Gaz" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="D:\Projects\C#\Price\Client\PriceList\Catalog\Picture\gaz.jpg"/>
-        <BitmapImage x:Key="Daewoo-ZAZ" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="D:\Projects\C#\Price\Client\PriceList\Catalog\Picture\daewoo-zaz.jpg"/>
-        <BitmapImage x:Key="Chemistry" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="D:\Projects\C#\Price\Client\PriceList\Catalog\Picture\chemistry-oil.jpg"/>
-        <BitmapImage x:Key="Battery" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="D:\Projects\C#\Price\Client\PriceList\Catalog\Picture\battery.jpeg"/>
-        <BitmapImage x:Key="Gas" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="D:\Projects\C#\Price\Client\PriceList\Catalog\Picture\gas.jpg"/>
-        <BitmapImage x:Key="Instrument" CreateOptions="IgnoreImageCache" CacheOption="OnLoad" UriSource="D:\Projects\C#\Price\Client\PriceList\Catalog\Picture\instruments.jpg"/>
-        
         <Style x:Key="Border" TargetType="Border">
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="BorderBrush" Value="#FF150070"/>

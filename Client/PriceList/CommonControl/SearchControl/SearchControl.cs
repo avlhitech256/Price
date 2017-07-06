@@ -9,7 +9,6 @@ namespace CommonControl.SearchControl
         #region Members
 
         private IDomainContext domainContext;
-        private IMessenger messenger;
 
         #endregion
 
@@ -26,37 +25,27 @@ namespace CommonControl.SearchControl
             {
                 if (domainContext != value)
                 {
+                    UnsubscribeMessenger();
                     domainContext = value;
-
-                    if (value != null)
-                    {
-                        Messenger = value.Messenger;
-                    }
-
+                    SubscribeMessenger();
                 }
-
             }
-
         }
 
-        private IMessenger Messenger
+        public IMessenger Messenger => DomainContext?.Messenger;
+
+        #endregion
+
+        #region Methods
+
+        protected virtual void SubscribeMessenger()
         {
-            get
-            {
-                return messenger;
-            }
+            
+        }
 
-            set
-            {
-                if (messenger != value)
-                {
-                    //UnsubscribeMessenger();
-                    messenger = value;
-                    //SubscribeMessenger();
-                }
-
-            }
-
+        protected virtual void UnsubscribeMessenger()
+        {
+            
         }
 
         #endregion

@@ -1,7 +1,10 @@
-﻿using System;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
+using Catalog.Model;
 using Common.Data.Notifier;
 using Common.Messenger;
 using Common.Messenger.Implementation;
+using Domain.Data.Object;
 using Domain.DomainContext;
 using Domain.Event;
 using Domain.ViewModel;
@@ -39,6 +42,8 @@ namespace Catalog.ViewModel
             Instrument = false;
             edvanceSearchWidth = 0;
             enabledEdvanceSearch = false;
+            Model = new CatalogModel(domainContext);
+            SubscribeEvents();
         }
 
         #endregion
@@ -47,6 +52,29 @@ namespace Catalog.ViewModel
 
         public IDomainContext DomainContext { get; }
         public IMessenger Messenger => DomainContext?.Messenger;
+
+        private CatalogModel Model { get; }
+
+        public CatalogItem SelectedItem
+        {
+            get
+            {
+                return Model?.SelectedItem;
+            }
+
+            set
+            {
+                if (Model != null)
+                {
+                    Model.SelectedItem = value;
+                }
+
+            }
+
+        }
+
+        public ObservableCollection<CatalogItem> Entities => Model?.Entities;
+
         public bool ReadOnly { get; set; }
         public bool Enabled { get; set; }
         public bool IsEditControl { get; set; }
@@ -243,10 +271,37 @@ namespace Catalog.ViewModel
 
         #region Methods
 
+        private void SubscribeEvents()
+        {
+            if (Model != null)
+            {
+                Model.PropertyChanged += OnChangedSelectedItem;
+            }
+
+        }
+
         private void CalculateEdvanceSearchWidth()
         {
             EnabledEdvanceSearch = Vaz || Gaz || Zaz || Chemistry || Battery || Gas || Instrument;
             EdvanceSearchWidth = EnabledEdvanceSearch ? 150 : 0;
+        }
+
+        private void OnChangedSelectedItem(object sender, PropertyChangedEventArgs e)
+        {
+            if (Model != null)
+            {
+                switch (e.PropertyName)
+                {
+                    case nameof(Model.SelectedItem):
+                        OnPropertyChanged(nameof(SelectedItem));
+                        break;
+                    case nameof(Model.Entities):
+                        OnPropertyChanged(nameof(Entities));
+                        break;
+                }
+
+            }
+
         }
 
         #endregion

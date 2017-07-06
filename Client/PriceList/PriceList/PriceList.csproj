@@ -33,6 +33,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -55,7 +56,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Presentation\FooterStatusBar\FooterStatusBarControl.xaml.cs">
+    <Compile Include="View\FooterStatusBar\FooterStatusBarControl.xaml.cs">
       <DependentUpon>FooterStatusBarControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\MainWindow\MainWindowViewModel.cs" />
@@ -77,31 +78,31 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Presentation\FooterStatusBar\FooterStatusBarControl.xaml">
+    <Page Include="View\FooterStatusBar\FooterStatusBarControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Presentation\Header\HeaderControl.xaml">
+    <Page Include="View\Header\HeaderControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Presentation\Header\HeaderRightControl.xaml">
+    <Page Include="View\Header\HeaderRightControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Presentation\TopMenu\TopMenuControl.xaml">
+    <Page Include="View\TopMenu\TopMenuControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Presentation\Header\HeaderControl.xaml.cs">
+    <Compile Include="View\Header\HeaderControl.xaml.cs">
       <DependentUpon>HeaderControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\Header\HeaderRightControl.xaml.cs">
+    <Compile Include="View\Header\HeaderRightControl.xaml.cs">
       <DependentUpon>HeaderRightControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\TopMenu\TopMenuControl.xaml.cs">
+    <Compile Include="View\TopMenu\TopMenuControl.xaml.cs">
       <DependentUpon>TopMenuControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -331,7 +332,29 @@
       <Name>Media</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Picture\avtoVaz.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Picture\battery.jpeg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Picture\chemistry-oil.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Picture\daewoo-zaz.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Picture\gas.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Picture\gaz.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Picture\instruments.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Picture\photo-camera.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

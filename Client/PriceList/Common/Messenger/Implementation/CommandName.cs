@@ -16,6 +16,7 @@
         ShowMismatchSearchCriteriaMessage,
         RequestForBack,
         RequestForDelete,
-        SetMinWidth
+        SetMinWidth,
+        SetImage
     }
 }

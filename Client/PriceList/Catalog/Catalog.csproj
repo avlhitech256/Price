@@ -28,12 +28,14 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
@@ -45,38 +47,43 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Presentation\CatalogControl.xaml.cs">
+    <Compile Include="Model\CatalogModel.cs" />
+    <Compile Include="View\CatalogControl.xaml.cs">
       <DependentUpon>CatalogControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\Detail\DetailControl.xaml.cs">
+    <Compile Include="View\Detail\DetailControl.xaml.cs">
       <DependentUpon>DetailControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\Detail\DetailFieldsControl.xaml.cs">
+    <Compile Include="View\Detail\DetailFieldsControl.xaml.cs">
       <DependentUpon>DetailFieldsControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\ResultSearch\ResultSearchGridControl.xaml.cs">
+    <Compile Include="View\ResultSearch\ResultSearchGridControl.xaml.cs">
       <DependentUpon>ResultSearchGridControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\Search\ButtonSearchControl.xaml.cs">
+    <Compile Include="View\Search\ButtonSearchControl.xaml.cs">
       <DependentUpon>ButtonSearchControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\Search\EdvanceSearchControl.xaml.cs">
+    <Compile Include="View\Search\EdvanceSearchControl.xaml.cs">
       <DependentUpon>EdvanceSearchControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\Search\SearchCheckButtonControl.xaml.cs">
+    <Compile Include="View\Search\SearchCheckButtonControl.xaml.cs">
       <DependentUpon>SearchCheckButtonControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\Search\MainSearchControl.xaml.cs">
+    <Compile Include="View\Search\MainSearchControl.xaml.cs">
       <DependentUpon>MainSearchControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\Search\SearchFieldsControl.xaml.cs">
+    <Compile Include="View\Search\SearchFieldsControl.xaml.cs">
       <DependentUpon>SearchFieldsControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\CatalogViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Model\" />
     <Folder Include="SearchCriteria\" />
   </ItemGroup>
   <ItemGroup>
@@ -94,39 +101,39 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Presentation\CatalogControl.xaml">
+    <Page Include="View\CatalogControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Presentation\Detail\DetailControl.xaml">
+    <Page Include="View\Detail\DetailControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Presentation\Detail\DetailFieldsControl.xaml">
+    <Page Include="View\Detail\DetailFieldsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Presentation\ResultSearch\ResultSearchGridControl.xaml">
+    <Page Include="View\ResultSearch\ResultSearchGridControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Presentation\Search\ButtonSearchControl.xaml">
+    <Page Include="View\Search\ButtonSearchControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Presentation\Search\EdvanceSearchControl.xaml">
+    <Page Include="View\Search\EdvanceSearchControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Presentation\Search\SearchCheckButtonControl.xaml">
+    <Page Include="View\Search\SearchCheckButtonControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Presentation\Search\MainSearchControl.xaml">
+    <Page Include="View\Search\MainSearchControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Presentation\Search\SearchFieldsControl.xaml">
+    <Page Include="View\Search\SearchFieldsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -156,7 +163,43 @@
     <Resource Include="Picture\instruments.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-    <Content Include="Picture\images15.jpg" />
+    <Resource Include="Picture\images15.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Photo2.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Photo3.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Photo4.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Photo5.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Photo6.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Photo1.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
