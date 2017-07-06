@@ -4,12 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d" 
-             d:DesignHeight="30" d:DesignWidth="700">
+             d:DesignHeight="30" d:DesignWidth="900">
     <UserControl.Resources>
 
         <Image x:Key="PriceListIcon" Source="/PriceList;component/Picture/price1.png" />
-        <Image x:Key="OrderIcon" Source="/PriceList;component/Picture/order.png" />
-        <Image x:Key="DocumentIcon" Source="/PriceList;component/Picture/document.png" />
+        <Image x:Key="BasketIcon" Source="/PriceList;component/Picture/order.png" />
+        <Image x:Key="OrderIcon" Source="/PriceList;component/Picture/document.png" />
+        <Image x:Key="DocumentIcon" Source="/PriceList;component/Picture/documents.png" />
         <Image x:Key="SynkIcon" Source="/PriceList;component/Picture/sync.png" />
         <Image x:Key="SettingsIcon" Source="/PriceList;component/Picture/settings.png" />
 
@@ -137,27 +138,32 @@
                 </LinearGradientBrush>
             </Menu.OpacityMask>
             <MenuItem x:Name="PricelistMenuItem" 
-                      Header="Прайс лист" 
+                      Header="ПРАЙС ЛИСТ" 
                       Icon="{DynamicResource PriceListIcon}" 
                       Template="{DynamicResource MenuItemControlTemplate}" 
                       Click="MenuItem_OnClick"/>
+            <MenuItem x:Name="BasketMenuItem" 
+                      Header="КОРЗИНА" 
+                      Icon="{DynamicResource BasketIcon}" 
+                      Template="{DynamicResource MenuItemControlTemplate}" 
+                      Click="MenuItem_OnClick"/>
             <MenuItem x:Name="OrdersMenuItem" 
-                      Header="Мои заказы" 
+                      Header="МОИ ЗАКАЗЫ" 
                       Icon="{DynamicResource OrderIcon}" 
                       Template="{DynamicResource MenuItemControlTemplate}" 
                       Click="MenuItem_OnClick"/>
             <MenuItem x:Name="DocumentsMenuItem" 
-                      Header="Накладные" 
+                      Header="НАКЛАДНЫЕ" 
                       Icon="{DynamicResource DocumentIcon}" 
                       Template="{DynamicResource MenuItemControlTemplate}" 
                       Click="MenuItem_OnClick"/>
             <MenuItem x:Name="SyncMenuItem" 
-                      Header="Синхронизация"  
+                      Header="СИНХРОНИЗАЦИЯ"  
                       Icon="{DynamicResource SynkIcon}" 
                       Template="{DynamicResource MenuItemControlTemplate}" 
                       Click="MenuItem_OnClick"/>
             <MenuItem x:Name="SettingsMenuItem" 
-                      Header="Настройки" 
+                      Header="НАСТРОЙКИ" 
                       Template="{DynamicResource MenuItemControlTemplate}" 
                       Icon="{DynamicResource SettingsIcon}" 
                       Click="MenuItem_OnClick"/>
