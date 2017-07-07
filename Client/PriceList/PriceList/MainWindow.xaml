@@ -13,10 +13,10 @@
         <footerStatusBar:FooterStatusBarControl x:Name="FooterStatusBarControl" DockPanel.Dock="Bottom" />
         <Grid DockPanel.Dock="Top">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition x:Name="HeaderRow" Height="Auto" MaxHeight="110"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
             </Grid.RowDefinitions>
-            <header:HeaderControl x:Name="HeaderControl" Grid.Row="0"/>
+            <header:HeaderControl x:Name="TopHeaderControl" Grid.Row="0" />
             <topMenu:TopMenuControl x:Name="TopMenuControl" Grid.Row="1" />
         </Grid>
         <UserControl x:Name="EntryControl" Content="{Binding Path=View}"/>

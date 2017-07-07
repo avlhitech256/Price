@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Timers;
 using System.Windows;
+using System.Windows.Media.Animation;
 using Common.Messenger;
 using Common.Messenger.Implementation;
 using Domain.DomainContext;
 using Domain.Event;
+using PriceList.View.Header;
 using PriceList.ViewModel.MainWindow;
 
 namespace PriceList
@@ -14,6 +17,14 @@ namespace PriceList
     /// </summary>
     public partial class MainWindow : Window
     {
+        #region Members
+
+        private Timer mainTimer;
+        private bool startElapse;
+        private double actualHeight;
+
+        #endregion
+
         #region Constructors
 
         public MainWindow()
@@ -34,6 +45,8 @@ namespace PriceList
                 splashScreen.Close(TimeSpan.FromSeconds(1));
                 while (DateTime.Now < now) { }
             }
+
+            SetMainTimer();
         }
 
         #endregion
@@ -47,6 +60,68 @@ namespace PriceList
 
         #region Methods
 
+        private void SetMainTimer()
+        {
+            startElapse = false;
+            mainTimer = new Timer();
+            mainTimer.BeginInit();
+            mainTimer.Enabled = false;
+            mainTimer.AutoReset = false;
+            mainTimer.Interval = 5000;
+            mainTimer.Elapsed += MainTimerOnElapsed;
+            mainTimer.Enabled = true;
+            mainTimer.EndInit();
+            mainTimer.Start();
+        }
+
+        private void MainTimerOnElapsed(object sender, ElapsedEventArgs elapsedEventArgs)
+        {
+            //if (startElapse)
+            //{
+            //    mainTimer.Stop();
+
+            //    if (HeaderRow.ActualHeight > 0)
+            //    {
+            //        actualHeight = actualHeight - 0.1;
+
+            //        if (actualHeight < 0)
+            //        {
+            //            actualHeight = 0;
+            //        }
+
+            //        HeaderRow.MaxHeight = actualHeight;
+            //        mainTimer.Start();
+            //    }
+            //    else
+            //    {
+            //        mainTimer.Stop();
+            //        mainTimer.Enabled = false;
+            //    }
+            //}
+            //else
+            //{
+            //    mainTimer.Stop();
+            //    startElapse = true;
+            //    mainTimer.Interval = 5;
+            //    actualHeight = HeaderRow.ActualHeight;
+            //    HeaderRow.MaxHeight = HeaderRow.ActualHeight;
+            //    mainTimer.Start();
+            //}
+
+            mainTimer.Stop();
+            mainTimer.Enabled = false;
+            Dispatcher.Invoke(GoAnimation);
+        }
+
+        private void GoAnimation()
+        {
+            DoubleAnimation animation = new DoubleAnimation();
+            animation.From = 110;
+            animation.To = 0;
+            animation.Duration = TimeSpan.FromMilliseconds(500);
+            TopHeaderControl.BeginAnimation(HeightProperty, animation);
+        }
+
         private void SetDomainContext()
         {
             TopMenuControl.DomainContext = DomainContext;
@@ -55,11 +130,7 @@ namespace PriceList
 
         private void SubscribeMessenger()
         {
-            if (Messenger != null)
-            {
-                Messenger.Register<MinWidthEventArgs>(CommandName.SetMinWidth, SetMinWidth, CanSetMinWidth);
-            }
-
+            Messenger?.Register<MinWidthEventArgs>(CommandName.SetMinWidth, SetMinWidth, CanSetMinWidth);
         }
 
         private void SetMinWidth(MinWidthEventArgs args)
