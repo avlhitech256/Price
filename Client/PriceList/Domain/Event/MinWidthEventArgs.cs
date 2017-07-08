@@ -1,6 +1,8 @@
-﻿namespace Domain.Event
+﻿using System;
+
+namespace Domain.Event
 {
-    public class MinWidthEventArgs
+    public class MinWidthEventArgs : EventArgs
     {
         #region Constructors
 

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Controls;
-using Catalog.Presentation;
 using CommonControl.EditControl;
 using CommonControl.SearchControl;
 using Domain.Data.Enum;
 using Domain.DomainContext;
 using Domain.ViewModel;
+using CatalogControl = Catalog.View.CatalogControl;
 
 namespace PriceList.ViewModel.MainWindow
 {

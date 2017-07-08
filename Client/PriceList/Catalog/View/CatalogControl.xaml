@@ -1,17 +1,17 @@
-﻿<searchControl:SearchControl x:Class="Catalog.Presentation.CatalogControl"
+﻿<searchControl:SearchControl x:Class="Catalog.View.CatalogControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Catalog.Presentation"
              xmlns:searchControl="clr-namespace:CommonControl.SearchControl;assembly=CommonControl"
-             xmlns:search="clr-namespace:Catalog.Presentation.Search"
                              xmlns:resultSearch="clr-namespace:Catalog.Presentation.ResultSearch"
              xmlns:detail1="clr-namespace:Catalog.View.Detail"
+             xmlns:search1="clr-namespace:Catalog.View.Search"
              mc:Ignorable="d" 
              d:DesignHeight="650" d:DesignWidth="1200">
     <searchControl:SearchControl.Resources>
-        <ControlTemplate x:Key="EdvanceControlTemplate" TargetType="search:EdvanceSearchControl">
+        <ControlTemplate x:Key="EdvanceControlTemplate" TargetType="search1:EdvanceSearchControl">
             <ControlTemplate.Triggers>
                 <Trigger Property="IsEnabled" Value="True">
                     <Trigger.EnterActions>
@@ -35,14 +35,14 @@
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <search:EdvanceSearchControl Width="{Binding Path=EdvanceSearchWidth}"/>
+            <search1:EdvanceSearchControl x:Name="LeftEdvanceSearchControl"/> <!--Width="{Binding Path=EdvanceSearchWidth}"/>-->
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
-                <search:MainSearchControl Grid.Row="0"></search:MainSearchControl>
+                <search1:MainSearchControl Grid.Row="0"></search1:MainSearchControl>
                 <detail1:DetailControl x:Name="DetailControl" Grid.Row="1"/>
                 <resultSearch:ResultSearchGridControl Grid.Row="2"></resultSearch:ResultSearchGridControl>
             </Grid>

@@ -1,12 +1,11 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Windows.Media.Imaging;
 using Catalog.ViewModel;
 using Common.Messenger.Implementation;
 using CommonControl.SearchControl;
 using Domain.Data.Object;
 
-namespace Catalog.Presentation
+namespace Catalog.View
 {
     /// <summary>
     /// Логика взаимодействия для CatalogControl.xaml
@@ -16,7 +15,10 @@ namespace Catalog.Presentation
         public CatalogControl()
         {
             InitializeComponent();
-            SubscribeMessenger();
+        }
+
+        protected override void SetDomainContext()
+        {
         }
 
         protected override void SubscribeMessenger()

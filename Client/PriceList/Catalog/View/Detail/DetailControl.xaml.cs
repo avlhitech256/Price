@@ -1,7 +1,4 @@
-﻿using System.IO;
-using Catalog.Properties;
-using System.Windows.Controls;
-using System.Windows.Media.Imaging;
+﻿using System.Windows.Controls;
 
 namespace Catalog.View.Detail
 {

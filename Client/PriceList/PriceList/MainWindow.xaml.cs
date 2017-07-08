@@ -7,7 +7,6 @@ using Common.Messenger;
 using Common.Messenger.Implementation;
 using Domain.DomainContext;
 using Domain.Event;
-using PriceList.View.Header;
 using PriceList.ViewModel.MainWindow;
 
 namespace PriceList
@@ -20,8 +19,6 @@ namespace PriceList
         #region Members
 
         private Timer mainTimer;
-        private bool startElapse;
-        private double actualHeight;
 
         #endregion
 
@@ -62,7 +59,6 @@ namespace PriceList
 
         private void SetMainTimer()
         {
-            startElapse = false;
             mainTimer = new Timer();
             mainTimer.BeginInit();
             mainTimer.Enabled = false;
@@ -76,38 +72,6 @@ namespace PriceList
 
         private void MainTimerOnElapsed(object sender, ElapsedEventArgs elapsedEventArgs)
         {
-            //if (startElapse)
-            //{
-            //    mainTimer.Stop();
-
-            //    if (HeaderRow.ActualHeight > 0)
-            //    {
-            //        actualHeight = actualHeight - 0.1;
-
-            //        if (actualHeight < 0)
-            //        {
-            //            actualHeight = 0;
-            //        }
-
-            //        HeaderRow.MaxHeight = actualHeight;
-            //        mainTimer.Start();
-            //    }
-            //    else
-            //    {
-            //        mainTimer.Stop();
-            //        mainTimer.Enabled = false;
-            //    }
-            //}
-            //else
-            //{
-            //    mainTimer.Stop();
-            //    startElapse = true;
-            //    mainTimer.Interval = 5;
-            //    actualHeight = HeaderRow.ActualHeight;
-            //    HeaderRow.MaxHeight = HeaderRow.ActualHeight;
-            //    mainTimer.Start();
-            //}
-
             mainTimer.Stop();
             mainTimer.Enabled = false;
             Dispatcher.Invoke(GoAnimation);

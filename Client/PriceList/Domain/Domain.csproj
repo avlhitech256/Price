@@ -46,6 +46,7 @@
     <Compile Include="Data\Object\CatalogItem.cs" />
     <Compile Include="DomainContext\DomainContext.cs" />
     <Compile Include="DomainContext\IDomainContext.cs" />
+    <Compile Include="Event\DoubleAnimationEventArgs.cs" />
     <Compile Include="Event\MenuChangedEventArgs.cs" />
     <Compile Include="Event\MinWidthEventArgs.cs" />
     <Compile Include="Event\TopMenuMouseOverEventArgs.cs" />

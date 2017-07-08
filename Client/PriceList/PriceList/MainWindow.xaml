@@ -13,7 +13,7 @@
         <footerStatusBar:FooterStatusBarControl x:Name="FooterStatusBarControl" DockPanel.Dock="Bottom" />
         <Grid DockPanel.Dock="Top">
             <Grid.RowDefinitions>
-                <RowDefinition x:Name="HeaderRow" Height="Auto" MaxHeight="110"></RowDefinition>
+                <RowDefinition Height="Auto" MaxHeight="110"></RowDefinition>
                 <RowDefinition Height="Auto"></RowDefinition>
             </Grid.RowDefinitions>
             <header:HeaderControl x:Name="TopHeaderControl" Grid.Row="0" />

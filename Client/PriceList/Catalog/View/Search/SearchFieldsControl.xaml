@@ -1,9 +1,9 @@
-﻿<UserControl x:Class="Catalog.Presentation.Search.SearchFieldsControl"
+﻿<UserControl x:Class="Catalog.View.Search.SearchFieldsControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Catalog.Presentation.Search"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:search="clr-namespace:Catalog.View.Search"
              mc:Ignorable="d" 
              d:DesignHeight="100" d:DesignWidth="600">
     <Grid>
@@ -97,6 +97,6 @@
                          FontStyle="Italic"/>
             </Grid>
         </Border>
-        <local:ButtonSearchControl Grid.Column="2" VerticalContentAlignment="Center"></local:ButtonSearchControl>
+        <search:ButtonSearchControl Grid.Column="2" VerticalContentAlignment="Center"></search:ButtonSearchControl>
     </Grid>
 </UserControl>

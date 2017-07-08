@@ -4,7 +4,7 @@ using Domain.DomainContext;
 
 namespace CommonControl.SearchControl
 {
-    public class SearchControl : UserControl
+    abstract public class SearchControl : UserControl
     {
         #region Members
 
@@ -27,6 +27,7 @@ namespace CommonControl.SearchControl
                 {
                     UnsubscribeMessenger();
                     domainContext = value;
+                    SetDomainContext();
                     SubscribeMessenger();
                 }
             }
@@ -38,15 +39,11 @@ namespace CommonControl.SearchControl
 
         #region Methods
 
-        protected virtual void SubscribeMessenger()
-        {
-            
-        }
+        abstract protected void SetDomainContext();
 
-        protected virtual void UnsubscribeMessenger()
-        {
-            
-        }
+        abstract protected void SubscribeMessenger();
+
+        protected abstract void UnsubscribeMessenger();
 
         #endregion
     }

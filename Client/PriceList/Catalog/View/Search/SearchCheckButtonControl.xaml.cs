@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace Catalog.Presentation.Search
+namespace Catalog.View.Search
 {
     /// <summary>
     /// Логика взаимодействия для SearchCheckButtonControl.xaml
