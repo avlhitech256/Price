@@ -63,8 +63,8 @@
     <Compile Include="View\Search\ButtonSearchControl.xaml.cs">
       <DependentUpon>ButtonSearchControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Search\EdvanceSearchControl.xaml.cs">
-      <DependentUpon>EdvanceSearchControl.xaml</DependentUpon>
+    <Compile Include="View\Search\AdvanceSearchControl.xaml.cs">
+      <DependentUpon>AdvanceSearchControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Search\SearchCheckButtonControl.xaml.cs">
       <DependentUpon>SearchCheckButtonControl.xaml</DependentUpon>
@@ -121,7 +121,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Search\EdvanceSearchControl.xaml">
+    <Page Include="View\Search\AdvanceSearchControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

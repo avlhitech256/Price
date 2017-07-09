@@ -3,12 +3,13 @@
 namespace Catalog.View.Search
 {
     /// <summary>
-    /// Логика взаимодействия для EdvanceSearchControl.xaml
+    /// Логика взаимодействия для AdvanceSearchControl.xaml
     /// </summary>
-    public partial class EdvanceSearchControl : UserControl
+    public partial class AdvanceSearchControl : UserControl
     {
         #region Constructors
-        public EdvanceSearchControl()
+
+        public AdvanceSearchControl()
         {
             InitializeComponent();
         }

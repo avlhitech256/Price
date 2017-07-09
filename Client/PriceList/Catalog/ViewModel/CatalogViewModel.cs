@@ -245,6 +245,8 @@ namespace Catalog.ViewModel
                 {
                     enabledEdvanceSearch = value;
                     OnPropertyChanged();
+                    var args = value ? new DoubleAnimationEventArgs(0, 150) : new DoubleAnimationEventArgs(150, 0); 
+                    Messenger?.Send(CommandName.ShowAdvanceSearchControl, args);
                 }
             }
         }

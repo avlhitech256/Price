@@ -17,6 +17,7 @@
         RequestForBack,
         RequestForDelete,
         SetMinWidth,
-        SetImage
+        SetImage,
+        ShowAdvanceSearchControl
     }
 }

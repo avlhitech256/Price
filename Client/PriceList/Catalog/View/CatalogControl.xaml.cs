@@ -1,9 +1,12 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using Catalog.ViewModel;
 using Common.Messenger.Implementation;
 using CommonControl.SearchControl;
 using Domain.Data.Object;
+using Domain.Event;
 
 namespace Catalog.View
 {
@@ -23,19 +26,46 @@ namespace Catalog.View
 
         protected override void SubscribeMessenger()
         {
-            Messenger?.Register<CatalogItem>(CommandName.SetImage, SetImage, CanSetImage);
-            var viewModel = DataContext as CatalogViewModel;
-
-            if (viewModel != null)
+            if (Messenger != null)
             {
-                CatalogItem item = viewModel.SelectedItem;
-                Messenger?.Send(CommandName.SetImage, item);
+                Messenger.Register<CatalogItem>(CommandName.SetImage, SetImage, CanSetImage);
+                Messenger.Register<DoubleAnimationEventArgs>(CommandName.ShowAdvanceSearchControl, 
+                                                             ShowAdvanceSearchControl, 
+                                                             CanShowAdvanceSearchControl);
+                var viewModel = DataContext as CatalogViewModel;
+
+                if (viewModel != null)
+                {
+                    CatalogItem item = viewModel.SelectedItem;
+                    Messenger.Send(CommandName.SetImage, item);
+                }
             }
         }
 
         protected override void UnsubscribeMessenger()
         {
             Messenger?.Unregister(CommandName.SetImage);
+        }
+
+        private void ShowAdvanceSearchControl(DoubleAnimationEventArgs args)
+        {
+            int commonTime = (LeftAdvanceSearchControl.ActualWidth - args.To) > 0 ? 300 : 150;
+            int time = Math.Abs((int)((LeftAdvanceSearchControl.ActualWidth - args.To) * commonTime / 110));
+
+            var animation = new DoubleAnimation
+            {
+                From = LeftAdvanceSearchControl.ActualWidth,
+                To = args.To,
+                Duration = TimeSpan.FromMilliseconds(time)
+            };
+
+            LeftAdvanceSearchControl.BeginAnimation(WidthProperty, animation);
+        }
+
+
+        private bool CanShowAdvanceSearchControl(DoubleAnimationEventArgs args)
+        {
+            return args != null;
         }
 
         private void SetImage(CatalogItem item)

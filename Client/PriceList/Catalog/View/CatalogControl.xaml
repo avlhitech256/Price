@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Catalog.Presentation"
+             xmlns:local="clr-namespace:Catalog.View"
              xmlns:searchControl="clr-namespace:CommonControl.SearchControl;assembly=CommonControl"
                              xmlns:resultSearch="clr-namespace:Catalog.Presentation.ResultSearch"
              xmlns:detail1="clr-namespace:Catalog.View.Detail"
@@ -11,7 +11,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="650" d:DesignWidth="1200">
     <searchControl:SearchControl.Resources>
-        <ControlTemplate x:Key="EdvanceControlTemplate" TargetType="search1:EdvanceSearchControl">
+        <ControlTemplate x:Key="EdvanceControlTemplate" TargetType="search1:AdvanceSearchControl">
             <ControlTemplate.Triggers>
                 <Trigger Property="IsEnabled" Value="True">
                     <Trigger.EnterActions>
@@ -35,7 +35,7 @@
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <search1:EdvanceSearchControl x:Name="LeftEdvanceSearchControl"/> <!--Width="{Binding Path=EdvanceSearchWidth}"/>-->
+            <search1:AdvanceSearchControl x:Name="LeftAdvanceSearchControl" Width="0" Grid.Column="0"/>
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"></RowDefinition>
