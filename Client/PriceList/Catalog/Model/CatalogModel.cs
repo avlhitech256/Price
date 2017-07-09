@@ -87,7 +87,7 @@ namespace Catalog.Model
             string typeResource;
             byte[] photo;
             long id = 0L;
-            long position = 0L;
+            long position = 1L;
             var brand1 = new BrandItem
             {
                 Id = 0,

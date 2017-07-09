@@ -1,4 +1,12 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Drawing;
+using System.Globalization;
+using System.IO;
+using System.Net.Mime;
+using System.Resources;
+using System.Windows;
+using System.Windows.Media.Imaging;
+using Domain.Properties;
 
 namespace Domain.Data.Object
 {
@@ -28,6 +36,20 @@ namespace Domain.Data.Object
 
         public byte[] Photo { get; set; }
 
+        public BitmapSource PhotoIcon => GetImage(Resources.Camera);
+
         public string FullPrice => Price.ToString(CultureInfo.InvariantCulture) + " " + Currency;
+
+        private BitmapSource GetImage(Bitmap imageData)
+        {
+            IntPtr hBitmap = imageData.GetHbitmap();
+            BitmapSizeOptions sizeOptions = BitmapSizeOptions.FromEmptyOptions();
+            BitmapSource image = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(hBitmap, IntPtr.Zero,
+                Int32Rect.Empty, sizeOptions);
+
+            return image;
+        }
+
     }
+
 }
