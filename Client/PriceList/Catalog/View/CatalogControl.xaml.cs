@@ -70,7 +70,7 @@ namespace Catalog.View
 
         private void SetImage(CatalogItem item)
         {
-            byte[] photo = item.Photo;
+            byte[] photo = item.Photo[0];
             DetailControl.DetailImage.Source = LoadImage(photo);
         }
 

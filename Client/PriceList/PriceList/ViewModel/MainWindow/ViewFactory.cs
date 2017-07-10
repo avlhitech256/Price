@@ -32,6 +32,7 @@ namespace PriceList.ViewModel.MainWindow
                 new Dictionary<MenuItemName, Func<object>>
                 {
                     {MenuItemName.PriceList, () => new CatalogControl()},
+                    {MenuItemName.Basket, () => null },
                     {MenuItemName.Orders,    () => null /*new FacultySearchControl()*/},
                     {MenuItemName.Documents, () => null /*new SpecialtySearchControl()*/},
                     {MenuItemName.Sync,      () => null /*new ChairSearchControl()*/},
@@ -42,6 +43,7 @@ namespace PriceList.ViewModel.MainWindow
                 new Dictionary<MenuItemName, Func<object>>
                 {
                     {MenuItemName.PriceList, () => null /*new HighSchoolEditControl()*/},
+                    {MenuItemName.Basket, () => null },
                     {MenuItemName.Orders,    () => null /*new FacultyEditControl()*/},
                     {MenuItemName.Documents, () => null /*new SpecialtyEditControl()*/},
                     {MenuItemName.Sync,      () => null /*new ChairEditControl()*/},

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.IO;
@@ -83,9 +84,7 @@ namespace Catalog.Model
         private void InitData()
         {
             //ResourceReader recourceReader = new ResourceReader("Resources.resx");
-            
-            string typeResource;
-            byte[] photo;
+
             long id = 0L;
             long position = 1L;
             var brand1 = new BrandItem
@@ -121,7 +120,7 @@ namespace Catalog.Model
                 Unit = "шт.",
                 Price = 50.52M,
                 Currency = "EUR",
-                Photo = ImageToByte(Resources.Photo1)
+                Photo = new List<byte[]> {ImageToByte(Resources.Photo1)}
             };
             Entities.Add(item);
             //---------------------------------------------------------------------
@@ -138,7 +137,7 @@ namespace Catalog.Model
                 Unit = "шт.",
                 Price = 320.45M,
                 Currency = "грн.",
-                Photo = ImageToByte(Resources.Photo2)
+                Photo = new List<byte[]> {ImageToByte(Resources.Photo2)}
             };
             Entities.Add(item);
             //---------------------------------------------------------------------
@@ -155,7 +154,7 @@ namespace Catalog.Model
                 Unit = "шт.",
                 Price = 18.65M,
                 Currency = "грн.",
-                Photo = ImageToByte(Resources.Photo3)
+                Photo = new List<byte[]> {ImageToByte(Resources.Photo3)}
             };
             //recourceReader.GetResourceData("Photo3", out typeResource, out photo);
             //item.Photo = photo;
@@ -174,7 +173,7 @@ namespace Catalog.Model
                 Unit = "шт.",
                 Price = 120.78M,
                 Currency = "USD",
-                Photo = ImageToByte(Resources.Photo4)
+                Photo = new List<byte[]> {ImageToByte(Resources.Photo4)}
             };
             //recourceReader.GetResourceData("Photo4", out typeResource, out photo);
             //item.Photo = photo;
@@ -193,7 +192,7 @@ namespace Catalog.Model
                 Unit = "шт.",
                 Price = 1850.46M,
                 Currency = "грн.",
-                Photo = ImageToByte(Resources.Photo5)
+                Photo = new List<byte[]> {ImageToByte(Resources.Photo5)}
             };
             //recourceReader.GetResourceData("Photo5", out typeResource, out photo);
             //item.Photo = photo;

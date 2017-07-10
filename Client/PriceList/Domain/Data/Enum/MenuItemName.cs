@@ -3,6 +3,7 @@
     public enum MenuItemName
     {
         PriceList,
+        Basket,
         Orders,
         Documents,
         Sync,

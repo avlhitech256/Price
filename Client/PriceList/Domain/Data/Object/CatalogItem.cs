@@ -1,9 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
-using System.IO;
-using System.Net.Mime;
-using System.Resources;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using Domain.Properties;
@@ -34,7 +32,7 @@ namespace Domain.Data.Object
 
         public string Currency { get; set; }
 
-        public byte[] Photo { get; set; }
+        public List<byte[]> Photo { get; set; }
 
         public BitmapSource PhotoIcon => GetImage(Resources.Camera);
 

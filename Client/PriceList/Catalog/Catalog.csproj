@@ -57,6 +57,12 @@
     <Compile Include="View\Detail\DetailFieldsControl.xaml.cs">
       <DependentUpon>DetailFieldsControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Photo\PhotoButtonControl.xaml.cs">
+      <DependentUpon>PhotoButtonControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Photo\PhotoControl.xaml.cs">
+      <DependentUpon>PhotoControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\ResultSearch\ResultSearchGridControl.xaml.cs">
       <DependentUpon>ResultSearchGridControl.xaml</DependentUpon>
     </Compile>
@@ -110,6 +116,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Detail\DetailFieldsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Photo\PhotoButtonControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Photo\PhotoControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -199,10 +213,28 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Photo1.jpg" />
+    <Resource Include="Resources\Photo1.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\Camera.png" />
+    <Resource Include="Resources\Camera.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Picture\collapce.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Picture\expand.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Picture\left.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Picture\right.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

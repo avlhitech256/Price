@@ -32,6 +32,7 @@ namespace PriceList.View.TopMenu
                 new Dictionary<MenuItem, MenuItemName>
                 {
                     { PricelistMenuItem, MenuItemName.PriceList },
+                    { BasketMenuItem, MenuItemName.Basket},
                     { OrdersMenuItem, MenuItemName.Orders},
                     { DocumentsMenuItem, MenuItemName.Documents },
                     { SyncMenuItem, MenuItemName.Sync },
