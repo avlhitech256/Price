@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.UI;
+using Domain.ViewModel;
 
 namespace Domain.Event
 {
@@ -7,7 +8,7 @@ namespace Domain.Event
     {
         #region Constructors
 
-        public ChildWindowEventArg(UserControl view, object viewModel)
+        public ChildWindowEventArg(UserControl view, IChildWindowViewModel viewModel)
         {
             View = view;
             ViewModel = viewModel;
@@ -19,7 +20,7 @@ namespace Domain.Event
 
         public UserControl View { get; set; }
 
-        public object ViewModel { get; }
+        public IChildWindowViewModel ViewModel { get; }
 
         #endregion
     }
