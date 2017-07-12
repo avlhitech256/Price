@@ -48,6 +48,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\CatalogModel.cs" />
+    <Compile Include="Model\PhotoModel.cs" />
+    <Compile Include="ViewModel\Command\CloseCommand.cs" />
+    <Compile Include="ViewModel\Command\NextCommand.cs" />
+    <Compile Include="ViewModel\Command\PreviousCommand.cs" />
+    <Compile Include="ViewModel\Command\ScaleCommand.cs" />
+    <Compile Include="ViewModel\PhotoViewModel.cs" />
     <Compile Include="View\CatalogControl.xaml.cs">
       <DependentUpon>CatalogControl.xaml</DependentUpon>
     </Compile>

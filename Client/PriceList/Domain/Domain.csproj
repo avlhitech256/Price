@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -52,6 +53,7 @@
     <Compile Include="DomainContext\DomainContext.cs" />
     <Compile Include="DomainContext\IDomainContext.cs" />
     <Compile Include="Event\ChildWindowEventArg.cs" />
+    <Compile Include="Event\ChildWindowScaleEventArgs.cs" />
     <Compile Include="Event\DoubleAnimationEventArgs.cs" />
     <Compile Include="Event\MenuChangedEventArgs.cs" />
     <Compile Include="Event\MinWidthEventArgs.cs" />
@@ -62,6 +64,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\Command\CommonCommand.cs" />
     <Compile Include="ViewModel\IChildWindowViewModel.cs" />
     <Compile Include="ViewModel\IControlViewModel.cs" />
   </ItemGroup>

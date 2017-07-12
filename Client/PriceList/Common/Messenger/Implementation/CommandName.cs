@@ -18,6 +18,8 @@
         RequestForDelete,
         SetMinWidth,
         SetImage,
+        ShowImages,
+        SetPhotoWindowState,
         ShowAdvanceSearchControl
     }
 }

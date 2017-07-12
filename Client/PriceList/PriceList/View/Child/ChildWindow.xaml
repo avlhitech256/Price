@@ -5,6 +5,5 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PriceList.View.Child"
         mc:Ignorable="d"
-        Title="" Height="300" Width="300">
-    <UserControl x:Name="ChildUserControl"/>
+        Title="" Height="450" Width="450">
 </Window>

@@ -120,7 +120,12 @@ namespace Catalog.Model
                 Unit = "шт.",
                 Price = 50.52M,
                 Currency = "EUR",
-                Photo = new List<byte[]> {ImageToByte(Resources.Photo1)}
+                Photo = new List<byte[]>
+                {
+                    ImageToByte(Resources.Photo1),
+                    ImageToByte(Resources.Photo2),
+                    ImageToByte(Resources.Photo3)
+                }
             };
             Entities.Add(item);
             //---------------------------------------------------------------------
@@ -137,7 +142,12 @@ namespace Catalog.Model
                 Unit = "шт.",
                 Price = 320.45M,
                 Currency = "грн.",
-                Photo = new List<byte[]> {ImageToByte(Resources.Photo2)}
+                Photo = new List<byte[]>
+                {
+                    ImageToByte(Resources.Photo2),
+                    ImageToByte(Resources.Photo3),
+                    ImageToByte(Resources.Photo4)
+                }
             };
             Entities.Add(item);
             //---------------------------------------------------------------------
@@ -154,7 +164,11 @@ namespace Catalog.Model
                 Unit = "шт.",
                 Price = 18.65M,
                 Currency = "грн.",
-                Photo = new List<byte[]> {ImageToByte(Resources.Photo3)}
+                Photo = new List<byte[]>
+                {
+                    ImageToByte(Resources.Photo3),
+                    ImageToByte(Resources.Photo2)
+                }
             };
             //recourceReader.GetResourceData("Photo3", out typeResource, out photo);
             //item.Photo = photo;
@@ -173,7 +187,12 @@ namespace Catalog.Model
                 Unit = "шт.",
                 Price = 120.78M,
                 Currency = "USD",
-                Photo = new List<byte[]> {ImageToByte(Resources.Photo4)}
+                Photo = new List<byte[]>
+                {
+                    ImageToByte(Resources.Photo4),
+                    ImageToByte(Resources.Photo5)
+
+                }
             };
             //recourceReader.GetResourceData("Photo4", out typeResource, out photo);
             //item.Photo = photo;
@@ -192,7 +211,12 @@ namespace Catalog.Model
                 Unit = "шт.",
                 Price = 1850.46M,
                 Currency = "грн.",
-                Photo = new List<byte[]> {ImageToByte(Resources.Photo5)}
+                Photo = new List<byte[]>
+                {
+                    ImageToByte(Resources.Photo5),
+                    ImageToByte(Resources.Photo6),
+                    ImageToByte(Resources.Photo3)
+                }
             };
             //recourceReader.GetResourceData("Photo5", out typeResource, out photo);
             //item.Photo = photo;

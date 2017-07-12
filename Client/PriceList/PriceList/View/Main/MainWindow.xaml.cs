@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Timers;
 using System.Windows;
 using System.Windows.Media.Animation;
+using Catalog.ViewModel;
 using Common.Messenger;
 using Common.Messenger.Implementation;
 using Domain.DomainContext;
 using Domain.Event;
+using PriceList.View.Child;
 using PriceList.ViewModel.MainWindow;
 
-namespace PriceList
+namespace PriceList.View.Main
 {
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
@@ -95,6 +97,36 @@ namespace PriceList
         private void SubscribeMessenger()
         {
             Messenger?.Register<MinWidthEventArgs>(CommandName.SetMinWidth, SetMinWidth, CanSetMinWidth);
+            Messenger?.Register<ChildWindowEventArg>(CommandName.ShowImages, ShowImages, CanShowImages);
+        }
+
+        private void ShowImages(ChildWindowEventArg args)
+        {
+            var childWindow = new ChildWindow
+            {
+                Content = args.View,
+                DataContext = args.ViewModel
+            };
+
+            PhotoViewModel photoViewModel = args.ViewModel as PhotoViewModel;
+
+            if (photoViewModel != null)
+            {
+                photoViewModel.HideWindow = () => childWindow.Hide();
+            }
+
+            Action<ChildWindowScaleEventArgs> scaleCildWindow =
+                x => childWindow.WindowState = x.FullScale ? WindowState.Maximized : WindowState.Normal;
+            Func<ChildWindowScaleEventArgs, bool> canScaleCildWindow = x => x != null;
+            Messenger?.Register(CommandName.SetPhotoWindowState, scaleCildWindow, canScaleCildWindow);
+            childWindow.ShowDialog();
+            Messenger?.Unregister(CommandName.SetPhotoWindowState);
+            childWindow.Close();
+        }
+
+        private bool CanShowImages(ChildWindowEventArg args)
+        {
+            return args != null && args.ViewModel != null && args.View != null;
         }
 
         private void SetMinWidth(MinWidthEventArgs args)

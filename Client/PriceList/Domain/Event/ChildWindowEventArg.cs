@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Web.UI;
+using System.Windows.Controls;
 using Domain.ViewModel;
 
 namespace Domain.Event
@@ -18,7 +18,7 @@ namespace Domain.Event
 
         #region Properties
 
-        public UserControl View { get; set; }
+        public UserControl View { get; }
 
         public IChildWindowViewModel ViewModel { get; }
 
