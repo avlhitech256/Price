@@ -6,6 +6,19 @@
              xmlns:local="clr-namespace:Catalog.View.Photo"
              mc:Ignorable="d" 
              d:DesignHeight="35" d:DesignWidth="350">
+    <UserControl.Resources>
+        <Style TargetType="Button" x:Key="ButtonStyle">
+            <Style.Setters>
+                <Setter Property="Background" Value="{DynamicResource DefaultGradientBrush}"/>
+            </Style.Setters>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{DynamicResource MouseOverAndNotSelectedGradientBrush}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -17,8 +30,8 @@
         </Grid.ColumnDefinitions>
         <Button Grid.Column="1" 
                 Margin="5" 
-                Background="{DynamicResource DefaultGradientBrush}"
-                Command="{Binding Path=PreviousCommand}">
+                Command="{Binding Path=PreviousCommand}"
+                Style="{DynamicResource ButtonStyle}">
             <Image Source="../../Picture/left.png" Height="15" Margin="3" />
         </Button>
         <Button Grid.Column="2" 

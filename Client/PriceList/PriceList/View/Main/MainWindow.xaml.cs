@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Timers;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media.Animation;
 using Catalog.ViewModel;
 using Common.Messenger;
@@ -109,12 +110,23 @@ namespace PriceList.View.Main
             };
 
             PhotoViewModel photoViewModel = args.ViewModel as PhotoViewModel;
+            Action hideWindows = () => childWindow.Hide();
 
             if (photoViewModel != null)
             {
-                photoViewModel.HideWindow = () => childWindow.Hide();
+                photoViewModel.HideWindow = () => hideWindows();
             }
 
+            Action<object, KeyEventArgs> childWindowKeyUp =
+                (sender, e) =>
+                {
+                    if (e.Key == Key.Escape)
+                    {
+                        hideWindows();
+                    }
+                };
+
+            childWindow.KeyUp += (sender, e) => childWindowKeyUp(sender, e);
             Action<ChildWindowScaleEventArgs> scaleCildWindow =
                 x => childWindow.WindowState = x.FullScale ? WindowState.Maximized : WindowState.Normal;
             Func<ChildWindowScaleEventArgs, bool> canScaleCildWindow = x => x != null;
