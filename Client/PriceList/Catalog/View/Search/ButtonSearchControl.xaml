@@ -6,15 +6,24 @@
              mc:Ignorable="d" 
              d:DesignHeight="90" d:DesignWidth="140">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="15"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="15"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
         <Button Content="Поиск"
                 Grid.Row="0"
-                Margin="20,10"/>
+                Grid.Column="1"
+                Width="100"
+                Style="{DynamicResource ButtonStyle}"/>
         <Button Content="Сбросить"
                 Grid.Row="1"
-                Margin="20,10"/>
+                Grid.Column="1"
+                Width="100"
+                Style="{DynamicResource ButtonStyle}"/>
     </Grid>
 </UserControl>

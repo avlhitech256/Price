@@ -26,7 +26,10 @@ namespace Catalog.View.Photo
 
         private void PhotoControl_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            ViewModel.Scale();
+            if (Equals(e.OriginalSource, Photo))
+            {
+                ViewModel?.Scale();
+            }
         }
 
         #endregion

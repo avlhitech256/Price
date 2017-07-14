@@ -1,7 +1,11 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Drawing;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Catalog.Model;
+using Catalog.Properties;
 using Catalog.ViewModel.Command;
 using Common.Data.Notifier;
 using Common.Messenger;
@@ -22,6 +26,8 @@ namespace Catalog.ViewModel
         private ICommand scaleCommand;
         private ICommand closeCommand;
         private bool fullScale;
+        private BitmapSource collapceIcon;
+        private BitmapSource expandIcon;
 
         #endregion
 
@@ -36,6 +42,7 @@ namespace Catalog.ViewModel
             PreviousCommand = new PreviousCommand(this);
             ScaleCommand = new ScaleCommand(this);
             CloseCommand = new CloseCommand(this);
+            PrepareIcons();
         }
 
         #endregion
@@ -67,6 +74,8 @@ namespace Catalog.ViewModel
 
         public ObservableCollection<BitmapSource> Entities => Model?.Entities;
 
+        public BitmapSource ScaleImage => FullScale ? collapceIcon : expandIcon;
+
         public  bool FullScale
         {
             get
@@ -78,7 +87,8 @@ namespace Catalog.ViewModel
                 if (fullScale != value)
                 {
                     fullScale = value;
-                    SubscribeModel();
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(ScaleImage));
                 }
             }
         }
@@ -186,6 +196,22 @@ namespace Catalog.ViewModel
         {
             FullScale = !FullScale;
             Messenger?.Send(CommandName.SetPhotoWindowState, new ChildWindowScaleEventArgs(FullScale));
+        }
+
+        private void PrepareIcons()
+        {
+            collapceIcon = Convert(Resources.collapce);
+            expandIcon = Convert(Resources.expand);
+        }
+
+        private BitmapSource Convert(Bitmap imageData)
+        {
+            IntPtr hBitmap = imageData.GetHbitmap();
+            BitmapSizeOptions sizeOptions = BitmapSizeOptions.FromEmptyOptions();
+            BitmapSource image = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(hBitmap, IntPtr.Zero,
+                Int32Rect.Empty, sizeOptions);
+
+            return image;
         }
 
         #endregion

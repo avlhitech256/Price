@@ -5,20 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Catalog.View.Photo"
              mc:Ignorable="d" 
-             d:DesignHeight="35" d:DesignWidth="350">
-    <UserControl.Resources>
-        <Style TargetType="Button" x:Key="ButtonStyle">
-            <Style.Setters>
-                <Setter Property="Background" Value="{DynamicResource DefaultGradientBrush}"/>
-            </Style.Setters>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="{DynamicResource MouseOverAndNotSelectedGradientBrush}"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-    </UserControl.Resources>
-    
+             d:DesignHeight="45" d:DesignWidth="350">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -29,29 +16,30 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Button Grid.Column="1" 
-                Margin="5" 
+                Width="35"
                 Command="{Binding Path=PreviousCommand}"
                 Style="{DynamicResource ButtonStyle}">
-            <Image Source="../../Picture/left.png" Height="15" Margin="3" />
+            <Image Source="../../Picture/left.png" />
         </Button>
         <Button Grid.Column="2" 
-                Margin="5" 
-                Background="{DynamicResource DefaultGradientBrush}"
-                Command="{Binding Path=NextCommand}">
-            <Image Source="../../Picture/right.png" Height="15" Margin="3" />
+                Width="35"
+                Command="{Binding Path=NextCommand}"
+                Style="{DynamicResource ButtonStyle}">
+            <Image Source="../../Picture/right.png"/>
         </Button>
         <Button Grid.Column="3" 
-                Margin="5" 
-                Background="{DynamicResource DefaultGradientBrush}"
-                Command="{Binding Path=ScaleCommand}">
-            <Image x:Name="ScaleButtonImage" Source="../../Picture/collapce.png" Height="15" Margin="3" />
+                Width="35"
+                Command="{Binding Path=ScaleCommand}"
+                Style="{DynamicResource ButtonStyle}"
+                IsDefault="True">
+            <Image x:Name="ScaleButtonImage" Source="{Binding Path=ScaleImage}"/>
         </Button>
         <Button Grid.Column="4" 
-                Margin="5" 
-                Width="70" 
-                Content="Закрыть" 
-                Background="{DynamicResource DefaultGradientBrush}" 
-                Foreground="White"
-                Command="{Binding Path=CloseCommand}"/>
+                Width="100" 
+                Content="Закрыть"
+                Command="{Binding Path=CloseCommand}"
+                Style="{DynamicResource ButtonStyle}"
+                IsCancel="True">
+            </Button>
     </Grid>
 </UserControl>
