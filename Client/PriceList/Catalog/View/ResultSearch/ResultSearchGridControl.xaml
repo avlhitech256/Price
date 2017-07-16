@@ -134,6 +134,11 @@
                     <DataGridTextColumn IsReadOnly="True" 
                                     Width="Auto"
                                     Binding="{Binding Path=Unit}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style>
+                                <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
                         <DataGridTextColumn.HeaderTemplate>
                             <DataTemplate>
                                 <TextBlock Text="Ед. изм." 
@@ -148,6 +153,11 @@
                     <DataGridTextColumn IsReadOnly="True" 
                                     Width="Auto"
                                     Binding="{Binding Path=EnterpriceNormPack}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style>
+                                <Setter Property="TextBlock.TextAlignment" Value="Right" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
                         <DataGridTextColumn.HeaderTemplate>
                             <DataTemplate>
                                 <TextBlock Text="Заводская норма упаковки" 
@@ -202,7 +212,7 @@
                         </DataGridTextColumn.ElementStyle>
                         <DataGridTextColumn.HeaderTemplate>
                             <DataTemplate>
-                                <TextBlock Text="Количество, шт." 
+                                <TextBlock Text="Количество" 
                                        Width="80" 
                                        TextWrapping="Wrap" 
                                        TextAlignment="Center" 
