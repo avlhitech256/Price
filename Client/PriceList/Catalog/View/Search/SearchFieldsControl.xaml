@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:search="clr-namespace:Catalog.View.Search"
              mc:Ignorable="d" 
-             d:DesignHeight="100" d:DesignWidth="600">
+             d:DesignHeight="100" d:DesignWidth="700">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -21,9 +21,9 @@
                     <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition Height="Auto"></RowDefinition>
                 </Grid.RowDefinitions>
-                <CheckBox Grid.Column="0" Grid.Row="0" Content="Только новые"></CheckBox>
-                <CheckBox Grid.Column="0" Grid.Row="1" Content="Подорожавшие"></CheckBox>
-                <CheckBox Grid.Column="0" Grid.Row="2" Content="Подешевевшие"></CheckBox>
+                <CheckBox Grid.Column="0" Grid.Row="0" Content="Только новые за последние 14 дней"></CheckBox>
+                <CheckBox Grid.Column="0" Grid.Row="1" Content="Подорожавшие за последние 7 дней"></CheckBox>
+                <CheckBox Grid.Column="0" Grid.Row="2" Content="Подешевевшие за последние 7 дней"></CheckBox>
             </Grid>
         </Border>
         <Border Grid.Column="1" Margin="3,0,0,0"
@@ -39,6 +39,7 @@
                     <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Label Content="Артикул:"
                        Grid.Column="0"
@@ -51,16 +52,6 @@
                          VerticalAlignment="Center" 
                          FontWeight="Bold" 
                          FontStyle="Italic"/>
-                <Label Content="Бренд:"
-                       Grid.Column="2" 
-                       Grid.Row="0" 
-                       Margin="15,0,0,0"/>
-                <ComboBox Grid.Column="3"
-                          Grid.Row="0" 
-                          MinWidth="60"
-                          VerticalAlignment="Center" 
-                          FontWeight="Bold" 
-                          FontStyle="Italic"/>
                 <Label Content="Наименование:"
                        Grid.Column="0"
                        Grid.Row="1" HorizontalAlignment="Right"/>
@@ -72,29 +63,39 @@
                          VerticalAlignment="Center" 
                          FontWeight="Bold" 
                          FontStyle="Italic"/>
-                <Label Content="Цена от:"
+                <Label Content="Бренд:"
+                       Grid.Column="2" 
+                       Grid.Row="0" 
+                       Margin="15,0,0,0"/>
+                <TextBox Grid.Column="3"
+                          Grid.Row="0" 
+                          MinWidth="60"
+                          VerticalAlignment="Center" 
+                          FontWeight="Bold" 
+                          FontStyle="Italic"/>
+                <Label Content="Наименование:"
                        Grid.Column="0"
-                       Grid.Row="2" 
+                       Grid.Row="1" 
                        HorizontalAlignment="Right"/>
                 <TextBox Grid.Column="1"
-                         Grid.Row="2" 
-                         MinWidth="60"
+                         Grid.ColumnSpan="3"
+                         Grid.Row="1" 
                          Foreground="#FF000059"
+                         MinWidth="100"
                          VerticalAlignment="Center" 
                          FontWeight="Bold" 
                          FontStyle="Italic"/>
-                <Label Content="до:"
-                       Grid.Column="2" 
-                       Grid.Row="2" 
-                       Margin="15,0,0,0" 
+                <Label Content="Бренд:"
+                       Grid.Column="0" 
+                       Grid.Row="2"
                        HorizontalAlignment="Right"/>
-                <TextBox Grid.Column="3"
-                         Grid.Row="2" 
-                         MinWidth="60"
-                         VerticalAlignment="Center" 
-                         Foreground="#FF000059"
-                         FontWeight="Bold" 
-                         FontStyle="Italic"/>
+                <ComboBox Grid.Column="1"
+                          Grid.ColumnSpan="3"
+                          Grid.Row="2" 
+                          MinWidth="60"
+                          VerticalAlignment="Center" 
+                          FontWeight="Bold" 
+                          FontStyle="Italic"/>
             </Grid>
         </Border>
         <search:ButtonSearchControl Grid.Column="2" VerticalContentAlignment="Center"></search:ButtonSearchControl>

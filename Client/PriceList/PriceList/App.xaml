@@ -84,8 +84,8 @@
         <Style TargetType="Button" x:Key="ButtonStyle">
             <Style.Setters>
                 <Setter Property="Background" Value="{DynamicResource DefaultGradientBrush}"/>
-                <Setter Property="FontSize" Value="15"/>
-                <Setter Property="Height" Value="35"/>
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="Height" Value="25"/>
                 <Setter Property="Margin" Value="5"/>
                 <Setter Property="Foreground" Value="White"/>
                 <Setter Property="Template">
@@ -99,7 +99,7 @@
                                   HorizontalAlignment="Center"
                                   Background="{TemplateBinding Background}">
                                 <ContentPresenter Name="MyContentPresenter" 
-                                                  Margin="6" HorizontalAlignment="Center"
+                                                  Margin="4" HorizontalAlignment="Center"
                                                   Content="{TemplateBinding Content}" />
                             </Grid>
                             <ControlTemplate.Triggers>
@@ -130,17 +130,17 @@
                                     <EventTrigger.Actions>
                                         <BeginStoryboard>
                                             <Storyboard>
-                                                <DoubleAnimation Duration="0:0:0.2" Storyboard.TargetProperty="FontSize" To="18"/>
+                                                <DoubleAnimation Duration="0:0:0.2" Storyboard.TargetProperty="FontSize" To="14"/>
                                             </Storyboard>
                                         </BeginStoryboard>
                                         <BeginStoryboard>
                                             <Storyboard>
-                                                <ThicknessAnimation Duration="0:0:0.2" Storyboard.TargetProperty="Margin" To="7"/>
+                                                <ThicknessAnimation Duration="0:0:0.2" Storyboard.TargetProperty="Margin" To="6"/>
                                             </Storyboard>
                                         </BeginStoryboard>
                                         <BeginStoryboard>
                                             <Storyboard TargetName="MyContentPresenter">
-                                                <ThicknessAnimation Duration="0:0:0.2" Storyboard.TargetProperty="Margin" To="3"/>
+                                                <ThicknessAnimation Duration="0:0:0.2" Storyboard.TargetProperty="Margin" To="2"/>
                                             </Storyboard>
                                         </BeginStoryboard>
                                     </EventTrigger.Actions>
@@ -159,7 +159,7 @@
                                         </BeginStoryboard>
                                         <BeginStoryboard>
                                             <Storyboard TargetName="MyContentPresenter">
-                                                <ThicknessAnimation Duration="0:0:1" Storyboard.TargetProperty="Margin" To="6"/>
+                                                <ThicknessAnimation Duration="0:0:1" Storyboard.TargetProperty="Margin" To="4"/>
                                             </Storyboard>
                                         </BeginStoryboard>
                                     </EventTrigger.Actions>

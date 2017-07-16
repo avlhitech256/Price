@@ -38,6 +38,8 @@ namespace Domain.Data.Object
 
         public string FullPrice => Price.ToString(CultureInfo.InvariantCulture) + " " + Currency;
 
+        public decimal Count { get; set; }
+
         private BitmapSource GetImage(Bitmap imageData)
         {
             IntPtr hBitmap = imageData.GetHbitmap();

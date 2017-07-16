@@ -1,4 +1,5 @@
-﻿using Common.Data.Notifier;
+﻿using System.Runtime.InteropServices;
+using Common.Data.Notifier;
 using Common.Messenger;
 using Common.Messenger.Implementation;
 using Domain.DomainContext;
@@ -12,6 +13,8 @@ namespace PriceList.ViewModel.TopMenu
         #region Members
 
         private MenuItemsStyle menuItemsStyle;
+        private string basketCaption;
+        private const string CurrencySuffix = " грн.";
 
         #endregion
 
@@ -26,6 +29,7 @@ namespace PriceList.ViewModel.TopMenu
                                                 ColorService.CreateBrush(0x8B, 0x9E, 0xF0),
                                                 ColorService.CreateBrush(0xDB, 0xEE, 0xFF));
             SubscribeMessenger();
+            BasketCaption = "0.00" + CurrencySuffix;
         }
 
         #endregion
@@ -54,6 +58,22 @@ namespace PriceList.ViewModel.TopMenu
 
             }
 
+        }
+
+        public string BasketCaption
+        {
+            get
+            {
+                return basketCaption;
+            }
+            set
+            {
+                if (basketCaption != value)
+                {
+                    basketCaption = value;
+                    OnPropertyChanged();
+                }
+            }
         }
 
         #endregion

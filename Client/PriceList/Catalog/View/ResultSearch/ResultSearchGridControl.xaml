@@ -5,8 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Catalog.View"
              mc:Ignorable="d" 
-             d:DesignHeight="100" d:DesignWidth="950">
+             d:DesignHeight="100" d:DesignWidth="1030">
 
+    <UserControl.Resources>
+        <Style x:Key="DataGridCellRight" TargetType="{x:Type DataGridCell}">
+            <Setter Property="TextBlock.TextAlignment" Value="Right"/>
+        </Style>
+    </UserControl.Resources>
+    
     <Border>
         <Grid>
             <Grid.RowDefinitions>
@@ -170,9 +176,33 @@
                     <DataGridTextColumn IsReadOnly="True" 
                                     Width="Auto"
                                     Binding="{Binding Path=Price}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style>
+                                <Setter Property="TextBlock.TextAlignment" Value="Right" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
                         <DataGridTextColumn.HeaderTemplate>
                             <DataTemplate>
                                 <TextBlock Text="Цена, грн." 
+                                       Width="80" 
+                                       TextWrapping="Wrap" 
+                                       TextAlignment="Center" 
+                                       VerticalAlignment="Center">
+                                </TextBlock>
+                            </DataTemplate>
+                        </DataGridTextColumn.HeaderTemplate>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn IsReadOnly="False" 
+                                        Width="*"
+                                        Binding="{Binding Path=Count}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style>
+                                <Setter Property="TextBlock.TextAlignment" Value="Right" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                        <DataGridTextColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="Количество, шт." 
                                        Width="80" 
                                        TextWrapping="Wrap" 
                                        TextAlignment="Center" 

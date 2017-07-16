@@ -119,6 +119,7 @@ namespace Catalog.Model
                 Balance = "свыше 100 шт.",
                 Unit = "шт.",
                 Price = 50.52M,
+                Count = 0,
                 Currency = "EUR",
                 Photo = new List<byte[]>
                 {
@@ -141,6 +142,7 @@ namespace Catalog.Model
                 Balance = "свыше 100 шт.",
                 Unit = "шт.",
                 Price = 320.45M,
+                Count = 0,
                 Currency = "грн.",
                 Photo = new List<byte[]>
                 {
@@ -163,6 +165,7 @@ namespace Catalog.Model
                 Balance = "от 10 до 100 шт.",
                 Unit = "шт.",
                 Price = 18.65M,
+                Count = 0,
                 Currency = "грн.",
                 Photo = new List<byte[]>
                 {
@@ -186,6 +189,7 @@ namespace Catalog.Model
                 Balance = "8 шт.",
                 Unit = "шт.",
                 Price = 120.78M,
+                Count = 0,
                 Currency = "USD",
                 Photo = new List<byte[]>
                 {
@@ -210,6 +214,7 @@ namespace Catalog.Model
                 Balance = "2 шт.",
                 Unit = "шт.",
                 Price = 1850.46M,
+                Count = 0,
                 Currency = "грн.",
                 Photo = new List<byte[]>
                 {
