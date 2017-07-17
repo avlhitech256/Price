@@ -4,12 +4,23 @@ using System.Drawing;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using Common.Data.Notifier;
 using Domain.Properties;
+using Domain.Service.Precision;
 
 namespace Domain.Data.Object
 {
-    public class CatalogItem
+    public class CatalogItem : Notifier
     {
+        private string count;
+        private decimal countValue;
+        private readonly IPrecisionService precisionService;
+
+        public CatalogItem(IPrecisionService precisionService)
+        {
+            this.precisionService = precisionService;
+            CountValue = 0;
+        }
         public long Id { get; set; }
 
         public long Position { get; set; }
@@ -38,7 +49,46 @@ namespace Domain.Data.Object
 
         public string FullPrice => Price.ToString(CultureInfo.InvariantCulture) + " " + Currency;
 
-        public decimal Count { get; set; }
+        public string Count
+        {
+            get
+            {
+                return count;
+            }
+            set
+            {
+                string stringValue = precisionService?.NormalizeValue(value);
+
+                if (count != stringValue)
+                {
+                    count = stringValue;
+
+                    if (precisionService != null)
+                    {
+                        CountValue = precisionService.Convert(Count);
+                    }
+
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public decimal CountValue
+        {
+            get
+            {
+                return countValue;
+            }
+            set
+            {
+                if (countValue != value)
+                {
+                    countValue = value;
+                    Count = precisionService?.Convert(CountValue);
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         private BitmapSource GetImage(Bitmap imageData)
         {

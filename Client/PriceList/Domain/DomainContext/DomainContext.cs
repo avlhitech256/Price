@@ -3,6 +3,8 @@ using Common.Annotations;
 using Common.Data.Notifier;
 using Common.Messenger;
 using Common.Messenger.Implementation;
+using Domain.Service.Precision;
+using Domain.Service.Precision.Implementation;
 using Domain.ViewModel;
 using Media.Color;
 
@@ -28,6 +30,7 @@ namespace Domain.DomainContext
             UserDomain = Environment.UserDomainName;
             Workstation = Environment.MachineName;
             DataBaseServer = string.Empty;
+            PrecisionService = new PrecisionService(2, true);
         }
 
         #endregion
@@ -53,6 +56,8 @@ namespace Domain.DomainContext
             }
 
         }
+
+        public IPrecisionService PrecisionService { get; }
 
         public bool IsEditControl
         {

@@ -64,6 +64,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Service\Precision\Implementation\PrecisionService.cs" />
+    <Compile Include="Service\Precision\IPrecisionService.cs" />
     <Compile Include="ViewModel\Command\CommonCommand.cs" />
     <Compile Include="ViewModel\IChildWindowViewModel.cs" />
     <Compile Include="ViewModel\IControlViewModel.cs" />

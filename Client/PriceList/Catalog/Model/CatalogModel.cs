@@ -10,6 +10,7 @@ using Common.Messenger;
 using Common.Messenger.Implementation;
 using Domain.Data.Object;
 using Domain.DomainContext;
+using Domain.Service.Precision;
 
 namespace Catalog.Model
 {
@@ -38,6 +39,8 @@ namespace Catalog.Model
         private IDomainContext DomainContext { get; }
 
         private IMessenger Messenger => DomainContext?.Messenger;
+
+        private IPrecisionService PrecisionService => DomainContext?.PrecisionService;
 
         public CatalogItem SelectedItem
         {
@@ -107,7 +110,7 @@ namespace Catalog.Model
             };
             entities = new ObservableCollection<CatalogItem>();
 
-            CatalogItem item = new CatalogItem
+            CatalogItem item = new CatalogItem(PrecisionService)
             {
                 Id = id++,
                 Position = position++,
@@ -119,7 +122,7 @@ namespace Catalog.Model
                 Balance = "свыше 100 шт.",
                 Unit = "шт.",
                 Price = 50.52M,
-                Count = 0,
+                Count = "0.00",
                 Currency = "EUR",
                 Photo = new List<byte[]>
                 {
@@ -130,7 +133,7 @@ namespace Catalog.Model
             };
             Entities.Add(item);
             //---------------------------------------------------------------------
-            item = new CatalogItem
+            item = new CatalogItem(PrecisionService)
             {
                 Id = id++,
                 Position = position++,
@@ -142,7 +145,7 @@ namespace Catalog.Model
                 Balance = "свыше 100 шт.",
                 Unit = "шт.",
                 Price = 320.45M,
-                Count = 0,
+                Count = "0.00",
                 Currency = "грн.",
                 Photo = new List<byte[]>
                 {
@@ -153,7 +156,7 @@ namespace Catalog.Model
             };
             Entities.Add(item);
             //---------------------------------------------------------------------
-            item = new CatalogItem
+            item = new CatalogItem(PrecisionService)
             {
                 Id = id++,
                 Position = position++,
@@ -165,7 +168,7 @@ namespace Catalog.Model
                 Balance = "от 10 до 100 шт.",
                 Unit = "шт.",
                 Price = 18.65M,
-                Count = 0,
+                Count = "0.00",
                 Currency = "грн.",
                 Photo = new List<byte[]>
                 {
@@ -177,7 +180,7 @@ namespace Catalog.Model
             //item.Photo = photo;
             Entities.Add(item);
             //---------------------------------------------------------------------
-            item = new CatalogItem
+            item = new CatalogItem(PrecisionService)
             {
                 Id = id++,
                 Position = position++,
@@ -189,7 +192,7 @@ namespace Catalog.Model
                 Balance = "8 шт.",
                 Unit = "шт.",
                 Price = 120.78M,
-                Count = 0,
+                Count = "0.00",
                 Currency = "USD",
                 Photo = new List<byte[]>
                 {
@@ -202,7 +205,7 @@ namespace Catalog.Model
             //item.Photo = photo;
             Entities.Add(item);
             //---------------------------------------------------------------------
-            item = new CatalogItem
+            item = new CatalogItem(PrecisionService)
             {
                 Id = id++,
                 Position = position++,
@@ -214,7 +217,7 @@ namespace Catalog.Model
                 Balance = "2 шт.",
                 Unit = "шт.",
                 Price = 1850.46M,
-                Count = 0,
+                Count = "0.00",
                 Currency = "грн.",
                 Photo = new List<byte[]>
                 {
