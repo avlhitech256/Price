@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Basket.ViewModel;
 using Catalog.ViewModel;
 using Domain.Data.Enum;
 using Domain.DomainContext;
@@ -23,7 +24,7 @@ namespace PriceList.ViewModel.MainWindow
                 new Dictionary<MenuItemName, Func<IDomainContext, object>>
                 {
                     {MenuItemName.PriceList, (x) => new CatalogViewModel(x)},
-                    {MenuItemName.Basket, (x) => null },
+                    {MenuItemName.Basket, (x) => new BasketViewModel(x)},
                     {MenuItemName.Orders,    (x) => null /*new FacultyViewModel(x)*/},
                     {MenuItemName.Documents, (x) => null /*new SpecialtyViewModel(x)*/},
                     {MenuItemName.Sync,      (x) => null /*new ChairViewModel(x)*/},

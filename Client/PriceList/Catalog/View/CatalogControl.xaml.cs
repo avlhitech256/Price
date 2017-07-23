@@ -1,7 +1,5 @@
 ﻿using System;
-using System.IO;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
 using Catalog.ViewModel;
 using Common.Messenger.Implementation;
 using CommonControl.SearchControl;
@@ -71,37 +69,12 @@ namespace Catalog.View
         private void SetImage(CatalogItem item)
         {
             byte[] photo = item.Photo[0];
-            DetailControl.DetailImage.Source = LoadImage(photo);
+            DetailControl.DetailImage.Source = ImageService?.ConvertToBitmapImage(photo);
         }
 
         private bool CanSetImage(CatalogItem item)
         {
             return item != null;
-        }
-
-        private BitmapImage LoadImage(byte[] imageData)
-        {
-            BitmapImage image = null;
-
-            if (imageData != null && imageData.Length > 0)
-            {
-                image = new BitmapImage();
-
-                using (var mem = new MemoryStream(imageData))
-                {
-                    mem.Position = 0;
-                    image.BeginInit();
-                    image.CreateOptions = BitmapCreateOptions.PreservePixelFormat;
-                    image.CacheOption = BitmapCacheOption.OnLoad;
-                    image.UriSource = null;
-                    image.StreamSource = mem;
-                    image.EndInit();
-                }
-
-                image.Freeze();
-            }
-
-            return image;
         }
     }
 }

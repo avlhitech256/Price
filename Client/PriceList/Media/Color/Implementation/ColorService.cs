@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Media;
 
-namespace Media.Color
+namespace Media.Color.Implementation
 {
     public class ColorService : IColorService
     {

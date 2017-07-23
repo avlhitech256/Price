@@ -7,6 +7,8 @@ using Domain.Service.Precision;
 using Domain.Service.Precision.Implementation;
 using Domain.ViewModel;
 using Media.Color;
+using Media.Color.Implementation;
+using Media.Image;
 
 namespace Domain.DomainContext
 {
@@ -30,6 +32,7 @@ namespace Domain.DomainContext
             UserDomain = Environment.UserDomainName;
             Workstation = Environment.MachineName;
             DataBaseServer = string.Empty;
+            ImageService = new ImageService();
             PrecisionService = new PrecisionService(2, true);
         }
 
@@ -56,6 +59,8 @@ namespace Domain.DomainContext
             }
 
         }
+
+        public IImageService ImageService { get; }
 
         public IPrecisionService PrecisionService { get; }
 

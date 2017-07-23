@@ -1,6 +1,7 @@
 ﻿using System.Windows.Controls;
 using Common.Messenger;
 using Domain.DomainContext;
+using Media.Image;
 
 namespace CommonControl.SearchControl
 {
@@ -34,6 +35,8 @@ namespace CommonControl.SearchControl
         }
 
         public IMessenger Messenger => DomainContext?.Messenger;
+
+        public IImageService ImageService => DomainContext?.ImageService;
 
         #endregion
 

@@ -13,6 +13,7 @@ using Common.Messenger.Implementation;
 using Domain.DomainContext;
 using Domain.Event;
 using Domain.ViewModel;
+using Media.Image;
 
 namespace Catalog.ViewModel
 {
@@ -52,6 +53,8 @@ namespace Catalog.ViewModel
         private IDomainContext DomainContext { get; }
 
         private IMessenger Messenger => DomainContext?.Messenger;
+
+        private IImageService ImageService => DomainContext?.ImageService;
 
 
         private PhotoModel Model
@@ -200,18 +203,8 @@ namespace Catalog.ViewModel
 
         private void PrepareIcons()
         {
-            collapceIcon = Convert(Resources.collapce);
-            expandIcon = Convert(Resources.expand);
-        }
-
-        private BitmapSource Convert(Bitmap imageData)
-        {
-            IntPtr hBitmap = imageData.GetHbitmap();
-            BitmapSizeOptions sizeOptions = BitmapSizeOptions.FromEmptyOptions();
-            BitmapSource image = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(hBitmap, IntPtr.Zero,
-                Int32Rect.Empty, sizeOptions);
-
-            return image;
+            collapceIcon = ImageService?.ConvertToBitmapSource(Resources.collapce);
+            expandIcon = ImageService?.ConvertToBitmapSource(Resources.expand);
         }
 
         #endregion

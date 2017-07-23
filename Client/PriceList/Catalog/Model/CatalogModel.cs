@@ -11,6 +11,7 @@ using Common.Messenger.Implementation;
 using Domain.Data.Object;
 using Domain.DomainContext;
 using Domain.Service.Precision;
+using Media.Image;
 
 namespace Catalog.Model
 {
@@ -39,6 +40,8 @@ namespace Catalog.Model
         private IDomainContext DomainContext { get; }
 
         private IMessenger Messenger => DomainContext?.Messenger;
+
+        private IImageService ImageService => DomainContext?.ImageService;
 
         private IPrecisionService PrecisionService => DomainContext?.PrecisionService;
 
@@ -110,7 +113,7 @@ namespace Catalog.Model
             };
             entities = new ObservableCollection<CatalogItem>();
 
-            CatalogItem item = new CatalogItem(PrecisionService)
+            CatalogItem item = new CatalogItem(PrecisionService, ImageService)
             {
                 Id = id++,
                 Position = position++,
@@ -126,14 +129,14 @@ namespace Catalog.Model
                 Currency = "EUR",
                 Photo = new List<byte[]>
                 {
-                    ImageToByte(Resources.Photo1),
-                    ImageToByte(Resources.Photo2),
-                    ImageToByte(Resources.Photo3)
+                    ImageService.ConvertToByteArray(Resources.Photo1),
+                    ImageService.ConvertToByteArray(Resources.Photo2),
+                    ImageService.ConvertToByteArray(Resources.Photo3)
                 }
             };
             Entities.Add(item);
             //---------------------------------------------------------------------
-            item = new CatalogItem(PrecisionService)
+            item = new CatalogItem(PrecisionService, ImageService)
             {
                 Id = id++,
                 Position = position++,
@@ -149,14 +152,14 @@ namespace Catalog.Model
                 Currency = "грн.",
                 Photo = new List<byte[]>
                 {
-                    ImageToByte(Resources.Photo2),
-                    ImageToByte(Resources.Photo3),
-                    ImageToByte(Resources.Photo4)
+                    ImageService.ConvertToByteArray(Resources.Photo2),
+                    ImageService.ConvertToByteArray(Resources.Photo3),
+                    ImageService.ConvertToByteArray(Resources.Photo4)
                 }
             };
             Entities.Add(item);
             //---------------------------------------------------------------------
-            item = new CatalogItem(PrecisionService)
+            item = new CatalogItem(PrecisionService, ImageService)
             {
                 Id = id++,
                 Position = position++,
@@ -172,15 +175,15 @@ namespace Catalog.Model
                 Currency = "грн.",
                 Photo = new List<byte[]>
                 {
-                    ImageToByte(Resources.Photo3),
-                    ImageToByte(Resources.Photo2)
+                    ImageService.ConvertToByteArray(Resources.Photo3),
+                    ImageService.ConvertToByteArray(Resources.Photo2)
                 }
             };
             //recourceReader.GetResourceData("Photo3", out typeResource, out photo);
             //item.Photo = photo;
             Entities.Add(item);
             //---------------------------------------------------------------------
-            item = new CatalogItem(PrecisionService)
+            item = new CatalogItem(PrecisionService, ImageService)
             {
                 Id = id++,
                 Position = position++,
@@ -196,8 +199,8 @@ namespace Catalog.Model
                 Currency = "USD",
                 Photo = new List<byte[]>
                 {
-                    ImageToByte(Resources.Photo4),
-                    ImageToByte(Resources.Photo5)
+                    ImageService.ConvertToByteArray(Resources.Photo4),
+                    ImageService.ConvertToByteArray(Resources.Photo5)
 
                 }
             };
@@ -205,7 +208,7 @@ namespace Catalog.Model
             //item.Photo = photo;
             Entities.Add(item);
             //---------------------------------------------------------------------
-            item = new CatalogItem(PrecisionService)
+            item = new CatalogItem(PrecisionService, ImageService)
             {
                 Id = id++,
                 Position = position++,
@@ -221,9 +224,9 @@ namespace Catalog.Model
                 Currency = "грн.",
                 Photo = new List<byte[]>
                 {
-                    ImageToByte(Resources.Photo5),
-                    ImageToByte(Resources.Photo6),
-                    ImageToByte(Resources.Photo3)
+                    ImageService.ConvertToByteArray(Resources.Photo5),
+                    ImageService.ConvertToByteArray(Resources.Photo6),
+                    ImageService.ConvertToByteArray(Resources.Photo3)
                 }
             };
             //recourceReader.GetResourceData("Photo5", out typeResource, out photo);
@@ -231,30 +234,6 @@ namespace Catalog.Model
             Entities.Add(item);
 
             SelectedItem = Entities[0];
-        }
-
-        public byte[] GetJpgFromImageControl(BitmapImage imageC)
-        {
-            MemoryStream memStream = new MemoryStream();
-            JpegBitmapEncoder encoder = new JpegBitmapEncoder();
-            encoder.Frames.Add(BitmapFrame.Create(imageC));
-            encoder.Save(memStream);
-            return memStream.ToArray();
-        }
-
-        public static byte[] ImageToByte(Image img)
-        {
-            ImageConverter converter = new ImageConverter();
-            return (byte[])converter.ConvertTo(img, typeof(byte[]));
-        }
-
-        public static byte[] ImageToByte2(Image img)
-        {
-            using (var stream = new MemoryStream())
-            {
-                img.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
-                return stream.ToArray();
-            }
         }
 
         #endregion

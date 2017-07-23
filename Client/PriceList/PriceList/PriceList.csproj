@@ -318,6 +318,10 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Basket\Basket.csproj">
+      <Project>{f2340fef-9582-419e-b58c-53ab4ad66299}</Project>
+      <Name>Basket</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Catalog\Catalog.csproj">
       <Project>{f0c9eb97-38e2-49c8-879b-660cc16acb2a}</Project>
       <Name>Catalog</Name>

@@ -165,7 +165,7 @@
                             <ColumnDefinition Width="50"></ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <Image Grid.Column="0" Source="/Catalog;component/Picture/instruments.jpg"/>
+                        <Image Grid.Column="0" Source="/Catalog;component/Picture/instruments1.jpg"/>
                         <Border Grid.Column="1" ></Border>
                         <TextBlock Grid.Column="1"
                                    Text="Материалы и оборудование для ремонта шин" 

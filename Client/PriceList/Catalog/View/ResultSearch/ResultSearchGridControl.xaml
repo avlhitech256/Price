@@ -37,6 +37,7 @@
                       ItemsSource="{Binding Entities}"
                       SelectedItem="{Binding Path=SelectedItem, Mode=TwoWay}"
                       IsReadOnly="False"
+                      MouseUp="ResultSearchDataGrid_OnMouseUp"
                       MouseDoubleClick="ResultSearchDataGrid_OnMouseDoubleClick">
                 <DataGrid.Columns>
                     <DataGridTextColumn IsReadOnly="True" 
@@ -204,7 +205,7 @@
                     </DataGridTextColumn>
                     <DataGridTextColumn IsReadOnly="False" 
                                         Width="*"
-                                        Binding="{Binding Path=Count, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+                                        Binding="{Binding Path=CountValue, StringFormat={}{0:n2} , Mode=TwoWay}">
                         <DataGridTextColumn.ElementStyle>
                             <Style>
                                 <Setter Property="TextBlock.TextAlignment" Value="Right" />

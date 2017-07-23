@@ -111,8 +111,19 @@ namespace Domain.Service.Precision.Implementation
             List<char> listValue = value.ToCharArray().ToList();
             char[] validSymbols = {',', '.', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
             listValue.RemoveAll(x => !validSymbols.Contains(x));
-            value = listValue.ToString();
-            string result = value.Replace(',', '.');
+            string result = new string(listValue.ToArray());
+            int lastIndexPoint = result.LastIndexOf('.');
+            int lastIndexComa = result.LastIndexOf(',');
+            int lastIndex = Math.Max(lastIndexComa, lastIndexPoint);
+
+            if (lastIndex >= 0)
+            {
+                string fraction = lastIndex + 1 < result.Length && lastIndex >= 0
+                    ? result.Substring(lastIndex + 1)
+                    : string.Empty;
+                string whole = result.Substring(0, lastIndex + 1).Replace(".", "").Replace(",", "");
+                result = whole + (string.IsNullOrWhiteSpace(whole) ? string.Empty : "," + fraction);
+            }
 
             return result;
         }
@@ -161,7 +172,7 @@ namespace Domain.Service.Precision.Implementation
 
         public string GetFormat(int valuesPrecision, bool separatorIsVisible)
         {
-            string stringFormat = separatorIsVisible ? "0,0" : "0";
+            string stringFormat = separatorIsVisible ? "#,0" : "0";
             string precisionString = string.Empty;
 
             if (valuesPrecision > 0)

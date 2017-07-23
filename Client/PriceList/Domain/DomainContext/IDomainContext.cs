@@ -3,6 +3,7 @@ using Common.Messenger;
 using Domain.Service.Precision;
 using Domain.ViewModel;
 using Media.Color;
+using Media.Image;
 
 namespace Domain.DomainContext
 {
@@ -16,6 +17,9 @@ namespace Domain.DomainContext
 
         [CanBeNull]
         IControlViewModel ViewModel { get; set; }
+
+        [CanBeNull]
+        IImageService ImageService { get; }
 
         [CanBeNull]
         IPrecisionService PrecisionService { get; }

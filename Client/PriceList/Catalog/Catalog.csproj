@@ -111,6 +111,10 @@
       <Project>{65b9a8c3-c1c1-4195-8eb6-cba4c7345c76}</Project>
       <Name>Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Media\Media.csproj">
+      <Project>{B7FC1012-787D-489F-A846-32062538CB77}</Project>
+      <Name>Media</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Page Include="View\CatalogControl.xaml">
@@ -239,6 +243,11 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Picture\right.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Picture\instruments1.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

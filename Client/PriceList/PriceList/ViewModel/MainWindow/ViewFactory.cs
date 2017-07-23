@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Controls;
+using Basket.View;
 using CommonControl.EditControl;
 using CommonControl.SearchControl;
 using Domain.Data.Enum;
@@ -32,7 +33,7 @@ namespace PriceList.ViewModel.MainWindow
                 new Dictionary<MenuItemName, Func<object>>
                 {
                     {MenuItemName.PriceList, () => new CatalogControl()},
-                    {MenuItemName.Basket, () => null },
+                    {MenuItemName.Basket, () => new BasketControl()},
                     {MenuItemName.Orders,    () => null /*new FacultySearchControl()*/},
                     {MenuItemName.Documents, () => null /*new SpecialtySearchControl()*/},
                     {MenuItemName.Sync,      () => null /*new ChairSearchControl()*/},

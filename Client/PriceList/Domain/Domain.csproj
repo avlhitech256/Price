@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\Enum\MenuItemName.cs" />
+    <Compile Include="Data\Object\BasketItem.cs" />
     <Compile Include="Data\Object\BrandItem.cs" />
     <Compile Include="Data\Object\CatalogItem.cs" />
     <Compile Include="DomainContext\DomainContext.cs" />

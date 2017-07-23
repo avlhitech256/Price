@@ -11,14 +11,14 @@ using Media.Image;
 
 namespace Domain.Data.Object
 {
-    public class CatalogItem : Notifier
+    public class BasketItem : Notifier
     {
         private string count;
         private decimal countValue;
         private IImageService imageService;
         private readonly IPrecisionService precisionService;
 
-        public CatalogItem(IPrecisionService precisionService, IImageService imageService)
+        public BasketItem(IPrecisionService precisionService, IImageService imageService)
         {
             this.imageService = imageService;
             this.precisionService = precisionService;
@@ -27,6 +27,8 @@ namespace Domain.Data.Object
         public long Id { get; set; }
 
         public long Position { get; set; }
+
+        public bool Selected { get; set; }
 
         public string Code { get; set; }
 

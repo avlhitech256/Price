@@ -42,6 +42,7 @@ namespace Catalog.ViewModel
             Instrument = false;
             edvanceSearchWidth = 0;
             enabledEdvanceSearch = false;
+            ShowPhotoOnMouseDoubleClick = false;
             Model = new CatalogModel(domainContext);
             SubscribeEvents();
         }
@@ -113,6 +114,8 @@ namespace Catalog.ViewModel
         {
             throw new System.NotImplementedException();
         }
+
+        public bool ShowPhotoOnMouseDoubleClick { get; set; }
 
         public bool Vaz
         {
