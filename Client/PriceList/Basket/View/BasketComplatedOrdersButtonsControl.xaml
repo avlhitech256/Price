@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Basket.View.BasketButtonControl"
+﻿<UserControl x:Class="Basket.View.BasketComplatedOrdersButtonsControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -25,12 +25,12 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <Button Content="Создать заказ"
+        <Button Content="Отправить заказы"
                 Grid.Row="1"
                 Grid.Column="1"
                 Width="120"
                 Style="{DynamicResource ButtonStyle}"/>
-        <Button Content="Добавить"
+        <Button Content="Вернуть в Корзину"
                 Grid.Row="3"
                 Grid.Column="1"
                 Width="120"

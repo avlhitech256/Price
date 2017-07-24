@@ -17,6 +17,7 @@ namespace Basket.ViewModel
             DomainContext = domainContext;
             Model = new BasketModel(domainContext);
             HasChanges = false;
+            ShowPhotoOnMouseDoubleClick = false;
         }
 
         #endregion
@@ -25,6 +26,8 @@ namespace Basket.ViewModel
 
         public IDomainContext DomainContext { get; }
         public IMessenger Messenger => DomainContext?.Messenger;
+
+        public bool ShowPhotoOnMouseDoubleClick { get; }
 
         private BasketModel Model { get; }
 

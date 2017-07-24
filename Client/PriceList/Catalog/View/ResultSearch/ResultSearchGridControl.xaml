@@ -21,7 +21,8 @@
             </Grid.RowDefinitions>
             <Label Name="TitleResult" 
                    Content="Результаты поиска" 
-                   Grid.Row="0" Margin="1" 
+                   Grid.Row="0" 
+                   Margin="1" 
                    HorizontalAlignment="Stretch" 
                    FontWeight="Bold" 
                    Foreground="White" 
@@ -31,8 +32,7 @@
                       AutoGenerateColumns="False"
                       VerticalAlignment="Stretch"
                       Height="Auto"
-                      Margin="2,27,0,3" 
-                      Grid.RowSpan="2"
+                      Grid.Row="1"
                       Foreground="#FF000059"
                       ItemsSource="{Binding Entities}"
                       SelectedItem="{Binding Path=SelectedItem, Mode=TwoWay}"
@@ -41,12 +41,17 @@
                       MouseDoubleClick="ResultSearchDataGrid_OnMouseDoubleClick">
                 <DataGrid.Columns>
                     <DataGridTextColumn IsReadOnly="True" 
-                                    Width="30"
+                                    Width="55"
                                     Binding="{Binding Path=Position}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style>
+                                <Setter Property="TextBlock.TextAlignment" Value="Right" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
                         <DataGridTextColumn.HeaderTemplate>
                             <DataTemplate>
                                 <TextBlock Text="№ п/п" 
-                                       Width="28"
+                                       Width="50"
                                        TextWrapping="Wrap" 
                                        TextAlignment="Center" 
                                        VerticalAlignment="Center"

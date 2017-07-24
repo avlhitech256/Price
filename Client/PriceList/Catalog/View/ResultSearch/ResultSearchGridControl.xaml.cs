@@ -33,7 +33,6 @@ namespace Catalog.View.ResultSearch
 
         #region Methods
 
-
         private void ResultSearchDataGrid_OnMouseUp(object sender, MouseButtonEventArgs e)
         {
             DataGrid grid = sender as DataGrid;

@@ -50,8 +50,20 @@
     <Compile Include="View\BasketButtonControl.xaml.cs">
       <DependentUpon>BasketButtonControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\BasketComplatedOrdersButtonsControl.xaml.cs">
+      <DependentUpon>BasketComplatedOrdersButtonsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\BasketComplatedOrdersGridControl.xaml.cs">
+      <DependentUpon>BasketComplatedOrdersGridControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\BasketControl.xaml.cs">
       <DependentUpon>BasketControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\BasketEditComplatedOrdersControl.xaml.cs">
+      <DependentUpon>BasketEditComplatedOrdersControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\BasketEditControl.xaml.cs">
+      <DependentUpon>BasketEditControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\BasketGridControl.xaml.cs">
       <DependentUpon>BasketGridControl.xaml</DependentUpon>
@@ -66,13 +78,33 @@
       <Project>{65b9a8c3-c1c1-4195-8eb6-cba4c7345c76}</Project>
       <Name>Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Photo\Photo.csproj">
+      <Project>{ee93dda8-df77-4e53-8b34-6439f3079748}</Project>
+      <Name>Photo</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Page Include="View\BasketButtonControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\BasketComplatedOrdersButtonsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\BasketComplatedOrdersGridControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\BasketControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\BasketEditComplatedOrdersControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\BasketEditControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
