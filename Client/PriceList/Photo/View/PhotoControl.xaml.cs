@@ -1,8 +1,8 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Input;
-using Catalog.ViewModel;
+using Photo.ViewModel;
 
-namespace Catalog.View.Photo
+namespace Photo.View
 {
     /// <summary>
     /// Логика взаимодействия для PhotoControl.xaml

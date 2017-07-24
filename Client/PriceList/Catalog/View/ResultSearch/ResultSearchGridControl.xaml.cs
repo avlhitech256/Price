@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Drawing;
-using System.IO;
 using System.Linq;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
-using Catalog.Model;
-using Catalog.View.Photo;
 using Catalog.ViewModel;
 using Common.Messenger;
 using Common.Messenger.Implementation;
@@ -17,6 +11,9 @@ using Domain.Data.Object;
 using Domain.DomainContext;
 using Domain.Event;
 using Media.Image;
+using Photo.Model;
+using Photo.View;
+using Photo.ViewModel;
 
 namespace Catalog.View.ResultSearch
 {

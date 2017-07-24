@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace Catalog.View.Photo
+namespace Photo.View
 {
     /// <summary>
     /// Логика взаимодействия для PhotoButtonControl.xaml

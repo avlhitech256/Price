@@ -1,6 +1,6 @@
 ﻿using Domain.ViewModel.Command;
 
-namespace Catalog.ViewModel.Command
+namespace Photo.ViewModel.Command
 {
     internal class CloseCommand : CommonCommand
     {

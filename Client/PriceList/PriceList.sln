@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseService", "Database
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basket", "Basket\Basket.csproj", "{F2340FEF-9582-419E-B58C-53AB4AD66299}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Photo", "Photo\Photo.csproj", "{EE93DDA8-DF77-4E53-8B34-6439F3079748}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{F2340FEF-9582-419E-B58C-53AB4AD66299}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2340FEF-9582-419E-B58C-53AB4AD66299}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2340FEF-9582-419E-B58C-53AB4AD66299}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE93DDA8-DF77-4E53-8B34-6439F3079748}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE93DDA8-DF77-4E53-8B34-6439F3079748}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE93DDA8-DF77-4E53-8B34-6439F3079748}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE93DDA8-DF77-4E53-8B34-6439F3079748}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

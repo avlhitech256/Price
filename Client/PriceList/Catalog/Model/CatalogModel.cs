@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Drawing;
-using System.IO;
-using System.Windows.Media.Imaging;
 using Catalog.Properties;
 using Common.Data.Notifier;
 using Common.Messenger;
@@ -129,9 +126,9 @@ namespace Catalog.Model
                 Currency = "EUR",
                 Photo = new List<byte[]>
                 {
-                    ImageService.ConvertToByteArray(Resources.Photo1),
-                    ImageService.ConvertToByteArray(Resources.Photo2),
-                    ImageService.ConvertToByteArray(Resources.Photo3)
+                    ImageService?.ConvertToByteArray(Resources.Photo1),
+                    ImageService?.ConvertToByteArray(Resources.Photo2),
+                    ImageService?.ConvertToByteArray(Resources.Photo3)
                 }
             };
             Entities.Add(item);
@@ -152,9 +149,9 @@ namespace Catalog.Model
                 Currency = "грн.",
                 Photo = new List<byte[]>
                 {
-                    ImageService.ConvertToByteArray(Resources.Photo2),
-                    ImageService.ConvertToByteArray(Resources.Photo3),
-                    ImageService.ConvertToByteArray(Resources.Photo4)
+                    ImageService?.ConvertToByteArray(Resources.Photo2),
+                    ImageService?.ConvertToByteArray(Resources.Photo3),
+                    ImageService?.ConvertToByteArray(Resources.Photo4)
                 }
             };
             Entities.Add(item);
@@ -175,8 +172,8 @@ namespace Catalog.Model
                 Currency = "грн.",
                 Photo = new List<byte[]>
                 {
-                    ImageService.ConvertToByteArray(Resources.Photo3),
-                    ImageService.ConvertToByteArray(Resources.Photo2)
+                    ImageService?.ConvertToByteArray(Resources.Photo3),
+                    ImageService?.ConvertToByteArray(Resources.Photo2)
                 }
             };
             //recourceReader.GetResourceData("Photo3", out typeResource, out photo);
@@ -199,8 +196,8 @@ namespace Catalog.Model
                 Currency = "USD",
                 Photo = new List<byte[]>
                 {
-                    ImageService.ConvertToByteArray(Resources.Photo4),
-                    ImageService.ConvertToByteArray(Resources.Photo5)
+                    ImageService?.ConvertToByteArray(Resources.Photo4),
+                    ImageService?.ConvertToByteArray(Resources.Photo5)
 
                 }
             };
@@ -224,9 +221,9 @@ namespace Catalog.Model
                 Currency = "грн.",
                 Photo = new List<byte[]>
                 {
-                    ImageService.ConvertToByteArray(Resources.Photo5),
-                    ImageService.ConvertToByteArray(Resources.Photo6),
-                    ImageService.ConvertToByteArray(Resources.Photo3)
+                    ImageService?.ConvertToByteArray(Resources.Photo5),
+                    ImageService?.ConvertToByteArray(Resources.Photo6),
+                    ImageService?.ConvertToByteArray(Resources.Photo3)
                 }
             };
             //recourceReader.GetResourceData("Photo5", out typeResource, out photo);

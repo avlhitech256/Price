@@ -342,6 +342,10 @@
       <Project>{b7fc1012-787d-489f-a846-32062538cb77}</Project>
       <Name>Media</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Photo\Photo.csproj">
+      <Project>{ee93dda8-df77-4e53-8b34-6439f3079748}</Project>
+      <Name>Photo</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Picture\avtoVaz.jpg">

@@ -48,12 +48,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\CatalogModel.cs" />
-    <Compile Include="Model\PhotoModel.cs" />
-    <Compile Include="ViewModel\Command\CloseCommand.cs" />
-    <Compile Include="ViewModel\Command\NextCommand.cs" />
-    <Compile Include="ViewModel\Command\PreviousCommand.cs" />
-    <Compile Include="ViewModel\Command\ScaleCommand.cs" />
-    <Compile Include="ViewModel\PhotoViewModel.cs" />
     <Compile Include="View\CatalogControl.xaml.cs">
       <DependentUpon>CatalogControl.xaml</DependentUpon>
     </Compile>
@@ -62,12 +56,6 @@
     </Compile>
     <Compile Include="View\Detail\DetailFieldsControl.xaml.cs">
       <DependentUpon>DetailFieldsControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Photo\PhotoButtonControl.xaml.cs">
-      <DependentUpon>PhotoButtonControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Photo\PhotoControl.xaml.cs">
-      <DependentUpon>PhotoControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ResultSearch\ResultSearchGridControl.xaml.cs">
       <DependentUpon>ResultSearchGridControl.xaml</DependentUpon>
@@ -115,6 +103,10 @@
       <Project>{B7FC1012-787D-489F-A846-32062538CB77}</Project>
       <Name>Media</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Photo\Photo.csproj">
+      <Project>{EE93DDA8-DF77-4E53-8B34-6439F3079748}</Project>
+      <Name>Photo</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Page Include="View\CatalogControl.xaml">
@@ -126,14 +118,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Detail\DetailFieldsControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Photo\PhotoButtonControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Photo\PhotoControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -237,12 +221,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Picture\expand.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Picture\left.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Picture\right.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

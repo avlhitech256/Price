@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Collections.Generic;
 using System.Globalization;
-using System.Windows;
 using System.Windows.Media.Imaging;
 using Common.Data.Notifier;
 using Domain.Properties;

@@ -4,11 +4,11 @@ using System.Timers;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
-using Catalog.ViewModel;
 using Common.Messenger;
 using Common.Messenger.Implementation;
 using Domain.DomainContext;
 using Domain.Event;
+using Photo.ViewModel;
 using PriceList.View.Child;
 using PriceList.ViewModel.MainWindow;
 

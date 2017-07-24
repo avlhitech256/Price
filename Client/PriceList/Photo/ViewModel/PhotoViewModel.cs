@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Drawing;
-using System.Windows;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
-using Catalog.Model;
-using Catalog.Properties;
-using Catalog.ViewModel.Command;
 using Common.Data.Notifier;
 using Common.Messenger;
 using Common.Messenger.Implementation;
@@ -14,8 +8,11 @@ using Domain.DomainContext;
 using Domain.Event;
 using Domain.ViewModel;
 using Media.Image;
+using Photo.Model;
+using Photo.Properties;
+using Photo.ViewModel.Command;
 
-namespace Catalog.ViewModel
+namespace Photo.ViewModel
 {
     public class PhotoViewModel : Notifier, IChildWindowViewModel
     {

@@ -3,7 +3,7 @@ using System.Linq;
 using System.Windows.Media.Imaging;
 using Common.Data.Notifier;
 
-namespace Catalog.Model
+namespace Photo.Model
 {
     public class PhotoModel : Notifier
     {

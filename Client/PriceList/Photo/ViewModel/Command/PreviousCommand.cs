@@ -2,13 +2,13 @@
 using System.Linq;
 using Domain.ViewModel.Command;
 
-namespace Catalog.ViewModel.Command
+namespace Photo.ViewModel.Command
 {
-    internal class NextCommand : CommonCommand
+    internal class PreviousCommand : CommonCommand
     {
         #region Constructors
 
-        public NextCommand(object viewModel) : base(viewModel)
+        public PreviousCommand(object viewModel) : base(viewModel)
         {
             if (PhotoViewModel != null)
             {
@@ -23,7 +23,7 @@ namespace Catalog.ViewModel.Command
 
         #region Properties
 
-        private PhotoViewModel PhotoViewModel => (PhotoViewModel) ViewModel;
+        private PhotoViewModel PhotoViewModel => (PhotoViewModel)ViewModel;
 
         #endregion
 
@@ -47,15 +47,16 @@ namespace Catalog.ViewModel.Command
         private bool CalculateCanExecute()
         {
             bool result = (PhotoViewModel?.Entities?.Any() ?? false) &&
-                          !Equals(PhotoViewModel.Entities.LastOrDefault(), PhotoViewModel?.SelectedItem);
+                          !Equals(PhotoViewModel.Entities.FirstOrDefault(), PhotoViewModel?.SelectedItem);
             return result;
         }
 
         public override void Execute(object parameter)
         {
-            PhotoViewModel?.Next();
+            PhotoViewModel?.Previous();
         }
 
         #endregion
     }
+
 }
