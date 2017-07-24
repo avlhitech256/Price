@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Media.Imaging;
 
@@ -70,6 +73,15 @@ namespace Media.Image
                 image.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
                 return stream.ToArray();
             }
+        }
+
+        public ObservableCollection<BitmapSource> Assemble(IEnumerable<byte[]> photos)
+        {
+            var result = new ObservableCollection<BitmapSource>();
+
+            photos?.ToList().ForEach(x => result.Add(ConvertToBitmapImage(x)));
+
+            return result;
         }
     }
 }

@@ -2,11 +2,11 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Common.Data.Enum;
+using Common.Event;
 using Common.Messenger;
 using Common.Messenger.Implementation;
-using Domain.Data.Enum;
 using Domain.DomainContext;
-using Domain.Event;
 using PriceList.ViewModel.TopMenu;
 
 namespace PriceList.View.TopMenu

@@ -52,6 +52,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Service\Implementation\PhotoService.cs" />
+    <Compile Include="Service\IPhotoService.cs" />
     <Compile Include="ViewModel\Command\CloseCommand.cs" />
     <Compile Include="ViewModel\Command\NextCommand.cs" />
     <Compile Include="ViewModel\Command\PreviousCommand.cs" />
@@ -68,10 +70,6 @@
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{fc5aa2b4-3b40-468f-b13e-f16b2ee8fdea}</Project>
       <Name>Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Domain\Domain.csproj">
-      <Project>{65b9a8c3-c1c1-4195-8eb6-cba4c7345c76}</Project>
-      <Name>Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\Media\Media.csproj">
       <Project>{b7fc1012-787d-489f-a846-32062538cb77}</Project>

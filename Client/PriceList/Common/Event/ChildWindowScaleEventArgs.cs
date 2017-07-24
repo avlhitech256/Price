@@ -1,4 +1,4 @@
-﻿namespace Domain.Event
+﻿namespace Common.Event
 {
     public class ChildWindowScaleEventArgs
     {

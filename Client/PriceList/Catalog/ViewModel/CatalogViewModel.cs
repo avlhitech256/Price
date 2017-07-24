@@ -2,11 +2,11 @@
 using System.ComponentModel;
 using Catalog.Model;
 using Common.Data.Notifier;
+using Common.Event;
 using Common.Messenger;
 using Common.Messenger.Implementation;
 using Domain.Data.Object;
 using Domain.DomainContext;
-using Domain.Event;
 using Domain.ViewModel;
 
 namespace Catalog.ViewModel

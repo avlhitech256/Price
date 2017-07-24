@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Domain.Data.Enum;
+using Common.Data.Enum;
 using Domain.DomainContext;
 
 namespace PriceList.ViewModel.MainWindow

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Linq;
-using Domain.ViewModel.Command;
+using Common.ViewModel.Command;
 
 namespace Photo.ViewModel.Command
 {

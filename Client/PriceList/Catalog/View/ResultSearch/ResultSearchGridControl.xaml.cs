@@ -1,19 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media.Imaging;
 using Catalog.ViewModel;
-using Common.Messenger;
-using Common.Messenger.Implementation;
-using Domain.Data.Object;
 using Domain.DomainContext;
-using Domain.Event;
-using Media.Image;
-using Photo.Model;
-using Photo.View;
-using Photo.ViewModel;
+using Photo.Service;
 
 namespace Catalog.View.ResultSearch
 {
@@ -37,9 +27,7 @@ namespace Catalog.View.ResultSearch
 
         private IDomainContext DomainContext => ViewModel?.DomainContext;
 
-        private IMessenger Messenger => DomainContext?.Messenger;
-
-        private IImageService ImageService => DomainContext?.ImageService;
+        private IPhotoService PhotoService => DomainContext?.PhotoService;
 
         #endregion
 
@@ -75,25 +63,9 @@ namespace Catalog.View.ResultSearch
         {
             if (ViewModel != null)
             {
-                CatalogItem selectedItem = ViewModel.SelectedItem;
-                var photoModel = new PhotoModel(Assemble(selectedItem.Photo));
-                var photoViewModel = new PhotoViewModel(ViewModel.DomainContext, photoModel);
-                var photoView = new PhotoControl();
-                var args = new ChildWindowEventArg(photoView, photoViewModel);
-                Messenger.Send(CommandName.ShowImages, args);
+                IEnumerable<byte[]> photos = ViewModel.SelectedItem.Photo;
+                PhotoService.ShowPhotos(photos);
             }
-        }
-
-        private ObservableCollection<BitmapSource> Assemble(List<byte[]> photos)
-        {
-            var result = new ObservableCollection<BitmapSource>();
-
-            if (photos != null && photos.Any())
-            {
-                photos.ForEach(x => result.Add(ImageService?.ConvertToBitmapImage(x)));
-            }
-
-            return result;
         }
 
         #endregion

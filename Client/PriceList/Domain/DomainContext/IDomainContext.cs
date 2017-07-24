@@ -4,6 +4,7 @@ using Domain.Service.Precision;
 using Domain.ViewModel;
 using Media.Color;
 using Media.Image;
+using Photo.Service;
 
 namespace Domain.DomainContext
 {
@@ -20,6 +21,9 @@ namespace Domain.DomainContext
 
         [CanBeNull]
         IImageService ImageService { get; }
+
+        [CanBeNull]
+        IPhotoService PhotoService { get; }
 
         [CanBeNull]
         IPrecisionService PrecisionService { get; }

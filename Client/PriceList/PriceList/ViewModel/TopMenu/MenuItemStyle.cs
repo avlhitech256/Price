@@ -1,6 +1,6 @@
 ﻿using System.Windows.Media;
+using Common.Data.Enum;
 using Common.Data.Notifier;
-using Domain.Data.Enum;
 using Domain.DomainContext;
 using Media.Color;
 

@@ -1,4 +1,6 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Drawing;
 using System.Windows.Media.Imaging;
 
 namespace Media.Image
@@ -14,5 +16,7 @@ namespace Media.Image
         byte[] ConvertToByteArray(System.Drawing.Image image);
 
         byte[] ConvertToByteArrayConvert2(System.Drawing.Image image);
+
+        ObservableCollection<BitmapSource> Assemble(IEnumerable<byte[]> photos);
     }
 }

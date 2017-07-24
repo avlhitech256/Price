@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Basket.ViewModel;
 using Catalog.ViewModel;
-using Domain.Data.Enum;
+using Common.Data.Enum;
 using Domain.DomainContext;
 
 namespace PriceList.ViewModel.MainWindow

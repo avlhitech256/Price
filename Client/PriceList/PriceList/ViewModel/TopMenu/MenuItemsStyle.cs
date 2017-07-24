@@ -2,10 +2,10 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Media;
+using Common.Data.Enum;
 using Common.Data.Notifier;
-using Domain.Data.Enum;
+using Common.Event;
 using Domain.DomainContext;
-using Domain.Event;
 
 namespace PriceList.ViewModel.TopMenu
 {

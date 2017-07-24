@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Windows.Controls;
-using Domain.ViewModel;
+using Common.ViewModel;
 
-namespace Domain.Event
+namespace Common.Event
 {
     public class ChildWindowEventArg : EventArgs
     {

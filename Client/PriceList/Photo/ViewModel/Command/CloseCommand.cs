@@ -1,4 +1,4 @@
-﻿using Domain.ViewModel.Command;
+﻿using Common.ViewModel.Command;
 
 namespace Photo.ViewModel.Command
 {

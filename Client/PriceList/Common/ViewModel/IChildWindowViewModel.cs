@@ -1,4 +1,4 @@
-﻿namespace Domain.ViewModel
+﻿namespace Common.ViewModel
 {
     public delegate void HideWindow();
 

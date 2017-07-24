@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Windows.Controls;
 using Basket.View;
+using Common.Data.Enum;
 using CommonControl.EditControl;
 using CommonControl.SearchControl;
-using Domain.Data.Enum;
 using Domain.DomainContext;
 using Domain.ViewModel;
 using CatalogControl = Catalog.View.CatalogControl;

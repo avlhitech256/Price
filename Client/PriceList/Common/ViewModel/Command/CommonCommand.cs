@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace Domain.ViewModel.Command
+namespace Common.ViewModel.Command
 {
     abstract public class CommonCommand : ICommand
     {

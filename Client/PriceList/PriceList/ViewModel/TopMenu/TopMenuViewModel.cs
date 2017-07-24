@@ -1,8 +1,8 @@
 ﻿using Common.Data.Notifier;
+using Common.Event;
 using Common.Messenger;
 using Common.Messenger.Implementation;
 using Domain.DomainContext;
-using Domain.Event;
 using Media.Color;
 
 namespace PriceList.ViewModel.TopMenu

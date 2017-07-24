@@ -2,11 +2,10 @@
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Common.Data.Notifier;
+using Common.Event;
 using Common.Messenger;
 using Common.Messenger.Implementation;
-using Domain.DomainContext;
-using Domain.Event;
-using Domain.ViewModel;
+using Common.ViewModel;
 using Media.Image;
 using Photo.Model;
 using Photo.Properties;
@@ -31,9 +30,10 @@ namespace Photo.ViewModel
 
         #region Constructors
 
-        public PhotoViewModel(IDomainContext domainContext, PhotoModel model)
+        public PhotoViewModel(IMessenger messenger, IImageService imageService, PhotoModel model)
         {
-            DomainContext = domainContext;
+            Messenger = messenger;
+            ImageService = imageService;
             Model = model;
             FullScale = false;
             NextCommand = new NextCommand(this);
@@ -47,11 +47,9 @@ namespace Photo.ViewModel
 
         #region Properties
 
-        private IDomainContext DomainContext { get; }
+        private IMessenger Messenger { get; }
 
-        private IMessenger Messenger => DomainContext?.Messenger;
-
-        private IImageService ImageService => DomainContext?.ImageService;
+        private IImageService ImageService { get; }
 
 
         private PhotoModel Model

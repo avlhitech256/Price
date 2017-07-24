@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Domain.Event
+namespace Common.Event
 {
     public class MinWidthEventArgs : EventArgs
     {

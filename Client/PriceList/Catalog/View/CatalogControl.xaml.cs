@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Windows.Media.Animation;
 using Catalog.ViewModel;
+using Common.Event;
 using Common.Messenger.Implementation;
 using CommonControl.SearchControl;
 using Domain.Data.Object;
-using Domain.Event;
 
 namespace Catalog.View
 {
