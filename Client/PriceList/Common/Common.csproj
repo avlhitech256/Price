@@ -48,9 +48,11 @@
     <Compile Include="Data\Enum\MenuItemName.cs" />
     <Compile Include="Data\Exception\BusinessLogicException.cs" />
     <Compile Include="Data\Notifier\Notifier.cs" />
+    <Compile Include="Event\DecimalValueChangedEventArgs.cs" />
     <Compile Include="Event\ChildWindowEventArg.cs" />
     <Compile Include="Event\ChildWindowScaleEventArgs.cs" />
     <Compile Include="Event\DoubleAnimationEventArgs.cs" />
+    <Compile Include="Event\EventHandlers.cs" />
     <Compile Include="Event\MenuChangedEventArgs.cs" />
     <Compile Include="Event\MinWidthEventArgs.cs" />
     <Compile Include="Event\TopMenuMouseOverEventArgs.cs" />

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Windows.Media;
 using Catalog.Properties;
 using Common.Data.Notifier;
+using Common.Event;
 using Common.Messenger;
 using Common.Messenger.Implementation;
 using Domain.Data.Object;
@@ -19,6 +21,8 @@ namespace Catalog.Model
         private CatalogItem selectedItem;
         private CatalogItem oldSelectedItem;
         private ObservableCollection<CatalogItem> entities;
+        private decimal amount;
+        public event CountChangedEventHandler CountChanged;
 
         #endregion
 
@@ -27,6 +31,7 @@ namespace Catalog.Model
         public CatalogModel(IDomainContext domainContext)
         {
             DomainContext = domainContext;
+            Amount = 0;
             InitData();
         }
 
@@ -52,8 +57,10 @@ namespace Catalog.Model
             {
                 if (selectedItem != value)
                 {
+                    CatalogItem oldValue = SelectedItem;
                     selectedItem = value;
                     OnPropertyChanged();
+                    OnChangeSelectedItem(oldValue, value);
                     SendSetImageMessage();
                 }
             }
@@ -75,9 +82,46 @@ namespace Catalog.Model
             }
         }
 
+        public decimal Amount
+        {
+            get
+            {
+                return amount;
+            }
+            set
+            {
+                if (amount != value)
+                {
+                    amount = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         #endregion
 
         #region Methods
+
+        private void OnChangeSelectedItem(CatalogItem oldItem, CatalogItem newItem)
+        {
+            UnsubscribeSelectedItemEvents(oldItem);
+            SubscribeSelectedItemEvents(newItem);
+        }
+
+        private void UnsubscribeSelectedItemEvents(CatalogItem oldItem)
+        {
+            oldItem.CountChanged -= OnAmountChanged;
+        }
+        private void SubscribeSelectedItemEvents(CatalogItem newItem)
+        {
+            newItem.CountChanged += OnAmountChanged;
+        }
+
+        private void OnAmountChanged(object sender, DecimalValueChangedEventArgs e)
+        {
+            Amount = Amount - e.OldValue + e.NewValue;
+            CountChanged?.Invoke(this, e);
+        }
 
         private void SendSetImageMessage()
         {

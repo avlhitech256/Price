@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Windows.Media.Imaging;
 using Common.Data.Notifier;
+using Common.Event;
 using Domain.Properties;
 using Domain.Service.Precision;
 using Media.Image;
@@ -14,6 +15,8 @@ namespace Domain.Data.Object
         private decimal countValue;
         private IImageService imageService;
         private readonly IPrecisionService precisionService;
+
+        public event CountChangedEventHandler CountChanged;
 
         public CatalogItem(IPrecisionService precisionService, IImageService imageService)
         {
@@ -89,5 +92,14 @@ namespace Domain.Data.Object
                 }
             }
         }
+
+        #region Methods
+
+        public void OnCountChanged(decimal oldValue, decimal newValue)
+        {
+            CountChanged?.Invoke(this, new DecimalValueChangedEventArgs(Id, oldValue, newValue));
+        }
+
+        #endregion
     }
 }
