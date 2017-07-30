@@ -1,5 +1,6 @@
 ﻿using Common.Annotations;
 using Common.Messenger;
+using DatabaseService.DataService;
 using Domain.Service.Precision;
 using Domain.ViewModel;
 using Media.Color;
@@ -27,6 +28,9 @@ namespace Domain.DomainContext
 
         [CanBeNull]
         IPrecisionService PrecisionService { get; }
+
+        [CanBeNull]
+        IDataService DataService { get; }
 
         bool IsEditControl { get; set; }
 

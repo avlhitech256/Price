@@ -8,6 +8,7 @@ using Common.Event;
 using Common.Messenger;
 using Common.Messenger.Implementation;
 using Domain.DomainContext;
+using Domain.DomainContext.Implementation;
 using Photo.ViewModel;
 using PriceList.View.Child;
 using PriceList.ViewModel.MainWindow;

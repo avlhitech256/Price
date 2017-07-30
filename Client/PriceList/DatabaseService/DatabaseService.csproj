@@ -31,8 +31,21 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -41,7 +54,57 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataBaseContext\DataBaseContext.cs" />
+    <Compile Include="DataBaseContext\Entities\BasketItemEntity.cs" />
+    <Compile Include="DataBaseContext\Entities\BrandItemEntity.cs" />
+    <Compile Include="DataBaseContext\Entities\CatalogItemEntity.cs" />
+    <Compile Include="DataBaseContext\Entities\OrderEntity.cs" />
+    <Compile Include="DataBaseContext\Entities\OrderItemEntity.cs" />
+    <Compile Include="DataBaseContext\Entities\PhotoItemEntity.cs" />
+    <Compile Include="DataBaseContext\Initializer\DataBaseInitializer.cs" />
+    <Compile Include="DataService\IDataService.cs" />
+    <Compile Include="DataService\Implementation\DataService.cs" />
+    <Compile Include="Objects\Enum\OrderStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\24029_F.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\87930_F.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\87930_F_1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\87930_F_2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\98486_F.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\98486_F_1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Media\Media.csproj">
+      <Project>{b7fc1012-787d-489f-a846-32062538cb77}</Project>
+      <Name>Media</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

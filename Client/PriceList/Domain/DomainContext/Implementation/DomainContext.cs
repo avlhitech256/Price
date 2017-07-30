@@ -3,6 +3,8 @@ using Common.Annotations;
 using Common.Data.Notifier;
 using Common.Messenger;
 using Common.Messenger.Implementation;
+using DatabaseService.DataService;
+using DatabaseService.DataService.Implementation;
 using Domain.Service.Precision;
 using Domain.Service.Precision.Implementation;
 using Domain.ViewModel;
@@ -12,7 +14,7 @@ using Media.Image;
 using Photo.Service;
 using Photo.Service.Implementation;
 
-namespace Domain.DomainContext
+namespace Domain.DomainContext.Implementation
 {
     public class DomainContext : Notifier, IDomainContext
     {
@@ -37,6 +39,7 @@ namespace Domain.DomainContext
             ImageService = new ImageService();
             PhotoService = new PhotoService(Messenger, ImageService);
             PrecisionService = new PrecisionService(2, true);
+            DataService = new DataService();
         }
 
         #endregion
@@ -67,6 +70,7 @@ namespace Domain.DomainContext
         public IPhotoService PhotoService { get; }
 
         public IPrecisionService PrecisionService { get; }
+        public IDataService DataService { get; }
 
         public bool IsEditControl
         {

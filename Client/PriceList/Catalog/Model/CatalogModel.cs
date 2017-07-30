@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Windows.Media;
+using System.Linq;
 using Catalog.Properties;
 using Common.Data.Notifier;
 using Common.Event;
 using Common.Messenger;
 using Common.Messenger.Implementation;
+using DatabaseService.DataBaseContext.Entities;
+using DatabaseService.DataService;
 using Domain.Data.Object;
 using Domain.DomainContext;
 using Domain.Service.Precision;
@@ -46,6 +48,8 @@ namespace Catalog.Model
         private IImageService ImageService => DomainContext?.ImageService;
 
         private IPrecisionService PrecisionService => DomainContext?.PrecisionService;
+
+        private IDataService DataServise => DomainContext.DataService;
 
         public CatalogItem SelectedItem
         {
@@ -110,11 +114,18 @@ namespace Catalog.Model
 
         private void UnsubscribeSelectedItemEvents(CatalogItem oldItem)
         {
-            oldItem.CountChanged -= OnAmountChanged;
+            if (oldItem != null)
+            {
+                oldItem.CountChanged -= OnAmountChanged;
+            }
         }
+
         private void SubscribeSelectedItemEvents(CatalogItem newItem)
         {
-            newItem.CountChanged += OnAmountChanged;
+            if (newItem != null)
+            {
+                newItem.CountChanged += OnAmountChanged;
+            }
         }
 
         private void OnAmountChanged(object sender, DecimalValueChangedEventArgs e)
@@ -130,6 +141,8 @@ namespace Catalog.Model
 
         private void InitData()
         {
+            List<CatalogItemEntity> catalogItemEntities = DataServise.DataBaseContext.CatalogItemEntities.ToList();
+
             //ResourceReader recourceReader = new ResourceReader("Resources.resx");
 
             long id = 0L;
