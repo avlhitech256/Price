@@ -62,7 +62,7 @@ namespace Basket.View
         {
             if (ViewModel != null)
             {
-                IEnumerable<byte[]> photos = ViewModel.SelectedItem.Photo;
+                IEnumerable<byte[]> photos = ViewModel.SelectedItem.Photos;
                 PhotoService.ShowPhotos(photos);
             }
         }

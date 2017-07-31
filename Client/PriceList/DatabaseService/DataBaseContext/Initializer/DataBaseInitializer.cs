@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
 using DatabaseService.DataBaseContext.Entities;
 using DatabaseService.Properties;
 using Media.Image;
@@ -22,6 +21,13 @@ namespace DatabaseService.DataBaseContext.Initializer
             PopulateCatalogItemEntities(dataBaseContext, brandItems, photoItems);
             dataBaseContext.SaveChanges();
             base.Seed(dataBaseContext);
+        }
+
+        private void CreateIndex(DataBaseContext dataBaseContext)
+        {
+            dataBaseContext.Database.ExecuteSqlCommand
+                ("CREATE INDEX Index_CatalogItemEntity_Name ON CatalogItemEntities (Name)");
+            //("CREATE INDEX Index_CatalogItemEntity_Name ON CatalogItemEntities (Id) INCLUDE (Name)");
         }
 
         private List<BrandItemEntity> PopulateBrandItemEntities(DataBaseContext dataBaseContext)

@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\CatalogModel.cs" />
+    <Compile Include="SearchCriteria\CatalogSearchCriteria.cs" />
     <Compile Include="View\CatalogControl.xaml.cs">
       <DependentUpon>CatalogControl.xaml</DependentUpon>
     </Compile>
@@ -92,9 +93,7 @@
     </Compile>
     <Compile Include="ViewModel\CatalogViewModel.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="SearchCriteria\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\CommonControl\CommonControl.csproj">
       <Project>{9c178753-f272-451b-8cc3-8b78a275bc48}</Project>

@@ -1,4 +1,5 @@
-﻿using DatabaseService.DataBaseContext.Entities;
+﻿using System.Diagnostics;
+using DatabaseService.DataBaseContext.Entities;
 using DatabaseService.DataBaseContext.Initializer;
 
 namespace DatabaseService.DataBaseContext
@@ -16,6 +17,7 @@ namespace DatabaseService.DataBaseContext
         public DataBaseContext()
             : base("name=DataBaseContext")
         {
+            Database.Log = (s => Debug.WriteLine(s));
             Database.SetInitializer(new DataBaseInitializer());
         }
 

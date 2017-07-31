@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.Entity;
 using System.Linq;
 using Catalog.Properties;
+using Catalog.SearchCriteria;
+using Common.Data.Holders;
 using Common.Data.Notifier;
 using Common.Event;
 using Common.Messenger;
@@ -34,6 +37,7 @@ namespace Catalog.Model
         {
             DomainContext = domainContext;
             Amount = 0;
+            SearchCriteria = new CatalogSearchCriteria();
             InitData();
         }
 
@@ -50,6 +54,8 @@ namespace Catalog.Model
         private IPrecisionService PrecisionService => DomainContext?.PrecisionService;
 
         private IDataService DataServise => DomainContext.DataService;
+
+        public CatalogSearchCriteria SearchCriteria { get; }
 
         public CatalogItem SelectedItem
         {
@@ -139,6 +145,36 @@ namespace Catalog.Model
             Messenger.Send(CommandName.SetImage, SelectedItem);
         }
 
+        public void SelectEntities()
+        {
+            Func<string, string[]> prepareArray =
+                x =>
+                {
+                    List<string> results = x.Split(',', ' ').ToList();
+                    results.RemoveAll(string.IsNullOrWhiteSpace);
+                    return results.ToArray();
+                };
+
+            Entities.Clear();
+
+            string[] codes = prepareArray(SearchCriteria.Code);
+            string[] lexemes = prepareArray(SearchCriteria.Name);
+            string[] articles = prepareArray(SearchCriteria.Article);
+            LongHolder position = new LongHolder();
+
+            DataServise.Select<CatalogItemEntity>()
+                .Include(x => x.Brand)
+                .Where(x => !codes.Any() || codes.Contains(x.Code))
+                .Where(n => lexemes.Any(s => n.Name.Contains(s)))
+                .Where(x => !articles.Any() || articles.Contains(x.Article))
+                .Where(x => !SearchCriteria.IsNew || (x.IsNew && x.LastUpdated <= DateTimeOffset.Now.AddDays(-14)))
+                .Where(x => !SearchCriteria.PriceIsDown || (x.PriceIsDown && x.LastUpdated <= DateTimeOffset.Now.AddDays(-7)))
+                .Where(x => !SearchCriteria.PriceIsUp || (x.PriceIsUp && x.LastUpdated <= DateTimeOffset.Now.AddDays(-7)))
+                .Where(x => SearchCriteria.BrandId <= -1L || x.Brand.Id == SearchCriteria.BrandId)
+                .ToList()
+                .ForEach(x => Entities.Add(new CatalogItem(x, PrecisionService, ImageService) { Position = ++position.Value}));
+        }
+
         private void InitData()
         {
             List<CatalogItemEntity> catalogItemEntities = DataServise.DataBaseContext.CatalogItemEntities.ToList();
@@ -181,7 +217,7 @@ namespace Catalog.Model
                 Price = 50.52M,
                 Count = "0.00",
                 Currency = "EUR",
-                Photo = new List<byte[]>
+                Photos = new List<byte[]>
                 {
                     ImageService?.ConvertToByteArray(Resources.Photo1),
                     ImageService?.ConvertToByteArray(Resources.Photo2),
@@ -204,7 +240,7 @@ namespace Catalog.Model
                 Price = 320.45M,
                 Count = "0.00",
                 Currency = "грн.",
-                Photo = new List<byte[]>
+                Photos = new List<byte[]>
                 {
                     ImageService?.ConvertToByteArray(Resources.Photo2),
                     ImageService?.ConvertToByteArray(Resources.Photo3),
@@ -227,14 +263,14 @@ namespace Catalog.Model
                 Price = 18.65M,
                 Count = "0.00",
                 Currency = "грн.",
-                Photo = new List<byte[]>
+                Photos = new List<byte[]>
                 {
                     ImageService?.ConvertToByteArray(Resources.Photo3),
                     ImageService?.ConvertToByteArray(Resources.Photo2)
                 }
             };
             //recourceReader.GetResourceData("Photo3", out typeResource, out photo);
-            //item.Photo = photo;
+            //item.Photos = photo;
             Entities.Add(item);
             //---------------------------------------------------------------------
             item = new CatalogItem(PrecisionService, ImageService)
@@ -251,7 +287,7 @@ namespace Catalog.Model
                 Price = 120.78M,
                 Count = "0.00",
                 Currency = "USD",
-                Photo = new List<byte[]>
+                Photos = new List<byte[]>
                 {
                     ImageService?.ConvertToByteArray(Resources.Photo4),
                     ImageService?.ConvertToByteArray(Resources.Photo5)
@@ -259,7 +295,7 @@ namespace Catalog.Model
                 }
             };
             //recourceReader.GetResourceData("Photo4", out typeResource, out photo);
-            //item.Photo = photo;
+            //item.Photos = photo;
             Entities.Add(item);
             //---------------------------------------------------------------------
             item = new CatalogItem(PrecisionService, ImageService)
@@ -276,7 +312,7 @@ namespace Catalog.Model
                 Price = 1850.46M,
                 Count = "0.00",
                 Currency = "грн.",
-                Photo = new List<byte[]>
+                Photos = new List<byte[]>
                 {
                     ImageService?.ConvertToByteArray(Resources.Photo5),
                     ImageService?.ConvertToByteArray(Resources.Photo6),
@@ -284,7 +320,7 @@ namespace Catalog.Model
                 }
             };
             //recourceReader.GetResourceData("Photo5", out typeResource, out photo);
-            //item.Photo = photo;
+            //item.Photos = photo;
             Entities.Add(item);
 
             SelectedItem = Entities[0];

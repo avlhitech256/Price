@@ -32,5 +32,11 @@ namespace DatabaseService.DataBaseContext.Entities
         public virtual List<PhotoItemEntity> Photos { get; set; }
 
         public DateTimeOffset LastUpdated { get; set; }
+
+        public bool PriceIsUp { get; set; }
+        
+        public bool PriceIsDown { get; set; }
+
+        public bool IsNew { get; set; }
     }
 }

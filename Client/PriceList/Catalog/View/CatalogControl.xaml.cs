@@ -68,7 +68,7 @@ namespace Catalog.View
 
         private void SetImage(CatalogItem item)
         {
-            byte[] photo = item.Photo[0];
+            byte[] photo = item.Photos[0];
             DetailControl.DetailImage.Source = ImageService?.ConvertToBitmapImage(photo);
         }
 
