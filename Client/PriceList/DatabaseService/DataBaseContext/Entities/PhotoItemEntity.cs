@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DatabaseService.DataBaseContext.Entities
 {
@@ -8,5 +9,11 @@ namespace DatabaseService.DataBaseContext.Entities
 
         [Column(TypeName = "image")]
         public byte[] Photo { get; set; }
+
+        public virtual List<CatalogItemEntity> CatalogItems { get; set; }
+
+        public virtual List<BasketItemEntity> BasketItems { get; set; }
+
+        public virtual List<OrderItemEntity> OrderItems { get; set; }
     }
 }

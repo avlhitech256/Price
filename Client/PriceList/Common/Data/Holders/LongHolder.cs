@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Common.Data.Holders
+﻿namespace Common.Data.Holders
 {
     public class LongHolder : Notifier.Notifier
     {

@@ -19,11 +19,13 @@
                 Grid.Row="0"
                 Grid.Column="1"
                 Width="100"
-                Style="{DynamicResource ButtonStyle}"/>
+                Style="{DynamicResource ButtonStyle}"
+                Command="{Binding Path=SearchCommand}"/>
         <Button Content="Сбросить"
                 Grid.Row="1"
                 Grid.Column="1"
                 Width="100"
-                Style="{DynamicResource ButtonStyle}"/>
+                Style="{DynamicResource ButtonStyle}"
+                Command="{Binding Path=ClearCommand}"/>
     </Grid>
 </UserControl>

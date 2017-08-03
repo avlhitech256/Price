@@ -1,4 +1,7 @@
-﻿using Common.Data.Notifier;
+﻿using System;
+using System.Runtime.CompilerServices;
+using Common.Annotations;
+using Common.Data.Notifier;
 
 namespace Catalog.SearchCriteria
 {
@@ -13,6 +16,8 @@ namespace Catalog.SearchCriteria
         private bool priceIsDown;
         private bool priceIsUp;
         private bool isNew;
+        private bool isModified;
+        private bool isEmpty;
 
         #endregion
 
@@ -27,11 +32,29 @@ namespace Catalog.SearchCriteria
             PriceIsDown = false;
             PriceIsUp = false;
             IsNew = false;
+            IsEmpty = true;
         }
 
         #endregion
 
         #region Properties
+
+        public bool IsModified
+        {
+            get
+            {
+                return isModified;
+            }
+            private set
+            {
+                if (isModified != value)
+                {
+                    isModified = value;
+                    OnPropertyChanged();
+                    OnSearchCriteriaChanged();
+                }
+            }
+        }
 
         public string Code
         {
@@ -144,6 +167,81 @@ namespace Catalog.SearchCriteria
                 }
             }
         }
+
+        public bool IsEmpty
+        {
+            get
+            {
+                return isEmpty;
+            }
+            set
+            {
+                if (isEmpty != value)
+                {
+                    isEmpty = value;
+                    OnPropertyChanged();
+                    OnSearchCriteriaCleared();
+                }
+            }
+        }
+
+        #endregion
+
+        #region Methods
+
+        [NotifyPropertyChangedInvocator]
+        protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            base.OnPropertyChanged(propertyName);
+            IsModified = true;
+            IsEmpty = SearchCriteriaIsEmpty();
+        }
+
+        private void OnSearchCriteriaChanged()
+        {
+            SearchCriteriaChanged?.Invoke(this, new EventArgs());
+        }
+
+        private void OnSearchCriteriaCleared()
+        {
+            SearchCriteriaCleared?.Invoke(this, new EventArgs());
+        }
+
+        public void Clear()
+        {
+            Code = string.Empty;
+            Name = string.Empty;
+            Article = string.Empty;
+            BrandId = -1L;
+            PriceIsDown = false;
+            PriceIsUp = false;
+            IsNew = false;
+        }
+
+        private bool SearchCriteriaIsEmpty()
+        {
+            return Code == string.Empty && 
+                   Name == string.Empty &&
+                   Article == string.Empty &&
+                   BrandId == -1L &&
+                   !PriceIsDown &&
+                   !PriceIsUp &&
+                   !IsNew;
+
+        }
+
+        public void SearchComplited()
+        {
+            IsModified = false;
+        }
+
+        #endregion
+
+        #region Events
+
+        public event EventHandler SearchCriteriaChanged;
+
+        public event EventHandler SearchCriteriaCleared;
 
         #endregion
     }
