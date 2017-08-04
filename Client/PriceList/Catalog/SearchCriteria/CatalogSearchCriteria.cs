@@ -25,14 +25,7 @@ namespace Catalog.SearchCriteria
 
         public CatalogSearchCriteria()
         {
-            Code = string.Empty;
-            Name = string.Empty;
-            Article = string.Empty;
-            BrandId = -1L;
-            PriceIsDown = false;
-            PriceIsUp = false;
-            IsNew = false;
-            IsEmpty = true;
+            Clear();
         }
 
         #endregion
@@ -193,7 +186,12 @@ namespace Catalog.SearchCriteria
         protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             base.OnPropertyChanged(propertyName);
-            IsModified = true;
+
+            if (propertyName != nameof(IsModified))
+            {
+                IsModified = true;
+            }
+
             IsEmpty = SearchCriteriaIsEmpty();
         }
 
