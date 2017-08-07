@@ -107,7 +107,10 @@
                           MinWidth="60"
                           VerticalAlignment="Center" 
                           FontWeight="Bold" 
-                          FontStyle="Italic"/>
+                          FontStyle="Italic"
+                          SelectedValue="{Binding Path=SearchCriteria.BrandId, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
+                          ItemsSource="{Binding Path=BrandItems}" DisplayMemberPath="Name" SelectedValuePath="Id"
+                          Text="{Binding Path=SearchCriteria.BrandName}"/>
             </Grid>
         </Border>
         <search:ButtonSearchControl Grid.Column="2" VerticalContentAlignment="Center"></search:ButtonSearchControl>

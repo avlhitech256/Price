@@ -16,35 +16,12 @@ namespace Catalog.ViewModel
 {
     public class CatalogViewModel : Notifier, IControlViewModel
     {
-        #region Members
-
-        private bool vaz;
-        private bool gaz;
-        private bool zaz;
-        private bool chemistry;
-        private bool battery;
-        private bool gas;
-        private bool instrument;
-        private int edvanceSearchWidth;
-        private bool enabledEdvanceSearch;
-
-        #endregion
-
         #region Constructors
 
         public CatalogViewModel(IDomainContext domainContext)
         {
             DomainContext = domainContext;
             HasChanges = false;
-            Vaz = false;
-            Gaz = false;
-            Zaz = false;
-            Chemistry = false;
-            Battery = false;
-            Gas = false;
-            Instrument = false;
-            edvanceSearchWidth = 0;
-            enabledEdvanceSearch = false;
             ShowPhotoOnMouseDoubleClick = false;
             Model = new CatalogModel(domainContext);
             SubscribeEvents();
@@ -60,7 +37,7 @@ namespace Catalog.ViewModel
 
         private CatalogModel Model { get; }
 
-        public CatalogSearchCriteria SearchCriteria => Model.SearchCriteria;
+        public CatalogSearchCriteria SearchCriteria => Model?.SearchCriteria;
 
         public CatalogItem SelectedItem
         {
@@ -81,6 +58,8 @@ namespace Catalog.ViewModel
         }
 
         public ObservableCollection<CatalogItem> Entities => Model?.Entities;
+
+        public ObservableCollection<BrandItem> BrandItems => Model?.BrandItems;
 
         public DelegateCommand SearchCommand { get; private set; }
 
@@ -126,161 +105,6 @@ namespace Catalog.ViewModel
         }
 
         public bool ShowPhotoOnMouseDoubleClick { get; set; }
-
-        public bool Vaz
-        {
-            get
-            {
-                return vaz;
-            }
-            set
-            {
-                if (vaz != value)
-                {
-                    vaz = value;
-                    OnPropertyChanged();
-                    CalculateEdvanceSearchWidth();
-                }
-            }
-        }
-
-        public bool Gaz
-        {
-            get
-            {
-                return gaz;
-            }
-            set
-            {
-                if (gaz != value)
-                {
-                    gaz = value;
-                    OnPropertyChanged();
-                    CalculateEdvanceSearchWidth();
-                }
-            }
-        }
-
-        public bool Zaz
-        {
-            get
-            {
-                return zaz;
-            }
-            set
-            {
-                if (zaz != value)
-                {
-                    zaz = value;
-                    OnPropertyChanged();
-                    CalculateEdvanceSearchWidth();
-                }
-            }
-        }
-
-        public bool Chemistry
-        {
-            get
-            {
-                return chemistry;
-            }
-            set
-            {
-                if (chemistry != value)
-                {
-                    chemistry = value;
-                    OnPropertyChanged();
-                    CalculateEdvanceSearchWidth();
-                }
-            }
-        }
-
-        public bool Battery
-        {
-            get
-            {
-                return battery;
-            }
-            set
-            {
-                if (battery != value)
-                {
-                    battery = value;
-                    OnPropertyChanged();
-                    CalculateEdvanceSearchWidth();
-                }
-            }
-        }
-
-        public bool Gas
-        {
-            get
-            {
-                return gas;
-            }
-            set
-            {
-                if (gas != value)
-                {
-                    gas = value;
-                    OnPropertyChanged();
-                    CalculateEdvanceSearchWidth();
-                }
-            }
-        }
-
-        public bool Instrument
-        {
-            get
-            {
-                return instrument;
-            }
-            set
-            {
-                if (instrument != value)
-                {
-                    instrument = value;
-                    OnPropertyChanged();
-                    CalculateEdvanceSearchWidth();
-                }
-            }
-        }
-
-        public bool EnabledEdvanceSearch
-        {
-            get
-            {
-                return enabledEdvanceSearch;
-            }
-            set
-            {
-                if (enabledEdvanceSearch != value)
-                {
-                    enabledEdvanceSearch = value;
-                    OnPropertyChanged();
-                    var args = value ? new DoubleAnimationEventArgs(0, 150) : new DoubleAnimationEventArgs(150, 0); 
-                    Messenger?.Send(CommandName.ShowAdvanceSearchControl, args);
-                }
-            }
-        }
-
-        public int EdvanceSearchWidth
-        {
-            get
-            {
-                return edvanceSearchWidth;
-            }
-            set
-            {
-                if (edvanceSearchWidth != value)
-                {
-                    edvanceSearchWidth = value;
-                    OnPropertyChanged();
-                    int minWidth = 1070 + EdvanceSearchWidth;
-                    Messenger?.Send(CommandName.SetMinWidth, new MinWidthEventArgs(minWidth));
-                }
-            }
-        }
 
         #endregion
 
@@ -343,12 +167,6 @@ namespace Catalog.ViewModel
         private void OnCanDoClear(object sender, EventArgs e)
         {
             ClearCommand?.RiseCanExecute();
-        }
-
-        private void CalculateEdvanceSearchWidth()
-        {
-            EnabledEdvanceSearch = Vaz || Gaz || Zaz || Chemistry || Battery || Gas || Instrument;
-            EdvanceSearchWidth = EnabledEdvanceSearch ? 150 : 0;
         }
 
         private void OnChangedSelectedItem(object sender, PropertyChangedEventArgs e)

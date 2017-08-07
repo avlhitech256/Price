@@ -25,6 +25,7 @@ namespace Catalog.Model
         private CatalogItem selectedItem;
         private CatalogItem oldSelectedItem;
         private ObservableCollection<CatalogItem> entities;
+        private ObservableCollection<BrandItem> brandItems;
         private decimal amount;
         public event CountChangedEventHandler CountChanged;
 
@@ -37,9 +38,10 @@ namespace Catalog.Model
             DomainContext = domainContext;
             Amount = 0;
             Entities = new ObservableCollection<CatalogItem>();
-            SearchCriteria = new CatalogSearchCriteria();
+            BrandItems = new ObservableCollection<BrandItem>();
+            SearchCriteria = new CatalogSearchCriteria(Messenger);
+            SelectBrandPopupItems();
             SelectEntities();
-            //InitData();
         }
 
         #endregion
@@ -88,6 +90,22 @@ namespace Catalog.Model
                 if (entities != value)
                 {
                     entities = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public ObservableCollection<BrandItem> BrandItems
+        {
+            get
+            {
+                return brandItems;
+            }
+            set
+            {
+                if (brandItems != value)
+                {
+                    brandItems = value;
                     OnPropertyChanged();
                 }
             }
@@ -146,6 +164,30 @@ namespace Catalog.Model
             Messenger.Send(CommandName.SetImage, SelectedItem);
         }
 
+        public void SelectBrandPopupItems()
+        {
+            BrandItems.Clear();
+            BrandItems.Add(new BrandItem(SearchCriteria.FirstBrandItemEntity));
+
+            DataServise.Select<BrandItemEntity>()
+                .OrderBy(x => x.Name)
+                .ToList()
+                .ForEach(x => BrandItems.Add(new BrandItem(x)));
+
+            if (SearchCriteria != null)
+            {
+                BrandItem selectBrandItem = BrandItems.FirstOrDefault(x => x.Id == SearchCriteria.BrandId);
+
+                if (selectBrandItem == null)
+                {
+                    selectBrandItem = BrandItems.FirstOrDefault();
+                }
+
+                SearchCriteria.BrandId = selectBrandItem?.Id ?? SearchCriteria.FirstBrandItemEntity.Id;
+                SearchCriteria.BrandName = selectBrandItem?.Name ?? SearchCriteria.FirstBrandItemEntity.Name;
+            }
+        }
+
         public void SelectEntities()
         {
             Func<string, string[]> prepareArray =
@@ -177,7 +219,8 @@ namespace Catalog.Model
                         (x.PriceIsDown && x.LastUpdated <= dateForPrice))
                 .Where(
                     x => !SearchCriteria.PriceIsUp || (x.PriceIsUp && x.LastUpdated <= dateForPrice))
-                .Where(x => SearchCriteria.BrandId <= -1L || x.Brand.Id == SearchCriteria.BrandId)
+                .Where(x => SearchCriteria.BrandId <= SearchCriteria.FirstBrandItemEntity.Id || 
+                                                      x.Brand.Id == SearchCriteria.BrandId)
                 .ToList()
                 .ForEach(
                     x =>
