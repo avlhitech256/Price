@@ -216,7 +216,7 @@ namespace Catalog.Model
             DataServise.Select<CatalogItemEntity>()
                 .Include(x => x.Brand)
                 .Where(x => !codes.Any() || codes.Contains(x.Code))
-                .Where(n => !lexemes.Any() || lexemes.Any(s => n.Name.Contains(s)))
+                .Where(n => !lexemes.Any() || lexemes.All(s => n.Name.Contains(s)))
                 .Where(x => !articles.Any() || articles.Contains(x.Article))
                 .Where(x => !SearchCriteria.IsNew || (x.IsNew && x.LastUpdated <= dateForNew))
                 .Where(
