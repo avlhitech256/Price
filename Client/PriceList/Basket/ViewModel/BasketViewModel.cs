@@ -1,7 +1,11 @@
 ﻿using System.Collections.ObjectModel;
 using Basket.Model;
+using Common.Data.Enum;
 using Common.Data.Notifier;
+using Common.Event;
 using Common.Messenger;
+using Common.Messenger.Implementation;
+using Common.ViewModel.Command;
 using Domain.Data.Object;
 using Domain.DomainContext;
 using Domain.ViewModel;
@@ -18,6 +22,7 @@ namespace Basket.ViewModel
             Model = new BasketModel(domainContext);
             HasChanges = false;
             ShowPhotoOnMouseDoubleClick = false;
+            InitCommands();
         }
 
         #endregion
@@ -55,6 +60,12 @@ namespace Basket.ViewModel
         public bool Enabled { get; set; }
         public bool IsEditControl { get; set; }
         public bool HasChanges { get; }
+
+        public DelegateCommand AddCommand { get; private set; }
+
+        #endregion
+
+        #region Methods
         public void ApplySearchCriteria()
         {
             throw new System.NotImplementedException();
@@ -88,6 +99,28 @@ namespace Basket.ViewModel
         public void Delete()
         {
             throw new System.NotImplementedException();
+        }
+
+        private void InitCommands()
+        {
+            CreateCommand();
+            SubscribeCommand();
+        }
+
+        private void SubscribeCommand()
+        {
+            
+        }
+
+        private void CreateCommand()
+        {
+            AddCommand = new DelegateCommand(DoAdd);
+        }
+
+        private void DoAdd(object parametr)
+        {
+            Messenger?.Send(CommandName.SetFocusTopMenu, new SetMenuFocusEventArgs(MenuItemName.PriceList));
+            Messenger?.Send(CommandName.SetEntryControl, new MenuChangedEventArgs(MenuItemName.PriceList));
         }
 
         #endregion

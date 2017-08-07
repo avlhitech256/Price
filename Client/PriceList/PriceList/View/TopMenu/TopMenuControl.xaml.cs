@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -72,9 +73,10 @@ namespace PriceList.View.TopMenu
         {
             ViewModel = new TopMenuViewModel(DomainContext);
             DataContext = ViewModel;
+            SubscribeMessenger();
         }
 
-        private TopMenuMouseOverEventArgs CreateLeftMenuMouseOverEventArgs(MenuItem menuItem, bool isMouseOver)
+        private TopMenuMouseOverEventArgs CreateTopMenuMouseOverEventArgs(MenuItem menuItem, bool isMouseOver)
         {
             TopMenuMouseOverEventArgs args = null;
 
@@ -86,7 +88,7 @@ namespace PriceList.View.TopMenu
             return args;
         }
 
-        private TopMenuMouseOverEventArgs CreateLeftMenuMouseOverEventArgs(object sender, bool isMouseOver)
+        private TopMenuMouseOverEventArgs CreateTopMenuMouseOverEventArgs(object sender, bool isMouseOver)
         {
             TopMenuMouseOverEventArgs args = null;
 
@@ -94,7 +96,7 @@ namespace PriceList.View.TopMenu
 
             if (menuItem != null)
             {
-                args = CreateLeftMenuMouseOverEventArgs(menuItem, isMouseOver);
+                args = CreateTopMenuMouseOverEventArgs(menuItem, isMouseOver);
             }
 
             return args;
@@ -103,7 +105,7 @@ namespace PriceList.View.TopMenu
         private void SetMouseOver(object sender, bool isMouseOver)
         {
 
-            TopMenuMouseOverEventArgs args = CreateLeftMenuMouseOverEventArgs(sender, isMouseOver);
+            TopMenuMouseOverEventArgs args = CreateTopMenuMouseOverEventArgs(sender, isMouseOver);
 
             if (args != null)
             {
@@ -168,6 +170,27 @@ namespace PriceList.View.TopMenu
         private void MenuItem_OnClick(object sender, RoutedEventArgs e)
         {
             SetMouseUp(sender);
+        }
+
+        private void SetFocusTopMenu(SetMenuFocusEventArgs args)
+        {
+            if (args != null)
+            {
+                MenuItemName menuItemName = args.MenuItemName;
+                MenuItem menuItem = menuItemMap.FirstOrDefault(x => x.Value == menuItemName).Key;
+                menuItem?.Focus();
+            }
+        }
+
+        private bool CanSetFocusTopMenu(SetMenuFocusEventArgs args)
+        {
+            return true;
+        }
+
+
+        private void SubscribeMessenger()
+        {
+            Messenger.Register<SetMenuFocusEventArgs>(CommandName.SetFocusTopMenu, SetFocusTopMenu, CanSetFocusTopMenu);
         }
     }
 }

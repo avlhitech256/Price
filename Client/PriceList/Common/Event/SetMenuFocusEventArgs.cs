@@ -1,13 +1,12 @@
-﻿using System;
-using Common.Data.Enum;
+﻿using Common.Data.Enum;
 
 namespace Common.Event
 {
-    public class MenuChangedEventArgs : EventArgs
+    public class SetMenuFocusEventArgs
     {
         #region Constructors
 
-        public MenuChangedEventArgs(MenuItemName menuItemName)
+        public SetMenuFocusEventArgs(MenuItemName menuItemName)
         {
             MenuItemName = menuItemName;
         }

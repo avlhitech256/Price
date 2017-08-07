@@ -20,6 +20,7 @@
         SetImage,
         ShowImages,
         SetPhotoWindowState,
-        ShowAdvanceSearchControl
+        ShowAdvanceSearchControl,
+        SetFocusTopMenu
     }
 }

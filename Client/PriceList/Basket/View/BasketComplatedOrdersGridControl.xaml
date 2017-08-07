@@ -65,34 +65,6 @@
                                     Binding="{Binding Path=Article}">
                         <DataGridTextColumn.HeaderTemplate>
                             <DataTemplate>
-                                <TextBlock Text="Дата отправки заказа" 
-                                       Width="130" 
-                                       TextWrapping="Wrap" 
-                                       TextAlignment="Center" 
-                                       VerticalAlignment="Center">
-                                </TextBlock>
-                            </DataTemplate>
-                        </DataGridTextColumn.HeaderTemplate>
-                    </DataGridTextColumn>
-                    <DataGridTextColumn IsReadOnly="True" 
-                                    Width="Auto"
-                                    Binding="{Binding Path=Article}">
-                        <DataGridTextColumn.HeaderTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="Статус заказа" 
-                                       Width="150" 
-                                       TextWrapping="Wrap" 
-                                       TextAlignment="Center" 
-                                       VerticalAlignment="Center">
-                                </TextBlock>
-                            </DataTemplate>
-                        </DataGridTextColumn.HeaderTemplate>
-                    </DataGridTextColumn>
-                    <DataGridTextColumn IsReadOnly="True" 
-                                    Width="Auto"
-                                    Binding="{Binding Path=Article}">
-                        <DataGridTextColumn.HeaderTemplate>
-                            <DataTemplate>
                                 <TextBlock Text="Краткая заметка для менеджера" 
                                        Width="180" 
                                        TextWrapping="Wrap" 
@@ -126,12 +98,12 @@
                                             Binding="{Binding Path=Position}">
                         <DataGridCheckBoxColumn.HeaderTemplate>
                             <DataTemplate>
-                                <TextBlock Text="Выбрать" 
-                                       Width="53"
-                                       TextWrapping="Wrap" 
-                                       TextAlignment="Center" 
-                                       VerticalAlignment="Center"
-                                       HorizontalAlignment="Center">
+                                <TextBlock Text="Удалить заказ" 
+                                           Width="53"
+                                           TextWrapping="Wrap" 
+                                           TextAlignment="Center" 
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center">
                                 </TextBlock>
                             </DataTemplate>
                         </DataGridCheckBoxColumn.HeaderTemplate>

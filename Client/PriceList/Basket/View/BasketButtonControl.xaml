@@ -19,13 +19,9 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="5"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="5"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <Button Content="Создать заказ"
+        <Button Content="Оформить заказ"
                 Grid.Row="1"
                 Grid.Column="1"
                 Width="120"
@@ -34,24 +30,10 @@
                 Grid.Row="3"
                 Grid.Column="1"
                 Width="120"
-                Style="{DynamicResource ButtonStyle}"/>
-        <Button Content="Выбрать"
+                Style="{DynamicResource ButtonStyle}"
+                Command="{Binding Path=AddCommand}"/>
+        <Button Content="Очистить корзину"
                 Grid.Row="5"
-                Grid.Column="1"
-                Width="120"
-                Style="{DynamicResource ButtonStyle}"/>
-        <Button Content="Выбрать все"
-                Grid.Row="6"
-                Grid.Column="1"
-                Width="120"
-                Style="{DynamicResource ButtonStyle}"/>
-        <Button Content="Удалить"
-                Grid.Row="8"
-                Grid.Column="1"
-                Width="120"
-                Style="{DynamicResource ButtonStyle}"/>
-        <Button Content="Удалить все"
-                Grid.Row="9"
                 Grid.Column="1"
                 Width="120"
                 Style="{DynamicResource ButtonStyle}"/>
