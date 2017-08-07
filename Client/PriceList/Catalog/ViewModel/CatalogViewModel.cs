@@ -157,7 +157,7 @@ namespace Catalog.ViewModel
 
         private void DoClear(object parametr)
         {
-            SearchCriteria?.Clear();
+            Model?.Clear();
         }
 
         private bool CanDoClear(object parametr)

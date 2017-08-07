@@ -20,12 +20,14 @@
                 Grid.Column="1"
                 Width="100"
                 Style="{DynamicResource ButtonStyle}"
-                Command="{Binding Path=SearchCommand}"/>
+                Command="{Binding Path=SearchCommand}"
+                IsDefault="True"/>
         <Button Content="Сбросить"
                 Grid.Row="1"
                 Grid.Column="1"
                 Width="100"
                 Style="{DynamicResource ButtonStyle}"
-                Command="{Binding Path=ClearCommand}"/>
+                Command="{Binding Path=ClearCommand}"
+                IsCancel="True"/>
     </Grid>
 </UserControl>

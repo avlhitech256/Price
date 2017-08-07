@@ -188,6 +188,12 @@ namespace Catalog.Model
             }
         }
 
+        public void Clear()
+        {
+            SearchCriteria.Clear();
+            SelectEntities();
+        }
+
         public void SelectEntities()
         {
             Func<string, string[]> prepareArray =
