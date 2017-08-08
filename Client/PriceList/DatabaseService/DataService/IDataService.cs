@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using DatabaseService.DataBaseContext.Entities;
 
 namespace DatabaseService.DataService
@@ -8,6 +9,10 @@ namespace DatabaseService.DataService
         DataBaseContext.DataBaseContext DataBaseContext { get; }
 
         IQueryable<TEntity> Select<TEntity>() where TEntity : class;
+
+        void Insert<TEntity>(TEntity entity) where TEntity : class;
+
+        void Insert<TEntity>(IEnumerable<TEntity> entities) where TEntity : class;
 
         void LoadPhotos(CatalogItemEntity entity);
 

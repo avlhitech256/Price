@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using System.Windows.Automation.Peers;
+using System.Windows.Automation.Provider;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Common.Data.Enum;
@@ -29,6 +31,7 @@ namespace PriceList.View.TopMenu
         public TopMenuControl()
         {
             InitializeComponent();
+            FocusManager.SetIsFocusScope(MainGrid, true);
             menuItemMap =
                 new Dictionary<MenuItem, MenuItemName>
                 {
@@ -178,7 +181,13 @@ namespace PriceList.View.TopMenu
             {
                 MenuItemName menuItemName = args.MenuItemName;
                 MenuItem menuItem = menuItemMap.FirstOrDefault(x => x.Value == menuItemName).Key;
-                menuItem?.Focus();
+
+                if (menuItem != null)
+                {
+                    MenuItemAutomationPeer peer = new MenuItemAutomationPeer(menuItem);
+                    IInvokeProvider invokeProv = peer.GetPattern(PatternInterface.Invoke) as IInvokeProvider;
+                    invokeProv?.Invoke();
+                }
             }
         }
 

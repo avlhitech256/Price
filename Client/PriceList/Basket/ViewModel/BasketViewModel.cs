@@ -120,7 +120,7 @@ namespace Basket.ViewModel
         private void DoAdd(object parametr)
         {
             Messenger?.Send(CommandName.SetFocusTopMenu, new SetMenuFocusEventArgs(MenuItemName.PriceList));
-            Messenger?.Send(CommandName.SetEntryControl, new MenuChangedEventArgs(MenuItemName.PriceList));
+            //Messenger?.Send(CommandName.SetEntryControl, new MenuChangedEventArgs(MenuItemName.PriceList));
         }
 
         #endregion

@@ -38,5 +38,7 @@ namespace DatabaseService.DataBaseContext.Entities
         public bool PriceIsDown { get; set; }
 
         public bool IsNew { get; set; }
+
+        public virtual BasketItemEntity BasketItem { get; set; }
     }
 }

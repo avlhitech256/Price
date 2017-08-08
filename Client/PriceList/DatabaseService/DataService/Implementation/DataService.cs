@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using DatabaseService.DataBaseContext.Entities;
 
@@ -19,6 +20,29 @@ namespace DatabaseService.DataService.Implementation
             return DataBaseContext.Set<TEntity>();
         }
 
+        public void Insert<TEntity>(TEntity entity) where TEntity : class
+        {
+            DataBaseContext.Entry(entity).State = EntityState.Added;
+            DataBaseContext.SaveChanges();
+        }
+
+        public void Insert<TEntity>(IEnumerable<TEntity> entities) where TEntity : class
+        {
+            // Отключаем отслеживание и проверку изменений для оптимизации вставки множества полей
+            DataBaseContext.Configuration.AutoDetectChangesEnabled = false;
+            DataBaseContext.Configuration.ValidateOnSaveEnabled = false;
+
+            foreach (TEntity entity in entities)
+            {
+                DataBaseContext.Entry(entity).State = EntityState.Added;
+            }
+
+            DataBaseContext.SaveChanges();
+
+            DataBaseContext.Configuration.AutoDetectChangesEnabled = true;
+            DataBaseContext.Configuration.ValidateOnSaveEnabled = true;
+        }
+
         public void LoadPhotos(CatalogItemEntity entity)
         {
             if (!DataBaseContext.Entry(entity).Collection(c => c.Photos).IsLoaded)
@@ -37,9 +61,9 @@ namespace DatabaseService.DataService.Implementation
 
         public void LoadPhotos(BasketItemEntity entity)
         {
-            if (!DataBaseContext.Entry(entity).Collection(c => c.Photos).IsLoaded)
+            if (!DataBaseContext.Entry(entity).Collection(c => c.CatalogItem.Photos).IsLoaded)
             {
-                DataBaseContext.Entry(entity).Collection(c => c.Photos).Load();
+                DataBaseContext.Entry(entity).Collection(c => c.CatalogItem.Photos).Load();
             }
         }
 

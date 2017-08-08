@@ -108,7 +108,8 @@
 
     </UserControl.Resources>
 
-    <Grid Background="{DynamicResource DefaultGradientBrush}">
+    <Grid Name="MainGrid"
+        Background="{DynamicResource DefaultGradientBrush}">
         <Grid.OpacityMask>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                 <GradientStop Color="#FF07183E" Offset="0"/>
