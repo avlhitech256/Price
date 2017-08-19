@@ -1,8 +1,11 @@
-﻿using Common.Data.Notifier;
+﻿using System;
+using Common.Data.Notifier;
 using Common.Event;
 using Common.Messenger;
 using Common.Messenger.Implementation;
+using DatabaseService.DataService;
 using Domain.DomainContext;
+using Domain.Service.Precision;
 using Media.Color;
 
 namespace PriceList.ViewModel.TopMenu
@@ -28,7 +31,7 @@ namespace PriceList.ViewModel.TopMenu
                                                 ColorService.CreateBrush(0x8B, 0x9E, 0xF0),
                                                 ColorService.CreateBrush(0xDB, 0xEE, 0xFF));
             SubscribeMessenger();
-            BasketCaption = "0.00" + CurrencySuffix;
+            RefreshBasketCapture();
         }
 
         #endregion
@@ -40,6 +43,11 @@ namespace PriceList.ViewModel.TopMenu
         private IMessenger Messenger => DomainContext?.Messenger;
 
         private IColorService ColorService => DomainContext?.ColorService;
+
+        private IPrecisionService PrecisionService => DomainContext?.PrecisionService;
+
+        private IDataService DatabaseService => DomainContext?.DataService;
+
         public MenuItemsStyle MenuItemsStyle
         {
             get
@@ -82,6 +90,7 @@ namespace PriceList.ViewModel.TopMenu
         private void SubscribeMessenger()
         {
             Messenger?.Register<MenuChangedEventArgs>(CommandName.SelectLeftMenu, SelectTopMenu, CanSelectTopMenu);
+            Messenger?.MultiRegister<EventArgs>(CommandName.RefreshBasket, RefreshBasketCapture, CanRefreshBasketCapture);
         }
 
         private void SelectTopMenu(MenuChangedEventArgs args)
@@ -92,6 +101,17 @@ namespace PriceList.ViewModel.TopMenu
         private bool CanSelectTopMenu(MenuChangedEventArgs args)
         {
             return args != null;
+        }
+
+        private void RefreshBasketCapture(EventArgs args = null)
+        {
+            decimal sum = DatabaseService.GetSumBasket();
+            BasketCaption = PrecisionService?.Convert(sum) + CurrencySuffix;
+        }
+
+        private bool CanRefreshBasketCapture(EventArgs args)
+        {
+            return true;
         }
 
         #endregion

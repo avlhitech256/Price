@@ -56,7 +56,7 @@ namespace Catalog.Model
 
         private IPrecisionService PrecisionService => DomainContext?.PrecisionService;
 
-        private IDataService DataServise => DomainContext.DataService;
+        private IDataService DataService => DomainContext?.DataService;
 
         public CatalogSearchCriteria SearchCriteria { get; }
 
@@ -169,7 +169,7 @@ namespace Catalog.Model
             BrandItems.Clear();
             BrandItems.Add(new BrandItem(SearchCriteria.FirstBrandItemEntity));
 
-            DataServise.Select<BrandItemEntity>()
+            DataService.Select<BrandItemEntity>()
                 .OrderBy(x => x.Name)
                 .ToList()
                 .ForEach(x => BrandItems.Add(new BrandItem(x)));
@@ -204,6 +204,8 @@ namespace Catalog.Model
                     return results.ToArray();
                 };
 
+            long catalogId = SelectedItem?.Id ?? -1L;
+
             Entities.Clear();
 
             string[] codes = prepareArray(SearchCriteria.Code);
@@ -213,7 +215,7 @@ namespace Catalog.Model
             DateTimeOffset dateForNew = DateTimeOffset.Now.AddDays(-14);
             DateTimeOffset dateForPrice = DateTimeOffset.Now.AddDays(-7);
 
-            DataServise.Select<CatalogItemEntity>()
+            DataService.Select<CatalogItemEntity>()
                 .Include(x => x.Brand)
                 .Where(x => !codes.Any() || codes.Contains(x.Code))
                 .Where(n => !lexemes.Any() || lexemes.All(s => n.Name.Contains(s)))
@@ -230,11 +232,12 @@ namespace Catalog.Model
                 .ToList()
                 .ForEach(
                     x =>
-                        Entities.Add(new CatalogItem(x, DataServise, PrecisionService, ImageService)
+                        Entities.Add(new CatalogItem(x, DataService, PrecisionService, ImageService, Messenger)
                         {
                             Position = ++position.Value
                         }));
-            SelectedItem = Entities.FirstOrDefault();
+
+            SelectedItem = Entities.FirstOrDefault(x => x.Id == catalogId) ?? Entities.FirstOrDefault();
             SearchCriteria.SearchComplited();
         }
 

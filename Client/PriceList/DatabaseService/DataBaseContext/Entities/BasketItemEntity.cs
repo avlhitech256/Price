@@ -6,12 +6,12 @@ namespace DatabaseService.DataBaseContext.Entities
     {
         public long Id { get; set; }
 
-        public Guid UID { get; set; }
-
         public virtual CatalogItemEntity CatalogItem { get; set; }
+
+        public virtual OrderItemEntity OrderItem { get; set; }
 
         public decimal Count { get; set; }
 
-        public DateTime DateAction { get; set; }
+        public DateTimeOffset DateAction { get; set; }
     }
 }

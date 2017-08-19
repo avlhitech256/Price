@@ -1,6 +1,6 @@
 ﻿namespace Common.Data.Enum
 {
-    public enum UserDecisionsAnswer
+    public enum Answer
     {
         Add,
         Delete,

@@ -39,6 +39,6 @@ namespace DatabaseService.DataBaseContext.Entities
 
         public bool IsNew { get; set; }
 
-        public virtual BasketItemEntity BasketItem { get; set; }
+        public virtual List<BasketItemEntity> BasketItems { get; set; }
     }
 }

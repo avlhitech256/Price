@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Media.Imaging;
 using Common.Data.Notifier;
 using Common.Event;
+using Common.Messenger;
+using Common.Messenger.Implementation;
 using DatabaseService.DataBaseContext.Entities;
 using DatabaseService.DataService;
 using Domain.Properties;
@@ -18,13 +21,13 @@ namespace Domain.Data.Object
 
         private CatalogItemEntity entity;
         private BrandItem brand;
-        private List<byte[]> photos;
         private long position;
         private string count;
         private decimal countValue;
-        private IDataService databaseService;
-        private IImageService imageService;
+        private readonly IDataService databaseService;
+        private readonly IImageService imageService;
         private readonly IPrecisionService precisionService;
+        private readonly IMessenger messenger;
 
         #endregion
 
@@ -33,16 +36,18 @@ namespace Domain.Data.Object
         public CatalogItem(CatalogItemEntity entity, 
                            IDataService databaseService, 
                            IPrecisionService precisionService, 
-                           IImageService imageService)
+                           IImageService imageService,
+                           IMessenger messenger)
         {
             Entity = entity;
             this.databaseService = databaseService;
             this.imageService = imageService;
             this.precisionService = precisionService;
+            this.messenger = messenger;
             Brand = new BrandItem(entity.Brand);
             Position = 1L;
-            CountValue = 0;
-            photos = new List<byte[]>();
+            countValue = databaseService.GetCount(entity);  //TODO Необходимо будет сделать загрузку в фоне
+            Count = precisionService?.Convert(CountValue);
         }
         #endregion
 
@@ -299,10 +304,14 @@ namespace Domain.Data.Object
             }
             set
             {
+                decimal oldValue = countValue;
+
                 if (countValue != value)
                 {
                     countValue = value;
+                    databaseService.SetCount(Entity, value);
                     Count = precisionService?.Convert(CountValue);
+                    OnCountChanged(oldValue, value);
                     OnPropertyChanged();
                 }
             }
@@ -312,9 +321,10 @@ namespace Domain.Data.Object
 
         #region Methods
 
-        public void OnCountChanged(decimal oldValue, decimal newValue)
+        private void OnCountChanged(decimal oldValue, decimal newValue)
         {
             CountChanged?.Invoke(this, new DecimalValueChangedEventArgs(Id, oldValue, newValue));
+            messenger?.Send(CommandName.RefreshBasket, new EventArgs());
         }
 
         #endregion

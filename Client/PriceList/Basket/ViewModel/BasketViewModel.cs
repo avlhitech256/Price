@@ -36,7 +36,7 @@ namespace Basket.ViewModel
 
         private BasketModel Model { get; }
 
-        public CatalogItem SelectedItem
+        public BasketItem SelectedItem
         {
             get
             {
@@ -54,7 +54,7 @@ namespace Basket.ViewModel
 
         }
 
-        public ObservableCollection<CatalogItem> Entities => Model?.Entities;
+        public ObservableCollection<BasketItem> Entities => Model?.Entities;
 
         public bool ReadOnly { get; set; }
         public bool Enabled { get; set; }

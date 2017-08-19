@@ -347,6 +347,10 @@
       <Project>{fc5aa2b4-3b40-468f-b13e-f16b2ee8fdea}</Project>
       <Name>Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DatabaseService\DatabaseService.csproj">
+      <Project>{e3aab1a2-9d4b-4c71-915e-7020b77f2875}</Project>
+      <Name>DatabaseService</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Domain\Domain.csproj">
       <Project>{65b9a8c3-c1c1-4195-8eb6-cba4c7345c76}</Project>
       <Name>Domain</Name>

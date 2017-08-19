@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using DatabaseService.DataBaseContext.Entities;
@@ -13,6 +14,18 @@ namespace DatabaseService.DataService.Implementation
         }
 
         public DataBaseContext.DataBaseContext DataBaseContext { get; }
+
+        private DataBaseContext.DataBaseContext CreateDataBaseContext()
+        {
+            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<DataBaseContext.DataBaseContext>());
+            DataBaseContext.DataBaseContext dataBaseContext = new DataBaseContext.DataBaseContext();
+
+            // Здесь мы можем указывать различные настройки контекста,
+            // например выводить в отладчик сгенерированный SQL-код
+            dataBaseContext.Database.Log = (s => System.Diagnostics.Debug.WriteLine(s));
+
+            return dataBaseContext;
+        }
 
         public IQueryable<TEntity> Select<TEntity>() where TEntity : class
         {
@@ -43,6 +56,12 @@ namespace DatabaseService.DataService.Implementation
             DataBaseContext.Configuration.ValidateOnSaveEnabled = true;
         }
 
+        public void Delete<TEntity>(TEntity entity) where TEntity : class
+        {
+            DataBaseContext.Entry(entity).State = EntityState.Deleted;
+            DataBaseContext.SaveChanges();
+        }
+
         public void LoadPhotos(CatalogItemEntity entity)
         {
             if (!DataBaseContext.Entry(entity).Collection(c => c.Photos).IsLoaded)
@@ -67,6 +86,14 @@ namespace DatabaseService.DataService.Implementation
             }
         }
 
+        public void LoadBasket(CatalogItemEntity entity)
+        {
+            if (!DataBaseContext.Entry(entity).Collection(c => c.BasketItems).IsLoaded)
+            {
+                DataBaseContext.Entry(entity).Collection(c => c.BasketItems).Load();
+            }
+        }
+
         public void AddPhoto(CatalogItemEntity entity, byte[] photo)
         {
             PhotoItemEntity photoEntity = new PhotoItemEntity
@@ -80,16 +107,53 @@ namespace DatabaseService.DataService.Implementation
             DataBaseContext.SaveChanges();
         }
 
-        private DataBaseContext.DataBaseContext CreateDataBaseContext()
+        private BasketItemEntity GetBasketEntity(CatalogItemEntity entity)
         {
-            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<DataBaseContext.DataBaseContext>());
-            DataBaseContext.DataBaseContext dataBaseContext = new DataBaseContext.DataBaseContext();
+            LoadBasket(entity);
+            BasketItemEntity basketItem = entity.BasketItems.FirstOrDefault(x => x.OrderItem == null);
+            return basketItem;
+        }
+        public decimal GetCount(CatalogItemEntity entity)
+        {
+            decimal count = GetBasketEntity(entity)?.Count ?? 0;
+            return count;
+        }
 
-            // Здесь мы можем указывать различные настройки контекста,
-            // например выводить в отладчик сгенерированный SQL-код
-            dataBaseContext.Database.Log = (s => System.Diagnostics.Debug.WriteLine(s));
+        public void SetCount(CatalogItemEntity entity, decimal count)
+        {
+            BasketItemEntity basketItem = GetBasketEntity(entity);
 
-            return dataBaseContext;
+            if (count == 0)
+            {
+                if (basketItem != null)
+                {
+                    Delete(basketItem);
+                }
+            }
+            else
+            {
+                if (basketItem == null)
+                {
+                    basketItem = new BasketItemEntity();
+                    entity.BasketItems.Add(basketItem);
+                }
+
+                basketItem.Count = count;
+                basketItem.DateAction = DateTimeOffset.Now;
+                DataBaseContext.SaveChanges();
+            }
+        }
+
+        public decimal GetSumBasket()
+        {
+            decimal sum = Select<BasketItemEntity>()
+                .Include(x => x.CatalogItem)
+                .Where(x => x.OrderItem == null)
+                .Where(x => x.CatalogItem != null)
+                .ToList()
+                .Select(x => x.Count*x.CatalogItem.Price)
+                .Sum();
+            return sum;
         }
     }
 }

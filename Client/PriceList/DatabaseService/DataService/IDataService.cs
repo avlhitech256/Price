@@ -14,6 +14,8 @@ namespace DatabaseService.DataService
 
         void Insert<TEntity>(IEnumerable<TEntity> entities) where TEntity : class;
 
+        void Delete<TEntity>(TEntity entity) where TEntity : class;
+
         void LoadPhotos(CatalogItemEntity entity);
 
         void LoadPhotos(OrderItemEntity entity);
@@ -21,5 +23,11 @@ namespace DatabaseService.DataService
         void LoadPhotos(BasketItemEntity entity);
 
         void AddPhoto(CatalogItemEntity entity, byte[] photo);
+
+        decimal GetCount(CatalogItemEntity entity);
+
+        void SetCount(CatalogItemEntity entity, decimal count);
+
+        decimal GetSumBasket();
     }
 }

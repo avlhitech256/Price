@@ -46,7 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\Enum\MenuItemName.cs" />
-    <Compile Include="Data\Enum\UserDecisionsAnswer.cs" />
+    <Compile Include="Data\Enum\Answer.cs" />
     <Compile Include="Data\Exception\BusinessLogicException.cs" />
     <Compile Include="Data\Holders\LongHolder.cs" />
     <Compile Include="Data\Notifier\Notifier.cs" />

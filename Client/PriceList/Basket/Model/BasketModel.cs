@@ -1,10 +1,14 @@
 ﻿using System.Collections.ObjectModel;
+using System.Data.Entity;
 using System.Linq;
 using Common.Data.Notifier;
 using Common.Messenger;
+using DatabaseService.DataBaseContext.Entities;
+using DatabaseService.DataService;
 using Domain.Data.Object;
 using Domain.DomainContext;
 using Domain.Service.Precision;
+using Media.Image;
 
 namespace Basket.Model
 {
@@ -12,9 +16,9 @@ namespace Basket.Model
     {
         #region Members
 
-        private CatalogItem selectedItem;
-        private CatalogItem oldSelectedItem;
-        private ObservableCollection<CatalogItem> entities;
+        private BasketItem selectedItem;
+        private BasketItem oldSelectedItem;
+        private ObservableCollection<BasketItem> entities;
 
         #endregion
 
@@ -23,7 +27,8 @@ namespace Basket.Model
         public BasketModel(IDomainContext domainContext)
         {
             DomainContext = domainContext;
-            Entities = new ObservableCollection<CatalogItem>();
+            Entities = new ObservableCollection<BasketItem>();
+            SelectEntities();
         }
 
         #endregion
@@ -36,7 +41,11 @@ namespace Basket.Model
 
         private IPrecisionService PrecisionService => DomainContext?.PrecisionService;
 
-        public CatalogItem SelectedItem
+        private IImageService ImageService => DomainContext?.ImageService;
+
+        private IDataService DataService => DomainContext?.DataService;
+
+        public BasketItem SelectedItem
         {
             get
             {
@@ -52,7 +61,7 @@ namespace Basket.Model
             }
         }
 
-        public ObservableCollection<CatalogItem> Entities
+        public ObservableCollection<BasketItem> Entities
         {
             get
             {
@@ -70,5 +79,26 @@ namespace Basket.Model
         }
 
         #endregion
+
+        #region Methods
+
+        public void SelectEntities()
+        {
+            long basketId = SelectedItem?.Id ?? -1L;
+
+            Entities.Clear();
+
+            DataService.Select<BasketItemEntity>()
+                .Include(x => x.CatalogItem)
+                .Include(x => x.OrderItem)
+                .Where(x => x.OrderItem == null)
+                .ToList()
+                .ForEach(x => Entities.Add(new BasketItem(x, DataService, PrecisionService, ImageService)));
+
+            SelectedItem = Entities.FirstOrDefault(x => x.Id == basketId) ?? Entities.FirstOrDefault();
+        }
+
+
+        #endregion#
     }
 }

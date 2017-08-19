@@ -21,6 +21,7 @@
         ShowImages,
         SetPhotoWindowState,
         ShowAdvanceSearchControl,
-        SetFocusTopMenu
+        SetFocusTopMenu,
+        RefreshBasket
     }
 }
