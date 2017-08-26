@@ -5,6 +5,7 @@ using Domain.Service.Precision;
 using Domain.ViewModel;
 using Media.Color;
 using Media.Image;
+using Options.Service;
 using Photo.Service;
 
 namespace Domain.DomainContext
@@ -41,5 +42,7 @@ namespace Domain.DomainContext
         string Workstation { get; }
 
         string DataBaseServer { get; set; }
+
+        IOptionService OptionService { get; }
     }
 }

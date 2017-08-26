@@ -1,4 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 using Basket.Model;
 using Common.Data.Enum;
 using Common.Data.Notifier;
@@ -23,6 +25,8 @@ namespace Basket.ViewModel
             HasChanges = false;
             ShowPhotoOnMouseDoubleClick = false;
             InitCommands();
+            SubscribeMessenger();
+            SubscribeEvents();
         }
 
         #endregion
@@ -48,6 +52,7 @@ namespace Basket.ViewModel
                 if (Model != null)
                 {
                     Model.SelectedItem = value;
+                    OnPropertyChanged();
                 }
 
             }
@@ -62,6 +67,8 @@ namespace Basket.ViewModel
         public bool HasChanges { get; }
 
         public DelegateCommand AddCommand { get; private set; }
+
+        public DelegateCommand ClearCommand { get; private set; }
 
         #endregion
 
@@ -115,12 +122,72 @@ namespace Basket.ViewModel
         private void CreateCommand()
         {
             AddCommand = new DelegateCommand(DoAdd);
+            ClearCommand = new DelegateCommand(DoClearBasket, CanDoClearBasket);
         }
 
         private void DoAdd(object parametr)
         {
             Messenger?.Send(CommandName.SetFocusTopMenu, new SetMenuFocusEventArgs(MenuItemName.PriceList));
-            //Messenger?.Send(CommandName.SetEntryControl, new MenuChangedEventArgs(MenuItemName.PriceList));
+        }
+
+        private void DoClearBasket(object parametr)
+        {
+            while (Entities != null && Entities.Any())
+            {
+                Entities.First().Count = 0;
+            }
+        }
+
+        private bool CanDoClearBasket(object parametr)
+        {
+            return Entities != null && Entities.Any();
+        }
+
+        private void SubscribeEvents()
+        {
+            Model.CountChanged += OnCountChanged;
+            Model.PropertyChanged += ModelOnPropertyChanged;
+        }
+
+        private void ModelOnPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(SelectedItem) || e.PropertyName == nameof(Entities))
+            {
+                OnPropertyChanged(e.PropertyName);
+            }
+        }
+
+        private void OnCountChanged(object sender, DecimalValueChangedEventArgs e)
+        {
+            if (Messenger != null)
+            {
+                Messenger.Send(CommandName.RefreshBasketCapture, new EventArgs());
+                Messenger.Send(CommandName.RefreshCount, e);
+            }
+        }
+
+        private void SubscribeMessenger()
+        {
+            Messenger?.MultiRegister<DecimalValueChangedEventArgs>(CommandName.RefreshCount,
+                                                                   RefreshCount,
+                                                                   CanRefreshCount);
+        }
+
+        private void RefreshCount(DecimalValueChangedEventArgs args)
+        {
+            if (args.NewValue == 0 || Entities.All(x => x.Entity.CatalogItem.Id != args.Id))
+            {
+                Model.SelectEntities();
+            }
+            else
+            {
+                Entities.FirstOrDefault(x => x.Entity.CatalogItem.Id == args.Id)?.Refresh();
+            }
+        }
+
+        private bool CanRefreshCount(DecimalValueChangedEventArgs args)
+        {
+            return args.Entry != MenuItemName.Basket;
         }
 
         #endregion

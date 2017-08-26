@@ -1,5 +1,4 @@
 ﻿using System;
-using Common.Data.Notifier;
 using DatabaseService.DataBaseContext.Entities;
 
 namespace Domain.Data.Object

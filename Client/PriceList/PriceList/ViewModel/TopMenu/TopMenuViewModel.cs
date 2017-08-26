@@ -90,7 +90,7 @@ namespace PriceList.ViewModel.TopMenu
         private void SubscribeMessenger()
         {
             Messenger?.Register<MenuChangedEventArgs>(CommandName.SelectLeftMenu, SelectTopMenu, CanSelectTopMenu);
-            Messenger?.MultiRegister<EventArgs>(CommandName.RefreshBasket, RefreshBasketCapture, CanRefreshBasketCapture);
+            Messenger?.Register<EventArgs>(CommandName.RefreshBasketCapture, RefreshBasketCapture, CanRefreshBasketCapture);
         }
 
         private void SelectTopMenu(MenuChangedEventArgs args)

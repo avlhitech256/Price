@@ -23,7 +23,7 @@
                 </Grid.RowDefinitions>
                 <CheckBox Grid.Column="0" 
                           Grid.Row="0" 
-                          Content="Только новые за последние 14 дней"
+                          Content="Новые товары за последние 14 дней"
                           IsChecked="{Binding Path=SearchCriteria.IsNew, UpdateSourceTrigger=PropertyChanged}"/>
                 <CheckBox Grid.Column="0" 
                           Grid.Row="1" 

@@ -19,6 +19,7 @@ namespace DatabaseService.DataBaseContext.Initializer
             List<BrandItemEntity> brandItems = PopulateBrandItemEntities(dataBaseContext);
             List<PhotoItemEntity> photoItems = PopulatePhotoEntities(dataBaseContext);
             PopulateCatalogItemEntities(dataBaseContext, brandItems, photoItems);
+            PopulateOptionItemEntities(dataBaseContext);
             dataBaseContext.SaveChanges();
             base.Seed(dataBaseContext);
         }
@@ -162,6 +163,32 @@ namespace DatabaseService.DataBaseContext.Initializer
             };
 
             dataBaseContext.CatalogItemEntities.AddRange(catalogItems);
+        }
+        private void PopulateOptionItemEntities(DataBaseContext dataBaseContext)
+        {
+            List<OptionItemEntity> optionItems = new List<OptionItemEntity>
+            {
+                new OptionItemEntity
+                {
+                    Code = "LOGIN",
+                    Name = "User Login",
+                    Value = "autotrend"
+                },
+                new OptionItemEntity
+                {
+                    Code = "PASSWORD",
+                    Name = "User Password",
+                    Value = ""
+                },
+                new OptionItemEntity
+                {
+                    Code = "LASTORDERNUMBER",
+                    Name = "Last Order Number",
+                    Value = "0"
+                },
+            };
+
+            dataBaseContext.OptionItemEntities.AddRange(optionItems);
         }
     }
 }

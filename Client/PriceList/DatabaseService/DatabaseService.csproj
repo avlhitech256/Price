@@ -58,8 +58,8 @@
     <Compile Include="DataBaseContext\Entities\BasketItemEntity.cs" />
     <Compile Include="DataBaseContext\Entities\BrandItemEntity.cs" />
     <Compile Include="DataBaseContext\Entities\CatalogItemEntity.cs" />
+    <Compile Include="DataBaseContext\Entities\OptionItemEntity.cs" />
     <Compile Include="DataBaseContext\Entities\OrderEntity.cs" />
-    <Compile Include="DataBaseContext\Entities\OrderItemEntity.cs" />
     <Compile Include="DataBaseContext\Entities\PhotoItemEntity.cs" />
     <Compile Include="DataBaseContext\Initializer\DataBaseInitializer.cs" />
     <Compile Include="DataService\IDataService.cs" />

@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Media.Imaging;
+using Common.Data.Enum;
 using Common.Data.Notifier;
 using Common.Event;
-using Common.Messenger;
-using Common.Messenger.Implementation;
 using DatabaseService.DataBaseContext.Entities;
 using DatabaseService.DataService;
 using Domain.Properties;
-using Domain.Service.Precision;
 using Media.Image;
 
 namespace Domain.Data.Object
@@ -22,12 +19,9 @@ namespace Domain.Data.Object
         private CatalogItemEntity entity;
         private BrandItem brand;
         private long position;
-        private string count;
-        private decimal countValue;
+        private decimal count;
         private readonly IDataService databaseService;
         private readonly IImageService imageService;
-        private readonly IPrecisionService precisionService;
-        private readonly IMessenger messenger;
 
         #endregion
 
@@ -35,19 +29,14 @@ namespace Domain.Data.Object
 
         public CatalogItem(CatalogItemEntity entity, 
                            IDataService databaseService, 
-                           IPrecisionService precisionService, 
-                           IImageService imageService,
-                           IMessenger messenger)
+                           IImageService imageService)
         {
             Entity = entity;
             this.databaseService = databaseService;
             this.imageService = imageService;
-            this.precisionService = precisionService;
-            this.messenger = messenger;
             Brand = new BrandItem(entity.Brand);
             Position = 1L;
-            countValue = databaseService.GetCount(entity);  //TODO Необходимо будет сделать загрузку в фоне
-            Count = precisionService?.Convert(CountValue);
+            Refresh();
         }
         #endregion
 
@@ -272,7 +261,7 @@ namespace Domain.Data.Object
 
         public string FullPrice => Price.ToString(CultureInfo.InvariantCulture) + " " + Currency;
 
-        public string Count
+        public decimal Count
         {
             get
             {
@@ -280,37 +269,12 @@ namespace Domain.Data.Object
             }
             set
             {
-                string stringValue = precisionService?.NormalizeValue(value);
+                decimal oldValue = count;
 
-                if (count != stringValue)
+                if (count != value)
                 {
-                    count = stringValue;
-
-                    if (precisionService != null)
-                    {
-                        CountValue = precisionService.Convert(Count);
-                    }
-
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public decimal CountValue
-        {
-            get
-            {
-                return countValue;
-            }
-            set
-            {
-                decimal oldValue = countValue;
-
-                if (countValue != value)
-                {
-                    countValue = value;
+                    count = value;
                     databaseService.SetCount(Entity, value);
-                    Count = precisionService?.Convert(CountValue);
                     OnCountChanged(oldValue, value);
                     OnPropertyChanged();
                 }
@@ -323,8 +287,12 @@ namespace Domain.Data.Object
 
         private void OnCountChanged(decimal oldValue, decimal newValue)
         {
-            CountChanged?.Invoke(this, new DecimalValueChangedEventArgs(Id, oldValue, newValue));
-            messenger?.Send(CommandName.RefreshBasket, new EventArgs());
+            CountChanged?.Invoke(this, new DecimalValueChangedEventArgs(Id, oldValue, newValue, MenuItemName.PriceList));
+        }
+
+        public void Refresh()
+        {
+            Count = databaseService.GetCount(Entity);  //TODO Необходимо будет сделать загрузку в фоне
         }
 
         #endregion

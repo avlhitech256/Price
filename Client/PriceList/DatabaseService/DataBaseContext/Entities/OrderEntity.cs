@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using DatabaseService.Objects.Enum;
 
 namespace DatabaseService.DataBaseContext.Entities
@@ -8,6 +9,7 @@ namespace DatabaseService.DataBaseContext.Entities
     {
         public long Id { get; set; }
 
+        [MaxLength(30)]
         public string OrderNumber { get; set; }
 
         public DateTimeOffset DateOfCreation { get; set; }
@@ -16,6 +18,6 @@ namespace DatabaseService.DataBaseContext.Entities
 
         public OrderStatus OrderStatus { get; set; }
 
-        public virtual List<OrderItemEntity> OrderItems { get; set; }
+        public virtual List<BasketItemEntity> BasketItems { get; set; }
     }
 }

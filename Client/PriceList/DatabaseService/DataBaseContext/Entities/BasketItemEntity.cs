@@ -8,7 +8,7 @@ namespace DatabaseService.DataBaseContext.Entities
 
         public virtual CatalogItemEntity CatalogItem { get; set; }
 
-        public virtual OrderItemEntity OrderItem { get; set; }
+        public virtual OrderEntity Order { get; set; }
 
         public decimal Count { get; set; }
 

@@ -42,7 +42,7 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn IsReadOnly="True" 
                                     Width="55"
-                                    Binding="{Binding Path=Position}">
+                                    Binding="{Binding Path=Position, Mode=OneWay}">
                         <DataGridTextColumn.ElementStyle>
                             <Style>
                                 <Setter Property="TextBlock.TextAlignment" Value="Right" />
@@ -76,13 +76,13 @@
                         </DataGridTemplateColumn.HeaderTemplate>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Image  Source="{Binding PhotoIcon}" Height="20"/>
+                                <Image  Source="{Binding PhotoIcon, Mode=OneWay}" Height="20"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTextColumn IsReadOnly="True" 
                                     Width="Auto"
-                                    Binding="{Binding Path=Code}">
+                                    Binding="{Binding Path=Code, Mode=OneWay}">
                         <DataGridTextColumn.HeaderTemplate>
                             <DataTemplate>
                                 <TextBlock Text="Код" 
@@ -97,7 +97,7 @@
                     </DataGridTextColumn>
                     <DataGridTextColumn IsReadOnly="True" 
                                     Width="Auto"
-                                    Binding="{Binding Path=Article}">
+                                    Binding="{Binding Path=Article, Mode=OneWay}">
                         <DataGridTextColumn.HeaderTemplate>
                             <DataTemplate>
                                 <TextBlock Text="Артикул" 
@@ -111,7 +111,7 @@
                     </DataGridTextColumn>
                     <DataGridTextColumn IsReadOnly="True" 
                                     Width="Auto"
-                                    Binding="{Binding Path=Name}">
+                                    Binding="{Binding Path=Name, Mode=OneWay}">
                         <DataGridTextColumn.HeaderTemplate>
                             <DataTemplate>
                                 <TextBlock Text="Наименование" 
@@ -125,7 +125,7 @@
                     </DataGridTextColumn>
                     <DataGridTextColumn IsReadOnly="True" 
                                         Width="Auto"
-                                        Binding="{Binding Path=Brand.Name}">
+                                        Binding="{Binding Path=Brand.Name, Mode=OneWay}">
                         <DataGridTextColumn.HeaderTemplate>
                             <DataTemplate>
                                 <TextBlock Text="Бренд" 
@@ -139,7 +139,7 @@
                     </DataGridTextColumn>
                     <DataGridTextColumn IsReadOnly="True" 
                                     Width="Auto"
-                                    Binding="{Binding Path=Unit}">
+                                    Binding="{Binding Path=Unit, Mode=OneWay}">
                         <DataGridTextColumn.ElementStyle>
                             <Style>
                                 <Setter Property="TextBlock.TextAlignment" Value="Center" />
@@ -158,7 +158,7 @@
                     </DataGridTextColumn>
                     <DataGridTextColumn IsReadOnly="True" 
                                     Width="Auto"
-                                    Binding="{Binding Path=EnterpriceNormPack}">
+                                    Binding="{Binding Path=EnterpriceNormPack, Mode=OneWay}">
                         <DataGridTextColumn.ElementStyle>
                             <Style>
                                 <Setter Property="TextBlock.TextAlignment" Value="Right" />
@@ -177,7 +177,7 @@
                     </DataGridTextColumn>
                     <DataGridTextColumn IsReadOnly="True" 
                                     Width="Auto"
-                                    Binding="{Binding Path=Balance}">
+                                    Binding="{Binding Path=Balance, Mode=OneWay}">
                         <DataGridTextColumn.HeaderTemplate>
                             <DataTemplate>
                                 <TextBlock Text="Остаток" 
@@ -191,7 +191,7 @@
                     </DataGridTextColumn>
                     <DataGridTextColumn IsReadOnly="True" 
                                     Width="Auto"
-                                    Binding="{Binding Path=Price}">
+                                    Binding="{Binding Path=Price, Mode=OneWay}">
                         <DataGridTextColumn.ElementStyle>
                             <Style>
                                 <Setter Property="TextBlock.TextAlignment" Value="Right" />
@@ -210,7 +210,7 @@
                     </DataGridTextColumn>
                     <DataGridTextColumn IsReadOnly="False" 
                                         Width="*"
-                                        Binding="{Binding Path=CountValue, StringFormat={}{0:n2} , Mode=TwoWay}">
+                                        Binding="{Binding Path=Count, StringFormat={}{0:n2} , Mode=TwoWay}">
                         <DataGridTextColumn.ElementStyle>
                             <Style>
                                 <Setter Property="TextBlock.TextAlignment" Value="Right" />

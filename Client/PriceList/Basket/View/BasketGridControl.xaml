@@ -20,7 +20,7 @@
             <DataGrid.Columns>
                 <DataGridTextColumn IsReadOnly="True" 
                                     Width="30"
-                                    Binding="{Binding Path=Position}">
+                                    Binding="{Binding Path=Position, Mode=OneWay}">
                     <DataGridTextColumn.HeaderTemplate>
                         <DataTemplate>
                             <TextBlock Text="№ п/п" 
@@ -49,17 +49,17 @@
                     </DataGridTemplateColumn.HeaderTemplate>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Image  Source="{Binding PhotoIcon}" Height="20"/>
+                            <Image  Source="{Binding PhotoIcon, Mode=OneWay}" Height="20"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
                 <DataGridTextColumn IsReadOnly="True" 
                                     Width="Auto"
-                                    Binding="{Binding Path=Code}">
+                                    Binding="{Binding Path=Code, Mode=OneWay}">
                     <DataGridTextColumn.HeaderTemplate>
                         <DataTemplate>
                             <TextBlock Text="Код" 
-                                       Width="65"
+                                       Width="60"
                                        TextWrapping="Wrap" 
                                        TextAlignment="Center" 
                                        VerticalAlignment="Center"
@@ -70,7 +70,7 @@
                 </DataGridTextColumn>
                 <DataGridTextColumn IsReadOnly="True" 
                                     Width="Auto"
-                                    Binding="{Binding Path=Article}">
+                                    Binding="{Binding Path=Article, Mode=OneWay}">
                     <DataGridTextColumn.HeaderTemplate>
                         <DataTemplate>
                             <TextBlock Text="Артикул" 
@@ -84,7 +84,7 @@
                 </DataGridTextColumn>
                 <DataGridTextColumn IsReadOnly="True" 
                                     Width="Auto"
-                                    Binding="{Binding Path=Name}">
+                                    Binding="{Binding Path=Name, Mode=OneWay}">
                     <DataGridTextColumn.HeaderTemplate>
                         <DataTemplate>
                             <TextBlock Text="Наименование" 
@@ -98,7 +98,7 @@
                 </DataGridTextColumn>
                 <DataGridTextColumn IsReadOnly="True" 
                                         Width="Auto"
-                                        Binding="{Binding Path=Brand.Name}">
+                                        Binding="{Binding Path=Brand.Name, Mode=OneWay}">
                     <DataGridTextColumn.HeaderTemplate>
                         <DataTemplate>
                             <TextBlock Text="Бренд" 
@@ -112,7 +112,7 @@
                 </DataGridTextColumn>
                 <DataGridTextColumn IsReadOnly="True" 
                                     Width="Auto"
-                                    Binding="{Binding Path=Unit}">
+                                    Binding="{Binding Path=Unit, Mode=OneWay}">
                     <DataGridTextColumn.ElementStyle>
                         <Style>
                             <Setter Property="TextBlock.TextAlignment" Value="Center" />
@@ -131,7 +131,7 @@
                 </DataGridTextColumn>
                 <DataGridTextColumn IsReadOnly="True" 
                                     Width="Auto"
-                                    Binding="{Binding Path=EnterpriceNormPack}">
+                                    Binding="{Binding Path=EnterpriceNormPack, Mode=OneWay}">
                     <DataGridTextColumn.ElementStyle>
                         <Style>
                             <Setter Property="TextBlock.TextAlignment" Value="Right" />
@@ -150,7 +150,7 @@
                 </DataGridTextColumn>
                 <DataGridTextColumn IsReadOnly="True" 
                                     Width="Auto"
-                                    Binding="{Binding Path=Price}">
+                                    Binding="{Binding Path=Price, Mode=OneWay}">
                     <DataGridTextColumn.ElementStyle>
                         <Style>
                             <Setter Property="TextBlock.TextAlignment" Value="Right" />
@@ -168,8 +168,9 @@
                     </DataGridTextColumn.HeaderTemplate>
                 </DataGridTextColumn>
                 <DataGridTextColumn IsReadOnly="False" 
-                                        Width="*"
-                                        Binding="{Binding Path=CountValue, StringFormat={}{0:n2} , Mode=TwoWay}">
+                                    Width="*"
+                                    MinWidth="60"
+                                    Binding="{Binding Path=Count, StringFormat={}{0:n2} , Mode=TwoWay}">
                     <DataGridTextColumn.ElementStyle>
                         <Style>
                             <Setter Property="TextBlock.TextAlignment" Value="Right" />
@@ -177,7 +178,26 @@
                     </DataGridTextColumn.ElementStyle>
                     <DataGridTextColumn.HeaderTemplate>
                         <DataTemplate>
-                            <TextBlock Text="Количество" 
+                            <TextBlock Text="Кол-во" 
+                                       Width="60" 
+                                       TextWrapping="Wrap" 
+                                       TextAlignment="Center" 
+                                       VerticalAlignment="Center">
+                            </TextBlock>
+                        </DataTemplate>
+                    </DataGridTextColumn.HeaderTemplate>
+                </DataGridTextColumn>
+                <DataGridTextColumn IsReadOnly="True" 
+                                    Width="Auto"
+                                    Binding="{Binding Path=Sum, StringFormat={}{0:n2} , Mode=OneWay}">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style>
+                            <Setter Property="TextBlock.TextAlignment" Value="Right" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                    <DataGridTextColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="Сумма, грн." 
                                        Width="80" 
                                        TextWrapping="Wrap" 
                                        TextAlignment="Center" 
@@ -186,21 +206,26 @@
                         </DataTemplate>
                     </DataGridTextColumn.HeaderTemplate>
                 </DataGridTextColumn>
-                <DataGridCheckBoxColumn IsReadOnly="False" 
-                                            Width="55"
-                                            Binding="{Binding Path=Position}">
-                    <DataGridCheckBoxColumn.HeaderTemplate>
+                <DataGridTemplateColumn x:Name="DeleteIconColumn"
+                                            IsReadOnly="True" 
+                                            Width="40">
+                    <DataGridTemplateColumn.HeaderTemplate>
                         <DataTemplate>
-                            <TextBlock Text="Удалить" 
-                                       Width="53"
+                            <TextBlock Text="Удал." 
+                                       Width="30"
                                        TextWrapping="Wrap" 
                                        TextAlignment="Center" 
                                        VerticalAlignment="Center"
                                        HorizontalAlignment="Center">
                             </TextBlock>
                         </DataTemplate>
-                    </DataGridCheckBoxColumn.HeaderTemplate>
-                </DataGridCheckBoxColumn>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image  Source="{Binding DeleteIcon, Mode=OneWay}" Height="20"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
     </Border>

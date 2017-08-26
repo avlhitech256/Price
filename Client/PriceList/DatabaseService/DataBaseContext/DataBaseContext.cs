@@ -37,12 +37,6 @@ namespace DatabaseService.DataBaseContext
 
         public virtual DbSet<OrderEntity> OrderEntities { get; set; }
 
-        public virtual DbSet<OrderItemEntity> OrderItemEntities { get; set; }
+        public virtual DbSet<OptionItemEntity> OptionItemEntities { get; set; }
     }
-
-    //public class MyEntity
-    //{
-    //    public int Id { get; set; }
-    //    public string Name { get; set; }
-    //}
 }

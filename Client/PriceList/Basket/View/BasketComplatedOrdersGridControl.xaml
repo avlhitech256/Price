@@ -12,8 +12,6 @@
                       VerticalAlignment="Stretch"
                       Height="Auto"
                       Foreground="#FF000059"
-                      ItemsSource="{Binding Entities}"
-                      SelectedItem="{Binding Path=SelectedItem, Mode=TwoWay}"
                       IsReadOnly="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn IsReadOnly="True" 

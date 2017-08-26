@@ -1,0 +1,23 @@
+        public string Count
+        {
+            get
+            {
+                return count;
+            }
+            set
+            {
+                string stringValue = precisionService?.NormalizeValue(value);
+
+                if (count != stringValue)
+                {
+                    count = stringValue;
+
+                    if (precisionService != null)
+                    {
+                        CountValue = precisionService.Convert(Count);
+                    }
+
+                    OnPropertyChanged();
+                }
+            }
+        }

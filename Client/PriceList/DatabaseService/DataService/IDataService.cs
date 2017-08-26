@@ -18,8 +18,6 @@ namespace DatabaseService.DataService
 
         void LoadPhotos(CatalogItemEntity entity);
 
-        void LoadPhotos(OrderItemEntity entity);
-
         void LoadPhotos(BasketItemEntity entity);
 
         void AddPhoto(CatalogItemEntity entity, byte[] photo);
@@ -29,5 +27,9 @@ namespace DatabaseService.DataService
         void SetCount(CatalogItemEntity entity, decimal count);
 
         decimal GetSumBasket();
+
+        string GetOption(string optionCode);
+
+        void SetOption(string optionCode, string value);
     }
 }

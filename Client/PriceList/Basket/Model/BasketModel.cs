@@ -1,13 +1,13 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
 using Common.Data.Notifier;
-using Common.Messenger;
+using Common.Event;
 using DatabaseService.DataBaseContext.Entities;
 using DatabaseService.DataService;
 using Domain.Data.Object;
 using Domain.DomainContext;
-using Domain.Service.Precision;
 using Media.Image;
 
 namespace Basket.Model
@@ -18,6 +18,7 @@ namespace Basket.Model
 
         private BasketItem selectedItem;
         private BasketItem oldSelectedItem;
+        private long oldSelectedItemId;
         private ObservableCollection<BasketItem> entities;
 
         #endregion
@@ -28,6 +29,8 @@ namespace Basket.Model
         {
             DomainContext = domainContext;
             Entities = new ObservableCollection<BasketItem>();
+            oldSelectedItem = null;
+            oldSelectedItemId = -1L;
             SelectEntities();
         }
 
@@ -36,10 +39,6 @@ namespace Basket.Model
         #region Properties
 
         private IDomainContext DomainContext { get; }
-
-        private IMessenger Messenger => DomainContext?.Messenger;
-
-        private IPrecisionService PrecisionService => DomainContext?.PrecisionService;
 
         private IImageService ImageService => DomainContext?.ImageService;
 
@@ -53,9 +52,13 @@ namespace Basket.Model
             }
             set
             {
+                oldSelectedItem = SelectedItem;
+                oldSelectedItemId = SelectedItem?.Id ?? -1L;
+
                 if (selectedItem != value)
                 {
                     selectedItem = value;
+                    OnChangeSelectedItem(oldSelectedItem, value);
                     OnPropertyChanged();
                 }
             }
@@ -82,23 +85,68 @@ namespace Basket.Model
 
         #region Methods
 
+        private void OnChangeSelectedItem(BasketItem oldItem, BasketItem newItem)
+        {
+            UnsubscribeSelectedItemEvents(oldItem);
+            SubscribeSelectedItemEvents(newItem);
+        }
+
+        private void UnsubscribeSelectedItemEvents(BasketItem oldItem)
+        {
+            if (oldItem != null)
+            {
+                oldItem.CountChanged -= OnCountChanged;
+                oldItem.DeletedItem -= OnDeletedItem;
+            }
+        }
+
+        private void SubscribeSelectedItemEvents(BasketItem newItem)
+        {
+            if (newItem != null)
+            {
+                newItem.CountChanged += OnCountChanged;
+                newItem.DeletedItem += OnDeletedItem;
+            }
+        }
+
+        private void OnCountChanged(object sender, DecimalValueChangedEventArgs e)
+        {
+            CountChanged?.Invoke(this, e);
+        }
+
+        private void OnDeletedItem(object sender, EventArgs eventArgs)
+        {
+            SelectEntities();
+        }
+
         public void SelectEntities()
         {
-            long basketId = SelectedItem?.Id ?? -1L;
+            long oldBasketId = oldSelectedItemId;
+            long basketId = SelectedItem?.Id ?? oldBasketId;
 
             Entities.Clear();
 
             DataService.Select<BasketItemEntity>()
                 .Include(x => x.CatalogItem)
-                .Include(x => x.OrderItem)
-                .Where(x => x.OrderItem == null)
+                .Include(x => x.Order)
+                .Where(x => x.Order == null)
                 .ToList()
-                .ForEach(x => Entities.Add(new BasketItem(x, DataService, PrecisionService, ImageService)));
+                .ForEach(x => Entities.Add(new BasketItem(x, DataService, ImageService)));
 
-            SelectedItem = Entities.FirstOrDefault(x => x.Id == basketId) ?? Entities.FirstOrDefault();
+            SelectedItem = Entities.FirstOrDefault(x => x.Id == basketId) 
+                ?? Entities.FirstOrDefault(x => x.Id == oldBasketId)
+                ?? Entities.FirstOrDefault();
+
+            oldSelectedItem = null;
+            oldSelectedItemId = -1L;
         }
 
+        #endregion
 
-        #endregion#
+        #region Events
+
+        public event CountChangedEventHandler CountChanged;
+
+        #endregion
     }
 }

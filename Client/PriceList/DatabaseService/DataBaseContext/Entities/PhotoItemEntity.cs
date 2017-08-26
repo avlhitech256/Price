@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DatabaseService.DataBaseContext.Entities
@@ -7,13 +7,12 @@ namespace DatabaseService.DataBaseContext.Entities
     {
         public long Id { get; set; }
 
+        [MaxLength(255)]
+        public string Name { get; set; }
+
         [Column(TypeName = "image")]
         public byte[] Photo { get; set; }
 
-        public virtual List<CatalogItemEntity> CatalogItems { get; set; }
-
-        public virtual List<BasketItemEntity> BasketItems { get; set; }
-
-        public virtual List<OrderItemEntity> OrderItems { get; set; }
+        public virtual CatalogItemEntity CatalogItem { get; set; }
     }
 }

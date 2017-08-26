@@ -43,6 +43,10 @@ namespace Basket.View
                 {
                     ShowPicture();
                 }
+                else if (Equals(grid.CurrentColumn, DeleteIconColumn))
+                {
+                    DeleteItem();
+                }
             }
         }
         private void BasketDataGrid_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -55,6 +59,10 @@ namespace Basket.View
                 {
                     ShowPicture();
                 }
+                else if (Equals(grid.CurrentColumn, DeleteIconColumn))
+                {
+                    DeleteItem();
+                }
             }
         }
 
@@ -65,6 +73,11 @@ namespace Basket.View
                 IEnumerable<byte[]> photos = ViewModel.SelectedItem.Photos;
                 PhotoService.ShowPhotos(photos);
             }
+        }
+
+        private void DeleteItem()
+        {
+            ViewModel.SelectedItem.Count = 0;
         }
 
         #endregion

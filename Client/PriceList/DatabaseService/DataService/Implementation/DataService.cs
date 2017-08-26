@@ -70,14 +70,6 @@ namespace DatabaseService.DataService.Implementation
             }
         }
 
-        public void LoadPhotos(OrderItemEntity entity)
-        {
-            if (!DataBaseContext.Entry(entity).Collection(c => c.Photos).IsLoaded)
-            {
-                DataBaseContext.Entry(entity).Collection(c => c.Photos).Load();
-            }
-        }
-
         public void LoadPhotos(BasketItemEntity entity)
         {
             if (!DataBaseContext.Entry(entity).Collection(c => c.CatalogItem.Photos).IsLoaded)
@@ -110,7 +102,7 @@ namespace DatabaseService.DataService.Implementation
         private BasketItemEntity GetBasketEntity(CatalogItemEntity entity)
         {
             LoadBasket(entity);
-            BasketItemEntity basketItem = entity.BasketItems.FirstOrDefault(x => x.OrderItem == null);
+            BasketItemEntity basketItem = entity.BasketItems.FirstOrDefault(x => x.Order == null);
             return basketItem;
         }
         public decimal GetCount(CatalogItemEntity entity)
@@ -148,12 +140,35 @@ namespace DatabaseService.DataService.Implementation
         {
             decimal sum = Select<BasketItemEntity>()
                 .Include(x => x.CatalogItem)
-                .Where(x => x.OrderItem == null)
+                .Where(x => x.Order == null)
                 .Where(x => x.CatalogItem != null)
                 .ToList()
                 .Select(x => x.Count*x.CatalogItem.Price)
                 .Sum();
             return sum;
+        }
+
+        public string GetOption(string optionCode)
+        {
+            string value = !string.IsNullOrWhiteSpace(optionCode)
+                ? Select<OptionItemEntity>().FirstOrDefault(x => x.Code == optionCode)?.Value
+                : string.Empty;
+
+            return value;
+        }
+
+        public void SetOption(string optionCode, string value)
+        {
+            if (!string.IsNullOrWhiteSpace(optionCode))
+            {
+                OptionItemEntity option = Select<OptionItemEntity>().FirstOrDefault(x => x.Code == optionCode);
+
+                if (option != null)
+                {
+                    option.Value = value;
+                    DataBaseContext.SaveChanges();
+                }
+            }
         }
     }
 }

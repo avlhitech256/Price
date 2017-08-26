@@ -11,6 +11,8 @@ using Domain.ViewModel;
 using Media.Color;
 using Media.Color.Implementation;
 using Media.Image;
+using Options.Service;
+using Options.Service.Implementation;
 using Photo.Service;
 using Photo.Service.Implementation;
 
@@ -23,6 +25,7 @@ namespace Domain.DomainContext.Implementation
         private string dataBaseServer;
         private IControlViewModel viewModel;
         private bool isEditControl;
+        private IOptionService _optionService;
 
         #endregion
 
@@ -40,6 +43,7 @@ namespace Domain.DomainContext.Implementation
             PhotoService = new PhotoService(Messenger, ImageService);
             PrecisionService = new PrecisionService(2, true);
             DataService = new DataService();
+            OptionService = new OptionService(DataService);
         }
 
         #endregion
@@ -117,7 +121,9 @@ namespace Domain.DomainContext.Implementation
             }
 
         }
-        
+
+        public IOptionService OptionService { get; }
+
         #endregion
     }
 }

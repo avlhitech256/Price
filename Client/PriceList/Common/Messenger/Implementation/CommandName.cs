@@ -22,6 +22,7 @@
         SetPhotoWindowState,
         ShowAdvanceSearchControl,
         SetFocusTopMenu,
-        RefreshBasket
+        RefreshBasketCapture,
+        RefreshCount
     }
 }

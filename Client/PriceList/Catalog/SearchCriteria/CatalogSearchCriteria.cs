@@ -3,8 +3,6 @@ using System.Runtime.CompilerServices;
 using Common.Annotations;
 using Common.Data.Notifier;
 using Common.Event;
-using Common.Messenger;
-using Common.Messenger.Implementation;
 using DatabaseService.DataBaseContext.Entities;
 
 namespace Catalog.SearchCriteria
@@ -33,7 +31,7 @@ namespace Catalog.SearchCriteria
         private bool enabledEdvanceSearch;
         private int edvanceSearchWidth;
 
-    private string oldCode;
+        private string oldCode;
         private string oldName;
         private string oldArticle;
         private long oldBrandId;
@@ -48,13 +46,14 @@ namespace Catalog.SearchCriteria
         private bool oldGas;
         private bool oldInstrument;
 
+        private const int MinWidthMainWindowWithoutAdvancedSearch = 1070;
+
         #endregion
 
         #region Constructors
 
-        public CatalogSearchCriteria(IMessenger messenger)
+        public CatalogSearchCriteria()
         {
-            Messenger = messenger;
             edvanceSearchWidth = 0;
             enabledEdvanceSearch = false;
             FirstBrandItemEntity = new BrandItemEntity {Id = -1L, Code = Guid.NewGuid(), Name = "Все бренды"};
@@ -65,8 +64,6 @@ namespace Catalog.SearchCriteria
         #endregion
 
         #region Properties
-
-        private IMessenger Messenger { get; }
 
         public bool IsModified
         {
@@ -351,7 +348,7 @@ namespace Catalog.SearchCriteria
             }
         }
 
-        public bool EnabledEdvanceSearch
+        private bool EnabledEdvanceSearch
         {
             get
             {
@@ -362,14 +359,13 @@ namespace Catalog.SearchCriteria
                 if (enabledEdvanceSearch != value)
                 {
                     enabledEdvanceSearch = value;
+                    OnEnabledEdvanceSearchChanged();
                     OnPropertyChanged();
-                    var args = value ? new DoubleAnimationEventArgs(0, 150) : new DoubleAnimationEventArgs(150, 0);
-                    Messenger?.Send(CommandName.ShowAdvanceSearchControl, args);
                 }
             }
         }
 
-        public int EdvanceSearchWidth
+        private int EdvanceSearchWidth
         {
             get
             {
@@ -380,9 +376,8 @@ namespace Catalog.SearchCriteria
                 if (edvanceSearchWidth != value)
                 {
                     edvanceSearchWidth = value;
+                    OnEdvanceSearchWidthChanged();
                     OnPropertyChanged();
-                    int minWidth = 1070 + EdvanceSearchWidth;
-                    Messenger?.Send(CommandName.SetMinWidth, new MinWidthEventArgs(minWidth));
                 }
             }
         }
@@ -415,6 +410,20 @@ namespace Catalog.SearchCriteria
         private void OnSearchCriteriaCleared()
         {
             SearchCriteriaCleared?.Invoke(this, new EventArgs());
+        }
+
+        private void OnEnabledEdvanceSearchChanged()
+        {
+            var args = EnabledEdvanceSearch
+                ? new DoubleAnimationEventArgs(0, 150)
+                : new DoubleAnimationEventArgs(150, 0);
+            EnabledEdvanceSearchChanged?.Invoke(this, args);
+        }
+
+        private void OnEdvanceSearchWidthChanged()
+        {
+            int minWidth = MinWidthMainWindowWithoutAdvancedSearch + EdvanceSearchWidth;
+            EdvanceSearchWidthChanged?.Invoke(this, new MinWidthEventArgs(minWidth));
         }
 
         public void Clear()
@@ -509,6 +518,10 @@ namespace Catalog.SearchCriteria
         public event EventHandler SearchCriteriaChanged;
 
         public event EventHandler SearchCriteriaCleared;
+
+        public event DoubleAnimationEventHandler EnabledEdvanceSearchChanged;
+
+        public event MinWidthEventHandler EdvanceSearchWidthChanged;
 
         #endregion
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace DatabaseService.DataBaseContext.Entities
 {
@@ -8,23 +9,30 @@ namespace DatabaseService.DataBaseContext.Entities
         public long Id { get; set; }
 
         public Guid UID { get; set; }
-        
+
+        [MaxLength(30)]
         public string Code { get; set; }
 
+        [MaxLength(30)]
         public string Article { get; set; }
 
+        [MaxLength(30)]
         public string Name { get; set; }
 
         public virtual BrandItemEntity Brand { get; set; }
 
+        [MaxLength(10)]
         public string Unit { get; set; }
 
+        [MaxLength(30)]
         public string EnterpriceNormPack { get; set; }
 
+        [MaxLength(30)]
         public string Balance { get; set; }
 
         public decimal Price { get; set; }
 
+        [MaxLength(5)]
         public string Currency { get; set; }
 
         public decimal Multiplicity { get; set; }

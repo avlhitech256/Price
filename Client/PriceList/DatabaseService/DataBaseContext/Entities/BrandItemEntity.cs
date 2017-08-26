@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace DatabaseService.DataBaseContext.Entities
 {
@@ -8,6 +9,7 @@ namespace DatabaseService.DataBaseContext.Entities
 
         public Guid Code { get; set; }
 
+        [MaxLength(255)]
         public string Name { get; set; }
     }
 }

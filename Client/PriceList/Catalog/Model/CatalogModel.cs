@@ -7,13 +7,10 @@ using Catalog.SearchCriteria;
 using Common.Data.Holders;
 using Common.Data.Notifier;
 using Common.Event;
-using Common.Messenger;
-using Common.Messenger.Implementation;
 using DatabaseService.DataBaseContext.Entities;
 using DatabaseService.DataService;
 using Domain.Data.Object;
 using Domain.DomainContext;
-using Domain.Service.Precision;
 using Media.Image;
 
 namespace Catalog.Model
@@ -27,7 +24,6 @@ namespace Catalog.Model
         private ObservableCollection<CatalogItem> entities;
         private ObservableCollection<BrandItem> brandItems;
         private decimal amount;
-        public event CountChangedEventHandler CountChanged;
 
         #endregion
 
@@ -39,7 +35,7 @@ namespace Catalog.Model
             Amount = 0;
             Entities = new ObservableCollection<CatalogItem>();
             BrandItems = new ObservableCollection<BrandItem>();
-            SearchCriteria = new CatalogSearchCriteria(Messenger);
+            SearchCriteria = new CatalogSearchCriteria();
             SelectBrandPopupItems();
             SelectEntities();
         }
@@ -50,11 +46,7 @@ namespace Catalog.Model
 
         private IDomainContext DomainContext { get; }
 
-        private IMessenger Messenger => DomainContext?.Messenger;
-
         private IImageService ImageService => DomainContext?.ImageService;
-
-        private IPrecisionService PrecisionService => DomainContext?.PrecisionService;
 
         private IDataService DataService => DomainContext?.DataService;
 
@@ -72,9 +64,8 @@ namespace Catalog.Model
                 {
                     CatalogItem oldValue = SelectedItem;
                     selectedItem = value;
-                    OnPropertyChanged();
                     OnChangeSelectedItem(oldValue, value);
-                    SendSetImageMessage();
+                    OnPropertyChanged();
                 }
             }
         }
@@ -159,11 +150,6 @@ namespace Catalog.Model
             CountChanged?.Invoke(this, e);
         }
 
-        private void SendSetImageMessage()
-        {
-            Messenger.Send(CommandName.SetImage, SelectedItem);
-        }
-
         public void SelectBrandPopupItems()
         {
             BrandItems.Clear();
@@ -232,7 +218,7 @@ namespace Catalog.Model
                 .ToList()
                 .ForEach(
                     x =>
-                        Entities.Add(new CatalogItem(x, DataService, PrecisionService, ImageService, Messenger)
+                        Entities.Add(new CatalogItem(x, DataService, ImageService)
                         {
                             Position = ++position.Value
                         }));
@@ -240,6 +226,12 @@ namespace Catalog.Model
             SelectedItem = Entities.FirstOrDefault(x => x.Id == catalogId) ?? Entities.FirstOrDefault();
             SearchCriteria.SearchComplited();
         }
+
+        #endregion
+
+        #region Events
+
+        public event CountChangedEventHandler CountChanged;
 
         #endregion
     }

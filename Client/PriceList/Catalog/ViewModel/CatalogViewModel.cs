@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using Catalog.Model;
 using Catalog.SearchCriteria;
+using Common.Data.Enum;
 using Common.Data.Notifier;
+using Common.Event;
 using Common.Messenger;
+using Common.Messenger.Implementation;
 using Common.ViewModel.Command;
 using Domain.Data.Object;
 using Domain.DomainContext;
@@ -23,6 +27,7 @@ namespace Catalog.ViewModel
             ShowPhotoOnMouseDoubleClick = false;
             Model = new CatalogModel(domainContext);
             SubscribeEvents();
+            SubscribeMessenger();
             InitCommands();
         }
 
@@ -113,9 +118,50 @@ namespace Catalog.ViewModel
             if (Model != null)
             {
                 Model.PropertyChanged += OnChangedSelectedItem;
+                Model.CountChanged += OnCountChanged;
+                if (Model.SearchCriteria != null)
+                {
+                    Model.SearchCriteria.EnabledEdvanceSearchChanged += OnShowAdvanceSearchControl;
+                    Model.SearchCriteria.EdvanceSearchWidthChanged += OnEdvanceSearchWidthChanged;
+                }
             }
 
         }
+
+        private void OnCountChanged(object sender, DecimalValueChangedEventArgs e)
+        {
+            if (Messenger != null)
+            {
+                Messenger.Send(CommandName.RefreshBasketCapture, new EventArgs());
+                Messenger.Send(CommandName.RefreshCount, e);
+            }
+        }
+
+        private void SubscribeMessenger()
+        {
+            Messenger?.MultiRegister<DecimalValueChangedEventArgs>(CommandName.RefreshCount,
+                                                                   RefreshCount,
+                                                                   CanRefreshCount);
+        }
+
+        private void RefreshCount(DecimalValueChangedEventArgs args)
+        {
+            if (Entities.All(x => x.Entity.Id != args.Id))
+            {
+                Model.SelectEntities();
+            }
+            else
+            {
+                Entities.FirstOrDefault(x => x.Entity.Id == args.Id)?.Refresh();
+            }
+        }
+
+        private bool CanRefreshCount(DecimalValueChangedEventArgs args)
+        {
+            return args.Entry != MenuItemName.PriceList;
+        }
+
+
 
         private void InitCommands()
         {
@@ -174,6 +220,7 @@ namespace Catalog.ViewModel
                 switch (e.PropertyName)
                 {
                     case nameof(Model.SelectedItem):
+                        SendSetImageMessage();
                         OnPropertyChanged(nameof(SelectedItem));
                         break;
                     case nameof(Model.Entities):
@@ -183,6 +230,21 @@ namespace Catalog.ViewModel
 
             }
 
+        }
+
+        private void OnShowAdvanceSearchControl(object sender, DoubleAnimationEventArgs e)
+        {
+            Messenger?.Send(CommandName.ShowAdvanceSearchControl, e);
+        }
+
+        private void OnEdvanceSearchWidthChanged(object sender, MinWidthEventArgs e)
+        {
+            Messenger?.Send(CommandName.SetMinWidth, e);
+        }
+
+        private void SendSetImageMessage()
+        {
+            Messenger?.Send(CommandName.SetImage, SelectedItem);
         }
 
         #endregion
