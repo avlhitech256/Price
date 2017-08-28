@@ -61,12 +61,19 @@ namespace DatabaseService.DataBaseContext.Initializer
         {
             List<PhotoItemEntity> photoItems = new List<PhotoItemEntity>
             {
-                new PhotoItemEntity {Photo = imageService.ConvertToByteArray(Resources.Photo1)},
-                new PhotoItemEntity {Photo = imageService.ConvertToByteArray(Resources.Photo2)},
-                new PhotoItemEntity {Photo = imageService.ConvertToByteArray(Resources.Photo3)},
-                new PhotoItemEntity {Photo = imageService.ConvertToByteArray(Resources.Photo4)},
-                new PhotoItemEntity {Photo = imageService.ConvertToByteArray(Resources.Photo5)},
-                new PhotoItemEntity {Photo = imageService.ConvertToByteArray(Resources.Photo6)}
+                new PhotoItemEntity {Photo = imageService.ConvertToByteArray(Resources.Photo1), Name = "Photo1"},
+                new PhotoItemEntity {Photo = imageService.ConvertToByteArray(Resources.Photo2), Name = "Photo2"},
+                new PhotoItemEntity {Photo = imageService.ConvertToByteArray(Resources.Photo3), Name = "Photo3"},
+                new PhotoItemEntity {Photo = imageService.ConvertToByteArray(Resources.Photo2), Name = "Photo2"},
+                new PhotoItemEntity {Photo = imageService.ConvertToByteArray(Resources.Photo3), Name = "Photo3"},
+                new PhotoItemEntity {Photo = imageService.ConvertToByteArray(Resources.Photo4), Name = "Photo4"},
+                new PhotoItemEntity {Photo = imageService.ConvertToByteArray(Resources.Photo3), Name = "Photo3"},
+                new PhotoItemEntity {Photo = imageService.ConvertToByteArray(Resources.Photo2), Name = "Photo2"},
+                new PhotoItemEntity {Photo = imageService.ConvertToByteArray(Resources.Photo4), Name = "Photo4"},
+                new PhotoItemEntity {Photo = imageService.ConvertToByteArray(Resources.Photo5), Name = "Photo5"},
+                new PhotoItemEntity {Photo = imageService.ConvertToByteArray(Resources.Photo5), Name = "Photo5"},
+                new PhotoItemEntity {Photo = imageService.ConvertToByteArray(Resources.Photo6), Name = "Photo6"},
+                new PhotoItemEntity {Photo = imageService.ConvertToByteArray(Resources.Photo3), Name = "Photo3"}
             };
 
             dataBaseContext.PhotoItemEntities.AddRange(photoItems);
@@ -110,7 +117,7 @@ namespace DatabaseService.DataBaseContext.Initializer
                     Currency = "грн.",
                     LastUpdated = DateTimeOffset.Now,
                     Multiplicity = 1.00M,
-                    Photos = new List<PhotoItemEntity> {photoItems[1], photoItems[2], photoItems[3]}
+                    Photos = new List<PhotoItemEntity> {photoItems[3], photoItems[4], photoItems[5]}
                 },
                 new CatalogItemEntity
                 {
@@ -126,7 +133,7 @@ namespace DatabaseService.DataBaseContext.Initializer
                     Currency = "грн.",
                     LastUpdated = DateTimeOffset.Now,
                     Multiplicity = 1.00M,
-                    Photos = new List<PhotoItemEntity> {photoItems[2], photoItems[1]}
+                    Photos = new List<PhotoItemEntity> {photoItems[6], photoItems[7]}
                 },
                 new CatalogItemEntity
                 {
@@ -142,7 +149,7 @@ namespace DatabaseService.DataBaseContext.Initializer
                     Currency = "USD",
                     LastUpdated = DateTimeOffset.Now,
                     Multiplicity = 1.00M,
-                    Photos = new List<PhotoItemEntity> {photoItems[3], photoItems[4]}
+                    Photos = new List<PhotoItemEntity> {photoItems[8], photoItems[9]}
                 },
                 new CatalogItemEntity
                 {
@@ -158,7 +165,7 @@ namespace DatabaseService.DataBaseContext.Initializer
                     Currency = "грн.",
                     LastUpdated = DateTimeOffset.Now,
                     Multiplicity = 1.00M,
-                    Photos = new List<PhotoItemEntity> {photoItems[4], photoItems[5], photoItems[2]}
+                    Photos = new List<PhotoItemEntity> {photoItems[10], photoItems[11], photoItems[12]}
                 }
             };
 

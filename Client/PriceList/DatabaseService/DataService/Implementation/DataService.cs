@@ -150,9 +150,16 @@ namespace DatabaseService.DataService.Implementation
 
         public string GetOption(string optionCode)
         {
-            string value = !string.IsNullOrWhiteSpace(optionCode)
-                ? Select<OptionItemEntity>().FirstOrDefault(x => x.Code == optionCode)?.Value
-                : string.Empty;
+            string value = string.Empty;
+            if (!string.IsNullOrWhiteSpace(optionCode))
+            {
+                OptionItemEntity option = Select<OptionItemEntity>().FirstOrDefault(x => x.Code == optionCode);
+
+                if (option != null)
+                {
+                    value = option.Value;
+                }
+            }
 
             return value;
         }

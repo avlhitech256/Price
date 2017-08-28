@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.Eventing.Reader;
-
-namespace Options.Service.Implementation
+﻿namespace Options.Service.Implementation
 {
     public class OptionName
     {

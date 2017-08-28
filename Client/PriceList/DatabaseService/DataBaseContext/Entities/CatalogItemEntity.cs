@@ -16,7 +16,7 @@ namespace DatabaseService.DataBaseContext.Entities
         [MaxLength(30)]
         public string Article { get; set; }
 
-        [MaxLength(30)]
+        [MaxLength(255)]
         public string Name { get; set; }
 
         public virtual BrandItemEntity Brand { get; set; }
