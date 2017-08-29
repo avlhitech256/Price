@@ -16,6 +16,8 @@ namespace DatabaseService.DataService
 
         void Delete<TEntity>(TEntity entity) where TEntity : class;
 
+        void DeleteEntities<TEntity>(IEnumerable<TEntity> entities) where TEntity : class;
+
         void LoadPhotos(CatalogItemEntity entity);
 
         void LoadPhotos(BasketItemEntity entity);

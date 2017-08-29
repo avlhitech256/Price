@@ -23,11 +23,13 @@
                 Grid.Row="1"
                 Grid.Column="1"
                 Width="120"
-                Style="{DynamicResource ButtonStyle}"/>
+                Style="{DynamicResource ButtonStyle}"
+                Command="{Binding Path=OrderViewModel.SendCommand}"/>
         <Button Content="Вернуть в Корзину"
                 Grid.Row="3"
                 Grid.Column="1"
                 Width="120"
-                Style="{DynamicResource ButtonStyle}"/>
+                Style="{DynamicResource ButtonStyle}"
+                Command="{Binding Path=OrderViewModel.RevertCommand}"/>
     </Grid>
 </UserControl>

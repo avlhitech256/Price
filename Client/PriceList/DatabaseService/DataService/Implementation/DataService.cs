@@ -62,6 +62,12 @@ namespace DatabaseService.DataService.Implementation
             DataBaseContext.SaveChanges();
         }
 
+        public void DeleteEntities<TEntity>(IEnumerable<TEntity> entities) where TEntity : class
+        {
+            entities.ToList().ForEach(x => DataBaseContext.Entry(x).State = EntityState.Deleted);
+            DataBaseContext.SaveChanges();
+        }
+
         public void LoadPhotos(CatalogItemEntity entity)
         {
             if (!DataBaseContext.Entry(entity).Collection(c => c.Photos).IsLoaded)

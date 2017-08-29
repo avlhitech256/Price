@@ -98,7 +98,7 @@ namespace DatabaseService.DataBaseContext.Initializer
                     Balance = "свыше 100 шт.",
                     Unit = "шт.",
                     Price = 50.52M,
-                    Currency = "EUR",
+                    Currency = "грн.",
                     LastUpdated = DateTimeOffset.Now,
                     Multiplicity = 1.00M,
                     Photos = new List<PhotoItemEntity> {photoItems[0], photoItems[1], photoItems[2]}
@@ -146,7 +146,7 @@ namespace DatabaseService.DataBaseContext.Initializer
                     Balance = "8 шт.",
                     Unit = "шт.",
                     Price = 120.78M,
-                    Currency = "USD",
+                    Currency = "грн.",
                     LastUpdated = DateTimeOffset.Now,
                     Multiplicity = 1.00M,
                     Photos = new List<PhotoItemEntity> {photoItems[8], photoItems[9]}

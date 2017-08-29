@@ -25,7 +25,8 @@
                 Grid.Row="1"
                 Grid.Column="1"
                 Width="120"
-                Style="{DynamicResource ButtonStyle}"/>
+                Style="{DynamicResource ButtonStyle}"
+                Command="{Binding Path=CreateOrderCommand}"/>
         <Button Content="Добавить"
                 Grid.Row="3"
                 Grid.Column="1"

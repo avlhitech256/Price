@@ -23,6 +23,8 @@
         ShowAdvanceSearchControl,
         SetFocusTopMenu,
         RefreshBasketCapture,
-        RefreshCount
+        RefreshCount,
+        RefreshPriceList,
+        SendOrder
     }
 }

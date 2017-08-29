@@ -22,6 +22,7 @@ namespace Basket.ViewModel
         {
             DomainContext = domainContext;
             Model = new BasketModel(domainContext);
+            OrderViewModel = new OrderViewModel(domainContext);
             HasChanges = false;
             ShowPhotoOnMouseDoubleClick = false;
             InitCommands();
@@ -39,6 +40,8 @@ namespace Basket.ViewModel
         public bool ShowPhotoOnMouseDoubleClick { get; }
 
         private BasketModel Model { get; }
+
+        public OrderViewModel OrderViewModel { get; }
 
         public BasketItem SelectedItem
         {
@@ -69,6 +72,8 @@ namespace Basket.ViewModel
         public DelegateCommand AddCommand { get; private set; }
 
         public DelegateCommand ClearCommand { get; private set; }
+
+        public DelegateCommand CreateOrderCommand { get; private set; }
 
         #endregion
 
@@ -110,19 +115,9 @@ namespace Basket.ViewModel
 
         private void InitCommands()
         {
-            CreateCommand();
-            SubscribeCommand();
-        }
-
-        private void SubscribeCommand()
-        {
-            
-        }
-
-        private void CreateCommand()
-        {
             AddCommand = new DelegateCommand(DoAdd);
             ClearCommand = new DelegateCommand(DoClearBasket, CanDoClearBasket);
+            CreateOrderCommand = new DelegateCommand(DoCreateOrder, CanDoCreateOrder);
         }
 
         private void DoAdd(object parametr)
@@ -143,10 +138,42 @@ namespace Basket.ViewModel
             return Entities != null && Entities.Any();
         }
 
+        private void DoCreateOrder(object parametr)
+        {
+            OrderViewModel.CreateOrder(Entities, string.Empty);
+            Refresh();
+            OrderViewModel.Refresh();
+            Messenger?.Send(CommandName.RefreshPriceList, new EventArgs());
+        }
+
+        public void Refresh()
+        {
+            Model.SelectEntities();
+            Messenger?.Send(CommandName.RefreshBasketCapture, new EventArgs());
+            Messenger?.Send(CommandName.RefreshPriceList, new EventArgs());
+        }
+
+        private bool CanDoCreateOrder(object parametr)
+        {
+            return Entities != null && Entities.Any();
+        }
+
         private void SubscribeEvents()
         {
             Model.CountChanged += OnCountChanged;
             Model.PropertyChanged += ModelOnPropertyChanged;
+            OrderViewModel.RevertedOrder += OrderViewModelRevertedOrder;
+            OrderViewModel.DeletedOrder += OrderViewModel_DeletedOrder;
+        }
+
+        private void OrderViewModel_DeletedOrder(object sender, EventArgs e)
+        {
+            Refresh();
+        }
+
+        private void OrderViewModelRevertedOrder(object sender, EventArgs e)
+        {
+            Refresh();
         }
 
         private void ModelOnPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -154,6 +181,9 @@ namespace Basket.ViewModel
             if (e.PropertyName == nameof(SelectedItem) || e.PropertyName == nameof(Entities))
             {
                 OnPropertyChanged(e.PropertyName);
+                AddCommand.RiseCanExecute(new object());
+                ClearCommand.RiseCanExecute(new object());
+                CreateOrderCommand.RiseCanExecute(new object());
             }
         }
 

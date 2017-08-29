@@ -139,9 +139,22 @@ namespace Catalog.ViewModel
 
         private void SubscribeMessenger()
         {
-            Messenger?.MultiRegister<DecimalValueChangedEventArgs>(CommandName.RefreshCount,
-                                                                   RefreshCount,
-                                                                   CanRefreshCount);
+            if (Messenger != null)
+            {
+                Messenger?.MultiRegister<DecimalValueChangedEventArgs>(CommandName.RefreshCount,
+                                                                       RefreshCount, CanRefreshCount);
+                Messenger.Register<EventArgs>(CommandName.RefreshPriceList, DoRefreshPriceList, CanDoRefreshPriceList);
+            }
+        }
+
+        private void DoRefreshPriceList(EventArgs args)
+        {
+            Model.SelectEntities();
+        }
+
+        private bool CanDoRefreshPriceList(EventArgs args)
+        {
+            return Entities != null && Entities.Any();
         }
 
         private void RefreshCount(DecimalValueChangedEventArgs args)

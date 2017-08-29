@@ -125,7 +125,7 @@ namespace Domain.Data.Object
 
         #endregion
 
-        #region Constructors
+        #region Methods
 
         private List<byte[]> GetPhotos()
         {

@@ -19,5 +19,8 @@ namespace DatabaseService.DataBaseContext.Entities
         public OrderStatus OrderStatus { get; set; }
 
         public virtual List<BasketItemEntity> BasketItems { get; set; }
+
+        [MaxLength(1024)]
+        public string Comment { get; set; }
     }
 }

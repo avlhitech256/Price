@@ -7,106 +7,115 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="1100">
     <Border>
-            <DataGrid x:Name="ResultSearchDataGrid" 
+        <DataGrid x:Name="ResultSearchDataGrid" 
                       AutoGenerateColumns="False"
                       VerticalAlignment="Stretch"
                       Height="Auto"
+                      ItemsSource="{Binding OrderViewModel.Entities}"
+                      SelectedItem="{Binding Path=OrderViewModel.SelectedItem, Mode=TwoWay}"
                       Foreground="#FF000059"
-                      IsReadOnly="False">
-                <DataGrid.Columns>
-                    <DataGridTextColumn IsReadOnly="True" 
+                      IsReadOnly="False"
+                      MouseUp="OrderDataGrid_OnMouseUp"
+                      MouseDoubleClick="OrderDataGrid_OnMouseDoubleClick">
+            <DataGrid.Columns>
+                <DataGridTextColumn IsReadOnly="True" 
                                     Width="Auto"
                                     Binding="{Binding Path=Position}">
-                        <DataGridTextColumn.HeaderTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="№ п/п" 
+                    <DataGridTextColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="№ п/п" 
                                        Width="40"
                                        TextWrapping="Wrap" 
                                        TextAlignment="Center" 
                                        VerticalAlignment="Center"
                                        HorizontalAlignment="Center">
-                                </TextBlock>
-                            </DataTemplate>
-                        </DataGridTextColumn.HeaderTemplate>
-                    </DataGridTextColumn>
-                    <DataGridTextColumn IsReadOnly="True" 
+                            </TextBlock>
+                        </DataTemplate>
+                    </DataGridTextColumn.HeaderTemplate>
+                </DataGridTextColumn>
+                <DataGridTextColumn IsReadOnly="True" 
                                     Width="Auto"
-                                    Binding="{Binding Path=Code}">
-                        <DataGridTextColumn.HeaderTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="№ заказа" 
+                                    Binding="{Binding Path=OrderNumber}">
+                    <DataGridTextColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="№ заказа" 
                                        Width="115"
                                        TextWrapping="Wrap" 
                                        TextAlignment="Center" 
                                        VerticalAlignment="Center"
                                        HorizontalAlignment="Center">
-                                </TextBlock>
-                            </DataTemplate>
-                        </DataGridTextColumn.HeaderTemplate>
-                    </DataGridTextColumn>
-                    <DataGridTextColumn IsReadOnly="True" 
+                            </TextBlock>
+                        </DataTemplate>
+                    </DataGridTextColumn.HeaderTemplate>
+                </DataGridTextColumn>
+                <DataGridTextColumn IsReadOnly="True" 
                                     Width="Auto"
-                                    Binding="{Binding Path=Article}">
-                        <DataGridTextColumn.HeaderTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="Дата формирования заказа" 
+                                    Binding="{Binding Path=DateOfCreation}">
+                    <DataGridTextColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="Дата формирования заказа" 
                                        Width="130" 
                                        TextWrapping="Wrap" 
                                        TextAlignment="Center" 
                                        VerticalAlignment="Center">
-                                </TextBlock>
-                            </DataTemplate>
-                        </DataGridTextColumn.HeaderTemplate>
-                    </DataGridTextColumn>
-                    <DataGridTextColumn IsReadOnly="True" 
-                                    Width="Auto"
-                                    Binding="{Binding Path=Article}">
-                        <DataGridTextColumn.HeaderTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="Краткая заметка для менеджера" 
-                                       Width="180" 
+                            </TextBlock>
+                        </DataTemplate>
+                    </DataGridTextColumn.HeaderTemplate>
+                </DataGridTextColumn>
+                <DataGridTextColumn IsReadOnly="True" 
+                                    Width="*"
+                                    Binding="{Binding Path=Comment}">
+                    <DataGridTextColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="Краткая заметка для менеджера" 
+                                       Width="{TemplateBinding DataGridTextColumn.Width}" 
                                        TextWrapping="Wrap" 
                                        TextAlignment="Center" 
                                        VerticalAlignment="Center">
-                                </TextBlock>
-                            </DataTemplate>
-                        </DataGridTextColumn.HeaderTemplate>
-                    </DataGridTextColumn>
-                    <DataGridTextColumn IsReadOnly="True" 
+                            </TextBlock>
+                        </DataTemplate>
+                    </DataGridTextColumn.HeaderTemplate>
+                </DataGridTextColumn>
+                <DataGridTextColumn IsReadOnly="True" 
                                     Width="Auto"
-                                    Binding="{Binding Path=Price}">
-                        <DataGridTextColumn.ElementStyle>
-                            <Style>
-                                <Setter Property="TextBlock.TextAlignment" Value="Right" />
-                            </Style>
-                        </DataGridTextColumn.ElementStyle>
-                        <DataGridTextColumn.HeaderTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="Сумма, грн." 
+                                    Binding="{Binding Path=Sum}">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style>
+                            <Setter Property="TextBlock.TextAlignment" Value="Right" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                    <DataGridTextColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="Сумма, грн." 
                                        Width="120" 
                                        TextWrapping="Wrap" 
                                        TextAlignment="Center" 
                                        VerticalAlignment="Center">
-                                </TextBlock>
-                            </DataTemplate>
-                        </DataGridTextColumn.HeaderTemplate>
-                    </DataGridTextColumn>
-                    <DataGridCheckBoxColumn IsReadOnly="False" 
-                                            Width="55"
-                                            Binding="{Binding Path=Position}">
-                        <DataGridCheckBoxColumn.HeaderTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="Удалить заказ" 
-                                           Width="53"
-                                           TextWrapping="Wrap" 
-                                           TextAlignment="Center" 
-                                           VerticalAlignment="Center"
-                                           HorizontalAlignment="Center">
-                                </TextBlock>
-                            </DataTemplate>
-                        </DataGridCheckBoxColumn.HeaderTemplate>
-                    </DataGridCheckBoxColumn>
-                </DataGrid.Columns>
-            </DataGrid>
+                            </TextBlock>
+                        </DataTemplate>
+                    </DataGridTextColumn.HeaderTemplate>
+                </DataGridTextColumn>
+                <DataGridTemplateColumn x:Name="DeleteIconColumn"
+                                            IsReadOnly="True" 
+                                            Width="55">
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="Удалить заказ" 
+                                       Width="53"
+                                       TextWrapping="Wrap" 
+                                       TextAlignment="Center" 
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center">
+                            </TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image  Source="{Binding DeleteIcon, Mode=OneWay}" Height="20"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
     </Border>
 </UserControl>
