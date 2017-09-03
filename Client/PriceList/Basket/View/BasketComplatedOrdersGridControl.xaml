@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Basket.View"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="1100">
+             d:DesignHeight="100" d:DesignWidth="1100">
     <Border>
         <DataGrid x:Name="ResultSearchDataGrid" 
                       AutoGenerateColumns="False"
@@ -62,9 +62,9 @@
                         </DataTemplate>
                     </DataGridTextColumn.HeaderTemplate>
                 </DataGridTextColumn>
-                <DataGridTextColumn IsReadOnly="True" 
+                <DataGridTextColumn IsReadOnly="False" 
                                     Width="*"
-                                    Binding="{Binding Path=Comment}">
+                                    Binding="{Binding Path=Comment, Mode=TwoWay}">
                     <DataGridTextColumn.HeaderTemplate>
                         <DataTemplate>
                             <TextBlock Text="Краткая заметка для менеджера" 

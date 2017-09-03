@@ -1,10 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 using System.Windows.Input;
 using Basket.ViewModel;
-using Domain.DomainContext;
-using Photo.Service;
-using Photo.Service.Implementation;
 
 namespace Basket.View
 {

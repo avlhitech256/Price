@@ -129,6 +129,20 @@ namespace Basket.Model
             SelectEntities();
         }
 
+        public void SendOut()
+        {
+            SelectedItem.OrderStatus = OrderStatus.SentOut;
+            DataService.DataBaseContext.SaveChanges();
+            SelectEntities();
+        }
+
+        public void Revert()
+        {
+            SelectedItem.BasketItems.ForEach(x => x.Order = null);
+            DataService.Delete(SelectedItem.Entity);
+            SelectEntities();
+        }
+
         #endregion
     }
 }

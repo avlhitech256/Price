@@ -48,7 +48,9 @@ namespace Basket.ViewModel
             {
                 if (Model != null)
                 {
+                    UnsubscribeSelectedItemEvent();
                     Model.SelectedItem = value;
+                    SubscribeSelectedItemEvent();
                     OnPropertyChanged();
                 }
 
@@ -71,6 +73,30 @@ namespace Basket.ViewModel
 
         #region Methods
 
+        private void SubscribeSelectedItemEvent()
+        {
+            if (Model != null && Model.SelectedItem != null)
+            {
+                Model.SelectedItem.PropertyChanged += SelectedItem_PropertyChanged;
+            }
+        }
+
+        private void UnsubscribeSelectedItemEvent()
+        {
+            if (Model != null && Model.SelectedItem != null)
+            {
+                Model.SelectedItem.PropertyChanged -= SelectedItem_PropertyChanged;
+            }
+        }
+
+        private void SelectedItem_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(Model.SelectedItem.Comment))
+            {
+                DataService.DataBaseContext.SaveChanges();
+            }
+        }
+
         private void InitCommands()
         {
             SendCommand = new DelegateCommand(DoSend, CanDoSend);
@@ -79,9 +105,7 @@ namespace Basket.ViewModel
 
         private void DoSend(object parametr)
         {
-            SelectedItem.OrderStatus = OrderStatus.SentOut;
-            //Messenger?.Send(CommandName.SendOrder, new EventArgs());
-            Model.SelectEntities();
+            Model.SendOut();
         }
 
         private bool CanDoSend(object parametr)
@@ -91,9 +115,7 @@ namespace Basket.ViewModel
 
         private void DoRevertBasket(object parametr)
         {
-            SelectedItem.BasketItems.ForEach(x => x.Order = null);
-            DataService.Delete(SelectedItem.Entity);
-            Model.SelectEntities();
+            Model.Revert();
             OnRevertOrder();
         }
 
@@ -105,6 +127,7 @@ namespace Basket.ViewModel
         private void SubscribeEvents()
         {
             Model.PropertyChanged += ModelOnPropertyChanged;
+            SubscribeSelectedItemEvent();
         }
 
         private void ModelOnPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)

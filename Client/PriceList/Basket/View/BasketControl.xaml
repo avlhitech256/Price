@@ -8,8 +8,11 @@
              d:DesignHeight="520" d:DesignWidth="1200">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"
+                           MinHeight="200"/>
+            <RowDefinition Height="Auto"
+                           MaxHeight="250"
+                           MinHeight="120"/>
         </Grid.RowDefinitions>
         <local:BasketEditControl Grid.Row="0"/>
         <local:BasketEditComplatedOrdersControl Grid.Row="1" MinHeight="110"></local:BasketEditComplatedOrdersControl>

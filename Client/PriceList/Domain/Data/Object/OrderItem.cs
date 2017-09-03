@@ -46,7 +46,21 @@ namespace Domain.Data.Object
 
         public string OrderNumber => Entity.OrderNumber;
 
-        public string Comment => Entity.Comment;
+        public string Comment
+        {
+            get
+            {
+                return Entity.Comment;
+            }
+            set
+            {
+                if (Entity.Comment != value)
+                {
+                    Entity.Comment = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public List<BasketItemEntity> BasketItems => Entity.BasketItems;
 

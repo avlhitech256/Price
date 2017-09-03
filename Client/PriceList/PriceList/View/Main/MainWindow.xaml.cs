@@ -156,6 +156,7 @@ namespace PriceList.View.Main
         {
             List<string> result = new List<string>();
 
+            result.Add("Picture/originalLogo.png");
             result.Add("Picture/images01.jpg");
             result.Add("Picture/images02.jpg");
             result.Add("Picture/images03.jpg");
@@ -220,7 +221,7 @@ namespace PriceList.View.Main
             return result;
         }
 
-        private SplashScreen CreateSplashScreen(List<string> picturesList)
+        private SplashScreen CreateSplashScreen(List<string> picturesList, bool onlyLogo = true)
         {
             SplashScreen splashScreen = null;
             List<int> indexList = new List<int>();
@@ -230,7 +231,7 @@ namespace PriceList.View.Main
             while (isNotCreatedSplashScreen && indexList.Count < picturesList.Count)
             {
                 currentSeconds = DateTime.Now.Second;
-                int index = currentSeconds % picturesList.Count;
+                int index = onlyLogo ? 0 : currentSeconds % picturesList.Count;
 
                 if (!indexList.Contains(index))
                 {
@@ -245,7 +246,7 @@ namespace PriceList.View.Main
                     }
                     catch (Exception)
                     {
-                        isNotCreatedSplashScreen = true;
+                        isNotCreatedSplashScreen = !onlyLogo;
                     }
 
                 }
