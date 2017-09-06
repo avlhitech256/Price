@@ -192,7 +192,7 @@ namespace Catalog.ViewModel
         {
             if (SearchCriteria != null)
             {
-                SearchCriteria.SearchCriteriaChanged += OnCanDoSearchCanged;
+                SearchCriteria.SearchCriteriaChanged += OnCanDoSearchChanged;
                 SearchCriteria.SearchCriteriaCleared += OnCanDoClear;
             }
         }
@@ -207,7 +207,7 @@ namespace Catalog.ViewModel
             return SearchCriteria.IsModified;
         }
 
-        private void OnCanDoSearchCanged(object sender, EventArgs e)
+        private void OnCanDoSearchChanged(object sender, EventArgs e)
         {
             SearchCommand?.RiseCanExecute();
         }

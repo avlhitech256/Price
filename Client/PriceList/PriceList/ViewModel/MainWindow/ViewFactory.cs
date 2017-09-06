@@ -7,6 +7,7 @@ using CommonControl.EditControl;
 using CommonControl.SearchControl;
 using Domain.DomainContext;
 using Domain.ViewModel;
+using Order.View;
 using CatalogControl = Catalog.View.CatalogControl;
 
 namespace PriceList.ViewModel.MainWindow
@@ -33,8 +34,8 @@ namespace PriceList.ViewModel.MainWindow
                 new Dictionary<MenuItemName, Func<object>>
                 {
                     {MenuItemName.PriceList, () => new CatalogControl()},
-                    {MenuItemName.Basket, () => new BasketControl()},
-                    {MenuItemName.Orders,    () => null /*new FacultySearchControl()*/},
+                    {MenuItemName.Basket,    () => new BasketControl()},
+                    {MenuItemName.Orders,    () => new OrderControl()},
                     {MenuItemName.Documents, () => null /*new SpecialtySearchControl()*/},
                     {MenuItemName.Sync,      () => null /*new ChairSearchControl()*/},
                     {MenuItemName.Settings,  () => null /*new SpecializationSearchControl()*/}
@@ -43,12 +44,12 @@ namespace PriceList.ViewModel.MainWindow
             mapEditControlFactories =
                 new Dictionary<MenuItemName, Func<object>>
                 {
-                    {MenuItemName.PriceList, () => null /*new HighSchoolEditControl()*/},
-                    {MenuItemName.Basket, () => null },
-                    {MenuItemName.Orders,    () => null /*new FacultyEditControl()*/},
-                    {MenuItemName.Documents, () => null /*new SpecialtyEditControl()*/},
-                    {MenuItemName.Sync,      () => null /*new ChairEditControl()*/},
-                    {MenuItemName.Settings,  () => null /*new SpecializationEditControl()*/}
+                    {MenuItemName.PriceList, () => null},
+                    {MenuItemName.Basket,    () => null},
+                    {MenuItemName.Orders,    () => null},
+                    {MenuItemName.Documents, () => null},
+                    {MenuItemName.Sync,      () => null},
+                    {MenuItemName.Settings,  () => null}
                 };
 
         }

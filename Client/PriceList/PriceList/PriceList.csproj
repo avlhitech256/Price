@@ -359,6 +359,10 @@
       <Project>{b7fc1012-787d-489f-a846-32062538cb77}</Project>
       <Name>Media</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Order\Order.csproj">
+      <Project>{fc8b8d0c-ad03-4e39-b2cd-1539aed76e65}</Project>
+      <Name>Order</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Photo\Photo.csproj">
       <Project>{ee93dda8-df77-4e53-8b34-6439f3079748}</Project>
       <Name>Photo</Name>

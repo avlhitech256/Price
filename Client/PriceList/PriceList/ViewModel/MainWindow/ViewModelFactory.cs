@@ -24,8 +24,8 @@ namespace PriceList.ViewModel.MainWindow
                 new Dictionary<MenuItemName, Func<IDomainContext, object>>
                 {
                     {MenuItemName.PriceList, (x) => new CatalogViewModel(x)},
-                    {MenuItemName.Basket, (x) => new BasketViewModel(x)},
-                    {MenuItemName.Orders,    (x) => null /*new FacultyViewModel(x)*/},
+                    {MenuItemName.Basket,    (x) => new BasketViewModel(x)},
+                    {MenuItemName.Orders,    (x) => new Order.ViewModel.OrderViewModel(x)},
                     {MenuItemName.Documents, (x) => null /*new SpecialtyViewModel(x)*/},
                     {MenuItemName.Sync,      (x) => null /*new ChairViewModel(x)*/},
                     {MenuItemName.Settings,  (x) => null /*new SpecializationViewModel(x)*/}

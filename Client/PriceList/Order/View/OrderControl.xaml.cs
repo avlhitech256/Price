@@ -1,28 +1,31 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using CommonControl.SearchControl;
 
 namespace Order.View
 {
     /// <summary>
     /// Логика взаимодействия для OrderControl.xaml
     /// </summary>
-    public partial class OrderControl : UserControl
+    public partial class OrderControl : SearchControl
     {
         public OrderControl()
         {
             InitializeComponent();
+        }
+
+        protected override void SetDomainContext()
+        {
+            //throw new NotImplementedException();
+        }
+
+        protected override void SubscribeMessenger()
+        {
+            //throw new NotImplementedException();
+        }
+
+        protected override void UnsubscribeMessenger()
+        {
+            //throw new NotImplementedException();
         }
     }
 }
