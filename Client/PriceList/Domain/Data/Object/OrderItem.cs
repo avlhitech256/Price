@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Media.Imaging;
+using Common.Data.Enum;
 using Common.Data.Notifier;
 using DatabaseService.DataBaseContext.Entities;
-using DatabaseService.Objects.Enum;
 using Domain.Properties;
 using Media.Image;
 

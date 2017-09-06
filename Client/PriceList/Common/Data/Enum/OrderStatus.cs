@@ -1,4 +1,4 @@
-﻿namespace DatabaseService.Objects.Enum
+﻿namespace Common.Data.Enum
 {
     public enum OrderStatus
     {
@@ -7,9 +7,10 @@
         SentOut = 2,
         Adopted = 3,
         Approved = 4,
-        InWork = 5,
-        Shipped = 6,
-        InTransit = 7,
-        Fulfilled = 8
+        Cancel = 5,
+        InWork = 6,
+        Shipped = 7,
+        InTransit = 8,
+        Fulfilled = 9
     }
 }

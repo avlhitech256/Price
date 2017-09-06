@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using DatabaseService.Objects.Enum;
+using Common.Data.Enum;
 
 namespace DatabaseService.DataBaseContext.Entities
 {

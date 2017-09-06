@@ -1,5 +1,4 @@
-﻿using System;
-using CommonControl.SearchControl;
+﻿using CommonControl.SearchControl;
 
 namespace Order.View
 {

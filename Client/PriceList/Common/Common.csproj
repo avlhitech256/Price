@@ -45,8 +45,11 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Convert\IConvertService.cs" />
+    <Compile Include="Convert\Implementation\ConvertService.cs" />
     <Compile Include="Data\Enum\MenuItemName.cs" />
     <Compile Include="Data\Enum\Answer.cs" />
+    <Compile Include="Data\Enum\OrderStatus.cs" />
     <Compile Include="Data\Exception\BusinessLogicException.cs" />
     <Compile Include="Data\Holders\LongHolder.cs" />
     <Compile Include="Data\Notifier\Notifier.cs" />

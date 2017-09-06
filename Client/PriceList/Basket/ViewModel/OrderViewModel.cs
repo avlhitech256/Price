@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Basket.Model;
+using Common.Data.Enum;
 using Common.Data.Notifier;
 using Common.Messenger;
 using Common.ViewModel.Command;
 using DatabaseService.DataService;
-using DatabaseService.Objects.Enum;
 using Domain.Data.Object;
 using Domain.DomainContext;
 

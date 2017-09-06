@@ -1,5 +1,7 @@
 ﻿using System;
 using Common.Annotations;
+using Common.Convert;
+using Common.Convert.Implementation;
 using Common.Data.Notifier;
 using Common.Messenger;
 using Common.Messenger.Implementation;
@@ -44,6 +46,7 @@ namespace Domain.DomainContext.Implementation
             PrecisionService = new PrecisionService(2, true);
             DataService = new DataService();
             OptionService = new OptionService(DataService);
+            ConvertService = new ConvertService();
         }
 
         #endregion
@@ -123,6 +126,8 @@ namespace Domain.DomainContext.Implementation
         }
 
         public IOptionService OptionService { get; }
+
+        public IConvertService ConvertService { get; }
 
         #endregion
     }

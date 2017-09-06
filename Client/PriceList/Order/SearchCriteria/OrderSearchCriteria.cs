@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using Common.Annotations;
+using Common.Convert;
+using Common.Data.Enum;
 using Common.Data.Notifier;
-using DatabaseService.Objects.Enum;
 
 namespace Order.SearchCriteria
 {
@@ -12,6 +14,7 @@ namespace Order.SearchCriteria
         #region Members
 
         private OrderStatus orderStatus;
+        private string orderStatusName;
         private DateTime? fromDateTime;
         private DateTime? toDateTime;
         private bool isModified;
@@ -19,16 +22,19 @@ namespace Order.SearchCriteria
         private OrderStatus oldOrderStatus;
         private DateTime? oldFromDateTime;
         private DateTime? oldToDateTime;
-        private Dictionary<OrderStatus, string> statusList; 
+        private Dictionary<OrderStatus, string> statusList;
+        private IConvertService convertService;
 
         #endregion
 
         #region Constructors
 
-        public OrderSearchCriteria()
+        public OrderSearchCriteria(IConvertService convertService)
         {
+            this.convertService = convertService;
             Clear();
             CopyValueToOld();
+            InitProperties();
         }
 
         #endregion
@@ -46,6 +52,7 @@ namespace Order.SearchCriteria
                 if (statusList != value)
                 {
                     statusList = value;
+                    var a = StatusList.ElementAt(1);
                     OnPropertyChanged();
                 }
             }
@@ -62,6 +69,22 @@ namespace Order.SearchCriteria
                 if (orderStatus != value)
                 {
                     orderStatus = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public string OrderStatusName
+        {
+            get
+            {
+                return orderStatusName;
+            }
+            set
+            {
+                if (orderStatusName != value)
+                {
+                    orderStatusName = value;
                     OnPropertyChanged();
                 }
             }
@@ -137,6 +160,34 @@ namespace Order.SearchCriteria
         #endregion
 
         #region Methods
+
+        private void InitProperties()
+        {
+            InitStatusList();
+            DateTime now = DateTime.Now.Date;
+            FromDateTime = now.AddDays(-1);
+            ToDateTime = now;
+        }
+
+        private void InitStatusList()
+        {
+            StatusList = new Dictionary<OrderStatus, string>
+            {
+                {OrderStatus.All, convertService.Convert(OrderStatus.All)},
+                {OrderStatus.New, convertService.Convert(OrderStatus.New)},
+                {OrderStatus.SentOut, convertService.Convert(OrderStatus.SentOut)},
+                {OrderStatus.Adopted, convertService.Convert(OrderStatus.Adopted)},
+                {OrderStatus.Approved, convertService.Convert(OrderStatus.Approved)},
+                {OrderStatus.Cancel, convertService.Convert(OrderStatus.Cancel)},
+                {OrderStatus.InWork, convertService.Convert(OrderStatus.InWork)},
+                {OrderStatus.Shipped, convertService.Convert(OrderStatus.Shipped)},
+                {OrderStatus.InTransit, convertService.Convert(OrderStatus.InTransit)},
+                {OrderStatus.Fulfilled, convertService.Convert(OrderStatus.Fulfilled)},
+            };
+
+            OrderStatus = OrderStatus.All;
+            OrderStatusName = convertService.Convert(OrderStatus);
+        }
 
         [NotifyPropertyChangedInvocator]
         protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)

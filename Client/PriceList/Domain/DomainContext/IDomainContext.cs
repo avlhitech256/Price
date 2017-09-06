@@ -1,4 +1,5 @@
 ﻿using Common.Annotations;
+using Common.Convert;
 using Common.Messenger;
 using DatabaseService.DataService;
 using Domain.Service.Precision;
@@ -44,5 +45,7 @@ namespace Domain.DomainContext
         string DataBaseServer { get; set; }
 
         IOptionService OptionService { get; }
+
+        IConvertService ConvertService { get; }
     }
 }

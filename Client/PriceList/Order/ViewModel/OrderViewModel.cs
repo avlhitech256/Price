@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using Common.Data.Notifier;
 using Common.Messenger;
 using Common.ViewModel.Command;

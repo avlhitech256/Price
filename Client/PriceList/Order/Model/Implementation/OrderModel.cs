@@ -1,10 +1,11 @@
 ﻿using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
+using Common.Convert;
+using Common.Data.Enum;
 using Common.Data.Notifier;
 using DatabaseService.DataBaseContext.Entities;
 using DatabaseService.DataService;
-using DatabaseService.Objects.Enum;
 using Domain.Data.Object;
 using Domain.DomainContext;
 using Media.Image;
@@ -27,7 +28,7 @@ namespace Order.Model.Implementation
         public OrderModel(IDomainContext domainContext)
         {
             DomainContext = domainContext;
-            SearchCriteria = new OrderSearchCriteria();
+            SearchCriteria = new OrderSearchCriteria(domainContext.ConvertService);
             Entities = new ObservableCollection<OrderItem>();
             SelectEntities();
         }
