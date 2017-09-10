@@ -1,7 +1,7 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
-using Common.Convert;
 using Common.Data.Enum;
 using Common.Data.Notifier;
 using DatabaseService.DataBaseContext.Entities;
@@ -92,10 +92,16 @@ namespace Order.Model.Implementation
             Entities.Clear();
             SelectedItem = null;
             long position = 1L;
+            bool fromDateIsNull = !SearchCriteria.FromDateTime.HasValue;
+            bool toDateIsNull = !SearchCriteria.ToDateTime.HasValue;
+            DateTimeOffset fromDate = !fromDateIsNull ? SearchCriteria.FromDateTime.Value.Date : DateTimeOffset.MinValue;
+            DateTimeOffset toDate = !toDateIsNull ? SearchCriteria.ToDateTime.Value.Date.AddDays(1) : DateTimeOffset.MinValue;
 
             DataService.Select<OrderEntity>()
                 .Include(x => x.BasketItems)
                 .Where(x => SearchCriteria.OrderStatus == OrderStatus.All || x.OrderStatus == SearchCriteria.OrderStatus)
+                .Where(x => fromDateIsNull || (x.DateOfCreation >= fromDate))
+                .Where(x => toDateIsNull || (x.DateOfCreation < toDate))
                 .ToList()
                 .ForEach(x => Entities.Add(new OrderItem(x, ImageService) { Position = position++ }));
 

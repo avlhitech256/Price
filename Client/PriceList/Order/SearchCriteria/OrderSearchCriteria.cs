@@ -15,13 +15,13 @@ namespace Order.SearchCriteria
 
         private OrderStatus orderStatus;
         private string orderStatusName;
-        private DateTime? fromDateTime;
-        private DateTime? toDateTime;
+        private DateTimeOffset? fromDateTime;
+        private DateTimeOffset? toDateTime;
         private bool isModified;
         private bool isEmpty;
         private OrderStatus oldOrderStatus;
-        private DateTime? oldFromDateTime;
-        private DateTime? oldToDateTime;
+        private DateTimeOffset? oldFromDateTime;
+        private DateTimeOffset? oldToDateTime;
         private Dictionary<OrderStatus, string> statusList;
         private IConvertService convertService;
 
@@ -90,7 +90,7 @@ namespace Order.SearchCriteria
             }
         }
 
-        public DateTime? FromDateTime
+        public DateTimeOffset? FromDateTime
         {
             get
             {
@@ -106,7 +106,7 @@ namespace Order.SearchCriteria
             }
         }
 
-        public DateTime? ToDateTime
+        public DateTimeOffset? ToDateTime
         {
             get
             {
@@ -164,9 +164,8 @@ namespace Order.SearchCriteria
         private void InitProperties()
         {
             InitStatusList();
-            DateTime now = DateTime.Now.Date;
-            FromDateTime = now.AddDays(-1);
-            ToDateTime = now;
+            FromDateTime = null;
+            ToDateTime = null;
         }
 
         private void InitStatusList()

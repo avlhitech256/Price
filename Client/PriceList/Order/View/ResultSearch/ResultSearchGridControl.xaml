@@ -4,12 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Order.View.ResultSearch"
+             xmlns:implementation="clr-namespace:Common.Convert.Implementation;assembly=Common"
              mc:Ignorable="d" 
              d:DesignHeight="100" d:DesignWidth="1100">
     <UserControl.Resources>
         <Style TargetType="{x:Type DataGridCell}">
             <Setter Property="TextBlock.TextAlignment" Value="Right"/>
         </Style>
+        <implementation:StringToOrderStatus x:Key="StringToOrderStatus"/>
     </UserControl.Resources>
 
     <Border>
@@ -115,8 +117,8 @@
                         </DataGridTextColumn.HeaderTemplate>
                     </DataGridTextColumn>
                     <DataGridTextColumn IsReadOnly="True" 
-                                    Width="Auto"
-                                    Binding="{Binding Path=Status}">
+                                        Width="Auto"
+                                        Binding="{Binding Path=OrderStatus, Mode=TwoWay, Converter={StaticResource StringToOrderStatus}}">
                         <DataGridTextColumn.ElementStyle>
                             <Style>
                                 <Setter Property="TextBlock.TextAlignment" Value="Right" />

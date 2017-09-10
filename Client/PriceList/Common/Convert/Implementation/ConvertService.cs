@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Globalization;
-using System.Windows.Data;
 using Common.Data.Enum;
 
 namespace Common.Convert.Implementation
@@ -42,6 +40,49 @@ namespace Common.Convert.Implementation
                     break;
                 case OrderStatus.Fulfilled:
                     result = "Выполнен";
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            return result;
+        }
+
+        public OrderStatus Convert(string status)
+        {
+            OrderStatus result;
+
+            switch (status)
+            {
+                case "Любой статус":
+                    result = OrderStatus.All;
+                    break;
+                case "Новый":
+                    result = OrderStatus.New;
+                    break;
+                case "Отправлен на сервер":
+                    result = OrderStatus.SentOut;
+                    break;
+                case "Принятый в обработку":
+                    result = OrderStatus.Adopted;
+                    break;
+                case "Утвержден":
+                    result = OrderStatus.Approved;
+                    break;
+                case "Отклонен":
+                    result = OrderStatus.Cancel;
+                    break;
+                case "В работе":
+                    result = OrderStatus.InWork;
+                    break;
+                case "Отправлен заказчику":
+                    result = OrderStatus.Shipped;
+                    break;
+                case "В процессе доставки":
+                    result = OrderStatus.InTransit;
+                    break;
+                case "Выполнен":
+                    result = OrderStatus.Fulfilled;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
