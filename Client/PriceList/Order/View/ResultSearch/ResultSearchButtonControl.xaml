@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="Order.View.ResultSearch.ResultSearchButtonControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Order.View.ResultSearch"
+             mc:Ignorable="d" 
+             d:DesignHeight="150" d:DesignWidth="150">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="10"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="5"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Button Content="Отправить заказы"
+                Grid.Row="1"
+                Grid.Column="1"
+                Width="120"
+                Style="{DynamicResource ButtonStyle}"
+                Command="{Binding Path=SendCommand}"/>
+        <Button Content="Вернуть в Корзину"
+                Grid.Row="3"
+                Grid.Column="1"
+                Width="120"
+                Style="{DynamicResource ButtonStyle}"
+                Command="{Binding Path=RevertCommand}"/>
+    </Grid>
+</UserControl>

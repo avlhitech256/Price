@@ -82,7 +82,7 @@ namespace Domain.Data.Object
             }
         }
 
-        public string Sum => Entity.Sum.ToString(CultureInfo.InvariantCulture) + " " + Currency;
+        public string Sum => Entity.Sum.ToString(CultureInfo.InvariantCulture);
 
         public string Currency => Entity.BasketItems.FirstOrDefault()?.CatalogItem.Currency;
 

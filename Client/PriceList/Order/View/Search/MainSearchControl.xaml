@@ -13,7 +13,7 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
-            <ColumnDefinition Width="140"></ColumnDefinition>
+            <ColumnDefinition Width="150"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Label Name="TitleResult" 
                Content="Поиск заказов" 
@@ -26,6 +26,6 @@
                HorizontalContentAlignment="Center" 
                Background="{DynamicResource DefaultGradientBrush}"/>
         <local:SearchFieldsControl Grid.Column="0" Grid.Row="1"></local:SearchFieldsControl>
-        <local:ButtonSearchControl Grid.Column="1" Grid.Row="1"></local:ButtonSearchControl>
+        <local:SearchButtonControl Grid.Column="1" Grid.Row="1"></local:SearchButtonControl>
     </Grid>
 </UserControl>

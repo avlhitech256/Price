@@ -110,11 +110,33 @@ namespace Order.Model.Implementation
                 ?? Entities.FirstOrDefault();
 
             oldSelectedItemId = -1L;
+            SearchCriteria.SearchComplited();
         }
 
         public void Clear()
         {
             SearchCriteria.Clear();
+            SelectEntities();
+        }
+
+        public void DeleteOrder()
+        {
+            DataService.DeleteEntities(SelectedItem.BasketItems);
+            DataService.Delete(SelectedItem.Entity);
+            SelectEntities();
+        }
+
+        public void SendOut()
+        {
+            SelectedItem.OrderStatus = OrderStatus.SentOut;
+            DataService.DataBaseContext.SaveChanges();
+            SelectEntities();
+        }
+
+        public void Revert()
+        {
+            SelectedItem.BasketItems.ForEach(x => x.Order = null);
+            DataService.Delete(SelectedItem.Entity);
             SelectEntities();
         }
 

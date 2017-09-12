@@ -7,14 +7,17 @@
              xmlns:searchControl="clr-namespace:CommonControl.SearchControl;assembly=CommonControl"
              xmlns:search="clr-namespace:Order.View.Search"
              xmlns:resultSearch="clr-namespace:Order.View.ResultSearch"
+             xmlns:datailOrder="clr-namespace:Order.View.DatailOrder"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="1100">
+             d:DesignHeight="500" d:DesignWidth="1100">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="100"></RowDefinition>
+            <RowDefinition Height="Auto" MinHeight="150" MaxHeight="300"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <search:MainSearchControl Grid.Row="0"/>
-        <resultSearch:ResultSearchGridControl Grid.Row="1"/>
+        <resultSearch:ResultSearchControl Grid.Row="1"/>
+        <datailOrder:DetailOrderControl Grid.Row="2"/>
     </Grid>
 </searchControl:SearchControl>

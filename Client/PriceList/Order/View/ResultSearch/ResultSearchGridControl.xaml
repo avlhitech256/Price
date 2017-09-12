@@ -16,19 +16,6 @@
 
     <Border>
         <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
-            </Grid.RowDefinitions>
-            <Label Name="TitleResult" 
-                   Content="Результаты поиска" 
-                   Grid.Row="0" 
-                   Margin="1" 
-                   HorizontalAlignment="Stretch" 
-                   FontWeight="Bold" 
-                   Foreground="White" 
-                   HorizontalContentAlignment="Center"
-                   Background="{DynamicResource DefaultGradientBrush}"/>
             <DataGrid x:Name="ResultSearchDataGrid" 
                       AutoGenerateColumns="False"
                       VerticalAlignment="Stretch"
@@ -71,7 +58,7 @@
                     </DataGridTextColumn>
                     <DataGridTextColumn IsReadOnly="True" 
                                     Width="Auto"
-                                    Binding="{Binding Path=DateOfCreation}">
+                                    Binding="{Binding Path=DateOfCreation, StringFormat={}{0:dd/MM/yyyy HH:mm zzz}}">
                         <DataGridTextColumn.HeaderTemplate>
                             <DataTemplate>
                                 <TextBlock Text="Дата формирования заказа" 
@@ -98,8 +85,8 @@
                         </DataGridTextColumn.HeaderTemplate>
                     </DataGridTextColumn>
                     <DataGridTextColumn IsReadOnly="True" 
-                                    Width="Auto"
-                                    Binding="{Binding Path=Sum}">
+                                        Width="Auto"
+                                        Binding="{Binding Path=Sum}">
                         <DataGridTextColumn.ElementStyle>
                             <Style>
                                 <Setter Property="TextBlock.TextAlignment" Value="Right" />
@@ -121,7 +108,7 @@
                                         Binding="{Binding Path=OrderStatus, Mode=TwoWay, Converter={StaticResource StringToOrderStatus}}">
                         <DataGridTextColumn.ElementStyle>
                             <Style>
-                                <Setter Property="TextBlock.TextAlignment" Value="Right" />
+                                <Setter Property="TextBlock.TextAlignment" Value="Left" />
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                         <DataGridTextColumn.HeaderTemplate>

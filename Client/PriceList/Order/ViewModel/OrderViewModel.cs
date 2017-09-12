@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
+using Common.Data.Enum;
 using Common.Data.Notifier;
 using Common.Messenger;
 using Common.ViewModel.Command;
@@ -15,17 +17,14 @@ namespace Order.ViewModel
 {
     public class OrderViewModel : Notifier, IControlViewModel
     {
-        private IMessenger _messenger;
-
-        #region Members
-        #endregion
-
         #region Constructors
 
         public OrderViewModel(IDomainContext domainContext)
         {
             DomainContext = domainContext;
             Model = new OrderModel(domainContext);
+            DetailViewModel = new DetailOrderViewModel(domainContext);
+            DetailViewModel.CurrentOrder = SelectedItem;
             SubscribeEvents();
             InitCommands();
         }
@@ -83,6 +82,8 @@ namespace Order.ViewModel
 
         private IOrderModel Model { get; }
 
+        public DetailOrderViewModel DetailViewModel { get; }
+
         public OrderItem SelectedItem
         {
             get
@@ -105,6 +106,10 @@ namespace Order.ViewModel
 
         public DelegateCommand ClearCommand { get; private set; }
 
+        public DelegateCommand SendCommand { get; private set; }
+
+        public DelegateCommand RevertCommand { get; private set; }
+
         public OrderSearchCriteria SearchCriteria => Model?.SearchCriteria;
 
         #endregion
@@ -121,6 +126,8 @@ namespace Order.ViewModel
         {
             SearchCommand = new DelegateCommand(DoSearch, CanDoSearch);
             ClearCommand = new DelegateCommand(DoClear, CanDoClear);
+            SendCommand = new DelegateCommand(DoSend, CanDoSend);
+            RevertCommand = new DelegateCommand(DoRevertBasket, CanDoRevertBasket);
         }
 
         private void SubscribeCommand()
@@ -152,6 +159,27 @@ namespace Order.ViewModel
             Model?.Clear();
         }
 
+        private void DoSend(object parametr)
+        {
+            Model.SendOut();
+        }
+
+        private bool CanDoSend(object parametr)
+        {
+            return SelectedItem != null && SelectedItem.OrderStatus == OrderStatus.New;
+        }
+
+        private void DoRevertBasket(object parametr)
+        {
+            Model.Revert();
+            //OnRevertOrder();
+        }
+
+        private bool CanDoRevertBasket(object parametr)
+        {
+            return SelectedItem != null && SelectedItem.OrderStatus == OrderStatus.New && SelectedItem.BasketItems.Any();
+        }
+
         private bool CanDoClear(object parametr)
         {
             return !SearchCriteria?.IsEmpty ?? false;
@@ -173,22 +201,16 @@ namespace Order.ViewModel
         {
             if (Model != null)
             {
-                switch (e.PropertyName)
+                if (e.PropertyName == nameof(Model.SelectedItem) || 
+                    e.PropertyName == nameof(Model.Entities))
                 {
-                    case nameof(Model.SelectedItem):
-                        OnPropertyChanged(nameof(SelectedItem));
-                        break;
-                    case nameof(Model.Entities):
-                        OnPropertyChanged(nameof(Entities));
-                        break;
+                    DetailViewModel.CurrentOrder = SelectedItem;
+                    OnPropertyChanged(e.PropertyName);
+                    SendCommand.RiseCanExecute(new object());
+                    RevertCommand.RiseCanExecute(new object());
                 }
             }
         }
-
-
-        #endregion
-
-        #region Events
 
         #endregion
     }

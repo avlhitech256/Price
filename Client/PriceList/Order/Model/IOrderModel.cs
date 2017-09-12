@@ -16,5 +16,11 @@ namespace Order.Model
         void SelectEntities();
 
         void Clear();
+
+        void DeleteOrder();
+
+        void SendOut();
+
+        void Revert();
     }
 }
