@@ -49,6 +49,7 @@
     <Compile Include="Convert\Implementation\ConvertService.cs" />
     <Compile Include="Convert\Implementation\DateTimeToDateTimeOffsetConverter.cs" />
     <Compile Include="Convert\Implementation\StringToOrderStatus.cs" />
+    <Compile Include="Data\Constant\Flag.cs" />
     <Compile Include="Data\Enum\MenuItemName.cs" />
     <Compile Include="Data\Enum\Answer.cs" />
     <Compile Include="Data\Enum\OrderStatus.cs" />

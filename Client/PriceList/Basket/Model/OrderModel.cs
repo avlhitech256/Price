@@ -55,10 +55,12 @@ namespace Basket.Model
             set
             {
                 oldSelectedItemId = SelectedItem?.Id ?? -1L;
+                OrderItem oldSelectedItem = SelectedItem;
 
                 if (selectedItem != value)
                 {
                     selectedItem = value;
+                    OnChangeSelectedItem(oldSelectedItem, value);
                     OnPropertyChanged();
                 }
             }
@@ -84,6 +86,36 @@ namespace Basket.Model
         #endregion
 
         #region Methods
+
+        private void OnChangeSelectedItem(OrderItem oldItem, OrderItem newItem)
+        {
+            UnsubscribeSelectedItemEvent(oldItem);
+            SubscribeSelectedItemEvent(newItem);
+        }
+
+        private void SubscribeSelectedItemEvent(OrderItem newItem)
+        {
+            if (newItem != null)
+            {
+                newItem.PropertyChanged += SelectedItem_PropertyChanged;
+            }
+        }
+
+        private void UnsubscribeSelectedItemEvent(OrderItem oldItem)
+        {
+            if (oldItem != null)
+            {
+                oldItem.PropertyChanged -= SelectedItem_PropertyChanged;
+            }
+        }
+
+        private void SelectedItem_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(SelectedItem.Comment))
+            {
+                DataService.DataBaseContext.SaveChanges();
+            }
+        }
 
         public void SelectEntities()
         {
@@ -131,8 +163,7 @@ namespace Basket.Model
 
         public void SendOut()
         {
-            SelectedItem.OrderStatus = OrderStatus.SentOut;
-            DataService.DataBaseContext.SaveChanges();
+            DataService.SetOrderStatus(SelectedItem.Entity, OrderStatus.SentOut);
             SelectEntities();
         }
 

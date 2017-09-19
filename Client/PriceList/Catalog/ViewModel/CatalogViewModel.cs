@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -13,6 +14,8 @@ using Common.ViewModel.Command;
 using Domain.Data.Object;
 using Domain.DomainContext;
 using Domain.ViewModel;
+using Photo.Service;
+using Photo.Service.Implementation;
 
 namespace Catalog.ViewModel
 {
@@ -36,7 +39,10 @@ namespace Catalog.ViewModel
         #region Properties
 
         public IDomainContext DomainContext { get; }
+
         public IMessenger Messenger => DomainContext?.Messenger;
+
+        private IPhotoService PhotoService => DomainContext?.PhotoService;
 
         private CatalogModel Model { get; }
 
@@ -258,6 +264,15 @@ namespace Catalog.ViewModel
         private void SendSetImageMessage()
         {
             Messenger?.Send(CommandName.SetImage, SelectedItem);
+        }
+
+        public void ShowPicture()
+        {
+            if (SelectedItem != null)
+            {
+                List<byte[]> photos = SelectedItem.Photos;
+                PhotoService.ShowPhotos(photos);
+            }
         }
 
         #endregion

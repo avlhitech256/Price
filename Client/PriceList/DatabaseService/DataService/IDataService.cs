@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Common.Data.Enum;
 using DatabaseService.DataBaseContext.Entities;
 
 namespace DatabaseService.DataService
@@ -28,10 +29,16 @@ namespace DatabaseService.DataService
 
         void SetCount(CatalogItemEntity entity, decimal count);
 
+        void SetOrderStatus(OrderEntity order, OrderStatus status);
+
+        bool ExistOption(string optionCode);
+
         decimal GetSumBasket();
 
         string GetOption(string optionCode);
 
         void SetOption(string optionCode, string value);
+
+        void CalculateOrderSum(BasketItemEntity basketItem);
     }
 }

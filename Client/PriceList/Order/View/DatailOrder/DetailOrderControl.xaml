@@ -30,9 +30,9 @@
                       Foreground="#FF000059"
                       ItemsSource="{Binding DetailViewModel.Entities}"
                       SelectedItem="{Binding Path=DetailViewModel.SelectedItem, Mode=TwoWay}"
-                      IsReadOnly="False">
-                  <!--MouseUp="BasketDataGrid_OnMouseUp"
-                      MouseDoubleClick="BasketDataGrid_OnMouseDoubleClick">-->
+                      IsReadOnly="False"
+                      MouseUp="DetailOrderDataGrid_OnMouseUp"
+                      MouseDoubleClick="DetailOrderDataGrid_OnMouseDoubleClick">
                 <DataGrid.Columns>
                     <DataGridTextColumn IsReadOnly="True" 
                                     Width="30"
@@ -183,7 +183,7 @@
                             </DataTemplate>
                         </DataGridTextColumn.HeaderTemplate>
                     </DataGridTextColumn>
-                    <DataGridTextColumn IsReadOnly="False" 
+                    <DataGridTextColumn IsReadOnly="{Binding Path=SelectedItem.AllowChangeCount}" 
                                     Width="*"
                                     MinWidth="60"
                                     Binding="{Binding Path=Count, StringFormat={}{0:n2} , Mode=TwoWay}">

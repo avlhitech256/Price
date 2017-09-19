@@ -4,6 +4,6 @@ namespace Photo.Service
 {
     public interface IPhotoService
     {
-        void ShowPhotos(IEnumerable<byte[]> photos);
+        void ShowPhotos(List<byte[]> photos);
     }
 }

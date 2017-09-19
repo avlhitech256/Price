@@ -1,7 +1,10 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
+using Common.Data.Enum;
 using Common.Data.Notifier;
+using Common.Event;
 using DatabaseService.DataBaseContext.Entities;
 using DatabaseService.DataService;
 using Domain.Data.Object;
@@ -16,6 +19,7 @@ namespace Order.Model.Implementation
 
         private OrderItem currentOrder;
         private BasketItem selectedItem;
+        private BasketItem oldSelectedItem;
         private long oldSelectedItemId;
         private ObservableCollection<BasketItem> entities;
         private string capture;
@@ -55,7 +59,7 @@ namespace Order.Model.Implementation
                 {
                     currentOrder = value;
                     SelectEntities();
-                    Capture = "Заказ № " + value.OrderNumber;
+                    Capture = "Заказ № " + value?.OrderNumber;
                     OnPropertyChanged();
                 }
             }
@@ -86,9 +90,13 @@ namespace Order.Model.Implementation
             }
             set
             {
+                oldSelectedItem = SelectedItem;
+                oldSelectedItemId = SelectedItem?.Id ?? -1L;
+
                 if (selectedItem != value)
                 {
                     selectedItem = value;
+                    OnChangeSelectedItem(oldSelectedItem, value);
                     OnPropertyChanged();
                 }
             }
@@ -144,6 +152,60 @@ namespace Order.Model.Implementation
             CurrentOrder = null;
             SelectEntities();
         }
+
+        private void OnCountChanged(object sender, DecimalValueChangedEventArgs e)
+        {
+            DecimalValueChangedEventArgs args = 
+                new DecimalValueChangedEventArgs(e.Id, e.OldValue, e.NewValue, MenuItemName.Orders);
+            CountChanged?.Invoke(this, args);
+            OrderChanged?.Invoke(sender, e);
+        }
+
+        private void OnChangeSelectedItem(BasketItem oldItem, BasketItem newItem)
+        {
+            UnsubscribeSelectedItemEvents(oldItem);
+            SubscribeSelectedItemEvents(newItem);
+        }
+
+        private void UnsubscribeSelectedItemEvents(BasketItem oldItem)
+        {
+            if (oldItem != null)
+            {
+                oldItem.CountChanged -= OnCountChanged;
+                oldItem.DeletedItem -= OnDeletedItem;
+                oldItem.DeletedOrder -= OnDeletedOrder;
+            }
+        }
+
+        private void SubscribeSelectedItemEvents(BasketItem newItem)
+        {
+            if (newItem != null)
+            {
+                newItem.CountChanged += OnCountChanged;
+                newItem.DeletedItem += OnDeletedItem;
+                newItem.DeletedOrder += OnDeletedOrder;
+            }
+        }
+
+        private void OnDeletedItem(object sender, EventArgs e)
+        {
+            SelectEntities();
+            OrderChanged?.Invoke(sender, e);
+        }
+
+        private void OnDeletedOrder(object sender, EventArgs e)
+        {
+            SelectEntities();
+            DeletedOrder?.Invoke(sender, e);
+        }
+
+        #endregion
+
+        #region Events
+
+        public event CountChangedEventHandler CountChanged;
+        public event EventHandler OrderChanged;
+        public event EventHandler DeletedOrder;
 
         #endregion
     }

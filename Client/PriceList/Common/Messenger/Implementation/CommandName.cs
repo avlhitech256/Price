@@ -25,6 +25,8 @@
         RefreshBasketCapture,
         RefreshCount,
         RefreshPriceList,
+        RefreshOrder,
+        RevertOrder,
         SendOrder
     }
 }

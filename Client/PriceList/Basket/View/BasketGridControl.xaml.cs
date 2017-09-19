@@ -25,10 +25,6 @@ namespace Basket.View
 
         private BasketViewModel ViewModel => (BasketViewModel)DataContext;
 
-        private IDomainContext DomainContext => ViewModel?.DomainContext;
-
-        private IPhotoService PhotoService => DomainContext?.PhotoService;
-
         #endregion
 
         #region Methods
@@ -68,16 +64,12 @@ namespace Basket.View
 
         private void ShowPicture()
         {
-            if (ViewModel != null)
-            {
-                IEnumerable<byte[]> photos = ViewModel.SelectedItem.Photos;
-                PhotoService.ShowPhotos(photos);
-            }
+            ViewModel?.ShowPicture();
         }
 
         private void DeleteItem()
         {
-            ViewModel.SelectedItem.Count = 0;
+            ViewModel?.DeleteItem();
         }
 
         #endregion

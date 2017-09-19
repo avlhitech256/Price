@@ -4,7 +4,9 @@ using System.ComponentModel;
 using System.Linq;
 using Common.Data.Enum;
 using Common.Data.Notifier;
+using Common.Event;
 using Common.Messenger;
+using Common.Messenger.Implementation;
 using Common.ViewModel.Command;
 using Domain.Data.Object;
 using Domain.DomainContext;
@@ -26,6 +28,7 @@ namespace Order.ViewModel
             DetailViewModel = new DetailOrderViewModel(domainContext);
             DetailViewModel.CurrentOrder = SelectedItem;
             SubscribeEvents();
+            SubscribeMessenger();
             InitCommands();
         }
 
@@ -162,6 +165,7 @@ namespace Order.ViewModel
         private void DoSend(object parametr)
         {
             Model.SendOut();
+            OnChangeOrder();
         }
 
         private bool CanDoSend(object parametr)
@@ -172,7 +176,8 @@ namespace Order.ViewModel
         private void DoRevertBasket(object parametr)
         {
             Model.Revert();
-            //OnRevertOrder();
+            Messenger?.Send(CommandName.RevertOrder, new EventArgs());
+            OnChangeOrder();
         }
 
         private bool CanDoRevertBasket(object parametr)
@@ -194,6 +199,52 @@ namespace Order.ViewModel
             if (Model != null)
             {
                 Model.PropertyChanged += OnChangedSelectedItem;
+            }
+
+            if (DetailViewModel != null)
+            {
+                DetailViewModel.OrderChanged += DetailViewModel_OrderChanged;
+                DetailViewModel.DeletedOrder += DetailViewModel_DeletedOrder;
+            }
+        }
+
+        private void SubscribeMessenger()
+        {
+            Messenger?.MultiRegister<DecimalValueChangedEventArgs>(CommandName.RefreshOrder, DoExternalRefresh, CanDoExternalRefresh);
+        }
+
+        private void DoExternalRefresh(DecimalValueChangedEventArgs args)
+        {
+            Model?.SelectEntities();
+        }
+
+        private bool CanDoExternalRefresh(DecimalValueChangedEventArgs args)
+        {
+            return args != null && args.Entry != MenuItemName.Orders;
+        }
+
+        private void DetailViewModel_DeletedOrder(object sender, EventArgs e)
+        {
+            Refresh();
+        }
+
+        private void DetailViewModel_OrderChanged(object sender, EventArgs e)
+        {
+            Refresh();
+        }
+
+        private void Refresh()
+        {
+            OnChangeOrder();
+            Model?.SelectEntities();
+        }
+
+        private void OnChangeOrder()
+        {
+            if (SelectedItem != null)
+            {
+                var args = new DecimalValueChangedEventArgs(SelectedItem.Id, 0, 0, MenuItemName.Orders);
+                Messenger?.Send(CommandName.RefreshOrder, args);
             }
         }
 

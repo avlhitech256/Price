@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using Common.Data.Enum;
 using DatabaseService.DataBaseContext.Entities;
 
 namespace DatabaseService.DataService.Implementation
@@ -92,6 +93,14 @@ namespace DatabaseService.DataService.Implementation
             }
         }
 
+        public void LoadBasket(OrderEntity entity)
+        {
+            if (entity != null && !DataBaseContext.Entry(entity).Collection(c => c.BasketItems).IsLoaded)
+            {
+                DataBaseContext.Entry(entity).Collection(c => c.BasketItems).Load();
+            }
+        }
+
         public void AddPhoto(CatalogItemEntity entity, byte[] photo)
         {
             PhotoItemEntity photoEntity = new PhotoItemEntity
@@ -142,6 +151,12 @@ namespace DatabaseService.DataService.Implementation
             }
         }
 
+        public void SetOrderStatus(OrderEntity order, OrderStatus status)
+        {
+            order.OrderStatus = OrderStatus.SentOut;
+            DataBaseContext.SaveChanges();
+        }
+
         public decimal GetSumBasket()
         {
             decimal sum = Select<BasketItemEntity>()
@@ -154,9 +169,27 @@ namespace DatabaseService.DataService.Implementation
             return sum;
         }
 
+        public bool ExistOption(string optionCode)
+        {
+            bool value = false;
+
+            if (!string.IsNullOrWhiteSpace(optionCode))
+            {
+                OptionItemEntity option = Select<OptionItemEntity>().FirstOrDefault(x => x.Code == optionCode);
+
+                if (option != null)
+                {
+                    value = true;
+                }
+            }
+
+            return value;
+        }
+
         public string GetOption(string optionCode)
         {
             string value = string.Empty;
+
             if (!string.IsNullOrWhiteSpace(optionCode))
             {
                 OptionItemEntity option = Select<OptionItemEntity>().FirstOrDefault(x => x.Code == optionCode);
@@ -176,11 +209,26 @@ namespace DatabaseService.DataService.Implementation
             {
                 OptionItemEntity option = Select<OptionItemEntity>().FirstOrDefault(x => x.Code == optionCode);
 
-                if (option != null)
+                if (option == null)
                 {
-                    option.Value = value;
-                    DataBaseContext.SaveChanges();
+                    option = DataBaseContext.OptionItemEntities.Create();
+                    option.Code = optionCode;
                 }
+
+                option.Value = value;
+                DataBaseContext.SaveChanges();
+            }
+        }
+
+        public void CalculateOrderSum(BasketItemEntity basketItem)
+        {
+            OrderEntity order = basketItem?.Order;
+
+            if (order != null)
+            {
+                LoadBasket(order);
+                order.Sum = order.BasketItems.Sum(x => x.Count*x.CatalogItem.Price);
+                DataBaseContext.SaveChanges();
             }
         }
     }

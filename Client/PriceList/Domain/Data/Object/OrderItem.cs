@@ -88,6 +88,8 @@ namespace Domain.Data.Object
 
         public BitmapSource DeleteIcon => imageService?.ConvertToBitmapSource(Resources.delete);
 
+        public bool AllowChangeCount => Entity.OrderStatus == OrderStatus.New;
+
         #endregion
     }
 }

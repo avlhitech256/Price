@@ -25,10 +25,6 @@ namespace Catalog.View.ResultSearch
 
         private CatalogViewModel ViewModel => (CatalogViewModel) DataContext;
 
-        private IDomainContext DomainContext => ViewModel?.DomainContext;
-
-        private IPhotoService PhotoService => DomainContext?.PhotoService;
-
         #endregion
 
         #region Methods
@@ -60,11 +56,7 @@ namespace Catalog.View.ResultSearch
 
         private void ShowPicture()
         {
-            if (ViewModel != null)
-            {
-                IEnumerable<byte[]> photos = ViewModel.SelectedItem.Photos;
-                PhotoService.ShowPhotos(photos);
-            }
+            ViewModel.ShowPicture();
         }
 
         #endregion

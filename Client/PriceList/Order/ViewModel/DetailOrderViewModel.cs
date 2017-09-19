@@ -1,12 +1,19 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows;
 using Common.Data.Enum;
 using Common.Data.Notifier;
+using Common.Event;
 using Common.Messenger;
+using Common.Messenger.Implementation;
 using Domain.Data.Object;
 using Domain.DomainContext;
+using Options.Service;
 using Order.Model;
 using Order.Model.Implementation;
+using Photo.Service;
+using Photo.Service.Implementation;
 
 namespace Order.ViewModel
 {
@@ -37,6 +44,12 @@ namespace Order.ViewModel
         public IMessenger Messenger => DomainContext?.Messenger;
 
         private IDetailOrderModel Model { get; }
+
+        private IOptionService OptionService => DomainContext?.OptionService;
+
+        private IPhotoService PhotoService => DomainContext?.PhotoService;
+
+        public bool ShowPhotoOnMouseDoubleClick => OptionService != null && OptionService.ShowPhotoOnMouseDoubleClick;
 
         public Visibility AllowDelete
         {
@@ -94,7 +107,20 @@ namespace Order.ViewModel
 
         private void SubscribeEvents()
         {
+            Model.CountChanged += OnCountChanged;
             Model.PropertyChanged += ModelOnPropertyChanged;
+        }
+
+        private void OnCountChanged(object sender, DecimalValueChangedEventArgs e)
+        {
+            DecimalValueChangedEventArgs args =
+                new DecimalValueChangedEventArgs(e.Id, e.OldValue, e.NewValue, MenuItemName.Orders);
+            Messenger?.Send(CommandName.RefreshCount, args);
+        }
+
+        public void Refresh()
+        {
+            Model.SelectEntities();
         }
 
         private void ModelOnPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -107,16 +133,69 @@ namespace Order.ViewModel
             }
         }
 
-        public void Refresh()
-        {
-            Model.SelectEntities();
-        }
-
         private void RiseAllowDelete()
         {
             AllowDelete = CurrentOrder != null && CurrentOrder.OrderStatus == OrderStatus.New ? Visibility.Visible : Visibility.Hidden;
         }
 
-        #endregion#
+        public void ShowPicture()
+        {
+            if (SelectedItem != null)
+            {
+                List<byte[]> photos = SelectedItem?.Photos;
+                PhotoService.ShowPhotos(photos);
+            }
+        }
+
+        public void DeleteItem()
+        {
+            if (SelectedItem != null && SelectedItem.Entity.Order.OrderStatus == OrderStatus.New)
+            {
+                SelectedItem.Count = 0;
+            }
+        }
+
+        #endregion
+
+        #region Events
+
+        public event EventHandler OrderChanged
+        {
+            add
+            {
+                if (Model != null)
+                {
+                    Model.OrderChanged += value;
+                }
+            }
+            remove
+            {
+                if (Model != null)
+                {
+                    Model.OrderChanged -= value;
+                }
+            }
+        }
+
+        public event EventHandler DeletedOrder
+        {
+            add
+            {
+                if (Model != null)
+                {
+                    Model.DeletedOrder += value;
+                }
+            }
+            remove
+            {
+                if (Model != null)
+                {
+                    Model.DeletedOrder -= value;
+                }
+            }
+        }
+
+
+        #endregion
     }
 }

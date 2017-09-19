@@ -5,7 +5,9 @@ using System.Linq;
 using Basket.Model;
 using Common.Data.Enum;
 using Common.Data.Notifier;
+using Common.Event;
 using Common.Messenger;
+using Common.Messenger.Implementation;
 using Common.ViewModel.Command;
 using DatabaseService.DataService;
 using Domain.Data.Object;
@@ -24,6 +26,7 @@ namespace Basket.ViewModel
             HasChanges = false;
             InitCommands();
             SubscribeEvents();
+            SubscribeMessenger();
         }
 
         #endregion
@@ -43,19 +46,14 @@ namespace Basket.ViewModel
             {
                 return Model?.SelectedItem;
             }
-
             set
             {
                 if (Model != null)
                 {
-                    UnsubscribeSelectedItemEvent();
                     Model.SelectedItem = value;
-                    SubscribeSelectedItemEvent();
                     OnPropertyChanged();
                 }
-
             }
-
         }
 
         public ObservableCollection<OrderItem> Entities => Model?.Entities;
@@ -73,30 +71,6 @@ namespace Basket.ViewModel
 
         #region Methods
 
-        private void SubscribeSelectedItemEvent()
-        {
-            if (Model != null && Model.SelectedItem != null)
-            {
-                Model.SelectedItem.PropertyChanged += SelectedItem_PropertyChanged;
-            }
-        }
-
-        private void UnsubscribeSelectedItemEvent()
-        {
-            if (Model != null && Model.SelectedItem != null)
-            {
-                Model.SelectedItem.PropertyChanged -= SelectedItem_PropertyChanged;
-            }
-        }
-
-        private void SelectedItem_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(Model.SelectedItem.Comment))
-            {
-                DataService.DataBaseContext.SaveChanges();
-            }
-        }
-
         private void InitCommands()
         {
             SendCommand = new DelegateCommand(DoSend, CanDoSend);
@@ -106,6 +80,7 @@ namespace Basket.ViewModel
         private void DoSend(object parametr)
         {
             Model.SendOut();
+            OnChangeOrder();
         }
 
         private bool CanDoSend(object parametr)
@@ -127,7 +102,6 @@ namespace Basket.ViewModel
         private void SubscribeEvents()
         {
             Model.PropertyChanged += ModelOnPropertyChanged;
-            SubscribeSelectedItemEvent();
         }
 
         private void ModelOnPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -137,12 +111,18 @@ namespace Basket.ViewModel
                 OnPropertyChanged(e.PropertyName);
                 SendCommand.RiseCanExecute(new object());
                 RevertCommand.RiseCanExecute(new object());
+
+                if (e.PropertyName == nameof(Entities))
+                {
+                    OnChangeOrder();
+                }
             }
         }
 
         public void CreateOrder(IEnumerable<BasketItem> basketItems, string comment)
         {
             Model.CreateOrder(basketItems, comment);
+            OnChangeOrder();
         }
 
         public void Refresh()
@@ -153,11 +133,13 @@ namespace Basket.ViewModel
         private void OnRevertOrder()
         {
             RevertedOrder?.Invoke(this, new EventArgs());
+            OnChangeOrder();
         }
 
         private void OnDeleteOrder()
         {
             DeletedOrder?.Invoke(this, new EventArgs());
+            OnChangeOrder();
         }
 
         public void DeleteOrder()
@@ -165,6 +147,31 @@ namespace Basket.ViewModel
             Model.DeleteOrder();
             OnDeleteOrder();
         }
+
+        private void SubscribeMessenger()
+        {
+            Messenger?.MultiRegister<DecimalValueChangedEventArgs>(CommandName.RefreshOrder, DoExternalRefresh, CanDoExternalRefresh);
+        }
+
+        private void DoExternalRefresh(DecimalValueChangedEventArgs args)
+        {
+            Model?.SelectEntities();
+        }
+
+        private bool CanDoExternalRefresh(DecimalValueChangedEventArgs args)
+        {
+            return args != null && args.Entry != MenuItemName.Basket;
+        }
+
+        public  void OnChangeOrder()
+        {
+            if (SelectedItem != null)
+            {
+                var args = new DecimalValueChangedEventArgs(SelectedItem.Id, 0, 0, MenuItemName.Basket);
+                Messenger?.Send(CommandName.RefreshOrder, args);
+            }
+        }
+
 
         #endregion
 

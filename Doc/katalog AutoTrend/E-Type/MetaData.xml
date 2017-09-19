@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<MetaData>
+	<Catalog>
+		<Directory>
+			<UID>c382cce2-f52d-11de-89a0-00248c1ddd9c</UID>
+			<Name>Автозапчасти к Автомобилям СНГ</Name>
+			<Subdirectory>
+				<Directory>
+					<UID>5fa30ef7-7ee7-11e4-99b3-ef8cc5836451</UID>
+					<Name>*Резинотехника*</Name>
+					<Subdirectory>
+						<Directory>
+							<UID>c382cd15-f52d-11de-89a0-00248c1ddd9c</UID>
+							<Name>СЭВИ ТМ (г. Балаково)</Name>
+						</Directory>
+					</Subdirectory>
+				</Directory>
+			</Subdirectory>
+		</Directory>
+	</Catalog>
+	<PriceGroups>
+		<PriceGroup>
+			<UID>7b1165c3-627c-11e3-9c4d-00163e6b9045</UID>
+			<Name>DAEWOO, CHEVROLET</Name>
+		</PriceGroup>
+		<PriceGroup>
+			<UID>7b1165c1-627c-11e3-9c4d-00163e6b9045</UID>
+			<Name>Иномарка</Name>
+		</PriceGroup>
+		<PriceGroup>
+			<UID>303d0da8-4adb-11e3-ace2-00163e21d963</UID>
+			<Name>ВАЗ</Name>
+		</PriceGroup>
+	</PriceGroups>
+	<NomenclatureGroups>
+		<NomenclatureGroup>
+			<UID>85c745ac-51d4-11df-89cd-00248c1ddd9c</UID>
+			<Name>СЭВИ ТМ, г. Балаково</Name>
+		</NomenclatureGroup>
+	</NomenclatureGroups>
+	<Brands>
+		<Brand>
+			<UID>fc86c0d0-0b85-11e4-af83-fe39cce543cb</UID>
+			<Name>СЭВИ</Name>
+		</Brand>
+	</Brands>
+	<TypesOfPrices>
+		<PriceType>
+			<UID>d36bad42-237c-4139-a005-9b132e480fbb</UID>
+			<Name>ОПТ1</Name>
+		</PriceType>
+		<PriceType>
+			<UID>4d0e6bf4-7494-4f0c-8835-f5b211e95e95</UID>
+			<Name>ДИЛ</Name>
+		</PriceType>
+	</TypesOfPrices>
+	<CommodityDirections>
+		<CommodityDirection>
+			<UID>01b0f02f-eb13-11e3-8064-00163e6000f8</UID>
+			<Name>ГАЗ Легковые автомобили CAR</Name>
+		</CommodityDirection>
+		<CommodityDirection>
+			<UID>711e97be-53a0-11e4-a274-d8a704927acb</UID>
+			<Name>Шиноремонт</Name>
+		</CommodityDirection>
+		<CommodityDirection>
+			<UID>01b0f027-eb13-11e3-8064-00163e6000f8</UID>
+			<Name>ЗАЗ, SENS</Name>
+		</CommodityDirection>
+		<CommodityDirection>
+			<UID>85cf60de-cc06-11e1-af29-00163e791aa4</UID>
+			<Name>DAEWOO, CHEVROLET</Name>
+		</CommodityDirection>
+		<CommodityDirection>
+			<UID>e2eda7fa-5452-11e4-a274-d8a704927acb</UID>
+			<Name>Аккумуляторы</Name>
+		</CommodityDirection>
+		<CommodityDirection>
+			<UID>c914c4e3-1b57-11e6-a58f-0025909a3c49</UID>
+			<Name>DACIA LOGAN</Name>
+		</CommodityDirection>
+		<CommodityDirection>
+			<UID>8e592e83-77bc-11e5-a68c-0025909a3c49</UID>
+			<Name>Иномарки легковые</Name>
+		</CommodityDirection>
+		<CommodityDirection>
+			<UID>01b0f02d-eb13-11e3-8064-00163e6000f8</UID>
+			<Name>ВАЗ</Name>
+		</CommodityDirection>
+	</CommodityDirections>
+</MetaData>

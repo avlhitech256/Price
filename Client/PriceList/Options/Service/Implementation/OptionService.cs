@@ -1,4 +1,6 @@
-﻿using DatabaseService.DataService;
+﻿using System.Collections.Generic;
+using Common.Data.Constant;
+using DatabaseService.DataService;
 
 namespace Options.Service.Implementation
 {
@@ -7,9 +9,8 @@ namespace Options.Service.Implementation
         #region Members
 
         private readonly IDataService dataService;
-        private string login;
-        private string password;
-        private long lastOrderNumber;
+        private readonly Dictionary<string, string> optionCache;
+        private readonly List<string> existOptionCache;
 
         #endregion
 
@@ -18,7 +19,8 @@ namespace Options.Service.Implementation
         public OptionService(IDataService dataService)
         {
             this.dataService = dataService;
-            InitProperties();
+            optionCache = new Dictionary<string, string>();
+            existOptionCache = new List<string>();
         }
 
         #endregion
@@ -29,15 +31,11 @@ namespace Options.Service.Implementation
         {
             get
             {
-                return login;
+                return GetOption(OptionName.Login);
             }
             set
             {
-                if (login != value)
-                {
-                    login = value;
-                    SetOption(OptionName.Login, value);
-                }
+                SetOption(OptionName.Login, value);
             }
         }
 
@@ -45,15 +43,11 @@ namespace Options.Service.Implementation
         {
             get
             {
-                return password;
+                return GetOption(OptionName.Password);
             }
             set
             {
-                if (password != value)
-                {
-                    password = value;
-                    SetOption(OptionName.Password, value);
-                }
+                SetOption(OptionName.Password, value);
             }
         }
 
@@ -61,15 +55,30 @@ namespace Options.Service.Implementation
         {
             get
             {
-                return lastOrderNumber;
+                return GetLongOption(OptionName.LastOrderNumber);
             }
             set
             {
-                if (lastOrderNumber != value)
+                SetLongOption(OptionName.LastOrderNumber, value);
+            }
+        }
+
+        private bool ExistShowPhotoOnMouseDoubleClickOption => ExistOption(OptionName.ShowPhotoOnMouseDoubleClick);
+
+        public bool ShowPhotoOnMouseDoubleClick
+        {
+            get
+            {
+                if (!ExistShowPhotoOnMouseDoubleClickOption)
                 {
-                    lastOrderNumber = value;
-                    SetOption(OptionName.LastOrderNumber, value.ToString());
+                    SetBooleanOption(OptionName.ShowPhotoOnMouseDoubleClick, false);
                 }
+
+                return GetBooleanOption(OptionName.ShowPhotoOnMouseDoubleClick);
+            }
+            set
+            {
+                SetBooleanOption(OptionName.ShowPhotoOnMouseDoubleClick, value);
             }
         }
 
@@ -77,25 +86,81 @@ namespace Options.Service.Implementation
 
         #region Methods
 
-        private void InitProperties()
+        private bool ExistOption(string optionCode)
         {
-            login = GetOption(OptionName.Login);
-            password = GetOption(OptionName.Password);
-            lastOrderNumber = long.TryParse(GetOption(OptionName.LastOrderNumber), out lastOrderNumber)
-                ? lastOrderNumber
-                : 0;
+            bool value = existOptionCache.Contains(optionCode);
+
+            if (!value)
+            {
+                value = dataService.ExistOption(optionCode);
+
+                if (value)
+                {
+                    existOptionCache.Add(optionCode);
+                }
+            }
+
+            return value;
+        }
+
+        private bool GetBooleanOption(string optionCode)
+        {
+            bool value = GetOption(optionCode) == Flag.Yes;
+
+            return value;
+        }
+
+        private void SetBooleanOption(string optionCode, bool value)
+        {
+            SetOption(optionCode, value ? Flag.Yes : Flag.No);
+        }
+
+        private long GetLongOption(string optionCode)
+        {
+            long value;
+            
+            if (!long.TryParse(GetOption(optionCode), out value))
+            {
+                value = 0L;
+                SetLongOption(optionCode, value);
+            }
+
+            return value;
+        }
+
+        private void SetLongOption(string optionCode, long value)
+        {
+            SetOption(optionCode, value.ToString());
         }
 
         private string GetOption(string optionCode)
         {
-            string value = dataService.GetOption(optionCode);
+            string value;
+
+            if (!optionCache.TryGetValue(optionCode, out value))
+            {
+                value = dataService.GetOption(optionCode);
+                optionCache.Add(optionCode, value);
+            }
 
             return value;
         }
 
         private void SetOption(string optionCode, string value)
         {
-            dataService.SetOption(optionCode, value);
+            if (!string.IsNullOrWhiteSpace(optionCode) && value != GetOption(optionCode))
+            {
+                if (optionCache.ContainsKey(optionCode))
+                {
+                    optionCache[optionCode] = value;
+                }
+                else
+                {
+                    optionCache.Add(optionCode, value);
+                }
+
+                dataService.SetOption(optionCode, value);
+            }
         }
 
         #endregion

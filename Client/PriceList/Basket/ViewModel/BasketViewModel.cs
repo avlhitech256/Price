@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Basket.Model;
@@ -11,6 +12,9 @@ using Common.ViewModel.Command;
 using Domain.Data.Object;
 using Domain.DomainContext;
 using Domain.ViewModel;
+using Options.Service;
+using Photo.Service;
+using Photo.Service.Implementation;
 
 namespace Basket.ViewModel
 {
@@ -24,7 +28,6 @@ namespace Basket.ViewModel
             Model = new BasketModel(domainContext);
             OrderViewModel = new OrderViewModel(domainContext);
             HasChanges = false;
-            ShowPhotoOnMouseDoubleClick = false;
             InitCommands();
             SubscribeMessenger();
             SubscribeEvents();
@@ -35,9 +38,14 @@ namespace Basket.ViewModel
         #region Properties
 
         public IDomainContext DomainContext { get; }
+
         public IMessenger Messenger => DomainContext?.Messenger;
 
-        public bool ShowPhotoOnMouseDoubleClick { get; }
+        private IPhotoService PhotoService => DomainContext?.PhotoService;
+
+        private IOptionService OptionService => DomainContext?.OptionService;
+
+        public bool ShowPhotoOnMouseDoubleClick => OptionService != null && OptionService.ShowPhotoOnMouseDoubleClick;
 
         private BasketModel Model { get; }
 
@@ -143,10 +151,11 @@ namespace Basket.ViewModel
             OrderViewModel.CreateOrder(Entities, string.Empty);
             Refresh();
             OrderViewModel.Refresh();
+            OrderViewModel.OnChangeOrder();
             Messenger?.Send(CommandName.RefreshPriceList, new EventArgs());
         }
 
-        public void Refresh()
+        private void Refresh()
         {
             Model.SelectEntities();
             Messenger?.Send(CommandName.RefreshBasketCapture, new EventArgs());
@@ -169,11 +178,23 @@ namespace Basket.ViewModel
         private void OrderViewModel_DeletedOrder(object sender, EventArgs e)
         {
             Refresh();
+            OrderViewModel.OnChangeOrder();
         }
 
         private void OrderViewModelRevertedOrder(object sender, EventArgs e)
         {
+            DoRevertOrder(e);
+        }
+
+        private void DoRevertOrder(EventArgs args)
+        {
             Refresh();
+            OrderViewModel.OnChangeOrder();
+        }
+
+        private bool CanDoRevertOrder(EventArgs args)
+        {
+            return args != null;
         }
 
         private void ModelOnPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -198,9 +219,13 @@ namespace Basket.ViewModel
 
         private void SubscribeMessenger()
         {
-            Messenger?.MultiRegister<DecimalValueChangedEventArgs>(CommandName.RefreshCount,
-                                                                   RefreshCount,
-                                                                   CanRefreshCount);
+            if (Messenger != null)
+            {
+                Messenger?.MultiRegister<DecimalValueChangedEventArgs>(CommandName.RefreshCount,
+                                                                       RefreshCount,
+                                                                       CanRefreshCount);
+                Messenger.Register<EventArgs>(CommandName.RevertOrder, DoRevertOrder, CanDoRevertOrder);
+            }
         }
 
         private void RefreshCount(DecimalValueChangedEventArgs args)
@@ -218,6 +243,23 @@ namespace Basket.ViewModel
         private bool CanRefreshCount(DecimalValueChangedEventArgs args)
         {
             return args.Entry != MenuItemName.Basket;
+        }
+
+        public void ShowPicture()
+        {
+            if (SelectedItem != null)
+            {
+                List<byte[]> photos = SelectedItem.Photos;
+                PhotoService.ShowPhotos(photos);
+            }
+        }
+
+        public void DeleteItem()
+        {
+            if (SelectedItem != null)
+            {
+                SelectedItem.Count = 0;
+            }
         }
 
         #endregion

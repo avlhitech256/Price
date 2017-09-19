@@ -128,8 +128,7 @@ namespace Order.Model.Implementation
 
         public void SendOut()
         {
-            SelectedItem.OrderStatus = OrderStatus.SentOut;
-            DataService.DataBaseContext.SaveChanges();
+            DataService.SetOrderStatus(SelectedItem.Entity, OrderStatus.SentOut);
             SelectEntities();
         }
 

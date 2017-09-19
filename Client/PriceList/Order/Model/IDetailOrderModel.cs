@@ -1,5 +1,7 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using Common.Event;
 using Domain.Data.Object;
 
 namespace Order.Model
@@ -17,6 +19,11 @@ namespace Order.Model
         void SelectEntities();
 
         void Clear();
-    }
 
+        event CountChangedEventHandler CountChanged;
+
+        event EventHandler OrderChanged;
+
+        event EventHandler DeletedOrder;
+    }
 }

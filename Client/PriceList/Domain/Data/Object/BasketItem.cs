@@ -33,9 +33,9 @@ namespace Domain.Data.Object
                           IImageService imageService)
         {
             Entity = entity;
-            CalculateSum();
             this.databaseService = databaseService;
             this.imageService = imageService;
+            CalculateSum();
         }
 
         #endregion
@@ -95,7 +95,15 @@ namespace Domain.Data.Object
 
                     if (value == 0)
                     {
+                        OrderEntity order = Entity.Order;
                         databaseService.Delete(Entity);
+
+                        if (order != null && order.Sum == 0)
+                        {
+                            databaseService.Delete(order);
+                            OnDeleteOrder();
+                        }
+
                         OnCountChanged(id, oldValue, value);
                         OnDeletedItem();
                     }
@@ -123,6 +131,15 @@ namespace Domain.Data.Object
             }
         }
 
+        public bool AllowChangeCount
+        {
+            get
+            {
+                bool result = Entity.Order == null || Entity.Order.OrderStatus == OrderStatus.New; 
+                return result;
+            }
+        }
+
         #endregion
 
         #region Methods
@@ -141,6 +158,12 @@ namespace Domain.Data.Object
         private void CalculateSum()
         {
             Sum = Price * Count;
+            CalculateOrderSum();
+        }
+
+        private void CalculateOrderSum()
+        {
+            databaseService.CalculateOrderSum(Entity);
         }
 
         public void Refresh()
@@ -161,6 +184,11 @@ namespace Domain.Data.Object
             DeletedItem?.Invoke(this, new EventArgs());
         }
 
+        private void OnDeleteOrder()
+        {
+            DeletedOrder?.Invoke(this, new EventArgs());
+        }
+
         #endregion
 
         #region Events
@@ -168,6 +196,8 @@ namespace Domain.Data.Object
         public event CountChangedEventHandler CountChanged;
 
         public event EventHandler DeletedItem;
+
+        public event EventHandler DeletedOrder;
 
         #endregion
     }

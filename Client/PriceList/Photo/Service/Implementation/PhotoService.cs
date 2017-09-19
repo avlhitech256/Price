@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Media.Imaging;
 using Common.Event;
 using Common.Messenger;
@@ -33,14 +34,17 @@ namespace Photo.Service.Implementation
         #endregion
 
         #region Methods
-        public void ShowPhotos(IEnumerable<byte[]> photos)
+        public void ShowPhotos(List<byte[]> photos)
         {
-            ObservableCollection<BitmapSource> photoCollection = ImageService.Assemble(photos);
-            var photoModel = new PhotoModel(photoCollection);
-            var photoViewModel = new PhotoViewModel(Messenger, ImageService, photoModel);
-            var photoView = new PhotoControl();
-            var args = new ChildWindowEventArg(photoView, photoViewModel);
-            Messenger.Send(CommandName.ShowImages, args);
+            if (photos != null && photos.Any())
+            {
+                ObservableCollection<BitmapSource> photoCollection = ImageService.Assemble(photos);
+                var photoModel = new PhotoModel(photoCollection);
+                var photoViewModel = new PhotoViewModel(Messenger, ImageService, photoModel);
+                var photoView = new PhotoControl();
+                var args = new ChildWindowEventArg(photoView, photoViewModel);
+                Messenger.Send(CommandName.ShowImages, args);
+            }
         }
 
         #endregion

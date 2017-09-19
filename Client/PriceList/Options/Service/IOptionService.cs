@@ -7,5 +7,7 @@
         string Password { get; set; }
 
         long LastOrderNumber { get; set; }
+
+        bool ShowPhotoOnMouseDoubleClick { get; set; }
     }
 }
