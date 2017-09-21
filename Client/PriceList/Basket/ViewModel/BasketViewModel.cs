@@ -14,7 +14,6 @@ using Domain.DomainContext;
 using Domain.ViewModel;
 using Options.Service;
 using Photo.Service;
-using Photo.Service.Implementation;
 
 namespace Basket.ViewModel
 {

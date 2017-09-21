@@ -37,6 +37,8 @@ namespace DatabaseService.DataBaseContext.Entities
 
         public decimal Multiplicity { get; set; }
 
+        public bool HasPhotos { get; set; }
+
         public virtual List<PhotoItemEntity> Photos { get; set; }
 
         public DateTimeOffset LastUpdated { get; set; }

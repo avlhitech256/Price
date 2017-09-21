@@ -13,7 +13,6 @@ using Options.Service;
 using Order.Model;
 using Order.Model.Implementation;
 using Photo.Service;
-using Photo.Service.Implementation;
 
 namespace Order.ViewModel
 {

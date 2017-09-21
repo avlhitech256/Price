@@ -1,0 +1,5628 @@
+{
+"Nomenclature": [
+{
+"UID": "ef2b8e4e-101d-4247-80e4-2e2edae24b9b",
+"Code": "86598",
+"VendorCode": "1119-ВП",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Опора стойки передней подвески ВАЗ 2170-2172 верхняя (с вологодск. подш.), кор.уп., \"люстра\" ЭКСПЕРТ",
+"Measure": "шт",
+"NormPackaging": "12",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "08.04.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "274,98 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "294,78 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"86598_F"
+]
+},
+{
+"UID": "440833f7-ed26-4475-8110-44f532694342",
+"Code": "51866",
+"VendorCode": "1130",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Опора стойки передней подвески ВАЗ 2190 верхняя с э/у с подшипником, кор.уп., \"люстра\" ЭКСПЕРТ",
+"Measure": "шт",
+"NormPackaging": "12",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "22.09.2010",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "242,52 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "257,64 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"51866_F"
+]
+},
+{
+"UID": "85215b6b-6412-4804-81e8-5bbf5376de0e",
+"Code": "95542",
+"VendorCode": "1181-1003",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Опора стойки амортизатора зад. подвески CHEVROLET LACETTI, DAEWOO Nubira, ЭКСПЕРТ",
+"Measure": "шт",
+"NormPackaging": "6",
+"BatchOfSales": "1",
+"PriceGroupUID": "7b1165c3-627c-11e3-9c4d-00163e6b9045",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "25.11.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "3",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "192,48 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "206,4 Грн"
+}
+],
+"CommodityDirection": [
+"85cf60de-cc06-11e1-af29-00163e791aa4"
+],
+"Photos": [
+"95542_F",
+"95542_F_1"
+]
+},
+{
+"UID": "7fb0dfcd-2717-4ef1-81fb-4bc3c0d4241b",
+"Code": "35362",
+"VendorCode": "1121",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Отбойник \"буфер\" амортизатора ВАЗ 2108, 2110, 2170, 1118 пер. (к-т 2шт.), LANOS/SENS/NEXIA, ЭКСТРИМ",
+"Measure": "к-кт",
+"NormPackaging": "20",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "08.02.2012",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "71,58 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "76,8 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f027-eb13-11e3-8064-00163e6000f8",
+"01b0f02d-eb13-11e3-8064-00163e6000f8",
+"85cf60de-cc06-11e1-af29-00163e791aa4"
+],
+"Photos": [
+"35362_F"
+]
+},
+{
+"UID": "2cc4e42e-5bf8-484c-8221-4d4ebbc8fbe3",
+"Code": "06377",
+"VendorCode": "7007",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Опора шаровая ВАЗ 2121-21214, верх. (усил.) с крепежом, кор.уп., ЭКСТРИМ",
+"Measure": "шт",
+"NormPackaging": "24",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "20.03.2017",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "137,34 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "147,36 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"06377_F",
+"06377_F_1"
+]
+},
+{
+"UID": "61c63928-299d-4e22-827f-1961d982f998",
+"Code": "54313",
+"VendorCode": "1210",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Сайлентблок задней балки ВАЗ 2110-12 (к-т 2 шт.) Эксперт",
+"Measure": "компл",
+"NormPackaging": "20",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "06.07.2015",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "111,84 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "119,94 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"54313_F"
+]
+},
+{
+"UID": "a439edfb-9033-4f10-8313-1f7699908a09",
+"Code": "18381",
+"VendorCode": "7063",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Наконечник рулевой ВАЗ 2121-214, лев. + прав., с крепежём, к-кт, кор.уп., ЭКСТРИМ",
+"Measure": "компл",
+"NormPackaging": "12",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "06.06.2017",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "213,54 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "228,96 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"18381_F",
+"18381_F_1"
+]
+},
+{
+"UID": "cb6133a7-373c-45dc-8347-a77abfe7a2fa",
+"Code": "52499",
+"VendorCode": "6107",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Кожух амортизатора задней подвески ВАЗ 2108-099, Эксперт \"полугофра\"",
+"Measure": "шт",
+"NormPackaging": "20",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "29.09.2011",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "58,02 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "62,22 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"52499_F"
+]
+},
+{
+"UID": "eaefa718-dcee-4a56-8357-780e22bec6ee",
+"Code": "90734",
+"VendorCode": "4107",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Подушка глушителя ВАЗ 2170, (к-кт 10 шт.), ЭКСПЕРТ",
+"Measure": "компл",
+"NormPackaging": "12",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "26.07.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "118,12 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "126,64 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"90734_F"
+]
+},
+{
+"UID": "371dcc72-6187-4543-83a6-5935ba677482",
+"Code": "18385",
+"VendorCode": "7052",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Наконечник рулевой ВАЗ 2101-07, 2121-21214, 2123, корот., к-кт, с крепежем, кор.уп., ЭКСТРИМ",
+"Measure": "компл",
+"NormPackaging": "12",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "06.06.2017",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "190,32 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "204,12 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"18385_F",
+"18385_F_1"
+]
+},
+{
+"UID": "4b05198d-f50b-4009-83c0-e7acd91a1223",
+"Code": "95567",
+"VendorCode": "8005",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Сальник привода ВАЗ 1117-19, 2108-2112, 2170-72, 2190 (правый), зелёный, ЭКСТРИМ",
+"Measure": "шт",
+"NormPackaging": "1",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "28.11.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "26,16 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "28,02 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"95567_F",
+"95567_F_1"
+]
+},
+{
+"UID": "c3bb5993-1405-4f85-84ab-c71cb2231bac",
+"Code": "40298",
+"VendorCode": "5112",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Подушка двигателя ВАЗ 2101-2107 в сб., ЭКСПЕРТ",
+"Measure": "шт.",
+"NormPackaging": "12",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "21.09.2011",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "96,54 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "103,56 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"40298_F",
+"40298_F_1"
+]
+},
+{
+"UID": "cc1828d1-8118-477a-852b-5f6fed0ac53c",
+"Code": "76818",
+"VendorCode": "6112",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Ремкомплект наружного ШРУСа ВАЗ 2121 (пыльник с хомутами и смазкой) Эксперт",
+"Measure": "шт",
+"NormPackaging": "12",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "18.12.2015",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "82,32 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "87,48 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"76818_F"
+]
+},
+{
+"UID": "168eddeb-b984-11df-8546-406186c674ef",
+"Code": "03864",
+"VendorCode": "2109",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Штанга реактивная ВАЗ 2121-23 (к-т 5 шт.) без крепления, Эксперт",
+"Measure": "к-кт",
+"NormPackaging": "4",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "06.09.2010",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "696,66 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "746,94 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"03864_F"
+]
+},
+{
+"UID": "168edded-b984-11df-8546-406186c674ef",
+"Code": "03865",
+"VendorCode": "5101",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Подушка двигателя ВАЗ 2108-099 лев. в сб. \"ласта\", ЭКСПЕРТ",
+"Measure": "шт",
+"NormPackaging": "18",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "06.09.2010",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "149,7 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "158,94 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"03865_F"
+]
+},
+{
+"UID": "a012850b-529f-4a69-85c4-f293f68aff40",
+"Code": "54311",
+"VendorCode": "1209",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Сайлентблок задней балки ВАЗ 2108-099 (к-т 2 шт.) Эксперт",
+"Measure": "компл",
+"NormPackaging": "20",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "06.07.2015",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "79,98 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "85,8 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"54311_F"
+]
+},
+{
+"UID": "36411fa3-fd4b-4558-8633-9c4199e27d6a",
+"Code": "06379",
+"VendorCode": "7009",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Опора шаровая ВАЗ 2108-15, 1117-19, 2170-72, (усил.) с крепежом, кор.уп., ЭКСТРИМ",
+"Measure": "шт",
+"NormPackaging": "24",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "20.03.2017",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "125,88 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "135,06 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"06379_F",
+"06379_F_1"
+]
+},
+{
+"UID": "a8513fb4-2f1f-4cdb-8713-799b4b15dd5d",
+"Code": "95549",
+"VendorCode": "6124-5030",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Пыльник ШРУС нар. с хомутами, Lada Largus,Renault Logan, Renault Sandero, ЭКСПЕРТ",
+"Measure": "шт",
+"NormPackaging": "20",
+"BatchOfSales": "1",
+"PriceGroupUID": "7b1165c1-627c-11e3-9c4d-00163e6b9045",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "25.11.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "92,64 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "99,3 Грн"
+}
+],
+"CommodityDirection": [
+"c914c4e3-1b57-11e6-a58f-0025909a3c49"
+],
+"Photos": [
+"95549_F",
+"95549_F_1"
+]
+},
+{
+"UID": "e3ff7dd6-67c5-4d78-878c-f7f4c70c1122",
+"Code": "87294",
+"VendorCode": "2210",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Подушка стабилизатора ВАЗ 2121, 2131 (к-кт 4 шт.) п/э уп., ЭКСПЕРТ",
+"Measure": "компл",
+"NormPackaging": "1",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "29.04.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "29,52 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "31,62 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"87294_F"
+]
+},
+{
+"UID": "6fd4c114-a1e3-450a-8973-ef799b818934",
+"Code": "46499",
+"VendorCode": "2305",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Кронштейн растяжки ВАЗ 1117-19 кор. уп., Эксперт \"краб\"",
+"Measure": "шт.",
+"NormPackaging": "16",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "30.09.2011",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "149,88 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "160,68 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"46499_F"
+]
+},
+{
+"UID": "9f8894f1-97d1-4bea-899f-53ffae9e4ab2",
+"Code": "06393",
+"VendorCode": "8015",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Сальник вала коленчатого ВАЗ 2101-07, 21213, 21214, 21216, 2131, 2120 перед., Экстрим",
+"Measure": "компл",
+"NormPackaging": "1",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "21.03.2017",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "41,46 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "44,58 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"06393_F",
+"06393_F_1"
+]
+},
+{
+"UID": "96f83e77-f52f-11de-89a0-00248c1ddd9c",
+"Code": "01111",
+"VendorCode": "5301",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Башмак натяжителя цепи ВАЗ 2103-07, Эксперт",
+"Measure": "шт",
+"NormPackaging": "80",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "23.04.2012",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "47,46 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "50,94 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"01111_F"
+]
+},
+{
+"UID": "96f83fa7-f52f-11de-89a0-00248c1ddd9c",
+"Code": "01117",
+"VendorCode": "1301",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Втулка амортизатора заднего ВАЗ 2101-07, 2121 (к-т 4 шт. на 2 аморт.) п/э уп., Эксперт",
+"Measure": "к-кт",
+"NormPackaging": "60",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "04.05.2012",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "16,92 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "18,18 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"01117_F"
+]
+},
+{
+"UID": "96f83fab-f52f-11de-89a0-00248c1ddd9c",
+"Code": "01116",
+"VendorCode": "2101",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Втулка штанги реактивной ВАЗ 2101-07 резиновая (к-т 4+6 шт.) Эксперт \"реактивка\"",
+"Measure": "к-кт",
+"NormPackaging": "40",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "16.01.2012",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "97,5 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "104,64 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"01116_F"
+]
+},
+{
+"UID": "96f83fad-f52f-11de-89a0-00248c1ddd9c",
+"Code": "01211",
+"VendorCode": "2102",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Втулка штанги реактивной ВАЗ 2121, 2101-07 резиновая (к-т 10 шт.) Эксперт \"реактивка\"",
+"Measure": "к-кт",
+"NormPackaging": "40",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "16.01.2012",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "121,56 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "130,38 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"01211_F"
+]
+},
+{
+"UID": "9cf2e467-f52f-11de-89a0-00248c1ddd9c",
+"Code": "01124",
+"VendorCode": "2302",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Кронштейн растяжки ВАЗ 2108-099, 2113-15 (к-т 2 шт.) силумин, кор. уп., Эксперт \"краб\"",
+"Measure": "к-кт",
+"NormPackaging": "20",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "17.05.2012",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "207,66 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "220,56 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"01124_F"
+]
+},
+{
+"UID": "9cf2e469-f52f-11de-89a0-00248c1ddd9c",
+"Code": "00096",
+"VendorCode": "2303",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Кронштейн растяжки ВАЗ 2108-099, 2113-15 (к-т 2 шт. с крепежом) сталь, кор. уп., Экстрим \"краб\"",
+"Measure": "к-кт",
+"NormPackaging": "20",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "04.05.2012",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "264 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "280,32 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"00096_F",
+"00096_F_1"
+]
+},
+{
+"UID": "9cf2e59f-f52f-11de-89a0-00248c1ddd9c",
+"Code": "00089",
+"VendorCode": "5105",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Подушка двигателя ВАЗ 2110-12, 2170 левая с крепежом, ЭКСПЕРТ",
+"Measure": "шт",
+"NormPackaging": "24",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "23.07.2012",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "166,98 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "177,3 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"00089_F"
+]
+},
+{
+"UID": "9cf2e5a1-f52f-11de-89a0-00248c1ddd9c",
+"Code": "00088",
+"VendorCode": "5106",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Подушка двигателя ВАЗ 2110-12, 2170 правая с крепежом, ЭКСПЕРТ",
+"Measure": "шт",
+"NormPackaging": "24",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "23.07.2012",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "164,4 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "174,6 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"00088_F"
+]
+},
+{
+"UID": "9cf2e5a7-f52f-11de-89a0-00248c1ddd9c",
+"Code": "01356",
+"VendorCode": "3103",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Опора вала карданного ВАЗ 2101-07 в сб. кор.уп., ЭКСПЕРТ",
+"Measure": "шт",
+"NormPackaging": "30",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "08.02.2012",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "170,58 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "182,94 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"01356_F"
+]
+},
+{
+"UID": "9cf2e5b1-f52f-11de-89a0-00248c1ddd9c",
+"Code": "01848",
+"VendorCode": "1101",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Опора стойки передней подвески ВАЗ 2108-099, 2113-15 \"люстра\" ЭКСПЕРТ",
+"Measure": "шт",
+"NormPackaging": "20",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "04.05.2012",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "0",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "233,16 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "249,96 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"01848_F"
+]
+},
+{
+"UID": "9cf2e5b5-f52f-11de-89a0-00248c1ddd9c",
+"Code": "00087",
+"VendorCode": "1102",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Опора стойки передней подвески ВАЗ 2110-12 \"люстра\" ЭКСПЕРТ",
+"Measure": "шт",
+"NormPackaging": "10",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "17.05.2012",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "0",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "280,56 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "300,84 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"00087_F"
+]
+},
+{
+"UID": "9cf2e5bb-f52f-11de-89a0-00248c1ddd9c",
+"Code": "01103",
+"VendorCode": "1115",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Опора стойки передней подвески ВАЗ 2110-12 (к-кт 2 шт.) с крепежом усиленная \"люстра\" ЭКСТРИМ",
+"Measure": "к-кт",
+"NormPackaging": "6",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "17.05.2012",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "619,86 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "658,2 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"01103_F"
+]
+},
+{
+"UID": "9cf2e64d-f52f-11de-89a0-00248c1ddd9c",
+"Code": "01463",
+"VendorCode": "5103",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Подушка двигателя ВАЗ 2108-09 зад. в сб.уп. \"скоба\", ЭКСПЕРТ",
+"Measure": "шт",
+"NormPackaging": "20",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "29.09.2011",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "168,36 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "178,86 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"01463_F"
+]
+},
+{
+"UID": "9cf2e64f-f52f-11de-89a0-00248c1ddd9c",
+"Code": "01464",
+"VendorCode": "5102",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Подушка двигателя ВАЗ 2108-09 перед. \"балда\", ЭКСПЕРТ",
+"Measure": "шт",
+"NormPackaging": "12",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "29.09.2011",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "241,56 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "259,14 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"01464_F"
+]
+},
+{
+"UID": "9cf2e657-f52f-11de-89a0-00248c1ddd9c",
+"Code": "01467",
+"VendorCode": "5104",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Подушка двигателя ВАЗ 2110-2112 зад. в сб., ЭКСПЕРТ",
+"Measure": "шт",
+"NormPackaging": "20",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "07.05.2012",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "197,34 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "211,56 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"01467_F"
+]
+},
+{
+"UID": "9cf2e659-f52f-11de-89a0-00248c1ddd9c",
+"Code": "01105",
+"VendorCode": "5107",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Подушка двигателя ВАЗ 2110-12, 2170 боковая (лев. или прав, без крепежа), ЭКСПЕРТ",
+"Measure": "шт",
+"NormPackaging": "24",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "17.05.2012",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "137,46 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "147,48 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"01105_F"
+]
+},
+{
+"UID": "9cf2e65f-f52f-11de-89a0-00248c1ddd9c",
+"Code": "01733",
+"VendorCode": "5108",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Подушка двигателя ВАЗ 2110-2112 зад. гол., ЭКСПЕРТ",
+"Measure": "шт",
+"NormPackaging": "30",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "04.05.2012",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "148,2 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "157,38 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"01733_F"
+]
+},
+{
+"UID": "9cf2e665-f52f-11de-89a0-00248c1ddd9c",
+"Code": "01107",
+"VendorCode": "4101",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Подушка глушителя ВАЗ 2108, 2110, 2170, 1118, 2123 (к-кт 5 шт.) \"пряник\", ЭКСПЕРТ",
+"Measure": "к-кт",
+"NormPackaging": "88",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "17.05.2012",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "51,12 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "54,9 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"01107_F"
+]
+},
+{
+"UID": "9cf2e667-f52f-11de-89a0-00248c1ddd9c",
+"Code": "01109",
+"VendorCode": "2202",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Подушка стабилизатора ВАЗ 2108 (к-кт 2 шт.) п/э уп., ЭКСПЕРТ",
+"Measure": "к-кт",
+"NormPackaging": "50",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "17.05.2012",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "18,78 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "20,16 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"01109_F"
+]
+},
+{
+"UID": "9cf2e669-f52f-11de-89a0-00248c1ddd9c",
+"Code": "01110",
+"VendorCode": "2203",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Подушка стабилизатора ВАЗ 2110 (к-кт 2 шт.) п/э уп., ЭКСПЕРТ",
+"Measure": "к-кт",
+"NormPackaging": "50",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "17.05.2012",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "18,78 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "20,16 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"01110_F"
+]
+},
+{
+"UID": "9cf2e66b-f52f-11de-89a0-00248c1ddd9c",
+"Code": "01108",
+"VendorCode": "2201",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Подушка стабилизатора ВАЗ 2101-07 (к-кт 4 шт) п/э уп., ЭКСПЕРТ",
+"Measure": "к-кт",
+"NormPackaging": "50",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "16.04.2012",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "25,56 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "27,42 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"01108_F"
+]
+},
+{
+"UID": "a326c2f6-f52f-11de-89a0-00248c1ddd9c",
+"Code": "01847",
+"VendorCode": "1305",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Ремкомплект амортизатора переднего ВАЗ 2101-07 (шарниры и втулки на 2 амор-ра) Экстрим",
+"Measure": "к-кт",
+"NormPackaging": "120",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "04.05.2012",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "83,16 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "89,22 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"01847_F"
+]
+},
+{
+"UID": "a326c2f8-f52f-11de-89a0-00248c1ddd9c",
+"Code": "01466",
+"VendorCode": "1303",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Ремкомплект амортизатора переднего ВАЗ 2101-07 (шарниры и втулки на 2 амор-ра) Эксперт",
+"Measure": "к-кт",
+"NormPackaging": "120",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "04.05.2012",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "81,48 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "87,48 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"01466_F"
+]
+},
+{
+"UID": "a974d8ce-f52f-11de-89a0-00248c1ddd9c",
+"Code": "01122",
+"VendorCode": "2301",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Сайлентблок кронштейна растяжки передней подвески ВАЗ 2108-099, 2110-12 (к-т 2 шт.) Эксперт \"втулка краба\"",
+"Measure": "к-кт",
+"NormPackaging": "32",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "04.05.2012",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "91,86 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "98,52 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"01122_F"
+]
+},
+{
+"UID": "a974d8d0-f52f-11de-89a0-00248c1ddd9c",
+"Code": "01118",
+"VendorCode": "1306",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Сайлентблок амортизатора передней подвески ВАЗ 2101-07 (к-т 2 шт.) Экстрим \"орех усиленный\"",
+"Measure": "к-кт",
+"NormPackaging": "90",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "26.03.2012",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "59,94 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "63,42 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"01118_F"
+]
+},
+{
+"UID": "a974d8d2-f52f-11de-89a0-00248c1ddd9c",
+"Code": "00098",
+"VendorCode": "1304",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Сайлентблок амортизатора передней подвески ВАЗ 2101-07 (к-т 2 шт.) Эксперт \"орех\"",
+"Measure": "к-кт",
+"NormPackaging": "90",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "04.05.2012",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "58,98 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "63,24 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"00098_F"
+]
+},
+{
+"UID": "a974d8d4-f52f-11de-89a0-00248c1ddd9c",
+"Code": "01100",
+"VendorCode": "2304",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Сайлентблок растяжки ВАЗ 2108-2170 задний (к-т 4 шт.) Эксперт \"ромашки\"",
+"Measure": "к-кт",
+"NormPackaging": "60",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "16.01.2012",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "73,98 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "79,32 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"01100_F"
+]
+},
+{
+"UID": "a974d8d6-f52f-11de-89a0-00248c1ddd9c",
+"Code": "01119",
+"VendorCode": "1202",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Сайлентблок рычагов передней подвески ВАЗ 2101-07 (к-т 8 шт.) Экстрим",
+"Measure": "к-кт",
+"NormPackaging": "30",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "13.10.2011",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "228,42 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "244,92 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"01119_F"
+]
+},
+{
+"UID": "a974d8da-f52f-11de-89a0-00248c1ddd9c",
+"Code": "01120",
+"VendorCode": "1203",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Сайлентблок рычагов передней подвески ВАЗ 2101-07 (к-т 8 шт.) Эксперт",
+"Measure": "к-кт",
+"NormPackaging": "30",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "04.05.2012",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "154,02 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "165,12 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"01120_F"
+]
+},
+{
+"UID": "a974d8dc-f52f-11de-89a0-00248c1ddd9c",
+"Code": "00095",
+"VendorCode": "1207",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Сайлентблок нижнего рычага передней подвески ВАЗ 2108-2190 (к-т 2 шт.) Эксперт \"втулка рычага\"",
+"Measure": "к-кт",
+"NormPackaging": "50",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "04.05.2012",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "51 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "54,72 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"00095_F"
+]
+},
+{
+"UID": "a974d8de-f52f-11de-89a0-00248c1ddd9c",
+"Code": "00094",
+"VendorCode": "1205",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Сайлентблок рычагов передней подвески ВАЗ 2121-213 (к-т 8 шт.) Экстрим",
+"Measure": "к-кт",
+"NormPackaging": "24",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "27.04.2012",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "228,24 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "244,74 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"00094_F"
+]
+},
+{
+"UID": "a974d8e0-f52f-11de-89a0-00248c1ddd9c",
+"Code": "01121",
+"VendorCode": "1206",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Сайлентблок рычагов передней подвески ВАЗ 2121-213 (к-т 8 шт.) Эксперт",
+"Measure": "к-кт",
+"NormPackaging": "24",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "10.10.2011",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "212,82 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "228,18 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"01121_F",
+"01121_F_1"
+]
+},
+{
+"UID": "a974d8e2-f52f-11de-89a0-00248c1ddd9c",
+"Code": "01123",
+"VendorCode": "2103",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Сайлентблок штанги реактивной ВАЗ 2101-07, 2121, резино-металлический, (к-т 10 шт.) Экстрим",
+"Measure": "к-кт",
+"NormPackaging": "20",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "20.01.2012",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "312,36 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "334,92 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"01123_F"
+]
+},
+{
+"UID": "a974d9c2-f52f-11de-89a0-00248c1ddd9c",
+"Code": "00091",
+"VendorCode": "2204",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Стойка стабилизатора ВАЗ 2108-099, 2113-15 (к-т 2 шт.) кор. уп. Эксперт \"яйца\"",
+"Measure": "к-кт",
+"NormPackaging": "20",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "04.05.2012",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "85,2 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "91,38 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"00091_F"
+]
+},
+{
+"UID": "a974d9c4-f52f-11de-89a0-00248c1ddd9c",
+"Code": "00092",
+"VendorCode": "2205",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Стойка стабилизатора ВАЗ 2110-12 (к-т 2 шт.) кор. уп. Эксперт \"яйца\"",
+"Measure": "к-кт",
+"NormPackaging": "20",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "02.04.2012",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "85,2 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "91,38 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"00092_F"
+]
+},
+{
+"UID": "a974d9c6-f52f-11de-89a0-00248c1ddd9c",
+"Code": "01465",
+"VendorCode": "2206",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Стойка стабилизатора ВАЗ 2170-72, 1117-19 (к-т 2 шт.) кор. уп. Эксперт \"яйца\"",
+"Measure": "к-кт",
+"NormPackaging": "20",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "04.04.2012",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "85,2 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "91,38 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"01465_F"
+]
+},
+{
+"UID": "a974dab8-f52f-11de-89a0-00248c1ddd9c",
+"Code": "01112",
+"VendorCode": "5302",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Успокоитель цепи ВАЗ 2101-07, Эксперт",
+"Measure": "шт",
+"NormPackaging": "120",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "23.04.2012",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "31,38 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "33,66 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"01112_F"
+]
+},
+{
+"UID": "afb240b0-f52f-11de-89a0-00248c1ddd9c",
+"Code": "01114",
+"VendorCode": "2104",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Штанга реактивная ВАЗ 2101-07 (к-т 5 шт.) без крепления, Экстрим",
+"Measure": "к-кт",
+"NormPackaging": "4",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "08.02.2012",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "853,62 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "915,24 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"01114_F"
+]
+},
+{
+"UID": "afb240b4-f52f-11de-89a0-00248c1ddd9c",
+"Code": "00097",
+"VendorCode": "2107",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Штанга реактивная ВАЗ 2101-07 (к-т 5 шт.) без крепления, Эксперт",
+"Measure": "к-кт",
+"NormPackaging": "4",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "28.09.2011",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "696,66 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "746,94 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"00097_F"
+]
+},
+{
+"UID": "b5f9bb78-62f1-49e0-8a30-82e3a5b55c87",
+"Code": "16347",
+"VendorCode": "7061",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Комплект рулевых тяг ВАЗ 2121-214, кор. уп., Экстрим \"трапеция\"",
+"Measure": "компл",
+"NormPackaging": "14",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "03.04.2017",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "663,48 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "711,36 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"16347_F",
+"16347_F_1"
+]
+},
+{
+"UID": "632a6293-2c27-4feb-8a89-ccd772e372a6",
+"Code": "95546",
+"VendorCode": "6123-5068",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Пыльник ШРУС внутр. прав. с хомутами, Renault Logan, Megane I, Kandoo, Clio II, ЭКСПЕРТ",
+"Measure": "шт",
+"NormPackaging": "20",
+"BatchOfSales": "1",
+"PriceGroupUID": "7b1165c1-627c-11e3-9c4d-00163e6b9045",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "25.11.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "1",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "92,64 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "99,3 Грн"
+}
+],
+"CommodityDirection": [
+"c914c4e3-1b57-11e6-a58f-0025909a3c49"
+],
+"Photos": [
+"95546_F",
+"95546_F_1"
+]
+},
+{
+"UID": "071192a4-13b6-465f-8a9f-0c46c9d1f0c0",
+"Code": "98423",
+"VendorCode": "2152",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Проставка межвитковая, 18-24,5мм, d113мм, Экстрим",
+"Measure": "компл",
+"NormPackaging": "6",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "20.12.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "6",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "153,72 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "163,32 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"98423_F",
+"98423_F_1"
+]
+},
+{
+"UID": "9dbcee79-c199-4742-8ac0-dbaba35e1b9b",
+"Code": "06376",
+"VendorCode": "7006",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Опора шаровая ВАЗ 2101-07, нижн. (усил.) с крепежом, кор.уп., ЭКСТРИМ",
+"Measure": "шт",
+"NormPackaging": "24",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "20.03.2017",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "135,36 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "145,2 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"06376_F",
+"06376_F_1"
+]
+},
+{
+"UID": "7100fccb-557b-4521-8ada-ea482f7682bf",
+"Code": "06094",
+"VendorCode": "2221-6040",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Втулка стабилизатора RENAULT/DACIA DUSTER перед, Эксперт",
+"Measure": "компл",
+"NormPackaging": "1",
+"BatchOfSales": "1",
+"PriceGroupUID": "7b1165c1-627c-11e3-9c4d-00163e6b9045",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "16.02.2017",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "2",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "59,88 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "64,26 Грн"
+}
+],
+"CommodityDirection": [
+"c914c4e3-1b57-11e6-a58f-0025909a3c49"
+],
+"Photos": [
+"06094_F",
+"06094_F_1"
+]
+},
+{
+"UID": "94a3f6a2-2652-44bf-8b2e-c686cd64fbfd",
+"Code": "51849",
+"VendorCode": "1128",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Опора стойки передней подвески ВАЗ 2190 верхняя без э/у с подшипником, кор.уп., \"люстра\" ЭКСПЕРТ",
+"Measure": "шт",
+"NormPackaging": "12",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "22.09.2010",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "242,52 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "257,64 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"51849_F"
+]
+},
+{
+"UID": "0e90da88-b13b-4d1b-8b4c-d4e221279cb6",
+"Code": "40296",
+"VendorCode": "4105",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Подушка глушителя ВАЗ 2170, \"3-пряника, 1-будильник\" (к-кт), ЭКСПЕРТ",
+"Measure": "к-кт",
+"NormPackaging": "36",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "17.05.2012",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "75,96 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "80,7 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"40296_F"
+]
+},
+{
+"UID": "14ebbf47-a805-4e6a-8b70-1bb54bd5012a",
+"Code": "53421",
+"VendorCode": "1311",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Ремкомплект втулок амортизатора ГАЗ 2410, 31029 зад., 3302 перед. и зад. (к-т 4 шт.) Эксперт",
+"Measure": "компл",
+"NormPackaging": "40",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "01.06.2015",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "29,46 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "31,56 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02f-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"53421_F"
+]
+},
+{
+"UID": "adc5c5cf-e4f2-425f-8d60-a39ca475ab2b",
+"Code": "94366",
+"VendorCode": "8003",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Сальник редуктора перед. и зад. моста ВАЗ 2101-21214, 2120, 2123, 2131 (ресиверная насечка), зелёный, ЭКСТРИМ",
+"Measure": "шт",
+"NormPackaging": "1",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "26.10.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "15,9 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "17,1 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"94366_F",
+"94366_F_1"
+]
+},
+{
+"UID": "9ef60498-44bf-42d6-8d79-6dfa0555392c",
+"Code": "86604",
+"VendorCode": "1128-ВП",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Опора стойки передней подвески ВАЗ 2190 верх. без э/у (с вологодск. подш.), кор.уп., \"люстра\" ЭКСПЕР",
+"Measure": "шт",
+"NormPackaging": "12",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "08.04.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "299,76 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "321,48 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"86604_F"
+]
+},
+{
+"UID": "82f58e4e-c995-4ec5-8e65-8ba089d9ce88",
+"Code": "37118",
+"VendorCode": "4102",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Подушка глушителя ВАЗ 2110-2112, \"3-пряника, 1-будильник\", (к-кт 4 шт.), ЭКСПЕРТ",
+"Measure": "к-кт",
+"NormPackaging": "42",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "17.05.2012",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "64,98 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "69,66 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"37118_F",
+"37118_F_1"
+]
+},
+{
+"UID": "7baec1e0-399d-4cb2-8ef5-6212d14d89f6",
+"Code": "15891",
+"VendorCode": "7062",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Наконечник рулевой ВАЗ 2121-214, лев. + прав., к-кт, кор.уп., ЭКСТРИМ",
+"Measure": "компл",
+"NormPackaging": "12",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "03.04.2017",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "203,64 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "218,4 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"15891_F",
+"15891_F_1"
+]
+},
+{
+"UID": "eb6518f5-2074-413c-8f76-4b099eac00ca",
+"Code": "95553",
+"VendorCode": "6126-5030",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Пыльник ШРУС нар. с хомутами DAEWOO MATIZ, Chevrolet Spark, ЭКСПЕРТ",
+"Measure": "шт",
+"NormPackaging": "20",
+"BatchOfSales": "1",
+"PriceGroupUID": "7b1165c3-627c-11e3-9c4d-00163e6b9045",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "25.11.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "92,64 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "99,3 Грн"
+}
+],
+"CommodityDirection": [
+"85cf60de-cc06-11e1-af29-00163e791aa4"
+],
+"Photos": [
+"95553_F",
+"95553_F_1"
+]
+},
+{
+"UID": "01eb38cb-0787-41f8-8f86-3ccd321b4b30",
+"Code": "58478",
+"VendorCode": "2208",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Подушка стабилизатора ВАЗ 1118, 2170 пер. (к-кт 2 шт.) п/э уп., ЭКСПЕРТ",
+"Measure": "компл",
+"NormPackaging": "50",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "23.10.2015",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "17,82 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "19,08 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"58478_F"
+]
+},
+{
+"UID": "bfbeb8a5-8e11-4579-8f8a-1b3b01fbe838",
+"Code": "95560",
+"VendorCode": "8001",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Сальник вала коленчатого ВАЗ 2101-07 (к-т 2 шт.) п/э уп., Экстрим",
+"Measure": "компл",
+"NormPackaging": "1",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "28.11.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "134,82 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "144,54 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"95560_F",
+"95560_F_1"
+]
+},
+{
+"UID": "d9ab375a-a321-499e-909f-a24f8adf67ce",
+"Code": "95544",
+"VendorCode": "2218",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Стойка стабилизатора ВАЗ 21928, Гранта Люкс, Калина-2 (к-кт 2 шт) кор.уп. \"яйца\", ЭКСПЕРТ",
+"Measure": "компл",
+"NormPackaging": "20",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "25.11.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "101,82 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "109,14 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"95544_F",
+"95544_F_1"
+]
+},
+{
+"UID": "d1929c96-b89f-43ff-9106-5b97a3ca5aa2",
+"Code": "51864",
+"VendorCode": "1129",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Опора стойки передней подвески ВАЗ 2190 верхняя с э/у без подшипника, кор.уп., \"люстра\" ЭКСПЕРТ",
+"Measure": "шт",
+"NormPackaging": "12",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "22.09.2010",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "210,54 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "223,62 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"51864_F"
+]
+},
+{
+"UID": "30e6086e-33e1-11e2-911c-00163e4bc2bf",
+"Code": "22336",
+"VendorCode": "1111",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Виброизолятор пружины передней подвески ВАЗ 2108-15, 2110-12 (к-т 2 шт.) Экстрим",
+"Measure": "к-кт",
+"NormPackaging": "2",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "23.04.2012",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "51,12 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "54,9 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"22336_F"
+]
+},
+{
+"UID": "30e60871-33e1-11e2-911c-00163e4bc2bf",
+"Code": "22338",
+"VendorCode": "1113",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Опора стойки передней подвески ВАЗ 2108-099, 2113-15 (к-кт 2 шт.) \"люстра\" ЭКСТРИМ",
+"Measure": "к-кт",
+"NormPackaging": "6",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "23.04.2012",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "629,1 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "674,52 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"22338_F"
+]
+},
+{
+"UID": "d864c35f-ca7e-449c-9223-29830ba4c3e5",
+"Code": "90696",
+"VendorCode": "7004",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Опора шаровая ВАЗ 2123, кор.уп., ЭКСТРИМ",
+"Measure": "шт",
+"NormPackaging": "24",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "22.07.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "164,16 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "174,36 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"90696_F"
+]
+},
+{
+"UID": "c8934e2c-75d7-4b12-92e7-57aee3019b1a",
+"Code": "52495",
+"VendorCode": "6102",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Пыльник ШРУС ВАЗ 2108-2115 внутр., ЭКСПЕРТ",
+"Measure": "шт",
+"NormPackaging": "20",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "29.09.2011",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "40,2 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "43,14 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"52495_F"
+]
+},
+{
+"UID": "fe5c51c4-4537-4482-9388-ac45fd582aa3",
+"Code": "54678",
+"VendorCode": "6105",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Пыльник ШРУС ВАЗ 2121 нар., ЭКСПЕРТ",
+"Measure": "шт",
+"NormPackaging": "18",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "30.07.2015",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "46,74 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "49,74 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"54678_F"
+]
+},
+{
+"UID": "9c5e5b5f-e519-4a00-93d6-1c54b5dfdfaf",
+"Code": "18380",
+"VendorCode": "7060",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Наконечник рулевой ВАЗ 1117-1119, лев. + прав., к-кт, с крепежем, кор.уп., ЭКСТРИМ",
+"Measure": "компл",
+"NormPackaging": "9",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "06.06.2017",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "350,88 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "376,26 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"18380_F",
+"18380_F_1"
+]
+},
+{
+"UID": "cef1a6a6-454f-4716-9427-1339dc77d44a",
+"Code": "51868",
+"VendorCode": "2306",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Кронштейн растяжки ВАЗ 2190 кор. уп., Эксперт",
+"Measure": "шт",
+"NormPackaging": "16",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "30.09.2011",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "140,28 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "148,92 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"51868_F"
+]
+},
+{
+"UID": "98cadf82-c858-4556-9456-d5716ad94503",
+"Code": "86617",
+"VendorCode": "2214-6040",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Подушка стабилизатора Hyundai Solaris, Avante, Ассent, Kia Rio, (к-кт 2 шт.), ЭКСПЕРТ",
+"Measure": "компл",
+"NormPackaging": "1",
+"BatchOfSales": "1",
+"PriceGroupUID": "7b1165c1-627c-11e3-9c4d-00163e6b9045",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "11.04.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "44 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "47,16 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"86617_F"
+]
+},
+{
+"UID": "8b8fea06-a02a-42e3-947d-5080d00013b5",
+"Code": "90732",
+"VendorCode": "4106",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Подушка глушителя ВАЗ 1118, (к-кт 10 шт.), ЭКСПЕРТ",
+"Measure": "компл",
+"NormPackaging": "12",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "26.07.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "138,78 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "148,86 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"90732_F"
+]
+},
+{
+"UID": "ba64a41c-b094-40e6-9498-bf9901139479",
+"Code": "95573",
+"VendorCode": "8010",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Сальник вала коленчатого Lada Largus, Renault: LOGAN, MEGANE, SANDERO, CLIO, DUSTER, FLUENCE (к-кт) ЭКСТРИМ",
+"Measure": "компл",
+"NormPackaging": "1",
+"BatchOfSales": "1",
+"PriceGroupUID": "7b1165c1-627c-11e3-9c4d-00163e6b9045",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "28.11.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "155,92 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "167,16 Грн"
+}
+],
+"CommodityDirection": [
+"c914c4e3-1b57-11e6-a58f-0025909a3c49"
+],
+"Photos": [
+"95573_F",
+"95573_F_1"
+]
+},
+{
+"UID": "06f83626-adae-47db-94e4-3e0a51dc1b42",
+"Code": "90752",
+"VendorCode": "4109-3073",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Подушка глушителя Renault Logan, Sandero, Lada Largus, ЭКСПЕРТ",
+"Measure": "шт",
+"NormPackaging": "25",
+"BatchOfSales": "1",
+"PriceGroupUID": "7b1165c1-627c-11e3-9c4d-00163e6b9045",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "26.07.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "6",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "25,02 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "24,6 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8",
+"c914c4e3-1b57-11e6-a58f-0025909a3c49"
+],
+"Photos": [
+"90752_F",
+"90752_F_1"
+]
+},
+{
+"UID": "496e73b1-c843-4caf-95c4-2c892a100e46",
+"Code": "15846",
+"VendorCode": "6120-5030",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Пыльник ШРУС наружн., Renault Logan, Renault Sandero, CLIO, MEGANE I, II, ЭКСПЕРТ",
+"Measure": "шт",
+"NormPackaging": "12",
+"BatchOfSales": "1",
+"PriceGroupUID": "7b1165c1-627c-11e3-9c4d-00163e6b9045",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "03.04.2017",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "92,64 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "99,36 Грн"
+}
+],
+"CommodityDirection": [
+"c914c4e3-1b57-11e6-a58f-0025909a3c49"
+],
+"Photos": [
+"15846_F",
+"15846_F_1"
+]
+},
+{
+"UID": "70d0be60-d4ab-4d6f-960b-71524df0cbe4",
+"Code": "06391",
+"VendorCode": "7059",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Наконечник рулевой ВАЗ 1117-1119, лев. + прав., к-кт, кор.уп., ЭКСТРИМ",
+"Measure": "компл",
+"NormPackaging": "9",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "21.03.2017",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "342,36 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "367,14 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"06391_F",
+"06391_F_1"
+]
+},
+{
+"UID": "b49153ec-5105-48db-969b-04f6d3e40fbc",
+"Code": "58480",
+"VendorCode": "2209",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Подушка стабилизатора ВАЗ 2190 (к-кт 2 шт.) п/э уп., ЭКСПЕРТ",
+"Measure": "компл",
+"NormPackaging": "50",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "23.10.2015",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "17,04 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "18,12 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"58480_F"
+]
+},
+{
+"UID": "cc35b2b6-389c-437d-96ad-5c8f4e6e1c86",
+"Code": "95569",
+"VendorCode": "8007",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Сальник редуктора заднего моста ВАЗ 2101-2123, ЭКСТРИМ",
+"Measure": "шт",
+"NormPackaging": "1",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "28.11.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "37,14 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "39,48 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"95569_F",
+"95569_F_1"
+]
+},
+{
+"UID": "4af3cadb-a4cf-44c4-96c1-02a062cf1a63",
+"Code": "06390",
+"VendorCode": "7057",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Наконечник рулевой ВАЗ 2110-12, 2170-72, лев. + прав., к-кт, кор.уп., ЭКСТРИМ",
+"Measure": "компл",
+"NormPackaging": "12",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "21.03.2017",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "251,04 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "269,16 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"06390_F",
+"06390_F_1"
+]
+},
+{
+"UID": "da8b2300-3cbc-464c-96e1-577aa051da8f",
+"Code": "45743",
+"VendorCode": "1309",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Сайлентблок рессоры ГАЗ 3302, Эксперт",
+"Measure": "шт.",
+"NormPackaging": "24",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "22.09.2011",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "95,52 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "102,42 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02f-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"45743_F"
+]
+},
+{
+"UID": "0e3903d1-42b4-4fc8-97e3-81300f577d97",
+"Code": "86635",
+"VendorCode": "У00000962",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Втулка стойки стабилизатора ВАЗ 1117-19 верхняя, Эксперт",
+"Measure": "шт",
+"NormPackaging": "1",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "11.04.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "7,74 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "8,34 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"86635_F"
+]
+},
+{
+"UID": "eef70658-c080-40ed-98d0-0db091b21646",
+"Code": "06378",
+"VendorCode": "7008",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Опора шаровая ВАЗ 2121-21214, нижн. (усил.) с крепежом, кор.уп., ЭКСТРИМ",
+"Measure": "шт",
+"NormPackaging": "24",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "20.03.2017",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "139,08 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "149,22 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"06378_F",
+"06378_F_1"
+]
+},
+{
+"UID": "44aa2429-57e1-49b8-9990-db405edd9e72",
+"Code": "76820",
+"VendorCode": "1211",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Сайлентблок рычагов передней подвески ВАЗ 2101-07 низ. (к-т 4 шт.) Эксперт",
+"Measure": "компл",
+"NormPackaging": "26",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "18.12.2015",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "80,22 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "86,04 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"76820_F"
+]
+},
+{
+"UID": "692cc2dd-1c53-426a-99d6-177acd69f085",
+"Code": "37120",
+"VendorCode": "4103",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Подушка глушителя ВАЗ 21213 и их модификации, \"2-будильника\", (к-кт 2 шт.), ЭКСПЕРТ",
+"Measure": "к-кт",
+"NormPackaging": "50",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "17.05.2012",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "50,7 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "54,36 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"37120_F"
+]
+},
+{
+"UID": "11d101aa-05e6-4534-9a03-eb83572b295d",
+"Code": "86606",
+"VendorCode": "2213-6040",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Подушка стабилизатора Lada Largus, Renault Logan, Renault Sandero (к-кт 2 шт.), ЭКСПЕРТ",
+"Measure": "компл",
+"NormPackaging": "34",
+"BatchOfSales": "1",
+"PriceGroupUID": "7b1165c1-627c-11e3-9c4d-00163e6b9045",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "08.04.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "36,77 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "39,33 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8",
+"e2eda7fa-5452-11e4-a274-d8a704927acb",
+"c914c4e3-1b57-11e6-a58f-0025909a3c49",
+"8e592e83-77bc-11e5-a68c-0025909a3c49"
+],
+"Photos": [
+"86606_F"
+]
+},
+{
+"UID": "1f9196e0-5059-47d1-9b54-511485a81142",
+"Code": "06375",
+"VendorCode": "7005",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Опора шаровая ВАЗ 2101-07, верх. (усил.) с крепежом, кор.уп., ЭКСТРИМ",
+"Measure": "шт",
+"NormPackaging": "24",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "20.03.2017",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "134,88 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "144,6 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"06375_F",
+"06375_F_1"
+]
+},
+{
+"UID": "90cccdf1-010d-43b1-9c5f-3971b74ed0da",
+"Code": "41723",
+"VendorCode": "5113",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Подушка двигателя ВАЗ 2121 в сб., ЭКСПЕРТ",
+"Measure": "шт.",
+"NormPackaging": "12",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "21.09.2011",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "89,4 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "95,88 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"41723_F"
+]
+},
+{
+"UID": "19aa11ef-6128-4b44-9c90-e6696bbdef4a",
+"Code": "06394",
+"VendorCode": "8016",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Сальник вала коленчатого ВАЗ 2108-12, 1117-19 перед. (распредвала 2108-12), ЭКСТРИМ",
+"Measure": "компл",
+"NormPackaging": "1",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "21.03.2017",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "37,86 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "40,68 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"06394_F",
+"06394_F_1"
+]
+},
+{
+"UID": "27965434-7ed7-4f2c-9c9d-674a92bbb04e",
+"Code": "51855",
+"VendorCode": "1127",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Опора стойки передней подвески ВАЗ 2190 верхняя без э/у без подшипника, кор.уп., \"люстра\" ЭКСПЕРТ",
+"Measure": "шт",
+"NormPackaging": "12",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "22.09.2010",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "8",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "210,54 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "223,62 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"51855_F"
+]
+},
+{
+"UID": "626f4503-e0ed-4392-9d47-2a98df0e567b",
+"Code": "06091",
+"VendorCode": "1134-2820",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Опора амортизатора DACIA/RENAULT DOKKER/DUSTER/LOGAN I/LODGY/SANDERO I, Эксперт",
+"Measure": "шт",
+"NormPackaging": "9",
+"BatchOfSales": "1",
+"PriceGroupUID": "7b1165c1-627c-11e3-9c4d-00163e6b9045",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "16.02.2017",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "9",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "121,62 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "130,44 Грн"
+}
+],
+"CommodityDirection": [
+"c914c4e3-1b57-11e6-a58f-0025909a3c49"
+],
+"Photos": [
+"06091_F",
+"06091_F_1"
+]
+},
+{
+"UID": "00dc25b2-01ea-4f89-9dd0-2c5f482c57bc",
+"Code": "95562",
+"VendorCode": "8002",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Сальник полуоси ВАЗ 2101-07, 2121 обрезиненный, ЭКСТРИМ",
+"Measure": "шт",
+"NormPackaging": "1",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "28.11.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "14,34 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "15,36 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"95562_F",
+"95562_F_1"
+]
+},
+{
+"UID": "ed8f2539-3b35-4782-9e52-f3ca0e891279",
+"Code": "88531",
+"VendorCode": "2215-6040",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Втулка стабилизатора перед. подвески CHEVROLET LACETTI/NUBIRA III, (к-кт 2 шт.), ЭКСПЕРТ",
+"Measure": "компл",
+"NormPackaging": "16",
+"BatchOfSales": "1",
+"PriceGroupUID": "7b1165c3-627c-11e3-9c4d-00163e6b9045",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "19.05.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "27,56 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "29,57 Грн"
+}
+],
+"CommodityDirection": [
+"85cf60de-cc06-11e1-af29-00163e791aa4"
+],
+"Photos": [
+"88531_F"
+]
+},
+{
+"UID": "bb703ecf-1998-4ef3-9e6b-271d0d6863fa",
+"Code": "90746",
+"VendorCode": "6116-5030",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Пыльник ШРУС нар. DAEWOO MATIZ, Chevrolet Spark, ЭКСПЕРТ",
+"Measure": "шт",
+"NormPackaging": "20",
+"BatchOfSales": "1",
+"PriceGroupUID": "7b1165c3-627c-11e3-9c4d-00163e6b9045",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "26.07.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "48,66 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "51,96 Грн"
+}
+],
+"CommodityDirection": [
+"85cf60de-cc06-11e1-af29-00163e791aa4"
+],
+"Photos": [
+"90746_F"
+]
+},
+{
+"UID": "225910e9-6092-4678-9e6c-99c273899969",
+"Code": "18273",
+"VendorCode": "7056",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Наконечник рулевой ВАЗ 2108-99, 2113-15, лев. + прав. с крепежом, к-кт, кор.уп., ЭКСТРИМ",
+"Measure": "компл",
+"NormPackaging": "13",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "30.05.2017",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "221,94 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "238,38 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"18273_F",
+"18273_F_1"
+]
+},
+{
+"UID": "e1168d64-85e9-412c-9e7d-24be934d34ff",
+"Code": "06380",
+"VendorCode": "7010",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Опора шаровая ВАЗ 2123, верх., с крепежом,  кор.уп., ЭКСТРИМ",
+"Measure": "шт",
+"NormPackaging": "24",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "20.03.2017",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "199,2 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "213,6 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"06380_F",
+"06380_F_1"
+]
+},
+{
+"UID": "88641fa3-7eee-4ccc-9e96-4b5fbf161bbc",
+"Code": "06389",
+"VendorCode": "7055",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Наконечник рулевой ВАЗ 2108-99, 2113-15, лев. + прав., к-кт, кор.уп., ЭКСТРИМ",
+"Measure": "компл",
+"NormPackaging": "13",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "20.03.2017",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "211,26 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "226,56 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"06389_F",
+"06389_F_1"
+]
+},
+{
+"UID": "97c1ad5b-b46e-4b88-9f9b-79c7dad9bbb5",
+"Code": "88533",
+"VendorCode": "2216-6040",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Втулка стабилизатора перед. подвески DAEWOО Nexia /Espero, 16мм, п\\э уп., (к-кт 2 шт.), ЭКСПЕРТ",
+"Measure": "компл",
+"NormPackaging": "1",
+"BatchOfSales": "1",
+"PriceGroupUID": "7b1165c3-627c-11e3-9c4d-00163e6b9045",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "19.05.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "37,64 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "40,35 Грн"
+}
+],
+"CommodityDirection": [
+"85cf60de-cc06-11e1-af29-00163e791aa4"
+],
+"Photos": [
+"88533_F"
+]
+},
+{
+"UID": "ba2ca7df-ba4d-47ad-9f9c-b7e599629ac7",
+"Code": "51847",
+"VendorCode": "1125",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Опора стойки передней подвески ВАЗ 1117-1119 верхняя с подшипником кор.уп. \"люстра\", ЭКСПЕРТ",
+"Measure": "шт",
+"NormPackaging": "10",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "19.09.2011",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "230,94 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "245,28 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"51847_F"
+]
+},
+{
+"UID": "5da4ced8-3c40-46d1-9fab-c318481769e5",
+"Code": "40284",
+"VendorCode": "1124",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Подшипник опоры стойки ВАЗ 1117-19, 2170-72, 2190-92, Эксперт (11180-2902840)",
+"Measure": "шт.",
+"NormPackaging": "40",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "31.03.2010",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "119,46 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "126,9 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"40284_F"
+]
+},
+{
+"UID": "1859ac4b-bbc2-4aa4-9fd0-1a9c6ae96fc8",
+"Code": "94361",
+"VendorCode": "8011",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Сальник привода ВАЗ 1117-19, 2108-2112, 2170-72, 2190 (ресиверная насечка), зелёный, ЭКСТРИМ",
+"Measure": "шт",
+"NormPackaging": "1",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "26.10.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "28,62 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "30,72 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"94361_F",
+"94361_F_1"
+]
+},
+{
+"UID": "e34cc44f-2213-41f9-9fdd-0efd7689e104",
+"Code": "90750",
+"VendorCode": "6118-5030",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Пыльник ШРУС нар., Lada Largus,Renault Logan, Renault Sandero, ЭКСПЕРТ",
+"Measure": "шт",
+"NormPackaging": "20",
+"BatchOfSales": "1",
+"PriceGroupUID": "7b1165c1-627c-11e3-9c4d-00163e6b9045",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "26.07.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "42,85 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "45,89 Грн"
+}
+],
+"CommodityDirection": [
+"c914c4e3-1b57-11e6-a58f-0025909a3c49"
+],
+"Photos": [
+"90750_F"
+]
+},
+{
+"UID": "675fc9b7-34a4-43be-a111-2b0ec570b681",
+"Code": "40290",
+"VendorCode": "1307",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Сайлентблок амортизатора задней подвески ВАЗ 2108-099, 2110-12, 1117-19 (к-т 2 шт.) Эксперт \"алюминька\"",
+"Measure": "к-кт",
+"NormPackaging": "40",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "31.08.2011",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "87 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "93,24 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"40290_F"
+]
+},
+{
+"UID": "f530ea44-3c52-4240-a226-0ecd82deda9b",
+"Code": "98284",
+"VendorCode": "1139-2820",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Опора стойки амортизатора перед. подвески ЗАЗ-1102, 1103, 1105, 110550  (Таврия) верхняя кор.уп. \"люстра\", ЭКСПЕРТ",
+"Measure": "шт",
+"NormPackaging": "1",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "14.12.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "7",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "263,22 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "282,24 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"98284_F",
+"98284_F_1"
+]
+},
+{
+"UID": "8e6c3a18-22fe-44c0-a26b-7773e4275ad7",
+"Code": "54119",
+"VendorCode": "3104",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Опора вала карданного ГАЗЕЛЬ нов. обр.  в сб. кор.уп., ЭКСПЕРТ",
+"Measure": "шт",
+"NormPackaging": "8",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "25.06.2015",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "172,38 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "184,86 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02f-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"54119_F"
+]
+},
+{
+"UID": "2309e8a2-0c3b-11e1-a327-406186c674ef",
+"Code": "09990",
+"VendorCode": "3102",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Опора вала карданного ГАЗЕЛЬ имп. обр. в сб. кор.уп., ЭКСТРИМ",
+"Measure": "шт.",
+"NormPackaging": "10",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "11.11.2011",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "248,04 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "263,4 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02f-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"09990_F"
+]
+},
+{
+"UID": "b8e830aa-f691-487d-a364-6971e2c991a5",
+"Code": "06392",
+"VendorCode": "8014",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Сальник раздаточной коробки ВАЗ 2123 Chevrolet Niva, ЭКСТРИМ",
+"Measure": "шт",
+"NormPackaging": "1",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "21.03.2017",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "28,14 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "30,24 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"06392_F",
+"06392_F_1"
+]
+},
+{
+"UID": "81c3c8ee-444a-4e94-a395-cc5fe0d6afb9",
+"Code": "95571",
+"VendorCode": "8008",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Сальник редуктора перед. моста ВАЗ 2121-21213, 2120, 2131 зелёный, ЭКСТРИМ",
+"Measure": "шт",
+"NormPackaging": "1",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "28.11.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "24,24 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "25,8 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"95571_F",
+"95571_F_1"
+]
+},
+{
+"UID": "d63d426a-2348-47bc-a3a0-e3c8136d79ea",
+"Code": "40282",
+"VendorCode": "1119",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Опора стойки передней подвески ВАЗ 2170-2172 верхняя с подшипником, кор.уп., \"люстра\" ЭКСПЕРТ",
+"Measure": "шт.",
+"NormPackaging": "12",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "22.09.2010",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "225,84 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "239,88 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"40282_F",
+"40282_F_1"
+]
+},
+{
+"UID": "24fdcf5c-dd9e-4eee-a670-1a8796d7b815",
+"Code": "06093",
+"VendorCode": "2220-6040",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Втулка стабилизатора NISSAN SUNNY ALMERA CLASSIC B10RS 06-12 FRONT D20, Эксперт",
+"Measure": "компл",
+"NormPackaging": "1",
+"BatchOfSales": "1",
+"PriceGroupUID": "7b1165c1-627c-11e3-9c4d-00163e6b9045",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "16.02.2017",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "6",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "50,52 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "54,18 Грн"
+}
+],
+"CommodityDirection": [
+"8e592e83-77bc-11e5-a68c-0025909a3c49"
+],
+"Photos": [
+"06093_F",
+"06093_F_1"
+]
+},
+{
+"UID": "81fddcbe-0a24-45ec-a698-ef067ee24a87",
+"Code": "90690",
+"VendorCode": "7001",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Опора шаровая ВАЗ 2101-07, 2121-21214, верх. (усил.) кор.уп., ЭКСТРИМ",
+"Measure": "шт",
+"NormPackaging": "24",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "22.07.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "125,64 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "133,5 Грн"
+}
+],
+"CommodityDirection": [
+"711e97be-53a0-11e4-a274-d8a704927acb"
+],
+"Photos": [
+"90690_F"
+]
+},
+{
+"UID": "edbe6181-beec-4784-a6f3-5fce9b0347fa",
+"Code": "16163",
+"VendorCode": "7050",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Комплект рулевых тяг ВАЗ 2101-07, кор. уп., Экстрим \"трапеция\"",
+"Measure": "компл",
+"NormPackaging": "13",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "03.04.2017",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "657 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "704,46 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"16163_F",
+"16163_F_1"
+]
+},
+{
+"UID": "b4f2ca50-78f4-4720-a701-a96ee7482e66",
+"Code": "86626",
+"VendorCode": "1132-2820",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Опора стойки амортизатора перед. подвески DAEWOO LANOS лев. (с VIN -439640) кор.уп., ЭКСТРИМ",
+"Measure": "шт",
+"NormPackaging": "8",
+"BatchOfSales": "1",
+"PriceGroupUID": "7b1165c3-627c-11e3-9c4d-00163e6b9045",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "11.04.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "4",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "379,86 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "407,4 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f027-eb13-11e3-8064-00163e6000f8",
+"85cf60de-cc06-11e1-af29-00163e791aa4"
+],
+"Photos": [
+"86626_F",
+"86626_F_1"
+]
+},
+{
+"UID": "61625537-00d9-44f4-a70d-20ac153dcc70",
+"Code": "18272",
+"VendorCode": "7054",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Наконечник рулевой ВАЗ 2101-07, лев. + прав. с крепежом, к-кт, кор.уп., ЭКСТРИМ",
+"Measure": "компл",
+"NormPackaging": "13",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "30.05.2017",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "208,86 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "223,92 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"18272_F",
+"18272_F_1"
+]
+},
+{
+"UID": "30964d4a-9101-11e0-a80c-406186c674ef",
+"Code": "08007",
+"VendorCode": "1302",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Подушка амортизатора ВАЗ 2101-07, 2121, 2108-10, 2170, 1118  (к-кт) \"бублик\" ЭКСПЕРТ",
+"Measure": "к-кт",
+"NormPackaging": "50",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "29.09.2011",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "28,14 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "30,18 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"08007_F"
+]
+},
+{
+"UID": "799e77ef-bf55-457e-a820-810c8074561d",
+"Code": "55222",
+"VendorCode": "6109",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Пыльник рулевой рейки Renault Dacia Logan, Lada Largus (RF-90), ЭКСПЕРТ",
+"Measure": "шт",
+"NormPackaging": "32",
+"BatchOfSales": "1",
+"PriceGroupUID": "7b1165c1-627c-11e3-9c4d-00163e6b9045",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "25.08.2015",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "55,74 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "59,22 Грн"
+}
+],
+"CommodityDirection": [
+"e2eda7fa-5452-11e4-a274-d8a704927acb",
+"c914c4e3-1b57-11e6-a58f-0025909a3c49",
+"8e592e83-77bc-11e5-a68c-0025909a3c49"
+],
+"Photos": [
+"55222_F"
+]
+},
+{
+"UID": "5a357aa9-20d4-47b2-a85f-800ad05dbdf9",
+"Code": "40294",
+"VendorCode": "4104",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Подушка глушителя ВАЗ 1118, (к-кт), \"3-пряника, 1-будильник\" ЭКСПЕРТ",
+"Measure": "к-кт",
+"NormPackaging": "48",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "17.05.2012",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "51,78 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "55,56 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"40294_F"
+]
+},
+{
+"UID": "b66651ed-3151-42cf-a8e2-46ed35c65cf9",
+"Code": "86628",
+"VendorCode": "1133-2820",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Опора стойки амортизатора перед. подвески DAEWOO LANOS прав. (с VIN -439640) кор.уп., ЭКСТРИМ",
+"Measure": "шт",
+"NormPackaging": "9",
+"BatchOfSales": "1",
+"PriceGroupUID": "7b1165c3-627c-11e3-9c4d-00163e6b9045",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "11.04.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "3",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "379,86 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "407,4 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f027-eb13-11e3-8064-00163e6000f8",
+"85cf60de-cc06-11e1-af29-00163e791aa4"
+],
+"Photos": [
+"86628_F",
+"86628_F_1"
+]
+},
+{
+"UID": "a1120070-ffba-43d8-a924-c079e1da2e86",
+"Code": "95575",
+"VendorCode": "8012",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Сальник вала распределительного Lada Largus, Renault: LOGAN, MEGANE, SANDERO, CLIO, (8-ми кл. дв.), ЭКСТРИМ",
+"Measure": "шт",
+"NormPackaging": "1",
+"BatchOfSales": "1",
+"PriceGroupUID": "7b1165c1-627c-11e3-9c4d-00163e6b9045",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "28.11.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "56,05 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "60,1 Грн"
+}
+],
+"CommodityDirection": [
+"c914c4e3-1b57-11e6-a58f-0025909a3c49"
+],
+"Photos": [
+"95575_F",
+"95575_F_1"
+]
+},
+{
+"UID": "4b7c35d8-441c-45ee-a97e-c943e94168b0",
+"Code": "90736",
+"VendorCode": "4108",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Подушка глушителя ВАЗ 21213, 2110 \"будильник\", (к-кт 10шт.), ЭКСПЕРТ",
+"Measure": "компл",
+"NormPackaging": "10",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "26.07.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "223,14 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "239,22 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"90736_F"
+]
+},
+{
+"UID": "2216b540-5aca-4d7d-a982-685838109168",
+"Code": "55166",
+"VendorCode": "6110",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Ремкомплект наружного ШРУСа ВАЗ 2108-15 (пыльник с хомутами и смазкой) Эксперт",
+"Measure": "компл",
+"NormPackaging": "12",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "21.08.2015",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "81,78 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "86,82 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"55166_F"
+]
+},
+{
+"UID": "0f87c66c-395d-4edf-a99d-605e39dcd91e",
+"Code": "94368",
+"VendorCode": "8009",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Сальник ступицы ВАЗ 2121, 2120, 2131 зелёный, ЭКСТРИМ",
+"Measure": "шт",
+"NormPackaging": "1",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "26.10.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "17,4 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "18,66 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"94368_F",
+"94368_F_1"
+]
+},
+{
+"UID": "096cdce6-3c78-4881-aa52-2e9ba953dc9c",
+"Code": "86602",
+"VendorCode": "1125-ВП",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Опора стойки передней подвески ВАЗ 1117-1119 верхняя (с вологодск. подш.) кор.уп., \"люстра\", ЭКСПЕРТ",
+"Measure": "шт",
+"NormPackaging": "10",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "08.04.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "282,84 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "300,42 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"86602_F"
+]
+},
+{
+"UID": "b490a448-6b6a-49da-aa7c-ea9eb649a80e",
+"Code": "45735",
+"VendorCode": "6001",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Обойма шаровой опоры рычага КПП ВАЗ 2110-2112 в сб. кор.уп., ЭКСПЕРТ",
+"Measure": "шт.",
+"NormPackaging": "20",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "22.09.2011",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "143,7 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "154,08 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"45735_F"
+]
+},
+{
+"UID": "978e12eb-6625-4853-aa8f-2e6488eae027",
+"Code": "88529",
+"VendorCode": "1124-ВП",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Подшипник опоры стойки ВАЗ 1117-19, 2170-72, 2190-92, Вологда, Эксперт (11180-2902840)",
+"Measure": "шт",
+"NormPackaging": "1",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "19.05.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "119,45 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "126,82 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"88529_F"
+]
+},
+{
+"UID": "a92e961b-d290-46e5-ab90-34b688d0c5e4",
+"Code": "90694",
+"VendorCode": "7003",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Опора шаровая ВАЗ 2108-15, 1117-19, 2170-72, (усил.) кор.уп., ЭКСТРИМ",
+"Measure": "шт",
+"NormPackaging": "24",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "22.07.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "107,4 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "114,12 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"90694_F"
+]
+},
+{
+"UID": "5811c465-5f02-4c72-ad44-b32c39c1dcf1",
+"Code": "90740",
+"VendorCode": "6106",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Пыльник ШРУС ВАЗ 2121 внутр., \"чашка\", ЭКСПЕРТ",
+"Measure": "шт",
+"NormPackaging": "20",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "26.07.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "52,44 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "56,28 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"90740_F"
+]
+},
+{
+"UID": "d733c50e-9e8c-4b3f-ad58-db1667f4e0ed",
+"Code": "06383",
+"VendorCode": "7051",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Наконечник рулевой ВАЗ 2101-07, 2121-21214, 2123, корот., к-кт, кор.уп., ЭКСТРИМ",
+"Measure": "компл",
+"NormPackaging": "12",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "20.03.2017",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "182,04 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "195,3 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"06383_F",
+"06383_F_1"
+]
+},
+{
+"UID": "773062c9-573c-4c20-ad9f-4b2c45d30da5",
+"Code": "06092",
+"VendorCode": "1214",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Сайлентблок рычагов передней подвески ВАЗ 21214, 2123 н/о (к-т 8 шт.), Эксперт",
+"Measure": "компл",
+"NormPackaging": "12",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "16.02.2017",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "374,34 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "397,56 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"06092_F",
+"06092_F_1"
+]
+},
+{
+"UID": "b2f9564d-5669-43cb-ae6a-e05f7b632fa3",
+"Code": "06388",
+"VendorCode": "7053",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Наконечник рулевой ВАЗ 2101-07, лев. + прав., к-кт, кор.уп., ЭКСТРИМ",
+"Measure": "компл",
+"NormPackaging": "13",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "20.03.2017",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "199,08 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "213,48 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"06388_F",
+"06388_F_1"
+]
+},
+{
+"UID": "7efb8063-d9d6-42c4-b03b-bf318d4ae0c8",
+"Code": "94551",
+"VendorCode": "1131-2820-1",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Опора стойки амортизатора перед. подвески DAEWOO NEXIA, OPEL Kadett \"люстра\", ЭКСТРИМ",
+"Measure": "Штука",
+"NormPackaging": "6",
+"BatchOfSales": "1",
+"PriceGroupUID": "7b1165c3-627c-11e3-9c4d-00163e6b9045",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "31.10.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "315,36 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "334,86 Грн"
+}
+],
+"CommodityDirection": [
+"85cf60de-cc06-11e1-af29-00163e791aa4"
+],
+"Photos": [
+"94551_F",
+"94551_F_1"
+]
+},
+{
+"UID": "2a5633a9-83b6-4f59-b076-0ae5b1d21e31",
+"Code": "95565",
+"VendorCode": "8004",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Сальник вала коленчатого ВАЗ 2108-12 (к-т 3 шт.) п/э уп., Экстрим",
+"Measure": "компл",
+"NormPackaging": "1",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "28.11.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "133,14 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "142,8 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"95565_F",
+"95565_F_1"
+]
+},
+{
+"UID": "62b14460-21e3-4a8e-b0f8-fb3b0a2068e9",
+"Code": "94359",
+"VendorCode": "8000",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Сальник вала вторичного КПП ВАЗ 2101-07, 2121 зелёный, ЭКСТРИМ",
+"Measure": "шт",
+"NormPackaging": "1",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "26.10.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "19,08 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "20,52 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"94359_F",
+"94359_F_1"
+]
+},
+{
+"UID": "85684701-836d-4179-b196-ef157fc855ff",
+"Code": "90744",
+"VendorCode": "6115-5068",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Пыльник ШРУС внутр. DAEWOO MATIZ, Chevrolet Spark, ЭКСПЕРТ",
+"Measure": "шт",
+"NormPackaging": "20",
+"BatchOfSales": "1",
+"PriceGroupUID": "7b1165c3-627c-11e3-9c4d-00163e6b9045",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "26.07.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "2",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "38,85 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "41,68 Грн"
+}
+],
+"CommodityDirection": [
+"85cf60de-cc06-11e1-af29-00163e791aa4"
+],
+"Photos": [
+"90744_F"
+]
+},
+{
+"UID": "e5312a6f-68b9-42b9-b302-75b7a160399b",
+"Code": "94143",
+"VendorCode": "6121",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Пыльник шаровой опоры  ВАЗ 2101-07, ЭКСТРИМ",
+"Measure": "шт",
+"NormPackaging": "1",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "25.10.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "16,44 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "17,52 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"94143_F",
+"94143_F_1"
+]
+},
+{
+"UID": "e924b32c-7501-4ccd-b31b-266107ee1389",
+"Code": "95540",
+"VendorCode": "1135-2820",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Опора стойки амортизатора перед. подвески CHEVROLET LACETTI кор.уп., DAEWOO Nubira, ЭКСПЕРТ",
+"Measure": "шт",
+"NormPackaging": "6",
+"BatchOfSales": "1",
+"PriceGroupUID": "7b1165c3-627c-11e3-9c4d-00163e6b9045",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "25.11.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "2",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "196,62 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "210,84 Грн"
+}
+],
+"CommodityDirection": [
+"85cf60de-cc06-11e1-af29-00163e791aa4"
+],
+"Photos": [
+"95540_F",
+"95540_F_1"
+]
+},
+{
+"UID": "4dc3a02c-db70-44dd-b394-d7d880f3c67f",
+"Code": "76822",
+"VendorCode": "1212",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Сайлентблок рычагов передней подвески ВАЗ 2121-213 низ. (к-т 4 шт.) Эксперт",
+"Measure": "компл",
+"NormPackaging": "18",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "18.12.2015",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "135,54 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "145,38 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"76822_F"
+]
+},
+{
+"UID": "bc512d2b-1b49-4396-b3a1-1bad3d075258",
+"Code": "95528",
+"VendorCode": "1101-ВП",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Опора стойки передней подвески ВАЗ 2108-099, 2113-15 \"люстра\", с Вологод. подш., ЭКСПЕРТ",
+"Measure": "шт",
+"NormPackaging": "20",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "25.11.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "0",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "242,76 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "259,98 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"95528_F",
+"95528_F_1"
+]
+},
+{
+"UID": "f3c58f37-326c-4d30-b44e-6fdc2ac92b21",
+"Code": "95577",
+"VendorCode": "8013",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Сальник вала распределительного Lada Largus, Renault: LOGAN, MEGANE, SANDERO, CLIO, DUSTER, FLUENCE, (16-ти кл. дв.), ЭКСТРИМ",
+"Measure": "шт",
+"NormPackaging": "1",
+"BatchOfSales": "1",
+"PriceGroupUID": "7b1165c1-627c-11e3-9c4d-00163e6b9045",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "28.11.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "102,71 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "110,14 Грн"
+}
+],
+"CommodityDirection": [
+"c914c4e3-1b57-11e6-a58f-0025909a3c49"
+],
+"Photos": [
+"95577_F",
+"95577_F_1"
+]
+},
+{
+"UID": "31dd1d72-bd60-40fe-b46a-27f7a2fa2d75",
+"Code": "95551",
+"VendorCode": "6125-5068",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Пыльник ШРУС внутр. с хомутами DAEWOO MATIZ, Chevrolet Spark, ЭКСПЕРТ",
+"Measure": "шт",
+"NormPackaging": "20",
+"BatchOfSales": "1",
+"PriceGroupUID": "7b1165c3-627c-11e3-9c4d-00163e6b9045",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "25.11.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "1",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "92,64 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "99,3 Грн"
+}
+],
+"CommodityDirection": [
+"85cf60de-cc06-11e1-af29-00163e791aa4"
+],
+"Photos": [
+"95551_F",
+"95551_F_1"
+]
+},
+{
+"UID": "d060a79f-b10c-4800-b475-a95308781809",
+"Code": "06381",
+"VendorCode": "7011",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Опора шаровая ВАЗ 2123, нижн., с крепежом,  кор.уп., ЭКСТРИМ",
+"Measure": "шт",
+"NormPackaging": "24",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "20.03.2017",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "200,28 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "214,8 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"06381_F",
+"06381_F_1"
+]
+},
+{
+"UID": "1a268ff6-ba2b-4b43-b5c8-154bf81f7a51",
+"Code": "54675",
+"VendorCode": "6108",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Кожух передней стойки ВАЗ 2110-12, Эксперт",
+"Measure": "шт",
+"NormPackaging": "20",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "30.07.2015",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "71,76 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "76,98 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"54675_F"
+]
+},
+{
+"UID": "b61197d9-3454-4a7e-b614-c5c7ed6f0cd9",
+"Code": "43254",
+"VendorCode": "2207",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Стойка стабилизатора ВАЗ 2190 (к-т 2 шт.) кор. уп. \"яйца\", Эксперт",
+"Measure": "к-кт",
+"NormPackaging": "20",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "29.08.2011",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "93 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "99,72 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"43254_F"
+]
+},
+{
+"UID": "366469b0-02a8-4a89-b628-500d2730122f",
+"Code": "87296",
+"VendorCode": "2211",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Подушка стабилизатора ВАЗ 2123 (к-кт 6 шт.) п/э уп., ЭКСПЕРТ",
+"Measure": "компл",
+"NormPackaging": "1",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "29.04.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "100,74 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "106,98 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"87296_F"
+]
+},
+{
+"UID": "04f61d16-d5dc-4f45-b637-550ae5d12562",
+"Code": "18274",
+"VendorCode": "7065",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Наконечник рулевой ВАЗ 2123 внутр. с крепежом (к-т), ЭКСТРИМ",
+"Measure": "компл",
+"NormPackaging": "12",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "30.05.2017",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "205,74 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "220,62 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"18274_F",
+"18274_F_1"
+]
+},
+{
+"UID": "8ef1b003-f69e-40df-b687-297e988b3a0e",
+"Code": "90742",
+"VendorCode": "6119",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Ремкомплект внутреннего ШРУСа ВАЗ 2121 (пыльник с хомутами и смазкой) Эксперт",
+"Measure": "шт",
+"NormPackaging": "12",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "26.07.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "85,86 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "91,2 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"90742_F"
+]
+},
+{
+"UID": "0f3e9e27-4e7d-4e49-b69b-1f717be090cf",
+"Code": "94357",
+"VendorCode": "6122",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Пыльник шаровой опоры ВАЗ 2108-2112, ЭКСТРИМ",
+"Measure": "шт",
+"NormPackaging": "1",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "26.10.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "15,72 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "16,74 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"94357_F",
+"94357_F_1"
+]
+},
+{
+"UID": "eaa89da8-5fb0-4c2e-b748-c1d82dba365f",
+"Code": "89567",
+"VendorCode": "1130-ВП",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Опора стойки передней подвески ВАЗ 2190 верхняя с э/у с Вологодским подш., кор.уп., \"люстра\" ЭКСПЕРТ",
+"Measure": "шт",
+"NormPackaging": "1",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "13.06.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "309,9 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "332,28 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"89567_F"
+]
+},
+{
+"UID": "dea08797-2a5d-4b96-b749-52c561c9adbc",
+"Code": "40280",
+"VendorCode": "1117",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Опора стойки передней подвески ВАЗ 2170-2172 верхняя без подшипника, кор.уп., \"люстра\" ЭКСПЕРТ",
+"Measure": "шт.",
+"NormPackaging": "12",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "22.09.2010",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "136,2 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "146,1 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"40280_F"
+]
+},
+{
+"UID": "c6c50701-5a32-4913-b7e0-7a3958f009a2",
+"Code": "90738",
+"VendorCode": "1213",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Сайлентблок рычагов передней подвески ВАЗ 21214, 2123 низ., н/о (к-т 4 шт.) Эксперт",
+"Measure": "компл",
+"NormPackaging": "12",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "26.07.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "235,86 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "252,9 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"90738_F"
+]
+},
+{
+"UID": "cd7fc215-a880-4710-b812-334e52bc6f93",
+"Code": "90748",
+"VendorCode": "6117-5068",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Пыльник ШРУС внутр., Renault Logan, Megane I, Kandoo, Clio II, ЭКСПЕРТ",
+"Measure": "шт",
+"NormPackaging": "20",
+"BatchOfSales": "1",
+"PriceGroupUID": "7b1165c1-627c-11e3-9c4d-00163e6b9045",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "26.07.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "6",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "42,85 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "45,89 Грн"
+}
+],
+"CommodityDirection": [
+"c914c4e3-1b57-11e6-a58f-0025909a3c49"
+],
+"Photos": [
+"90748_F"
+]
+},
+{
+"UID": "033ee6f4-7e5a-489b-b821-a3fb5ed0021f",
+"Code": "17966",
+"VendorCode": "8017",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Сальник вала коленчатого ВАЗ 2108-12, 1117-19, 2190, ГАЗель дв. ЗМЗ 406, УМЗ 4215, зад. 80х100х10 мм, ЭКСТРИМ",
+"Measure": "шт",
+"NormPackaging": "1",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "17.05.2017",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "70,56 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "75,66 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"17966_F",
+"17966_F_1"
+]
+},
+{
+"UID": "52633aa5-0312-4e38-b86f-da58d816cecc",
+"Code": "86633",
+"VendorCode": "У00003714",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Втулка стойки стабилизатора ВАЗ 2190 верхняя, Эксперт",
+"Measure": "шт",
+"NormPackaging": "1",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "11.04.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "7,74 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "8,34 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"86633_F"
+]
+},
+{
+"UID": "f306a6ab-70fc-4c1f-b89b-83f1e5eac87e",
+"Code": "90692",
+"VendorCode": "7002",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Опора шаровая ВАЗ 2101-07, нижн. (усил.) кор.уп., ЭКСТРИМ",
+"Measure": "шт",
+"NormPackaging": "24",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "22.07.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "125,64 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "133,5 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"90692_F"
+]
+},
+{
+"UID": "10babca0-34dc-488a-b8c7-bb068b88d72c",
+"Code": "19450",
+"VendorCode": "2900000059320",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Шайба Ф 14*32*4 плоская (под чашку опоры стойки LANOS), Экстрим",
+"Measure": "шт",
+"NormPackaging": "50",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "14.07.2017",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "28,14 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "30,18 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"19450_F",
+"19450_F_1"
+]
+},
+{
+"UID": "6850277f-9bb9-42f4-b9c5-4dc1788a8068",
+"Code": "86619",
+"VendorCode": "2212-6050",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Стойка стабилизатора Lada Largus,Renault Logan, Renault Sandero, ЭКСПЕРТ",
+"Measure": "компл",
+"NormPackaging": "1",
+"BatchOfSales": "1",
+"PriceGroupUID": "7b1165c1-627c-11e3-9c4d-00163e6b9045",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "11.04.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "47,88 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "51,36 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8",
+"e2eda7fa-5452-11e4-a274-d8a704927acb",
+"c914c4e3-1b57-11e6-a58f-0025909a3c49",
+"8e592e83-77bc-11e5-a68c-0025909a3c49"
+],
+"Photos": [
+"86619_F"
+]
+},
+{
+"UID": "46058233-aa1d-49b0-ba4c-a77406df6c70",
+"Code": "06095",
+"VendorCode": "6131",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Пыльник рулевого наконечника ВАЗ 2108-2112,1118 \"колокольчик\", Екстрим",
+"Measure": "шт",
+"NormPackaging": "1",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "16.02.2017",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "12,18 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "13,14 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"06095_F",
+"06095_F_1"
+]
+},
+{
+"UID": "502b4b34-22d4-4851-baf9-10829711eca1",
+"Code": "18379",
+"VendorCode": "7058",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Наконечник рулевой ВАЗ 2110-12, 2170-72, лев. + прав., с крепежем, к-кт, кор.уп., ЭКСТРИМ",
+"Measure": "компл",
+"NormPackaging": "12",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "06.06.2017",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "265,86 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "285,06 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"18379_F",
+"18379_F_1"
+]
+},
+{
+"UID": "8c321e13-847a-4bee-bb3c-e8fd968d6be1",
+"Code": "55168",
+"VendorCode": "6111",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Ремкомплект внутреннего ШРУСа ВАЗ 2108-15 (пыльник с хомутами и смазкой) Эксперт",
+"Measure": "компл",
+"NormPackaging": "18",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "21.08.2015",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "79,14 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "84,84 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"55168_F"
+]
+},
+{
+"UID": "5df510bc-349e-44e9-bb50-db33fa9b86e1",
+"Code": "51845",
+"VendorCode": "1126",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Опора стойки передней подвески ВАЗ 1117-1119 верхняя кор.уп. \"люстра\", ЭКСПЕРТ",
+"Measure": "шт",
+"NormPackaging": "10",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "19.09.2011",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "143,4 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "153,78 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"51845_F"
+]
+},
+{
+"UID": "2c9ac7f4-9dba-4525-bb5c-66c381e4062a",
+"Code": "52491",
+"VendorCode": "6101",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Пыльник ШРУС ВАЗ 2108-2115 нар., ЭКСПЕРТ",
+"Measure": "шт",
+"NormPackaging": "20",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "29.09.2011",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "36,84 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "39,48 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"52491_F"
+]
+},
+{
+"UID": "db1abcdc-3823-4678-bd15-f16760e0e2b5",
+"Code": "95534",
+"VendorCode": "1102-ВП",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Опора стойки передней подвески ВАЗ 2110-12 \"люстра\", с Вологод. подш., ЭКСПЕРТ",
+"Measure": "шт",
+"NormPackaging": "10",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "25.11.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "299,64 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "321,24 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"95534_F",
+"95534_F_1"
+]
+},
+{
+"UID": "e2454b27-6afb-406e-bd61-220c9b8abbad",
+"Code": "16017",
+"VendorCode": "7064",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Наконечник рулевой ВАЗ 2123 внутр. (к-т), ЭКСТРИМ",
+"Measure": "компл",
+"NormPackaging": "12",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "03.04.2017",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "196,26 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "210,42 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"16017_F",
+"16017_F_1"
+]
+},
+{
+"UID": "a62a1257-fc5a-4a4b-be2c-7dff30b7a8f3",
+"Code": "86621",
+"VendorCode": "5114",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Подушка передней опоры двигателя ГАЗ 3102, 3302 (Газель), ЭКСПЕРТ",
+"Measure": "шт",
+"NormPackaging": "14",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "11.04.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "76,08 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "81,6 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"86621_F"
+]
+},
+{
+"UID": "fe49787b-4784-4019-bee9-a9fa6fc27d1d",
+"Code": "94364",
+"VendorCode": "8006",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Сальник привода ВАЗ 1117-19, 2108-2112, 2170-72, 2190 (левый), зелёный, ЭКСТРИМ",
+"Measure": "шт",
+"NormPackaging": "1",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "26.10.2016",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "от 10 до 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "26,34 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "27,96 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"94364_F",
+"94364_F_1"
+]
+},
+{
+"UID": "d895d1d2-90b1-405e-bf78-728dff750261",
+"Code": "37573",
+"VendorCode": "5109",
+"BrandUID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "Подушка головки ВАЗ 2112 в сб. кор.уп. \"гитара\", ЭКСПЕРТ",
+"Measure": "шт.",
+"NormPackaging": "10",
+"BatchOfSales": "1",
+"PriceGroupUID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"NomenclatureGroupUID": "85c745ac-51d4-11df-89cd-00248c1ddd9c",
+"DateOfCreation": "20.09.2011",
+"CatalogUID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"InStock": "свыше 100 шт.",
+"TypesOfPrices": [
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Price": "192,48 Грн"
+},
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Price": "206,4 Грн"
+}
+],
+"CommodityDirection": [
+"01b0f02d-eb13-11e3-8064-00163e6000f8"
+],
+"Photos": [
+"37573_F"
+]
+}
+]
+}

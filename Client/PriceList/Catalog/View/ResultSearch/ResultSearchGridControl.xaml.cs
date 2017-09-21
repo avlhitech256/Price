@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 using System.Windows.Input;
 using Catalog.ViewModel;
-using Domain.DomainContext;
-using Photo.Service;
 
 namespace Catalog.View.ResultSearch
 {

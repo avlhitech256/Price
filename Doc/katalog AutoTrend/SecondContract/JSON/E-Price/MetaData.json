@@ -1,0 +1,74 @@
+{
+"Catalog": [
+{
+"UID": "c382cce2-f52d-11de-89a0-00248c1ddd9c",
+"Name": "Автозапчасти к Автомобилям СНГ",
+"Subdirectory": [
+{
+"UID": "5fa30ef7-7ee7-11e4-99b3-ef8cc5836451",
+"Name": "*Резинотехника*",
+"Subdirectory": [
+{
+"UID": "c382cd15-f52d-11de-89a0-00248c1ddd9c",
+"Name": "СЭВИ ТМ (г. Балаково)"
+}
+]
+}
+]
+}
+],
+"PriceGroups": [
+{
+"UID": "7b1165c3-627c-11e3-9c4d-00163e6b9045",
+"Name": "DAEWOO, CHEVROLET"
+},
+{
+"UID": "7b1165c1-627c-11e3-9c4d-00163e6b9045",
+"Name": "Иномарка"
+},
+{
+"UID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"Name": "ВАЗ"
+}
+],
+"NomenclatureGroups": [
+{
+"UID": "7b1165c3-627c-11e3-9c4d-00163e6b9045",
+"Name": "DAEWOO, CHEVROLET"
+},
+{
+"UID": "7b1165c1-627c-11e3-9c4d-00163e6b9045",
+"Name": "Иномарка"
+},
+{
+"UID": "303d0da8-4adb-11e3-ace2-00163e21d963",
+"Name": "ВАЗ"
+}
+],
+"Brands": [
+{
+"UID": "fc86c0d0-0b85-11e4-af83-fe39cce543cb",
+"Name": "СЭВИ"
+}
+],
+"TypesOfPrices": [
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Name": "ОПТ1"
+},
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Name": "ДИЛ"
+}
+],
+"CommodityDirections": [
+{
+"UID": "d36bad42-237c-4139-a005-9b132e480fbb",
+"Name": "ОПТ1"
+},
+{
+"UID": "4d0e6bf4-7494-4f0c-8835-f5b211e95e95",
+"Name": "ДИЛ"
+}
+]
+}

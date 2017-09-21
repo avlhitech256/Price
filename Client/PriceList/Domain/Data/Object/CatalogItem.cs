@@ -255,10 +255,14 @@ namespace Domain.Data.Object
             }
         }
 
+        public bool HasPhotos => Entity.HasPhotos;
 
-
-        public BitmapSource PhotoIcon => imageService?.ConvertToBitmapSource(Resources.Camera);
-
+        public BitmapSource PhotoIcon
+            =>
+                HasPhotos
+                    ? imageService?.ConvertToBitmapSource(Resources.Camera)
+                    : imageService?.ConvertToBitmapSource(Resources.disableCameraDarkGrey);
+        
         public string FullPrice => Price.ToString(CultureInfo.InvariantCulture) + " " + Currency;
 
         public decimal Count

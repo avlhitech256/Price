@@ -1,0 +1,127 @@
+Логика расчета цены для контрагента:
+Цену номенклатуры определяет тип цены, связь ними происходит по вхождению номенклатуры в группу (номенклатурная и ценовая).
+У каждой номенклатуры указана ценовая и номенклатурная группы.
+У контрагента в свою очередь установлены типы цен либо на номенклатурную группу либо на ценовую, 
+если у контрагента нету типа цены не на одну из групп, то цена нулевая.
+Номенклатурная группа приоритетней ценовой, следовательно если у контрагента есть тип цены по номенклатурной группе то она перекрывает цену по ценовой группе.
+
+Список выгружаемых файлов:
+1) PriceList.xml
+2) Clients.xml
+3) MetaData.xml 
+4) каталог Photo (формат наименование файлов фотографий <внутренний код 1с>_F<номер фотографии, если отсутствует значит фотография основная>)
+Структура файлов описана ниже.
+
+
+Структура файла PriceList.xml
+Файл содержит в себе информацию по номенклатуре
+
+<?xml version="1.0" encoding="UTF-8"?>
+<PriceList>
+	<Nomenclature>
+		<UID></UID>					// Уникальный идентификатор
+		<Code></Code>					// Внутренний код 1С 
+		<VendorCode></VendorCode>			// Артикул
+		<BrandUID></BrandUID>				// Уникальный идентификатор Бренда
+		<Name></Name>					// Наименование
+		<Measure></Measure>				// Ед. измерения
+		<NormPackaging></NormPackaging>			// Норма упаковки
+		<BatchOfSales></BatchOfSales>			// Партия продаж
+		<PriceGroupUID></PriceGroupUID>			// Уникальный идентификатор ценовой группы к которой принадлежит номенклатура
+		<NomenclatureGroupUID></NomenclatureGroupUID>	// Уникальный идентификатор номенклатурной группы к которой принадлежит номенклатура
+		<DateOfCreation></DateOfCreation>		// Дата создания
+		<CatalogUID></CatalogUID>			// Уникальный идентификатор каталога к которому принадлежит номенклатура
+		<InStock></InStock>				// Остаток на складах	
+		<TypesOfPrices>					// Список типов цен
+			<PriceType>				// Тип цены номенклатуры
+				<UID></UID>			// Уникальный идентификатор типа цены
+				<Price></Price>			// Цена с валютой
+			</PriceType>
+		</TypesOfPrices>
+		<CommodityDirection>				// Список товарных направлений
+			<UID></UID>				// Уникальный идентификатор товарного направления
+		</CommodityDirection>
+		<Photos>					// Список Фотографий
+			<Photo></Photo>				// Наименование файла с фотографией (без расширения)
+		</Photos>
+	</Nomenclature>
+</PriceList>
+
+Структура файла Clients.xml
+Файл содержит в себе информацию по контрагентам
+
+<?xml version="1.0" encoding="UTF-8"?>
+<Clients>
+	<Client>
+		<UID></UID>							// Уникальный идентификатор
+		<Code></Code>							// Внутренний код 1С
+		<Name></Name>							// Наименование
+		<Login></Login>							// Логин клиента
+		<MutualSettlements></MutualSettlements>				// Предоплата(отрицательное значение)\долг(положительное значение). 
+		<PDZ></PDZ>							// Просроченный долг клиента
+		<TypesOfPrices>							// Список типов цен по ценовым и номенклатурным группам						
+			<PriceTypeNomenclatureGroup>
+				<NomenclatureGroupUID></NomenclatureGroupUID>	// Уникальный идентификатор номенклатурной группы
+				<PriceTypeUID></PriceTypeUID>			// Уникальный идентификатор типа цены
+			</PriceTypeNomenclatureGroup>
+			<PriceTypePriceGroup>
+				<PriceGroupUID></PriceGroupUID>			// Уникальный идентификатор ценовой группы
+				<PriceTypeUID></PriceTypeUID>			// Уникальный идентификатор типа цены
+			</PriceTypePriceGroup>	
+		</TypesOfPrices>
+		<Discounts>							// Список скидок
+			<Rate></Rate>						// Процент скидки(отрицательное значение)\наценки(положительное значение). 
+			<Nomenclature>						// Список номенклатры к которому отситься скидка
+				<UID></UID>					// Уникальный идентификатор номенклатуры
+			</Nomenclature>
+		</Discounts>
+	</Client>
+</Clients>
+
+Структура файла MetaData.xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<MetaData>
+	<Catalog>
+		<Directory>				// Список каталогов
+			<UID></UID>			// Уникальный идентификатор
+			<Name></Name>			// Наименование
+			<Subdirectory>			// Список подкаталогов
+				<Directory>
+					<UID></UID>	// Уникальный идентификатор
+					<Name></Name>	// Наименование
+				</Directory>
+			</Subdirectory>
+		</Directory>
+	</Catalog>	
+	<PriceGroups>				// Список ценовых групп
+		<PriceGroup>			// Ценовая группа
+			<UID></UID>		// Уникальный идентификатор
+			<Name></Name>		// Наименование
+		</PriceGroup>
+	</PriceGroups>				
+	<NomenclatureGroups>			// Список номенклатурных групп
+		<NomenclatureGroup>		// Номенклатурная группа
+			<UID></UID>		// Уникальный идентификатор
+			<Name></Name>		// Наименование
+		</NomenclatureGroup>	
+	</NomenclatureGroups>
+	<Brands>				// Список брендов
+		<Brand>				// Бренд
+			<UID></UID>		// Уникальный идентификатор			
+			<Name></Name>		// Наименование
+		</Brand>
+	</Brands>	
+	<TypesOfPrices>				// Список типов цен номенклатуры
+		<PriceType>			// Тип цены
+			<UID></UID>		// Уникальный идентификатор
+			<Name></Name>		// Наименование
+		</PriceType>
+	</TypesOfPrices>
+	<CommodityDirections>			// Список товарных направлений
+		<CommodityDirection>		// Товарное направление
+			<UID></UID>		// Уникальный идентификатор
+			<Name></Name>		// Наименование
+		</CommodityDirection>
+	</CommodityDirections>
+</MetaData>

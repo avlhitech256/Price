@@ -101,6 +101,7 @@ namespace DatabaseService.DataBaseContext.Initializer
                     Currency = "грн.",
                     LastUpdated = DateTimeOffset.Now,
                     Multiplicity = 1.00M,
+                    HasPhotos = true,
                     Photos = new List<PhotoItemEntity> {photoItems[0], photoItems[1], photoItems[2]}
                 },
                 new CatalogItemEntity
@@ -117,7 +118,8 @@ namespace DatabaseService.DataBaseContext.Initializer
                     Currency = "грн.",
                     LastUpdated = DateTimeOffset.Now,
                     Multiplicity = 1.00M,
-                    Photos = new List<PhotoItemEntity> {photoItems[3], photoItems[4], photoItems[5]}
+                    HasPhotos = false,
+                    Photos = null //new List<PhotoItemEntity> {photoItems[3], photoItems[4], photoItems[5]}
                 },
                 new CatalogItemEntity
                 {
@@ -133,6 +135,7 @@ namespace DatabaseService.DataBaseContext.Initializer
                     Currency = "грн.",
                     LastUpdated = DateTimeOffset.Now,
                     Multiplicity = 1.00M,
+                    HasPhotos = true,
                     Photos = new List<PhotoItemEntity> {photoItems[6], photoItems[7]}
                 },
                 new CatalogItemEntity
@@ -149,6 +152,7 @@ namespace DatabaseService.DataBaseContext.Initializer
                     Currency = "грн.",
                     LastUpdated = DateTimeOffset.Now,
                     Multiplicity = 1.00M,
+                    HasPhotos = true,
                     Photos = new List<PhotoItemEntity> {photoItems[8], photoItems[9]}
                 },
                 new CatalogItemEntity
@@ -165,7 +169,8 @@ namespace DatabaseService.DataBaseContext.Initializer
                     Currency = "грн.",
                     LastUpdated = DateTimeOffset.Now,
                     Multiplicity = 1.00M,
-                    Photos = new List<PhotoItemEntity> {photoItems[10], photoItems[11], photoItems[12]}
+                    HasPhotos = false,
+                    Photos = null//new List<PhotoItemEntity> {photoItems[10], photoItems[11], photoItems[12]}
                 }
             };
 

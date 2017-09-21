@@ -68,11 +68,21 @@ namespace Domain.Data.Object
 
         public string Currency => Entity.CatalogItem.Currency;
 
+        public bool HasPhotos => Entity.CatalogItem.HasPhotos;
+
         public List<byte[]> Photos => GetPhotos();
 
-        public BitmapSource PhotoIcon => imageService?.ConvertToBitmapSource(Resources.Camera);
+        public BitmapSource PhotoIcon
+            =>
+                HasPhotos
+                    ? imageService?.ConvertToBitmapSource(Resources.Camera)
+                    : imageService?.ConvertToBitmapSource(Resources.disableCameraDarkGrey);
 
-        public BitmapSource DeleteIcon => imageService?.ConvertToBitmapSource(Resources.delete);
+        public BitmapSource DeleteIcon
+            =>
+                AllowChangeCount
+                    ? imageService?.ConvertToBitmapSource(Resources.delete)
+                    : imageService?.ConvertToBitmapSource(Resources.disableDelete);
 
         public string FullPrice => Price.ToString(CultureInfo.InvariantCulture) + " " + Currency;
 

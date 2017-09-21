@@ -24,62 +24,65 @@
                       ItemsSource="{Binding Entities}"
                       SelectedItem="{Binding Path=SelectedItem, Mode=TwoWay}"
                       Foreground="#FF000059"
-                      IsReadOnly="False">
+                      IsReadOnly="False"
+                      BeginningEdit="ResultSearchDataGrid_OnBeginningEdit" 
+                      SelectionChanged="ResultSearchDataGrid_SelectionChanged">
                 <DataGrid.Columns>
                     <DataGridTextColumn IsReadOnly="True" 
-                                    Width="Auto"
-                                    Binding="{Binding Path=Position}">
+                                        Width="Auto"
+                                        Binding="{Binding Path=Position}">
                         <DataGridTextColumn.HeaderTemplate>
                             <DataTemplate>
                                 <TextBlock Text="№ п/п" 
-                                       Width="40"
-                                       TextWrapping="Wrap" 
-                                       TextAlignment="Center" 
-                                       VerticalAlignment="Center"
-                                       HorizontalAlignment="Center">
+                                           Width="40"
+                                           TextWrapping="Wrap" 
+                                           TextAlignment="Center" 
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center">
                                 </TextBlock>
                             </DataTemplate>
                         </DataGridTextColumn.HeaderTemplate>
                     </DataGridTextColumn>
                     <DataGridTextColumn IsReadOnly="True" 
-                                    Width="Auto"
-                                    Binding="{Binding Path=OrderNumber}">
+                                        Width="Auto"
+                                        Binding="{Binding Path=OrderNumber}">
                         <DataGridTextColumn.HeaderTemplate>
                             <DataTemplate>
                                 <TextBlock Text="№ заказа" 
-                                       Width="115"
-                                       TextWrapping="Wrap" 
-                                       TextAlignment="Center" 
-                                       VerticalAlignment="Center"
-                                       HorizontalAlignment="Center">
+                                           Width="115"
+                                           TextWrapping="Wrap" 
+                                           TextAlignment="Center" 
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center">
                                 </TextBlock>
                             </DataTemplate>
                         </DataGridTextColumn.HeaderTemplate>
                     </DataGridTextColumn>
                     <DataGridTextColumn IsReadOnly="True" 
-                                    Width="Auto"
-                                    Binding="{Binding Path=DateOfCreation, StringFormat={}{0:dd/MM/yyyy HH:mm zzz}}">
+                                        Width="Auto"
+                                        Binding="{Binding Path=DateOfCreation, StringFormat={}{0:dd/MM/yyyy HH:mm zzz}}">
                         <DataGridTextColumn.HeaderTemplate>
                             <DataTemplate>
                                 <TextBlock Text="Дата формирования заказа" 
-                                       Width="130" 
-                                       TextWrapping="Wrap" 
-                                       TextAlignment="Center" 
-                                       VerticalAlignment="Center">
+                                           Width="130" 
+                                           TextWrapping="Wrap" 
+                                           TextAlignment="Center" 
+                                           VerticalAlignment="Center">
                                 </TextBlock>
                             </DataTemplate>
                         </DataGridTextColumn.HeaderTemplate>
                     </DataGridTextColumn>
-                    <DataGridTextColumn IsReadOnly="True" 
-                                    Width="*"
-                                    Binding="{Binding Path=Comment, Mode=TwoWay}">
+                    <DataGridTextColumn x:Name="CommentColumn"
+                                        IsReadOnly="False" 
+                                        Width="*"
+                                        Binding="{Binding Path=Comment, Mode=TwoWay}">
                         <DataGridTextColumn.HeaderTemplate>
                             <DataTemplate>
                                 <TextBlock Text="Краткая заметка для менеджера" 
-                                       Width="{TemplateBinding DataGridTextColumn.Width}" 
-                                       TextWrapping="Wrap" 
-                                       TextAlignment="Center" 
-                                       VerticalAlignment="Center">
+                                           Width="{TemplateBinding DataGridTextColumn.Width}" 
+                                           TextWrapping="Wrap" 
+                                           TextAlignment="Center" 
+                                           VerticalAlignment="Center">
                                 </TextBlock>
                             </DataTemplate>
                         </DataGridTextColumn.HeaderTemplate>
@@ -95,10 +98,10 @@
                         <DataGridTextColumn.HeaderTemplate>
                             <DataTemplate>
                                 <TextBlock Text="Сумма, грн." 
-                                       Width="120" 
-                                       TextWrapping="Wrap" 
-                                       TextAlignment="Center" 
-                                       VerticalAlignment="Center">
+                                           Width="120" 
+                                           TextWrapping="Wrap" 
+                                           TextAlignment="Center" 
+                                           VerticalAlignment="Center">
                                 </TextBlock>
                             </DataTemplate>
                         </DataGridTextColumn.HeaderTemplate>
@@ -114,10 +117,10 @@
                         <DataGridTextColumn.HeaderTemplate>
                             <DataTemplate>
                                 <TextBlock Text="Статус заказа" 
-                                       Width="120" 
-                                       TextWrapping="Wrap" 
-                                       TextAlignment="Center" 
-                                       VerticalAlignment="Center">
+                                           Width="120" 
+                                           TextWrapping="Wrap" 
+                                           TextAlignment="Center" 
+                                           VerticalAlignment="Center">
                                 </TextBlock>
                             </DataTemplate>
                         </DataGridTextColumn.HeaderTemplate>

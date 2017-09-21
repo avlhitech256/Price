@@ -124,4 +124,16 @@
   <data name="delete" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\delete.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="disableCamera" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\disableCamera.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="disableCameraDarkGrey" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\disableCameraDarkGrey.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="disableCameraGrey" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\disableCameraGrey.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="disableDelete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\disableDelete.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

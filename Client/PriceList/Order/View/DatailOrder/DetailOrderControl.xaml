@@ -5,8 +5,18 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Order.View.DatailOrder"
              xmlns:resultSearch="clr-namespace:Order.View.ResultSearch"
+             xmlns:implementation="clr-namespace:Common.Convert.Implementation;assembly=Common"
              mc:Ignorable="d" 
              d:DesignHeight="150" d:DesignWidth="1100">
+    <UserControl.Resources>
+        <implementation:InverseBoolConverter x:Key="InverseBoolConverter"/>
+        <DataTemplate x:Key="TextColumnTemplate">
+            <TextBox Text="{Binding Path=Count, StringFormat={}{0:n2}, Mode=TwoWay}" 
+                     TextAlignment="Right"
+                     IsReadOnly="{Binding AllowChangeCount, Converter={StaticResource InverseBoolConverter}}"/>
+        </DataTemplate>
+    </UserControl.Resources>
+
     <Border>
         <Grid>
             <Grid.RowDefinitions>
@@ -32,7 +42,8 @@
                       SelectedItem="{Binding Path=DetailViewModel.SelectedItem, Mode=TwoWay}"
                       IsReadOnly="False"
                       MouseUp="DetailOrderDataGrid_OnMouseUp"
-                      MouseDoubleClick="DetailOrderDataGrid_OnMouseDoubleClick">
+                      MouseDoubleClick="DetailOrderDataGrid_OnMouseDoubleClick"
+                      BeginningEdit="ResultSearchDataGrid_OnBeginningEdit">
                 <DataGrid.Columns>
                     <DataGridTextColumn IsReadOnly="True" 
                                     Width="30"
@@ -166,7 +177,7 @@
                     </DataGridTextColumn>
                     <DataGridTextColumn IsReadOnly="True" 
                                     Width="Auto"
-                                    Binding="{Binding Path=Price, Mode=OneWay}">
+                                    Binding="{Binding Path=Price, StringFormat={}{0:n2}, Mode=OneWay}">
                         <DataGridTextColumn.ElementStyle>
                             <Style>
                                 <Setter Property="TextBlock.TextAlignment" Value="Right" />
@@ -183,10 +194,11 @@
                             </DataTemplate>
                         </DataGridTextColumn.HeaderTemplate>
                     </DataGridTextColumn>
-                    <DataGridTextColumn IsReadOnly="{Binding Path=SelectedItem.AllowChangeCount}" 
-                                    Width="*"
-                                    MinWidth="60"
-                                    Binding="{Binding Path=Count, StringFormat={}{0:n2} , Mode=TwoWay}">
+                    <DataGridTextColumn x:Name="CountColumn"
+                                        Width="*"
+                                        MinWidth="60"
+                                        Binding="{Binding Path=Count, StringFormat={}{0:n2}, Mode=TwoWay}"
+                                        IsReadOnly="False">
                         <DataGridTextColumn.ElementStyle>
                             <Style>
                                 <Setter Property="TextBlock.TextAlignment" Value="Right" />

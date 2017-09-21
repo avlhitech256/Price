@@ -15,7 +15,6 @@ using Domain.Data.Object;
 using Domain.DomainContext;
 using Domain.ViewModel;
 using Photo.Service;
-using Photo.Service.Implementation;
 
 namespace Catalog.ViewModel
 {

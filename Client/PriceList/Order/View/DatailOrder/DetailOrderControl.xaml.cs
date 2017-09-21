@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 using System.Windows.Input;
-using Domain.DomainContext;
+using Domain.Data.Object;
 using Order.ViewModel;
-using Photo.Service;
 
 namespace Order.View.DatailOrder
 {
@@ -23,7 +21,7 @@ namespace Order.View.DatailOrder
 
         #region Properties
 
-        private DetailOrderViewModel ViewModel => ((OrderViewModel)DataContext)?.DetailViewModel;
+        private DetailOrderViewModel ViewModel => (DataContext as OrderViewModel)?.DetailViewModel;
 
         #endregion
 
@@ -72,6 +70,12 @@ namespace Order.View.DatailOrder
             ViewModel.DeleteItem();
         }
 
+        private void ResultSearchDataGrid_OnBeginningEdit(object sender, DataGridBeginningEditEventArgs e)
+        {
+            e.Cancel = !Equals(e.Column, CountColumn) || ViewModel?.SelectedItem == null || !ViewModel.SelectedItem.AllowChangeCount;
+        }
+
         #endregion
+
     }
 }
