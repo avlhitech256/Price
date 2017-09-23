@@ -3,7 +3,7 @@ using JSON.Contract;
 
 namespace JSON.Service
 {
-    interface IJsonService
+    public interface IJsonService
     {
         Clients ConvertToClients(MemoryStream stream);
 
@@ -12,6 +12,10 @@ namespace JSON.Service
         MetaData ConvertToMetaData(MemoryStream stream);
 
         MetaData ConvertToMetaData(string json);
+
+        PriceList ConvertToPriceList(MemoryStream stream);
+
+        PriceList ConvertToPriceList(string json);
 
         T Convert<T>(MemoryStream stream) where T : class;
 

@@ -51,9 +51,12 @@
     <Compile Include="Contract\Directory.cs" />
     <Compile Include="Contract\Discount.cs" />
     <Compile Include="Contract\MetaData.cs" />
+    <Compile Include="Contract\Nomenclature.cs" />
     <Compile Include="Contract\NomenclatureGroup.cs" />
     <Compile Include="Contract\PriceGroup.cs" />
+    <Compile Include="Contract\PriceList.cs" />
     <Compile Include="Contract\PriceType.cs" />
+    <Compile Include="Contract\PriceTypeItem.cs" />
     <Compile Include="Contract\TypeOfNomenclature.cs" />
     <Compile Include="Contract\TypesOfPrices.cs" />
     <Compile Include="Program.cs" />

@@ -7,6 +7,8 @@ namespace JSON.Service.Implementation
 {
     public class JsonService : IJsonService
     {
+        #region Methods
+
         public Clients ConvertToClients(MemoryStream stream)
         {
             Clients result = Convert<Clients>(stream);
@@ -28,6 +30,18 @@ namespace JSON.Service.Implementation
         public MetaData ConvertToMetaData(string json)
         {
             MetaData result = Convert<MetaData>(json);
+            return result;
+        }
+
+        public PriceList ConvertToPriceList(MemoryStream stream)
+        {
+            PriceList result = Convert<PriceList>(stream);
+            return result;
+        }
+
+        public PriceList ConvertToPriceList(string json)
+        {
+            PriceList result = Convert<PriceList>(json);
             return result;
         }
 
@@ -60,5 +74,7 @@ namespace JSON.Service.Implementation
 
             return result;
         }
+
+        #endregion
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Input;
-using Domain.Data.Object;
 using Order.ViewModel;
 
 namespace Order.View.DatailOrder

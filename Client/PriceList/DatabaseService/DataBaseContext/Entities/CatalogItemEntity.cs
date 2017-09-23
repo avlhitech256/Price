@@ -14,6 +14,9 @@ namespace DatabaseService.DataBaseContext.Entities
         public string Code { get; set; }
 
         [MaxLength(30)]
+        public string VendorCode { get; set; }
+
+        [MaxLength(30)]
         public string Article { get; set; }
 
         [MaxLength(255)]
@@ -26,6 +29,8 @@ namespace DatabaseService.DataBaseContext.Entities
 
         [MaxLength(30)]
         public string EnterpriceNormPack { get; set; }
+
+        public decimal BatchOfSales { get; set; }
 
         [MaxLength(30)]
         public string Balance { get; set; }
@@ -41,6 +46,8 @@ namespace DatabaseService.DataBaseContext.Entities
 
         public virtual List<PhotoItemEntity> Photos { get; set; }
 
+        public DateTimeOffset DateOfCreation { get; set; }
+
         public DateTimeOffset LastUpdated { get; set; }
 
         public bool PriceIsUp { get; set; }
@@ -50,5 +57,11 @@ namespace DatabaseService.DataBaseContext.Entities
         public bool IsNew { get; set; }
 
         public virtual List<BasketItemEntity> BasketItems { get; set; }
+
+        public DirectoryEntity Directory { get; set; }
+
+        public NomenclatureGroupEntity NomenclatureGroup { get; set; }
+
+        public CommodityDirectionEntity CommodityDirection { get; set; }
     }
 }
