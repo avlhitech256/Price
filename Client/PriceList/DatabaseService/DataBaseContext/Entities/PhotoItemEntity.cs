@@ -10,6 +10,8 @@ namespace DatabaseService.DataBaseContext.Entities
         [MaxLength(255)]
         public string Name { get; set; }
 
+        public bool IsLoad { get; set; }
+
         [Column(TypeName = "image")]
         public byte[] Photo { get; set; }
 

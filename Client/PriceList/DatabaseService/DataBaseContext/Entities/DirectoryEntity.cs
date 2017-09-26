@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace DatabaseService.DataBaseContext.Entities
@@ -12,6 +13,8 @@ namespace DatabaseService.DataBaseContext.Entities
         [MaxLength(255)]
         public string Name { get; set; }
 
-        public DirectoryEntity SubDirectory { get; set; }
+        public virtual List<DirectoryEntity> SubDirectory { get; set; }
+
+        public virtual List<CatalogItemEntity> CatalogItems { get; set; }
     }
 }

@@ -14,9 +14,6 @@ namespace DatabaseService.DataBaseContext.Entities
         public string Code { get; set; }
 
         [MaxLength(30)]
-        public string VendorCode { get; set; }
-
-        [MaxLength(30)]
         public string Article { get; set; }
 
         [MaxLength(255)]
@@ -58,10 +55,10 @@ namespace DatabaseService.DataBaseContext.Entities
 
         public virtual List<BasketItemEntity> BasketItems { get; set; }
 
-        public DirectoryEntity Directory { get; set; }
+        public virtual DirectoryEntity Directory { get; set; }
 
-        public NomenclatureGroupEntity NomenclatureGroup { get; set; }
+        public virtual NomenclatureGroupEntity NomenclatureGroup { get; set; }
 
-        public CommodityDirectionEntity CommodityDirection { get; set; }
+        public virtual List<CommodityDirectionEntity> CommodityDirection { get; set; }
     }
 }

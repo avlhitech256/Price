@@ -110,8 +110,9 @@
                         </DataGridTextColumn.HeaderTemplate>
                     </DataGridTextColumn>
                     <DataGridTextColumn IsReadOnly="True" 
-                                    Width="Auto"
-                                    Binding="{Binding Path=Name, Mode=OneWay}">
+                                        Width="Auto"
+                                        MaxWidth="550"
+                                        Binding="{Binding Path=Name, Mode=OneWay}">
                         <DataGridTextColumn.HeaderTemplate>
                             <DataTemplate>
                                 <TextBlock Text="Наименование" 

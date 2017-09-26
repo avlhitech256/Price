@@ -17,8 +17,8 @@ namespace Json.Service
 
         PriceList ConvertToPriceList(string json);
 
-        T Convert<T>(MemoryStream stream) where T : class;
+        T Convert<T>(MemoryStream stream) where T : class, new ();
 
-        T Convert<T>(string json) where T : class;
+        T Convert<T>(string json) where T : class, new ();
     }
 }

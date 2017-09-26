@@ -33,10 +33,17 @@ namespace DatabaseService.DataBaseContext
 
         public virtual DbSet<CatalogItemEntity> CatalogItemEntities { get; set; }
 
-        public virtual DbSet<PhotoItemEntity> PhotoItemEntities { get; set; }
+        public virtual DbSet<CommodityDirectionEntity> CommodityDirectionEntities { get; set; }
+
+        public virtual DbSet<DirectoryEntity> DirectoryEntities { get; set; }
+
+        public virtual DbSet<NomenclatureGroupEntity> NomenclatureGroupEntities { get; set; }
+
+        public virtual DbSet<OptionItemEntity> OptionItemEntities { get; set; }
 
         public virtual DbSet<OrderEntity> OrderEntities { get; set; }
 
-        public virtual DbSet<OptionItemEntity> OptionItemEntities { get; set; }
+        public virtual DbSet<PhotoItemEntity> PhotoItemEntities { get; set; }
+
     }
 }

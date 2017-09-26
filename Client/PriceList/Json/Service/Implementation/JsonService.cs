@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Runtime.Serialization.Json;
 using System.Text;
 using Json.Contract;
@@ -45,30 +46,45 @@ namespace Json.Service.Implementation
             return result;
         }
 
-        public T Convert<T>(MemoryStream stream) where T : class
+        public T Convert<T>(MemoryStream stream) where T : class, new ()
         {
-            T result = null;
+            T result = new T();
 
             if (stream != null)
             {
                 stream.Position = 0;
                 DataContractJsonSerializer serializator = new DataContractJsonSerializer(typeof(T));
-                result = serializator.ReadObject(stream) as T;
+
+                try
+                {
+                    result = serializator.ReadObject(stream) as T;
+                }
+                catch (Exception e)
+                {
+                    result = new T();
+                }
             }
 
             return result;
         }
 
-        public T Convert<T>(string json) where T : class
+        public T Convert<T>(string json) where T : class, new ()
         {
-            T result = null;
+            T result = new T();
 
             if (!string.IsNullOrWhiteSpace(json))
             {
-                using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(json)))
+                try
                 {
-                    result = Convert<T>(stream);
-                    stream.Close();
+                    using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(json)))
+                    {
+                        result = Convert<T>(stream);
+                        stream.Close();
+                    }
+                }
+                catch (Exception)
+                {
+                    result = new T();
                 }
             }
 

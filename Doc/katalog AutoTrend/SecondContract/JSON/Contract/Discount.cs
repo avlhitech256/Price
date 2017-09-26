@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 namespace Json.Contract
 {
@@ -9,6 +10,6 @@ namespace Json.Contract
         public string Rate;
 
         [DataMember]
-        public string[] Nomenclature;
+        public Guid[] Nomenclature;
     }
 }

@@ -16,7 +16,7 @@ namespace DatabaseService.DataBaseContext.Entities
 
         public decimal Sum { get; set; }
 
-        public OrderStatus OrderStatus { get; set; }
+        public virtual OrderStatus OrderStatus { get; set; }
 
         public virtual List<BasketItemEntity> BasketItems { get; set; }
 

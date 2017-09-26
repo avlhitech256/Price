@@ -12,5 +12,13 @@ namespace Common.Convert
         DateTimeOffset Convert(DateTime date);
 
         DateTime Convert(DateTimeOffset date);
+
+        bool ConvertToGuid(string stringValue, out Guid value);
+
+        Guid? ConvertToNullableGuid(string stringValue);
+
+        bool ConvertToDecimal(string stringValue, out decimal value);
+
+        decimal? ConvertTuNullableDecimal(string stringValue);
     }
 }

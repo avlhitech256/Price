@@ -1,7 +1,11 @@
-﻿using System.IO;
+﻿using System;
+using System.Drawing;
+using System.IO;
+using System.Linq;
 using Json.Contract;
 using Json.Service;
 using Json.Service.Implementation;
+using Media.Image;
 
 namespace File.Service.Implementation
 {
@@ -10,14 +14,16 @@ namespace File.Service.Implementation
         #region Members
 
         private readonly IJsonService jsonService;
+        private readonly IImageService imageService;
 
         #endregion
 
         #region#
 
-        public FileService(IJsonService jsonService = null)
+        public FileService(IJsonService jsonService = null, IImageService imageService = null)
         {
             this.jsonService = jsonService ?? new JsonService();
+            this.imageService = imageService ?? new ImageService();
         }
 
         #endregion
@@ -30,25 +36,62 @@ namespace File.Service.Implementation
 
             if (!string.IsNullOrWhiteSpace(fileName))
             {
-                using (FileStream fileStream = new FileStream(fileName, FileMode.Open, FileAccess.Read))
+                try
                 {
-                    fileStream.CopyTo(memoryStream);
+                    using (FileStream fileStream = new FileStream(fileName, FileMode.Open, FileAccess.Read))
+                    {
+                        fileStream.CopyTo(memoryStream);
+                    }
+                }
+                catch (Exception)
+                {
+                    memoryStream = null;
                 }
             }
 
             return memoryStream;
         }
 
-        public T ReadJsonFile<T>(string fileName) where T : class
+        public T ReadJsonFile<T>(string fileName) where T : class, new ()
         {
             T result;
 
-            using (MemoryStream stream = ReadFile(fileName))
+            try
             {
-                result = jsonService.Convert<T>(stream);
+                using (MemoryStream stream = ReadFile(fileName))
+                {
+                    result = jsonService.Convert<T>(stream);
+                }
+            }
+            catch (Exception)
+            {
+                result = new T();
             }
 
             return result;
+        }
+
+        public Bitmap ReadBitmapPicture(string fileName)
+        {
+            Bitmap picture;
+
+            try
+            {
+                picture = new Bitmap(fileName);
+            }
+            catch (Exception)
+            {
+                picture = null;
+            }
+
+            return picture;
+        }
+
+        public byte[] ReadByteArrayPicture(string fileName)
+        {
+            Image image = ReadBitmapPicture(fileName);
+            byte[] picture = image != null ? imageService.ConvertToByteArray(image) : null;
+            return picture;
         }
 
         public Clients ReadClients(string fileName)
@@ -67,6 +110,54 @@ namespace File.Service.Implementation
         {
             PriceList result = ReadJsonFile<PriceList>(fileName);
             return result;
+        }
+
+        public string[] GetFileNames(string dirPath, string searchPattern = null)
+        {
+            string[] fileNames =
+            GetFileInfos(dirPath, searchPattern)
+                .Where(f => f.Exists)
+                .Select(x => x.Name)
+                .ToArray();
+
+            return fileNames;
+        }
+
+        public FileInfo[] GetFileInfos(string dirPath, string searchPattern = null)
+        {
+            FileInfo[] fileInfos;
+
+            try
+            {
+                DirectoryInfo dirInfo = new DirectoryInfo(dirPath);
+                fileInfos = string.IsNullOrWhiteSpace(searchPattern)
+                    ? dirInfo.GetFiles()
+                    : dirInfo.GetFiles(searchPattern);
+
+            }
+            catch (Exception)
+            {
+                fileInfos = new FileInfo[0];
+            }
+
+            return fileInfos;
+        }
+
+        public string GetFileName(string fileNameWithExtention)
+        {
+            string fileName = string.Empty;
+
+            if (!string.IsNullOrWhiteSpace(fileNameWithExtention))
+            {
+                string[] fileFilds = fileNameWithExtention.Split('.');
+
+                if (fileFilds.Any())
+                {
+                    fileName = fileFilds[0];
+                }
+            }
+
+            return fileName;
         }
 
         #endregion

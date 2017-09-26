@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 namespace Json.Contract
 {
@@ -6,9 +7,9 @@ namespace Json.Contract
     public class TypeOfNomenclature
     {
         [DataMember]
-        public string NomenclatureGroupUID;
+        public Guid NomenclatureGroupUID;
 
         [DataMember]
-        public string PriceTypeUID;
+        public Guid PriceTypeUID;
     }
 }

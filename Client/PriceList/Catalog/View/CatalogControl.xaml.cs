@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Media.Animation;
 using Catalog.ViewModel;
 using Common.Event;
@@ -68,8 +69,11 @@ namespace Catalog.View
 
         private void SetImage(CatalogItem item)
         {
-            byte[] photo = item.Photos[0];
-            DetailControl.DetailImage.Source = ImageService?.ConvertToBitmapImage(photo);
+            if (item.HasPhotos && item.Photos.Any())
+            {
+                byte[] photo = item.Photos[0];
+                DetailControl.DetailImage.Source = ImageService?.ConvertToBitmapImage(photo);
+            }
         }
 
         private bool CanSetImage(CatalogItem item)

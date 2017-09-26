@@ -3,12 +3,9 @@
 namespace Json.Contract
 {
     [DataContract]
-    public class PriceType
+    public class Clients
     {
         [DataMember]
-        public string UID;
-
-        [DataMember]
-        public string Name;
+        public Client[] Contragent;
     }
 }

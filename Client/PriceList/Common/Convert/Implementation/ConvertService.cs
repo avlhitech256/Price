@@ -122,5 +122,25 @@ namespace Common.Convert.Implementation
 
             return result;
         }
+
+        public bool ConvertToGuid(string stringValue, out Guid value)
+        {
+            return stringValue.ConvertToGuid(out value);
+        }
+
+        public Guid? ConvertToNullableGuid(string stringValue)
+        {
+            return stringValue.ConvertToNullableGuid();
+        }
+
+        public bool ConvertToDecimal(string stringValue, out decimal value)
+        {
+            return stringValue.ConvertToDecimal(out value);
+        }
+
+        public decimal? ConvertTuNullableDecimal(string stringValue)
+        {
+            return stringValue.ConvertToNullableDecimal();
+        }
     }
 }

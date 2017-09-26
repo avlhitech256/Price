@@ -1,5 +1,4 @@
-﻿using System;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 
 namespace Json.Contract
 {
@@ -7,7 +6,7 @@ namespace Json.Contract
     public class NomenclatureGroup
     {
         [DataMember]
-        public Guid UID;
+        public string UID;
 
         [DataMember]
         public string Name;

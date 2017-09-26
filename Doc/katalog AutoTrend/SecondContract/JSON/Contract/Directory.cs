@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 namespace Json.Contract
 {
@@ -6,7 +7,7 @@ namespace Json.Contract
     public class Directory
     {
         [DataMember]
-        public string UID;
+        public Guid UID;
 
         [DataMember]
         public string Name;

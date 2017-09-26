@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Convert\IConvertService.cs" />
+    <Compile Include="Convert\Implementation\Convert.cs" />
     <Compile Include="Convert\Implementation\ConvertService.cs" />
     <Compile Include="Convert\Implementation\DateTimeToDateTimeOffsetConverter.cs" />
     <Compile Include="Convert\Implementation\InverseBoolConverter.cs" />

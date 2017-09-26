@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace DatabaseService.DataBaseContext.Entities
@@ -7,9 +8,11 @@ namespace DatabaseService.DataBaseContext.Entities
     {
         public long Id { get; set; }
 
-        public Guid UID { get; set; }
+        public Guid Code { get; set; }
 
         [MaxLength(255)]
         public string Name { get; set; }
+
+        public virtual List<CatalogItemEntity> CatalogItems { get; set; } 
     }
 }

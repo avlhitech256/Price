@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 namespace Json.Contract
 {
@@ -6,7 +7,7 @@ namespace Json.Contract
     public class Nomenclature
     {
         [DataMember]
-        public string UID;
+        public Guid UID;
 
         [DataMember]
         public string Code;
@@ -15,7 +16,7 @@ namespace Json.Contract
         public string VendorCode;
 
         [DataMember]
-        public string BrandUID;
+        public Guid? BrandUID;
 
         [DataMember]
         public string Name;
@@ -24,22 +25,22 @@ namespace Json.Contract
         public string Measure;
 
         [DataMember]
-        public string NormPackaging;
+        public decimal NormPackaging;//-------------
 
         [DataMember]
-        public string BatchOfSales;
+        public decimal BatchOfSales;//-------------
 
         [DataMember]
-        public string PriceGroupUID;
+        public Guid? PriceGroupUID;
 
         [DataMember]
-        public string NomenclatureGroupUID;
+        public Guid? NomenclatureGroupUID;
 
         [DataMember]
         public string DateOfCreation;
 
         [DataMember]
-        public string CatalogUID;
+        public Guid? CatalogUID;
 
         [DataMember]
         public string InStock;
@@ -48,7 +49,7 @@ namespace Json.Contract
         public PriceTypeItem[] TypesOfPrices;
 
         [DataMember]
-        public string[] CommodityDirection;
+        public Guid[] CommodityDirection;
 
         [DataMember]
         public string[] Photos;
