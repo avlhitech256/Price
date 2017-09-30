@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
 using Catalog.SearchCriteria;
+using Common.Data.Enum;
 using Common.Data.Holders;
 using Common.Data.Notifier;
 using Common.Event;
@@ -12,6 +13,7 @@ using DatabaseService.DataService;
 using Domain.Data.Object;
 using Domain.DomainContext;
 using Media.Image;
+using Options.Service;
 
 namespace Catalog.Model
 {
@@ -24,6 +26,12 @@ namespace Catalog.Model
         private ObservableCollection<CatalogItem> entities;
         private ObservableCollection<BrandItem> brandItems;
         private decimal amount;
+        private int startRowIndex;
+        private int oldMaximumRows;
+        private int count;
+        private bool needToUpdateCount;
+        private readonly Dictionary<int, List<CatalogItem>> cacheCatalogItems;
+
 
         #endregion
 
@@ -33,9 +41,14 @@ namespace Catalog.Model
         {
             DomainContext = domainContext;
             Amount = 0;
+            StartRowIndex = 0;
+            oldMaximumRows = MaximumRows;
+            needToUpdateCount = true;
             Entities = new ObservableCollection<CatalogItem>();
+            cacheCatalogItems = new Dictionary<int, List<CatalogItem>>();
             BrandItems = new ObservableCollection<BrandItem>();
             SearchCriteria = new CatalogSearchCriteria();
+            SubscribeEvents();
             SelectBrandPopupItems();
             SelectEntities();
         }
@@ -51,6 +64,9 @@ namespace Catalog.Model
         private IDataService DataService => DomainContext?.DataService;
 
         public CatalogSearchCriteria SearchCriteria { get; }
+
+        private IOptionService OptionService => DomainContext?.OptionService;
+
 
         public CatalogItem SelectedItem
         {
@@ -118,9 +134,65 @@ namespace Catalog.Model
             }
         }
 
+        public int StartRowIndex
+        {
+            get
+            {
+                return startRowIndex;
+            }
+            set
+            {
+                if (startRowIndex != value)
+                {
+                    startRowIndex = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public int MaximumRows
+        {
+            get
+            {
+                return OptionService?.CatalogMaximumRows ?? 13;
+            }
+            set
+            {
+                if (OptionService != null && OptionService.CatalogMaximumRows != value)
+                {
+                    OptionService.CatalogMaximumRows = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public int Count
+        {
+            get
+            {
+                if (needToUpdateCount)
+                {
+                    needToUpdateCount = false;
+                    count = GetCount();
+                }
+
+                return count;
+            }
+        }
+
         #endregion
 
         #region Methods
+
+        private void SubscribeEvents()
+        {
+            SearchCriteria.SearchCriteriaChanged += SearchCriteria_SearchCriteriaChanged;
+        }
+
+        private void SearchCriteria_SearchCriteriaChanged(object sender, EventArgs e)
+        {
+            needToUpdateCount = needToUpdateCount || SearchCriteria.IsModified;
+        }
 
         private void OnChangeSelectedItem(CatalogItem oldItem, CatalogItem newItem)
         {
@@ -162,12 +234,8 @@ namespace Catalog.Model
 
             if (SearchCriteria != null)
             {
-                BrandItem selectBrandItem = BrandItems.FirstOrDefault(x => x.Id == SearchCriteria.BrandId);
-
-                if (selectBrandItem == null)
-                {
-                    selectBrandItem = BrandItems.FirstOrDefault();
-                }
+                BrandItem selectBrandItem = BrandItems.FirstOrDefault(x => x.Id == SearchCriteria.BrandId) ??
+                                            BrandItems.FirstOrDefault();
 
                 SearchCriteria.BrandId = selectBrandItem?.Id ?? SearchCriteria.FirstBrandItemEntity.Id;
                 SearchCriteria.BrandName = selectBrandItem?.Name ?? SearchCriteria.FirstBrandItemEntity.Name;
@@ -182,49 +250,111 @@ namespace Catalog.Model
 
         public void SelectEntities()
         {
-            Func<string, string[]> prepareArray =
-                x =>
+            if (SearchCriteria != null)
+            {
+                long catalogId = SelectedItem?.Id ?? -1L;
+                Entities.Clear();
+
+                if (SearchCriteria.IsModified)
                 {
-                    List<string> results = x.Split(',', ' ').ToList();
-                    results.RemoveAll(string.IsNullOrWhiteSpace);
-                    return results.ToArray();
-                };
+                    StartRowIndex = 0;
+                    count = GetCount();
+                    needToUpdateCount = false;
+                    OnPropertyChanged(nameof(Count));
+                }
 
-            long catalogId = SelectedItem?.Id ?? -1L;
+                if (StartRowIndex < Count)
+                {
+                    GetItems(StartRowIndex, MaximumRows).ForEach(x => Entities.Add(x));
+                    OnPropertyChanged(nameof(Entities));
+                    SelectedItem = Entities.FirstOrDefault(x => x.Id == catalogId) ?? Entities.FirstOrDefault();
+                    SearchCriteria.SearchComplited();
+                }
+            }
+        }
 
-            Entities.Clear();
+        private List<CatalogItem> GetItems(int startRow, int maxRows)
+        {
+            if (oldMaximumRows != MaximumRows || SearchCriteria.IsModified)
+            {
+                cacheCatalogItems.Clear();
+                oldMaximumRows = MaximumRows;
+            }
 
-            string[] codes = prepareArray(SearchCriteria.Code);
-            string[] lexemes = prepareArray(SearchCriteria.Name);
-            string[] articles = prepareArray(SearchCriteria.Article);
-            LongHolder position = new LongHolder();
-            DateTimeOffset dateForNew = DateTimeOffset.Now.AddDays(-14);
-            DateTimeOffset dateForPrice = DateTimeOffset.Now.AddDays(-7);
+            List<CatalogItem> items;
 
-            DataService.Select<CatalogItemEntity>()
-                .Include(x => x.Brand)
-                .Where(x => !codes.Any() || codes.Contains(x.Code))
-                .Where(n => !lexemes.Any() || lexemes.All(s => n.Name.Contains(s)))
-                .Where(x => !articles.Any() || articles.Contains(x.Article))
-                .Where(x => !SearchCriteria.IsNew || (x.IsNew && x.LastUpdated <= dateForNew))
-                .Where(
+            if (!cacheCatalogItems.TryGetValue(startRow, out items))
+            {
+                LongHolder position = new LongHolder {Value = startRow};
+
+                items = GetItems()
+                    .OrderBy(x => x.Name)
+                    .Skip(startRow)
+                    .Take(maxRows)
+                    .AsEnumerable()
+                    .Select(x => new CatalogItem(x, DataService, ImageService)
+                            {
+                                Position = ++position.Value
+                            })
+                    .ToList();
+
+                if (cacheCatalogItems.Count > 50)
+                {
+                    var firstItems = cacheCatalogItems.FirstOrDefault();
+                    cacheCatalogItems.Remove(firstItems.Key);
+                }
+
+                cacheCatalogItems.Add(startRow, items);
+            }
+
+            return items;
+        }
+
+        private IQueryable<CatalogItemEntity> GetItems()
+        {
+            IQueryable<CatalogItemEntity> items = null;
+
+            if (SearchCriteria != null)
+            {
+                Func<string, string[]> prepareArray =
                     x =>
-                        !SearchCriteria.PriceIsDown ||
-                        (x.PriceIsDown && x.LastUpdated <= dateForPrice))
-                .Where(
-                    x => !SearchCriteria.PriceIsUp || (x.PriceIsUp && x.LastUpdated <= dateForPrice))
-                .Where(x => SearchCriteria.BrandId <= SearchCriteria.FirstBrandItemEntity.Id || 
-                                                      x.Brand.Id == SearchCriteria.BrandId)
-                .ToList()
-                .ForEach(
-                    x =>
-                        Entities.Add(new CatalogItem(x, DataService, ImageService)
+                    {
+                        List<string> results = new List<string>();
+
+                        if (!string.IsNullOrWhiteSpace(x))
                         {
-                            Position = ++position.Value
-                        }));
+                            results = x.Split(',', ' ').ToList();
+                            results.RemoveAll(string.IsNullOrWhiteSpace);
+                        }
 
-            SelectedItem = Entities.FirstOrDefault(x => x.Id == catalogId) ?? Entities.FirstOrDefault();
-            SearchCriteria.SearchComplited();
+                        return results.ToArray();
+                    };
+
+                string[] codes = prepareArray(SearchCriteria.Code);
+                string[] lexemes = prepareArray(SearchCriteria.Name);
+                string[] articles = prepareArray(SearchCriteria.Article);
+                DateTimeOffset dateForNew = DateTimeOffset.Now.AddDays(-14);
+                DateTimeOffset dateForPrice = DateTimeOffset.Now.AddDays(-7);
+
+                items = DataService.Select<CatalogItemEntity>()
+                    .Include(x => x.BasketItems)
+                    .Where(x => !codes.Any() || codes.Contains(x.Code))
+                    .Where(n => !lexemes.Any() || lexemes.All(s => n.Name.Contains(s)))
+                    .Where(x => !articles.Any() || articles.Contains(x.Article))
+                    .Where(x => (!SearchCriteria.IsNew && !SearchCriteria.PriceIsDown && !SearchCriteria.PriceIsUp) || 
+                                 (SearchCriteria.IsNew && x.Status == CatalogItemStatus.New && x.DateOfCreation >= dateForNew) ||
+                                 (SearchCriteria.PriceIsDown && x.Status == CatalogItemStatus.PriceIsDown && x.LastUpdatedStatus >= dateForPrice) || 
+                                 (SearchCriteria.PriceIsUp && x.Status == CatalogItemStatus.PriceIsUp && x.LastUpdatedStatus >= dateForPrice))
+                    .Where(x => SearchCriteria.BrandId <= SearchCriteria.FirstBrandItemEntity.Id ||
+                                x.Brand.Id == SearchCriteria.BrandId);
+            }
+
+            return items;
+        } 
+
+        private int GetCount()
+        {
+            return GetItems().Count();
         }
 
         #endregion

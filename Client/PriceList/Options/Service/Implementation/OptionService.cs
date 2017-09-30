@@ -11,6 +11,7 @@ namespace Options.Service.Implementation
         private readonly IDataService dataService;
         private readonly Dictionary<string, string> optionCache;
         private readonly List<string> existOptionCache;
+        private int catalogMaximumRows;
 
         #endregion
 
@@ -82,6 +83,18 @@ namespace Options.Service.Implementation
             }
         }
 
+        public int CatalogMaximumRows
+        {
+            get
+            {
+                return GetIntOption(OptionName.CatalogMaximumRows);
+            }
+            set
+            {
+                SetIntOption(OptionName.CatalogMaximumRows, value);
+            }
+        }
+
         #endregion
 
         #region Methods
@@ -129,6 +142,24 @@ namespace Options.Service.Implementation
         }
 
         private void SetLongOption(string optionCode, long value)
+        {
+            SetOption(optionCode, value.ToString());
+        }
+
+        private int GetIntOption(string optionCode)
+        {
+            int value;
+
+            if (!int.TryParse(GetOption(optionCode), out value))
+            {
+                value = 0;
+                SetLongOption(optionCode, value);
+            }
+
+            return value;
+        }
+
+        private void SetIntOption(string optionCode, int value)
         {
             SetOption(optionCode, value.ToString());
         }

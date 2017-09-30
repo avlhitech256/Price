@@ -34,7 +34,6 @@ namespace Domain.Data.Object
             Entity = entity;
             this.databaseService = databaseService;
             this.imageService = imageService;
-            Brand = new BrandItem(entity.Brand);
             Position = 1L;
             Refresh();
         }
@@ -138,19 +137,21 @@ namespace Domain.Data.Object
             }
         }
 
-        public BrandItem Brand
+        public string Brand
         {
             get
             {
-                return brand;
+                return entity.BrandName;
             }
             set
             {
-                if (brand != value)
+                if (entity.BrandName != value)
                 {
-                    brand = value;
+                    entity.BrandName = value;
                     OnPropertyChanged();
-                    entity.Brand = value.Entity;
+                    BrandItemEntity brandItem =
+                        databaseService.Select<BrandItemEntity>().FirstOrDefault(x => x.Name == Brand);
+                    entity.Brand = brandItem;
                 }
             }
         }
@@ -233,6 +234,8 @@ namespace Domain.Data.Object
                 }
             }
         }
+
+        public CatalogItemStatus Status => Entity.Status;
 
         public List<byte[]> Photos
         {

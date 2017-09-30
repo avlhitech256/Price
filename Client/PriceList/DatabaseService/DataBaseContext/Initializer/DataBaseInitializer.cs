@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using Common.Annotations;
 using Common.Convert.Implementation;
+using Common.Data.Enum;
 using DatabaseService.DataBaseContext.Entities;
+using DatabaseService.Objects;
 using DatabaseService.Properties;
 using File.Service;
 using File.Service.Implementation;
@@ -40,6 +42,7 @@ namespace DatabaseService.DataBaseContext.Initializer
                 List<PhotoItemEntity> photoItems = PopulatePhotoEntities(dataBaseContext);
                 PopulateCatalogItemEntities(dataBaseContext, brandItems, photoItems);
                 PopulateOptionItemEntities(dataBaseContext);
+                dataBaseContext.SaveChanges();
             }
             else
             {
@@ -50,27 +53,41 @@ namespace DatabaseService.DataBaseContext.Initializer
                 string clientsFileName = "Clients.json";
                 string priceFileName = "PriceList.json";
 
+                MetaData metaData = fileService.ReadMetaData(dataPath + metaDataFileName);
+                PriceList pricelist = fileService.ReadPriceList(dataPath + priceFileName);
+                Clients clients = fileService.ReadClients(dataPath + clientsFileName);
+                Pause10();
+
+                // Отключаем отслеживание и проверку изменений для оптимизации вставки множества полей
+                dataBaseContext.Configuration.AutoDetectChangesEnabled = false;
+                dataBaseContext.Configuration.ValidateOnSaveEnabled = false;
+
+                CreateBrandItems(dataBaseContext, metaData);
+                CreateDirectoryItems(dataBaseContext, metaData);
+                CreateNomenclatureGroupItems(dataBaseContext, metaData);
+                CreateCommodityDirectionsItems(dataBaseContext, metaData);
+                PopulateOptionItemEntities(dataBaseContext, clients);
+
                 LoadPictures(dataBaseContext, photoPath, photoSearchPattern);
 
-                MetaData metaData = fileService.ReadMetaData(dataPath + metaDataFileName);
-                Clients clients = fileService.ReadClients(dataPath + clientsFileName);
-                PriceList pricelist = fileService.ReadPriceList(dataPath + priceFileName);
+                CreateCatalogItems(dataBaseContext, pricelist);
 
-                List<BrandItemEntity> brandItems =
-                    CreateBrandItems(dataBaseContext, metaData);
-                List<DirectoryEntity> directoryItems =
-                    CreateDirectoryItems(dataBaseContext, metaData);
-                List<NomenclatureGroupEntity> nomenclatureGroupItems =
-                    CreateNomenclatureGroupItems(dataBaseContext, metaData);
-                List<CommodityDirectionEntity> commodityDirectionsItems =
-                    CreateCommodityDirectionsItems(dataBaseContext, metaData);
-                CreateCatalogItems(dataBaseContext, pricelist, brandItems, directoryItems,
-                                   nomenclatureGroupItems, commodityDirectionsItems);
-                PopulateOptionItemEntities(dataBaseContext, clients);
+                dataBaseContext.Configuration.AutoDetectChangesEnabled = true;
+                dataBaseContext.Configuration.ValidateOnSaveEnabled = true;
             }
 
-            dataBaseContext.SaveChanges();
             base.Seed(dataBaseContext);
+        }
+
+        private void Pause10()
+        {
+            Thread.Sleep(10);
+        }
+
+        private void Save(DataBaseContext dataBaseContext)
+        {
+            dataBaseContext.SaveChanges();
+            Pause10();
         }
 
         private void LoadPictures(DataBaseContext dataBaseContext, string photoPath, string photoSearchPattern = null)
@@ -98,23 +115,23 @@ namespace DatabaseService.DataBaseContext.Initializer
                             dataBaseContext.PhotoItemEntities.Add(photoItem);
                             countOfFiles++;
 
-                            if (countOfFiles%10 == 0)
+                            if (countOfFiles % 10 == 0)
                             {
-                                dataBaseContext.SaveChanges();
+                                Save(dataBaseContext);
                             }
                         }
                     });
 
-                dataBaseContext.SaveChanges();
+                Save(dataBaseContext);
             }
         }
 
-        private List<BrandItemEntity> CreateBrandItems(DataBaseContext dataBaseContext, MetaData metaData)
+        private void CreateBrandItems(DataBaseContext dataBaseContext, MetaData metaData)
         {
-            var brandItems = new List<BrandItemEntity>();
-
             if (dataBaseContext != null && metaData?.Brands != null && metaData.Brands.Any())
             {
+                int countInsertedItems = 0;
+
                 metaData.Brands.ToList().ForEach(
                     x =>
                     {
@@ -122,14 +139,18 @@ namespace DatabaseService.DataBaseContext.Initializer
 
                         if (brandItem != null)
                         {
-                            brandItems.Add(brandItem);
+                            dataBaseContext.BrandItemEntities.Add(brandItem);
+                            countInsertedItems++;
+
+                            if (countInsertedItems % 100 == 0)
+                            {
+                                Save(dataBaseContext);
+                            }
                         }
                     });
 
-                dataBaseContext.BrandItemEntities.AddRange(brandItems);
+                Save(dataBaseContext);
             }
-
-            return brandItems;
         }
 
         private BrandItemEntity Assemble(Brand brand)
@@ -148,12 +169,12 @@ namespace DatabaseService.DataBaseContext.Initializer
             return brandItem;
         }
 
-        private List<DirectoryEntity> CreateDirectoryItems(DataBaseContext dataBaseContext, MetaData metaData)
+        private void CreateDirectoryItems(DataBaseContext dataBaseContext, MetaData metaData)
         {
-            var directoryItems = new List<DirectoryEntity>();
-
             if (dataBaseContext != null && metaData?.Catalog != null && metaData.Catalog.Any())
             {
+                int countInsertedItems = 0;
+
                 metaData.Catalog.ToList().ForEach(
                     x =>
                     {
@@ -161,14 +182,17 @@ namespace DatabaseService.DataBaseContext.Initializer
 
                         if (directory != null)
                         {
-                            directoryItems.Add(directory);
+                            dataBaseContext.DirectoryEntities.Add(directory);
+
+                            if (countInsertedItems % 10 == 0)
+                            {
+                                Save(dataBaseContext);
+                            }
                         }
                     });
 
-                dataBaseContext.DirectoryEntities.AddRange(directoryItems);
+                Save(dataBaseContext);
             }
-
-            return directoryItems;
         }
 
         private DirectoryEntity Assemble(Directory directory)
@@ -203,12 +227,12 @@ namespace DatabaseService.DataBaseContext.Initializer
             return directoryItem;
         }
 
-        private List<NomenclatureGroupEntity> CreateNomenclatureGroupItems(DataBaseContext dataBaseContext, MetaData metaData)
+        private void CreateNomenclatureGroupItems(DataBaseContext dataBaseContext, MetaData metaData)
         {
-            var nomenclatureGroupItems = new List<NomenclatureGroupEntity>();
-
             if (dataBaseContext != null && metaData?.NomenclatureGroups != null && metaData.NomenclatureGroups.Any())
             {
+                int countInsertedItems = 0;
+
                 metaData.NomenclatureGroups.ToList().ForEach(
                     x =>
                     {
@@ -216,13 +240,17 @@ namespace DatabaseService.DataBaseContext.Initializer
 
                         if (nomenclatureGroup != null)
                         {
-                            nomenclatureGroupItems.Add(nomenclatureGroup);
+                            dataBaseContext.NomenclatureGroupEntities.Add(nomenclatureGroup);
+
+                            if (countInsertedItems % 100 == 0)
+                            {
+                                Save(dataBaseContext);
+                            }
                         }
                     });
-                dataBaseContext.NomenclatureGroupEntities.AddRange(nomenclatureGroupItems);
-            }
 
-            return nomenclatureGroupItems;
+                Save(dataBaseContext);
+            }
         }
 
         private NomenclatureGroupEntity Assemble(NomenclatureGroup nomenclatureGroup)
@@ -241,13 +269,12 @@ namespace DatabaseService.DataBaseContext.Initializer
             return nomenclatureGroupItem;
         }
 
-        private List<CommodityDirectionEntity> CreateCommodityDirectionsItems(DataBaseContext dataBaseContext, 
-                                                                              MetaData metaData)
+        private void CreateCommodityDirectionsItems(DataBaseContext dataBaseContext, MetaData metaData)
         {
-            var commodityDirectionsItems = new List<CommodityDirectionEntity>();
-
             if (dataBaseContext != null && metaData?.CommodityDirections != null && metaData.CommodityDirections.Any())
             {
+                int countInsertedItems = 0;
+
                 metaData.CommodityDirections.ToList().ForEach(
                     x =>
                     {
@@ -255,13 +282,17 @@ namespace DatabaseService.DataBaseContext.Initializer
 
                         if (commodityDirection != null)
                         {
-                            commodityDirectionsItems.Add(commodityDirection);
+                            dataBaseContext.CommodityDirectionEntities.Add(commodityDirection);
+
+                            if (countInsertedItems % 100 == 0)
+                            {
+                                Save(dataBaseContext);
+                            }
                         }
                     });
-                dataBaseContext.CommodityDirectionEntities.AddRange(commodityDirectionsItems);
-            }
 
-            return commodityDirectionsItems;
+                Save(dataBaseContext);
+            }
         }
 
         private CommodityDirectionEntity Assemble(CommodityDirection commodityDirection)
@@ -281,43 +312,41 @@ namespace DatabaseService.DataBaseContext.Initializer
             return commodityDirectionItem;
         }
 
-        private void CreateCatalogItems(DataBaseContext dataBaseContext, 
-                                        PriceList pricelist, 
-                                        List<BrandItemEntity> brandItems, 
-                                        List<DirectoryEntity> directoryItems,
-                                        List<NomenclatureGroupEntity> nomenclatureGroupItems,
-                                        List<CommodityDirectionEntity> commodityDirectionItems)
+        private void CreateCatalogItems(DataBaseContext dataBaseContext, PriceList pricelist)
         {
-            if (dataBaseContext != null && pricelist?.Nomenclature != null)
+            if (dataBaseContext != null && pricelist?.Nomenclature != null && pricelist.Nomenclature.Any())
             {
-                var catalogItems = new List<CatalogItemEntity>();
+                int countOfCatalogItem = 0;
 
                 pricelist.Nomenclature.ToList().ForEach(
-                    x => catalogItems.Add(Assemble(dataBaseContext, x, brandItems, directoryItems,
-                        nomenclatureGroupItems, commodityDirectionItems)));
-                dataBaseContext.CatalogItemEntities.AddRange(catalogItems);
+                    x =>
+                    {
+                        dataBaseContext.CatalogItemEntities.Add(Assemble(dataBaseContext, x));
+                        countOfCatalogItem++;
+
+                        if (countOfCatalogItem % 100 == 0)
+                        {
+                            Save(dataBaseContext);
+                        }
+                    });
+
+                Save(dataBaseContext);
             }
         }
 
         [NotNull]
         private CatalogItemEntity Assemble(DataBaseContext dataBaseContext, 
-                                           Nomenclature nomenclature, 
-                                           List<BrandItemEntity> brandItems,
-                                           List<DirectoryEntity> directoryItems,
-                                           List<NomenclatureGroupEntity> nomenclatureGroupItems,
-                                           List<CommodityDirectionEntity> commodityDirectionItems)
+                                           Nomenclature nomenclature)
         {
-            BrandItemEntity brandItem = brandItems?.FirstOrDefault(x => x.Code == nomenclature.BrandUID.ConvertToNullableGuid());
-            DirectoryEntity directoryItem = directoryItems?.FirstOrDefault(x => x.Code == nomenclature.CatalogUID.ConvertToNullableGuid());
-            NomenclatureGroupEntity nomenclatureGroupItem =
-                nomenclatureGroupItems?.FirstOrDefault(x => x.Code == nomenclature.NomenclatureGroupUID.ConvertToNullableGuid());
-            List<CommodityDirectionEntity> commodityDirectionItemsForCatalogItem =
-                commodityDirectionItems?.Where(
-                    x => nomenclature.CommodityDirection.Any(c => c.ConvertToNullableGuid() == x.Code)).ToList() ??
-                new List<CommodityDirectionEntity>();
-            List<PhotoItemEntity> photoItems =
-                dataBaseContext.PhotoItemEntities.Where(x => nomenclature.Photos.Any(p => p == x.Name)).ToList();
-            List<string> needToCreatePhotos = nomenclature.Photos.Where(x => photoItems.All(p => p.Name != x)).ToList();
+            BrandItemEntity brandItem = GetBrandItem(dataBaseContext, nomenclature);
+            DirectoryEntity directoryItem = GetDirectoryItem(dataBaseContext, nomenclature);
+            NomenclatureGroupEntity nomenclatureGroupItem = 
+                GetNomenclatureGroupItem(dataBaseContext, nomenclature);
+            List<CommodityDirectionEntity> commodityDirectionItemsForCatalogItem = 
+                GetCommodityDirection(dataBaseContext, nomenclature);
+            PriceInfo priceInfo = GetPriceInfo(nomenclature);
+            List<PhotoItemEntity> photoItems = GetPhotoItems(dataBaseContext, nomenclature);
+            List<string> needToCreatePhotos = GetNeedToCreatePhotos(photoItems, nomenclature);
             photoItems.AddRange(CreateEmptyPhotos(dataBaseContext, needToCreatePhotos));
 
             var catalogItem = new CatalogItemEntity
@@ -328,20 +357,20 @@ namespace DatabaseService.DataBaseContext.Initializer
                 Article = nomenclature.VendorCode,
                 Name = nomenclature.Name,
                 Brand = brandItem,
+                BrandName = brandItem?.Name,
                 Unit = nomenclature.Measure,
-                EnterpriceNormPack = nomenclature.NormPackaging.ToString(CultureInfo.InvariantCulture),
+                EnterpriceNormPack = nomenclature.NormPackaging,
                 BatchOfSales = nomenclature.BatchOfSales.ConvertToDecimal(),
                 Balance = nomenclature.InStock,
-                Price = GetPrice(nomenclature),
-                Currency = string.Empty,
+                Price = priceInfo.Prise,
+                Currency = priceInfo.Currency,
                 Multiplicity = 0,
                 HasPhotos = photoItems.Any(x => x.IsLoad),
                 Photos = photoItems,
-                DateOfCreation = DateTimeOffset.Now,
+                DateOfCreation = nomenclature.DateOfCreation.ConvertToDateTimeOffset(),
                 LastUpdated = DateTimeOffset.Now,
-                PriceIsUp = false,
-                PriceIsDown = false,
-                IsNew = false,
+                Status = GenerateStatus(),
+                LastUpdatedStatus = DateTimeOffset.Now,
                 BasketItems = null,
                 Directory = directoryItem,
                 NomenclatureGroup = nomenclatureGroupItem,
@@ -418,7 +447,158 @@ namespace DatabaseService.DataBaseContext.Initializer
             return catalogItem;
         }
 
-        private IEnumerable<PhotoItemEntity> CreateEmptyPhotos(DataBaseContext dataBaseContext, List<string> photos)
+        private CatalogItemStatus GenerateStatus()
+        {
+            int miliseconds = DateTime.Now.Millisecond;
+
+            CatalogItemStatus status = CatalogItemStatus.Old;
+
+            if (miliseconds % 7 == 0)
+            {
+                status = CatalogItemStatus.PriceIsDown;
+            }
+            else if (miliseconds % 5 == 0)
+            {
+                status = CatalogItemStatus.PriceIsUp;
+            }
+            else if (miliseconds % 2 == 0)
+            {
+                status = CatalogItemStatus.New;
+            }
+
+            return status;
+        }
+
+        private BrandItemEntity GetBrandItem(DataBaseContext dataBaseContext, 
+                                             Nomenclature nomenclature)
+        {
+            BrandItemEntity brandItem = null;
+
+            if (dataBaseContext != null && nomenclature != null)
+            {
+                Guid brandGuid;
+
+                if (nomenclature.BrandUID.ConvertToGuid(out brandGuid))
+                {
+                    brandItem = dataBaseContext
+                        .BrandItemEntities
+                        .FirstOrDefault(x => x.Code == brandGuid);
+                }
+            }
+
+            return brandItem;
+        }
+
+        private DirectoryEntity GetDirectoryItem(DataBaseContext dataBaseContext, 
+                                                 Nomenclature nomenclature)
+        {
+            DirectoryEntity directoryItem = null;
+
+            if (dataBaseContext != null && nomenclature != null)
+            {
+                Guid directoryGuid;
+
+                if (nomenclature.CatalogUID.ConvertToGuid(out directoryGuid))
+                {
+                    directoryItem = dataBaseContext
+                        .DirectoryEntities
+                        .FirstOrDefault(x => x.Code == directoryGuid);
+                }
+            }
+                
+            return directoryItem;
+        }
+
+        private NomenclatureGroupEntity GetNomenclatureGroupItem(DataBaseContext dataBaseContext, 
+                                                                 Nomenclature nomenclature)
+        {
+            NomenclatureGroupEntity nomenclatureGroupItem = null;
+
+            if (dataBaseContext != null && nomenclature != null)
+            {
+                Guid nomenclatureGroupGuid;
+
+                if (nomenclature.NomenclatureGroupUID.ConvertToGuid(out nomenclatureGroupGuid))
+                {
+                    nomenclatureGroupItem = dataBaseContext
+                        .NomenclatureGroupEntities
+                        .FirstOrDefault(x => x.Code == nomenclatureGroupGuid);
+                }
+            }
+
+            return nomenclatureGroupItem;
+        }
+
+        private List<CommodityDirectionEntity> GetCommodityDirection(DataBaseContext dataBaseContext,
+                                                                     Nomenclature nomenclature)
+        {
+            List<CommodityDirectionEntity> commodityDirectionItems = new List<CommodityDirectionEntity>();
+
+            if (dataBaseContext != null && 
+                nomenclature?.CommodityDirection != null && 
+                nomenclature.CommodityDirection.Any())
+            {
+                List<Guid> commodityDirectionGuids = nomenclature
+                    .CommodityDirection
+                    .Where(IsGuid)
+                    .Select(x => x.ConvertToGuid())
+                    .ToList();
+
+                if (commodityDirectionGuids.Any())
+                {
+                    commodityDirectionItems = dataBaseContext
+                        .CommodityDirectionEntities.Where(x => commodityDirectionGuids.Any(c => c == x.Code))
+                        .ToList();
+                }
+            }
+
+            return commodityDirectionItems;
+        }
+
+        private bool IsGuid(string code)
+        {
+            Guid guid;
+            return code.ConvertToGuid(out guid);
+        }
+
+        private static bool EqualStringToGuid(string stringGuid, Guid guid)
+        {
+            Guid comparerGuid;
+            bool result = !string.IsNullOrWhiteSpace(stringGuid) &&
+                          stringGuid.ConvertToGuid(out comparerGuid) &&
+                          comparerGuid == guid;
+            return result;
+        }
+
+        private List<PhotoItemEntity> GetPhotoItems(DataBaseContext dataBaseContext,
+                                                    Nomenclature nomenclature)
+        {
+            List<PhotoItemEntity> photoItems = new List<PhotoItemEntity>();
+
+            if (dataBaseContext != null && nomenclature != null && nomenclature.Photos.Any())
+            {
+                photoItems = dataBaseContext
+                    .PhotoItemEntities
+                    .Where(x => nomenclature.Photos.Any(p => p == x.Name)).ToList();
+            }
+
+            return photoItems;
+        }
+
+        private List<string> GetNeedToCreatePhotos(List<PhotoItemEntity> photoItems, Nomenclature nomenclature)
+        {
+            List<string> needToCreatePhotos = new List<string>();
+
+            if (nomenclature?.Photos != null) // photoItems != null && photoItems.Any()
+            {
+                needToCreatePhotos = nomenclature.Photos.Where(x => photoItems == null ||
+                                                                    !photoItems.Any() ||
+                                                                    photoItems.All(p => p.Name != x)).ToList();
+            }
+            return needToCreatePhotos;
+        }
+        private IEnumerable<PhotoItemEntity> CreateEmptyPhotos(DataBaseContext dataBaseContext, 
+                                                               List<string> photos)
         {
             var emptyPhotos = new List<PhotoItemEntity>();
 
@@ -426,7 +606,67 @@ namespace DatabaseService.DataBaseContext.Initializer
             dataBaseContext.PhotoItemEntities.AddRange(emptyPhotos);
 
             return emptyPhotos;
-        } 
+        }
+
+        private PriceInfo GetPriceInfo(Nomenclature nomenclature)
+        {
+            var priceInfo = new PriceInfo();
+
+            if (nomenclature?.TypesOfPrices != null && nomenclature.TypesOfPrices.Any())
+            {
+                PriceTypeItem typeOfPrice = nomenclature.TypesOfPrices.FirstOrDefault();
+
+                if (typeOfPrice != null)
+                {
+                    PriceInfoParse(typeOfPrice.Price, priceInfo);
+                }
+            }
+
+            return priceInfo;
+        }
+
+        private void PriceInfoParse(string priceWithCurrency, PriceInfo priceInfo)
+        {
+            if (!string.IsNullOrWhiteSpace(priceWithCurrency))
+            {
+                string[] splitPriceString = priceWithCurrency.Split(' ');
+
+                if (splitPriceString.Any())
+                {
+                    string stringPrice = splitPriceString[0];
+
+                    if (!string.IsNullOrWhiteSpace(stringPrice))
+                    {
+                        decimal price;
+
+                        if (decimal.TryParse(stringPrice, out price))
+                        {
+                            priceInfo.Prise = price;
+
+                            if (splitPriceString.Length >= 2)
+                            {
+                                priceInfo.Currency = splitPriceString[1];
+                            }
+                        }
+                        else
+                        {
+                            if (splitPriceString.Length >= 2)
+                            {
+                                priceInfo.Currency = splitPriceString[1];
+                            }
+                            else
+                            {
+                                priceInfo.Currency = splitPriceString[0];
+                            }
+                        }
+                    }
+                    else if (splitPriceString.Length >= 2)
+                    {
+                        priceInfo.Currency = splitPriceString[1];
+                    }
+                }
+            }
+        }
 
         private decimal GetPrice(Nomenclature nomenclature)
         {
@@ -443,6 +683,23 @@ namespace DatabaseService.DataBaseContext.Initializer
             }
 
             return price;
+        }
+
+        private string GetCurrency(Nomenclature nomenclature)
+        {
+            string currency = string.Empty;
+
+            if (nomenclature?.TypesOfPrices != null && nomenclature.TypesOfPrices.Any())
+            {
+                PriceTypeItem typeOfPrice = nomenclature.TypesOfPrices.FirstOrDefault();
+
+                if (typeOfPrice != null)
+                {
+                    currency = CurrencyParse(typeOfPrice.Price);
+                }
+            }
+
+            return currency;
         }
 
         private decimal PriceParse(string priceWithCurrency)
@@ -465,6 +722,23 @@ namespace DatabaseService.DataBaseContext.Initializer
             }
 
             return price;
+        }
+
+        private string CurrencyParse(string priceWithCurrency)
+        {
+            string  currency = string.Empty;
+
+            if (!string.IsNullOrWhiteSpace(priceWithCurrency))
+            {
+                string[] splitPriceString = priceWithCurrency.Split(' ');
+
+                if (splitPriceString.Any() && splitPriceString.Length >= 2)
+                {
+                    currency = splitPriceString[1];
+                }
+            }
+
+            return currency;
         }
 
         private void CreateIndex(DataBaseContext dataBaseContext)
@@ -643,9 +917,16 @@ namespace DatabaseService.DataBaseContext.Initializer
                     Name = "Last Order Number",
                     Value = "0"
                 },
+                new OptionItemEntity
+                {
+                    Code = "CATALOGMAXIMUMROWS",
+                    Name = "Maximum Rows Displayed in Catalog Entry",
+                    Value = "20"
+                }
             };
 
             dataBaseContext.OptionItemEntities.AddRange(optionItems);
+            Save(dataBaseContext);
         }
     }
 }

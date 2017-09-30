@@ -78,7 +78,7 @@
                Grid.Column="0" 
                VerticalAlignment="Center" 
                HorizontalAlignment="Right"/>
-        <TextBox Text="{Binding Path=SelectedItem.Brand.Name, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"  
+        <TextBox Text="{Binding Path=SelectedItem.Brand, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"  
                  Grid.Column="1"
                  Grid.Row="2" 
                  Margin="2" 

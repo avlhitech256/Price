@@ -28,6 +28,8 @@ namespace Catalog.ViewModel
             HasChanges = false;
             ShowPhotoOnMouseDoubleClick = false;
             Model = new CatalogModel(domainContext);
+            CatalogNavigateViewModel = new CatalogNavigateViewModel(Model);
+            CatalogEdvanceSearchViewModel = new CatalogEdvanceSearchViewModel(domainContext, Model?.SearchCriteria);
             SubscribeEvents();
             SubscribeMessenger();
             InitCommands();
@@ -46,6 +48,10 @@ namespace Catalog.ViewModel
         private CatalogModel Model { get; }
 
         public CatalogSearchCriteria SearchCriteria => Model?.SearchCriteria;
+
+        public CatalogNavigateViewModel CatalogNavigateViewModel { get; }
+
+        public CatalogEdvanceSearchViewModel CatalogEdvanceSearchViewModel { get; }
 
         public CatalogItem SelectedItem
         {
@@ -113,6 +119,40 @@ namespace Catalog.ViewModel
         }
 
         public bool ShowPhotoOnMouseDoubleClick { get; set; }
+
+        public int StartRowIndex
+        {
+            get
+            {
+                return Model.StartRowIndex;
+            }
+            set
+            {
+                if (Model.StartRowIndex != value)
+                {
+                    Model.StartRowIndex = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public int MaximumRows
+        {
+            get
+            {
+                return Model.MaximumRows;
+            }
+            set
+            {
+                if (Model.MaximumRows != value)
+                {
+                    Model.MaximumRows = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public int Count => Model.Count;
 
         #endregion
 
@@ -252,6 +292,7 @@ namespace Catalog.ViewModel
 
         private void OnShowAdvanceSearchControl(object sender, DoubleAnimationEventArgs e)
         {
+            CatalogEdvanceSearchViewModel.Refresh();
             Messenger?.Send(CommandName.ShowAdvanceSearchControl, e);
         }
 
@@ -272,6 +313,12 @@ namespace Catalog.ViewModel
                 List<byte[]> photos = SelectedItem.Photos;
                 PhotoService.ShowPhotos(photos);
             }
+        }
+
+        public void SelectNexPageData()
+        {
+            StartRowIndex += MaximumRows;
+            Model.SelectEntities();
         }
 
         #endregion

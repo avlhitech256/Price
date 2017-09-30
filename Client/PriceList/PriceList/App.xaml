@@ -21,6 +21,16 @@
             </GradientBrush.GradientStops>
         </LinearGradientBrush>
 
+        <LinearGradientBrush x:Key="LightBlueGradientBrush" EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientBrush.GradientStops>
+                <GradientStopCollection>
+                    <GradientStop Color="#FFB8B8FF" Offset="0"/>
+                    <GradientStop Color="#FFE8E8FF" Offset="0.5"/>
+                    <GradientStop Color="#FFB8B8FF" Offset="1"/>
+                </GradientStopCollection>
+            </GradientBrush.GradientStops>
+        </LinearGradientBrush>
+
         <LinearGradientBrush x:Key="BlueGradientBrush" EndPoint="0.5,1" StartPoint="0.5,0">
             <GradientBrush.GradientStops>
                 <GradientStopCollection>

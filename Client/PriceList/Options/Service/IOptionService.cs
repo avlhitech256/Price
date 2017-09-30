@@ -9,5 +9,7 @@
         long LastOrderNumber { get; set; }
 
         bool ShowPhotoOnMouseDoubleClick { get; set; }
+
+        int CatalogMaximumRows { get; set; }
     }
 }

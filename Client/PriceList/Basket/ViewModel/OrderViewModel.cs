@@ -34,6 +34,7 @@ namespace Basket.ViewModel
         #region Properties
 
         public IDomainContext DomainContext { get; }
+
         public IMessenger Messenger => DomainContext?.Messenger;
 
         public IDataService DataService => DomainContext?.DataService;

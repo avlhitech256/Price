@@ -40,6 +40,7 @@ namespace File.Service.Implementation
                 {
                     using (FileStream fileStream = new FileStream(fileName, FileMode.Open, FileAccess.Read))
                     {
+                        GC.Collect();
                         fileStream.CopyTo(memoryStream);
                     }
                 }

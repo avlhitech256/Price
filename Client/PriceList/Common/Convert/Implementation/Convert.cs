@@ -58,5 +58,29 @@ namespace Common.Convert.Implementation
             stringValue.ConvertToDecimal(out value);
             return value;
         }
+
+        public static bool ConvertToDateTimeOffset(this string stringValue, out DateTimeOffset dateTimrOffset)
+        {
+            dateTimrOffset = DateTimeOffset.MinValue;
+            bool result = !string.IsNullOrWhiteSpace(stringValue) && 
+                          DateTimeOffset.TryParse(stringValue, out dateTimrOffset);
+            return result;
+        }
+
+        public static DateTimeOffset? ConvertToNullableDateTimeOffset(this string stringValue)
+        {
+            DateTimeOffset dateTimeOffset;
+            DateTimeOffset? result = ConvertToDateTimeOffset(stringValue, out dateTimeOffset)
+                ? dateTimeOffset
+                : (DateTimeOffset?) null;
+            return result;
+        }
+
+        public static DateTimeOffset ConvertToDateTimeOffset(this string stringValue)
+        {
+            DateTimeOffset dateTimeOffset;
+            ConvertToDateTimeOffset(stringValue, out dateTimeOffset);
+            return dateTimeOffset;
+        }
     }
 }

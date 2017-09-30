@@ -4,13 +4,26 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Catalog.View"
+             xmlns:webControls="clr-namespace:System.Web.UI.WebControls;assembly=System.Web"
+             xmlns:resultSearch="clr-namespace:Catalog.View.ResultSearch"
              mc:Ignorable="d" 
-             d:DesignHeight="100" d:DesignWidth="1030">
+             d:DesignHeight="200" d:DesignWidth="1030">
 
     <UserControl.Resources>
         <Style x:Key="DataGridCellRight" TargetType="{x:Type DataGridCell}">
             <Setter Property="TextBlock.TextAlignment" Value="Right"/>
         </Style>
+        
+        <LinearGradientBrush x:Key="LightBlueGradientBrush" EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientBrush.GradientStops>
+                <GradientStopCollection>
+                    <GradientStop Color="#FF9786FF" Offset="0"/>
+                    <GradientStop Color="#FF1700A8" Offset="1"/>
+                    <GradientStop Color="#FFCBC2FF" Offset="0.3"/>
+                </GradientStopCollection>
+            </GradientBrush.GradientStops>
+        </LinearGradientBrush>
+
     </UserControl.Resources>
     
     <Border>
@@ -18,6 +31,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="40"></RowDefinition>
             </Grid.RowDefinitions>
             <Label Name="TitleResult" 
                    Content="Результаты поиска" 
@@ -38,7 +52,9 @@
                       SelectedItem="{Binding Path=SelectedItem, Mode=TwoWay}"
                       IsReadOnly="False"
                       MouseUp="ResultSearchDataGrid_OnMouseUp"
-                      MouseDoubleClick="ResultSearchDataGrid_OnMouseDoubleClick">
+                      MouseDoubleClick="ResultSearchDataGrid_OnMouseDoubleClick"
+                      SelectionChanged="ResultSearchDataGrid_OnSelectionChanged"
+                      LoadingRow="ResultSearchDataGrid_OnLoadingRow">
                 <DataGrid.Columns>
                     <DataGridTextColumn IsReadOnly="True" 
                                     Width="55"
@@ -126,7 +142,7 @@
                     </DataGridTextColumn>
                     <DataGridTextColumn IsReadOnly="True" 
                                         Width="Auto"
-                                        Binding="{Binding Path=Brand.Name, Mode=OneWay}">
+                                        Binding="{Binding Path=Brand, Mode=OneWay}">
                         <DataGridTextColumn.HeaderTemplate>
                             <DataTemplate>
                                 <TextBlock Text="Бренд" 
@@ -230,6 +246,8 @@
                     </DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
+            <resultSearch:ResultSearchGridNavigateControl x:Name="GridNavigateControl" 
+                                                          Grid.Row="2"/>
         </Grid>
     </Border>
 </UserControl>

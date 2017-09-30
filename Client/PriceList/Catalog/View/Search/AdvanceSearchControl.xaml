@@ -4,16 +4,19 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:search="clr-namespace:Catalog.View.Search"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="150">
+             d:DesignHeight="500" d:DesignWidth="150">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Label Name="TitleResult" 
                Content="Расширенный поиск" 
-               Grid.Row="0" Margin="1" 
+               Grid.Row="0" 
+               Margin="1" 
                HorizontalAlignment="Stretch" 
                FontWeight="Bold" 
                Foreground="White" 
@@ -23,5 +26,7 @@
                 BorderBrush="CadetBlue" 
                 Margin="3"
                 BorderThickness="1"/>
+        <search:CommodityDirectionControl Grid.Row="1"/>
+        <search:BrandControl Grid.Row="2"/>
     </Grid>
 </UserControl>

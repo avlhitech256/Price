@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Common.Data.Enum;
 
 namespace DatabaseService.DataBaseContext.Entities
 {
@@ -20,6 +21,9 @@ namespace DatabaseService.DataBaseContext.Entities
         public string Name { get; set; }
 
         public virtual BrandItemEntity Brand { get; set; }
+
+        [MaxLength(255)]
+        public string BrandName { get; set; }
 
         [MaxLength(10)]
         public string Unit { get; set; }
@@ -47,11 +51,9 @@ namespace DatabaseService.DataBaseContext.Entities
 
         public DateTimeOffset LastUpdated { get; set; }
 
-        public bool PriceIsUp { get; set; }
-        
-        public bool PriceIsDown { get; set; }
+        public CatalogItemStatus Status { get; set; }
 
-        public bool IsNew { get; set; }
+        public DateTimeOffset LastUpdatedStatus { get; set; }
 
         public virtual List<BasketItemEntity> BasketItems { get; set; }
 

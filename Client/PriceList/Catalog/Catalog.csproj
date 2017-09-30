@@ -56,13 +56,17 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\CatalogBrandModel.cs" />
     <Compile Include="Model\CatalogModel.cs" />
+    <Compile Include="Model\CatalogPageSource.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="SearchCriteria\CatalogSearchCriteria.cs" />
+    <Compile Include="ViewModel\CatalogEdvanceSearchViewModel.cs" />
+    <Compile Include="ViewModel\CatalogNavigateViewModel.cs" />
     <Compile Include="View\CatalogControl.xaml.cs">
       <DependentUpon>CatalogControl.xaml</DependentUpon>
     </Compile>
@@ -75,11 +79,20 @@
     <Compile Include="View\ResultSearch\ResultSearchGridControl.xaml.cs">
       <DependentUpon>ResultSearchGridControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\ResultSearch\ResultSearchGridNavigateControl.xaml.cs">
+      <DependentUpon>ResultSearchGridNavigateControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Search\BrandControl.xaml.cs">
+      <DependentUpon>BrandControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Search\ButtonSearchControl.xaml.cs">
       <DependentUpon>ButtonSearchControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Search\AdvanceSearchControl.xaml.cs">
       <DependentUpon>AdvanceSearchControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Search\CommodityDirectionControl.xaml.cs">
+      <DependentUpon>CommodityDirectionControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Search\SearchCheckButtonControl.xaml.cs">
       <DependentUpon>SearchCheckButtonControl.xaml</DependentUpon>
@@ -114,6 +127,10 @@
       <Project>{B7FC1012-787D-489F-A846-32062538CB77}</Project>
       <Name>Media</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Options\Options.csproj">
+      <Project>{4959bb8a-7823-4aca-9883-117edde207b2}</Project>
+      <Name>Options</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Photo\Photo.csproj">
       <Project>{EE93DDA8-DF77-4E53-8B34-6439F3079748}</Project>
       <Name>Photo</Name>
@@ -136,11 +153,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\ResultSearch\ResultSearchGridNavigateControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Search\BrandControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Search\ButtonSearchControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Search\AdvanceSearchControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Search\CommodityDirectionControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

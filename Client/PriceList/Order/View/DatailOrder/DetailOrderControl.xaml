@@ -125,7 +125,7 @@
                     </DataGridTextColumn>
                     <DataGridTextColumn IsReadOnly="True" 
                                         Width="Auto"
-                                        Binding="{Binding Path=Brand.Name, Mode=OneWay}">
+                                        Binding="{Binding Path=Brand, Mode=OneWay}">
                         <DataGridTextColumn.HeaderTemplate>
                             <DataTemplate>
                                 <TextBlock Text="Бренд" 

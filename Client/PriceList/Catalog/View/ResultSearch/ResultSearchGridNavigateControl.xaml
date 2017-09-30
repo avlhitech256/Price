@@ -1,0 +1,82 @@
+﻿<UserControl x:Class="Catalog.View.ResultSearch.ResultSearchGridNavigateControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Catalog.View.ResultSearch"
+             mc:Ignorable="d" 
+             d:DesignHeight="40" d:DesignWidth="900">
+    <Border>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Button Content="В начало"
+                Grid.Column="1"
+                Width="100"
+                Style="{DynamicResource ButtonStyle}"
+                Command="{Binding Path=CatalogNavigate.FirstCommand}"
+                IsDefault="True"/>
+            <Button Content="Предыдущая"
+                Grid.Column="2"
+                Width="100"
+                Style="{DynamicResource ButtonStyle}"
+                Command="{Binding Path=CatalogNavigate.PreviousCommand}"
+                IsDefault="True"/>
+            <TextBox Grid.Column="3"
+                     MinWidth="50"
+                     Foreground="#FF000059"
+                     VerticalAlignment="Center" 
+                     FontWeight="Bold" 
+                     FontStyle="Italic"               
+                     Text="{Binding Path=CatalogNavigate.CurrentPage, UpdateSourceTrigger=PropertyChanged}" 
+                     Margin="20,0,5,0"
+                     KeyDown="CurrentPage_OnKeyDown"
+                     LostFocus="CurrentPage_OnLostFocus"/>
+            <Label Grid.Column="4"
+                   MinWidth="100"
+                   VerticalAlignment="Center"
+                   Margin="0,0,20,0"
+                   Content ="{Binding Path=CatalogNavigate.StringCountOfPages}">
+            </Label>
+            <Button Content="Следующая"
+                Grid.Column="5"
+                Width="100"
+                Style="{DynamicResource ButtonStyle}"
+                Command="{Binding Path=CatalogNavigate.NextCommand}"
+                IsDefault="True"/>
+            <Button Content="В конец"
+                Grid.Column="6"
+                Width="100"
+                Style="{DynamicResource ButtonStyle}"
+                Command="{Binding Path=CatalogNavigate.LastCommand}"
+                IsDefault="True"/>
+            <DockPanel Grid.Column="7"
+                       Dock="Right">
+                <TextBox MinWidth="50"
+                         DockPanel.Dock="Right"
+                         Foreground="#FF000059"
+                         VerticalAlignment="Center" 
+                         FontWeight="Bold" 
+                         FontStyle="Italic"               
+                         Margin="0,0,10,0"
+                         Text="{Binding Path=CatalogNavigate.MaximumRows, UpdateSourceTrigger=PropertyChanged}" 
+                         KeyDown="MaxRow_OnKeyDown"
+                         LostFocus="MaxRow_OnLostFocus"/>
+                <Label MinWidth="100"
+                       DockPanel.Dock="Right"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Right"
+                       HorizontalContentAlignment="Right"
+                       Content="Количество записей на странице: "/>
+            </DockPanel>
+        </Grid>
+    </Border>
+</UserControl>

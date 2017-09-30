@@ -52,6 +52,7 @@
     <Compile Include="Convert\Implementation\InverseBoolConverter.cs" />
     <Compile Include="Convert\Implementation\StringToOrderStatus.cs" />
     <Compile Include="Data\Constant\Flag.cs" />
+    <Compile Include="Data\Enum\CatalogItemStatus.cs" />
     <Compile Include="Data\Enum\MenuItemName.cs" />
     <Compile Include="Data\Enum\Answer.cs" />
     <Compile Include="Data\Enum\OrderStatus.cs" />

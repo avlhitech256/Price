@@ -59,6 +59,7 @@ namespace Catalog.SearchCriteria
             FirstBrandItemEntity = new BrandItemEntity {Id = -1L, Code = Guid.NewGuid(), Name = "Все бренды"};
             Clear();
             SearchComplited();
+            IsModified = true;
         }
 
         #endregion

@@ -1,10 +1,17 @@
 ﻿using System;
+using Common.Data.Notifier;
 using DatabaseService.DataBaseContext.Entities;
 
 namespace Domain.Data.Object
 {
-    public class BrandItem
+    public class BrandItem : Notifier
     {
+        #region Members
+
+        private long position;
+
+        #endregion
+
         #region Constructors
 
         public BrandItem(BrandItemEntity entity)
@@ -15,6 +22,22 @@ namespace Domain.Data.Object
         #endregion
 
         #region Properties
+
+        public long Position
+        {
+            get
+            {
+                return position;
+            }
+            set
+            {
+                if (position != value)
+                {
+                    position = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public BrandItemEntity Entity { get; }
 
