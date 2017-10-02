@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using Catalog.Model;
@@ -29,13 +30,13 @@ namespace Catalog.ViewModel
 
         public CatalogSearchCriteria SearchCriteria { get; }
 
-        public BrandItemEntity SelectedItem
+        public BrandItem SelectedItem
         {
             get { return Model?.SelectedItem; }
             set { Model.SelectedItem = value; }
         }
 
-        public List<BrandItemEntity> Entities => Model?.Entities;
+        public ObservableCollection<BrandItem> Entities => Model?.Entities;
 
         #endregion
 
@@ -46,6 +47,26 @@ namespace Catalog.ViewModel
             if (Model != null)
             {
                 Model.PropertyChanged += Model_PropertyChanged;
+            }
+
+            if (SearchCriteria != null)
+            {
+                SearchCriteria.EnabledEdvanceSearchChanged += SearchCriteria_EnabledEdvanceSearchChanged;
+            }
+        }
+
+        private void SearchCriteria_EnabledEdvanceSearchChanged(object sender, Common.Event.DoubleAnimationEventArgs e)
+        {
+            if (SearchCriteria != null)
+            {
+                if (SearchCriteria.Vaz || SearchCriteria.Zaz || SearchCriteria.Gaz)
+                {
+                    Refresh();
+                }
+            }
+            else
+            {
+                Refresh();
             }
         }
 
@@ -65,7 +86,7 @@ namespace Catalog.ViewModel
             }
         }
 
-        public void Refresh()
+        private void Refresh()
         {
             Model.SelectEntities();
         }

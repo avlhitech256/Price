@@ -108,6 +108,8 @@
                           VerticalAlignment="Center" 
                           FontWeight="Bold" 
                           FontStyle="Italic"
+                          IsReadOnly="{Binding Path=SearchCriteria.EnabledEdvanceSearch, Mode=OneWay}"
+                          IsEditable="{Binding Path=SearchCriteria.EnableBrandComboBox, Mode=OneWay}"
                           SelectedValue="{Binding Path=SearchCriteria.BrandId, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"
                           ItemsSource="{Binding Path=BrandItems}" DisplayMemberPath="Name" SelectedValuePath="Id"
                           Text="{Binding Path=SearchCriteria.BrandName}"/>

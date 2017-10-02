@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Common.Annotations;
 using Common.Data.Notifier;
@@ -48,6 +49,16 @@ namespace Catalog.SearchCriteria
 
         private const int MinWidthMainWindowWithoutAdvancedSearch = 1070;
 
+        private List<Guid> commodityVazDirection;
+        private List<Guid> commodityGazDirection;
+        private List<Guid> commodityZazDirection;
+        private List<Guid> commodityChemistryDirection;
+        private List<Guid> commodityBatteryDirection;
+        private List<Guid> commodityGasDirection;
+        private List<Guid> commodityInstrumentDirection;
+
+
+
         #endregion
 
         #region Constructors
@@ -57,6 +68,7 @@ namespace Catalog.SearchCriteria
             edvanceSearchWidth = 0;
             enabledEdvanceSearch = false;
             FirstBrandItemEntity = new BrandItemEntity {Id = -1L, Code = Guid.NewGuid(), Name = "Все бренды"};
+            InitCommodityDirection();
             Clear();
             SearchComplited();
             IsModified = true;
@@ -65,6 +77,15 @@ namespace Catalog.SearchCriteria
         #endregion
 
         #region Properties
+
+        public List<Guid> CommodityVazDirection => commodityVazDirection;
+        public List<Guid> CommodityGazDirection => commodityGazDirection;
+        public List<Guid> CommodityZazDirection => commodityZazDirection;
+        public List<Guid> CommodityChemistryDirection => commodityChemistryDirection;
+        public List<Guid> CommodityBatteryDirection => commodityBatteryDirection;
+        public List<Guid> CommodityGasDirection => commodityGasDirection;
+        public List<Guid> CommodityInstrumentDirection => commodityInstrumentDirection;
+
 
         public bool IsModified
         {
@@ -349,22 +370,28 @@ namespace Catalog.SearchCriteria
             }
         }
 
-        private bool EnabledEdvanceSearch
+        public bool EnabledEdvanceSearch
         {
             get
             {
                 return enabledEdvanceSearch;
             }
-            set
+            private set
             {
                 if (enabledEdvanceSearch != value)
                 {
                     enabledEdvanceSearch = value;
                     OnEnabledEdvanceSearchChanged();
                     OnPropertyChanged();
+                    OnPropertyChanged(nameof(EnableEdvanceTree));
+                    OnPropertyChanged(nameof(EnableBrandComboBox));
                 }
             }
         }
+
+        public bool EnableBrandComboBox => !EnabledEdvanceSearch;
+
+        public bool EnableEdvanceTree => Chemistry || Battery || Gas || Instrument;
 
         private int EdvanceSearchWidth
         {
@@ -510,6 +537,102 @@ namespace Catalog.SearchCriteria
         {
             EnabledEdvanceSearch = Vaz || Gaz || Zaz || Chemistry || Battery || Gas || Instrument;
             EdvanceSearchWidth = EnabledEdvanceSearch ? 150 : 0;
+        }
+
+        private void InitCommodityDirection()
+        {
+            commodityVazDirection = new List<Guid>
+            {
+                Guid.Parse("01b0f02e-eb13-11e3-8064-00163e6000f8"),
+                Guid.Parse("01b0f02d-eb13-11e3-8064-00163e6000f8")
+            };
+
+            commodityGazDirection = new List<Guid>
+            {
+                Guid.Parse("01b0f032-eb13-11e3-8064-00163e6000f8"),
+                Guid.Parse("228decab-d8a3-11e6-ae82-0025909a3c49"),
+                Guid.Parse("01b0f02f-eb13-11e3-8064-00163e6000f8"),
+                Guid.Parse("01b0f030-eb13-11e3-8064-00163e6000f8")
+            };
+
+            commodityZazDirection = new List<Guid>
+            {
+                Guid.Parse("01b0f025-eb13-11e3-8064-00163e6000f8"),
+                Guid.Parse("01b0f038-eb13-11e3-8064-00163e6000f8"),
+                Guid.Parse("4dfccc74-a71b-11e6-bdf3-0025909a3c49"),
+                Guid.Parse("01b0f02b-eb13-11e3-8064-00163e6000f8"),
+                Guid.Parse("c914c4e3-1b57-11e6-a58f-0025909a3c49"),
+                Guid.Parse("aca2b2fb-7637-11e4-8fbf-b1a970ab8551"),
+                Guid.Parse("01b0f027-eb13-11e3-8064-00163e6000f8"),
+                Guid.Parse("85cf60de-cc06-11e1-af29-00163e791aa4"),
+                Guid.Parse("8e592e83-77bc-11e5-a68c-0025909a3c49")
+            };
+
+            commodityChemistryDirection = new List<Guid>
+            {
+                Guid.Parse("01b0f03b-eb13-11e3-8064-00163e6000f8"),
+                Guid.Parse("01b0f03c-eb13-11e3-8064-00163e6000f8")
+            };
+
+            commodityBatteryDirection = new List<Guid>
+            {
+                Guid.Parse("e2eda7fa-5452-11e4-a274-d8a704927acb")
+            };
+
+            commodityGasDirection = new List<Guid>
+            {
+                Guid.Parse("01b0f038-eb13-11e3-8064-00163e6000f8"),
+                Guid.Parse("01b0f039-eb13-11e3-8064-00163e6000f8")
+            };
+
+            commodityInstrumentDirection = new List<Guid>
+            {
+                Guid.Parse("e2eda7fb-5452-11e4-a274-d8a704927acb"),
+                Guid.Parse("711e97be-53a0-11e4-a274-d8a704927acb"),
+                Guid.Parse("01b0f03d-eb13-11e3-8064-00163e6000f8")
+            };
+        }
+
+        public List<Guid> GetCommodityDirectionCriteria()
+        {
+            List<Guid> criteria = new List<Guid>();
+
+            if (Vaz)
+            {
+                criteria.AddRange(CommodityVazDirection);
+            }
+
+            if (Gaz)
+            {
+                criteria.AddRange(CommodityGazDirection);
+            }
+
+            if (Zaz)
+            {
+                criteria.AddRange(CommodityZazDirection);
+            }
+
+            if (Chemistry)
+            {
+                criteria.AddRange(CommodityChemistryDirection);
+            }
+
+            if (Battery)
+            {
+                criteria.AddRange(CommodityBatteryDirection);
+            }
+
+            if (Gas)
+            {
+                criteria.AddRange(CommodityGasDirection);
+            }
+
+            if (Instrument)
+            {
+                criteria.AddRange(CommodityInstrumentDirection);
+            }
+
+            return criteria;
         }
 
         #endregion

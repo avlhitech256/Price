@@ -164,13 +164,51 @@ namespace Catalog.ViewModel
             {
                 Model.PropertyChanged += OnChangedSelectedItem;
                 Model.CountChanged += OnCountChanged;
+
                 if (Model.SearchCriteria != null)
                 {
                     Model.SearchCriteria.EnabledEdvanceSearchChanged += OnShowAdvanceSearchControl;
                     Model.SearchCriteria.EdvanceSearchWidthChanged += OnEdvanceSearchWidthChanged;
+                    Model.SearchCriteria.PropertyChanged += SearchCriteria_PropertyChanged;
                 }
             }
 
+            if (CatalogEdvanceSearchViewModel != null)
+            {
+                CatalogEdvanceSearchViewModel.PropertyChanged += CatalogEdvanceSearchViewModel_PropertyChanged;
+            }
+        }
+
+        private void SearchCriteria_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (SearchCriteria != null && SearchCriteria.EnabledEdvanceSearch &&
+                (e.PropertyName == nameof(SearchCriteria.Vaz) ||
+                 e.PropertyName == nameof(SearchCriteria.Gaz) ||
+                 e.PropertyName == nameof(SearchCriteria.Zaz) ||
+                 e.PropertyName == nameof(SearchCriteria.Chemistry) ||
+                 e.PropertyName == nameof(SearchCriteria.Battery) ||
+                 e.PropertyName == nameof(SearchCriteria.Gas) ||
+                 e.PropertyName == nameof(SearchCriteria.Instrument)))
+            {
+                RefreshEdvanceSearch();
+            }
+        }
+
+        private void CatalogEdvanceSearchViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(CatalogEdvanceSearchViewModel.SelectedItem) && Model != null)
+            {
+                if (CatalogEdvanceSearchViewModel.SelectedItem != null)
+                {
+                    RefreshEdvanceSearch();
+                }
+            }
+        }
+
+        private void RefreshEdvanceSearch()
+        {
+            Model.ExternalBrandItem = CatalogEdvanceSearchViewModel.SelectedItem;
+            Model.SelectEntities();
         }
 
         private void OnCountChanged(object sender, DecimalValueChangedEventArgs e)
@@ -292,7 +330,6 @@ namespace Catalog.ViewModel
 
         private void OnShowAdvanceSearchControl(object sender, DoubleAnimationEventArgs e)
         {
-            CatalogEdvanceSearchViewModel.Refresh();
             Messenger?.Send(CommandName.ShowAdvanceSearchControl, e);
         }
 

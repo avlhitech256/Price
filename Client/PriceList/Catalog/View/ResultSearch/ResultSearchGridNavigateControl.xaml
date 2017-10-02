@@ -22,13 +22,13 @@
                 Grid.Column="1"
                 Width="100"
                 Style="{DynamicResource ButtonStyle}"
-                Command="{Binding Path=CatalogNavigate.FirstCommand}"
+                Command="{Binding Path=CatalogNavigateViewModel.FirstCommand}"
                 IsDefault="True"/>
             <Button Content="Предыдущая"
                 Grid.Column="2"
                 Width="100"
                 Style="{DynamicResource ButtonStyle}"
-                Command="{Binding Path=CatalogNavigate.PreviousCommand}"
+                Command="{Binding Path=CatalogNavigateViewModel.PreviousCommand}"
                 IsDefault="True"/>
             <TextBox Grid.Column="3"
                      MinWidth="50"
@@ -36,7 +36,7 @@
                      VerticalAlignment="Center" 
                      FontWeight="Bold" 
                      FontStyle="Italic"               
-                     Text="{Binding Path=CatalogNavigate.CurrentPage, UpdateSourceTrigger=PropertyChanged}" 
+                     Text="{Binding Path=CatalogNavigateViewModel.CurrentPage, UpdateSourceTrigger=PropertyChanged}" 
                      Margin="20,0,5,0"
                      KeyDown="CurrentPage_OnKeyDown"
                      LostFocus="CurrentPage_OnLostFocus"/>
@@ -44,19 +44,19 @@
                    MinWidth="100"
                    VerticalAlignment="Center"
                    Margin="0,0,20,0"
-                   Content ="{Binding Path=CatalogNavigate.StringCountOfPages}">
+                   Content ="{Binding Path=CatalogNavigateViewModel.StringCountOfPages}">
             </Label>
             <Button Content="Следующая"
                 Grid.Column="5"
                 Width="100"
                 Style="{DynamicResource ButtonStyle}"
-                Command="{Binding Path=CatalogNavigate.NextCommand}"
+                Command="{Binding Path=CatalogNavigateViewModel.NextCommand}"
                 IsDefault="True"/>
             <Button Content="В конец"
                 Grid.Column="6"
                 Width="100"
                 Style="{DynamicResource ButtonStyle}"
-                Command="{Binding Path=CatalogNavigate.LastCommand}"
+                Command="{Binding Path=CatalogNavigateViewModel.LastCommand}"
                 IsDefault="True"/>
             <DockPanel Grid.Column="7"
                        Dock="Right">
@@ -67,7 +67,7 @@
                          FontWeight="Bold" 
                          FontStyle="Italic"               
                          Margin="0,0,10,0"
-                         Text="{Binding Path=CatalogNavigate.MaximumRows, UpdateSourceTrigger=PropertyChanged}" 
+                         Text="{Binding Path=CatalogNavigateViewModel.MaximumRows, UpdateSourceTrigger=PropertyChanged}" 
                          KeyDown="MaxRow_OnKeyDown"
                          LostFocus="MaxRow_OnLostFocus"/>
                 <Label MinWidth="100"
