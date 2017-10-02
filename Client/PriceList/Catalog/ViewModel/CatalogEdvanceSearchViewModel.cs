@@ -1,11 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using Catalog.Model;
 using Catalog.SearchCriteria;
 using Common.Data.Notifier;
-using DatabaseService.DataBaseContext.Entities;
 using Domain.Data.Object;
 using Domain.DomainContext;
 

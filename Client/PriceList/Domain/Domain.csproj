@@ -50,6 +50,7 @@
     <Compile Include="Data\Object\BasketItem.cs" />
     <Compile Include="Data\Object\BrandItem.cs" />
     <Compile Include="Data\Object\CatalogItem.cs" />
+    <Compile Include="Data\Object\DirectoryItem.cs" />
     <Compile Include="Data\Object\OrderItem.cs" />
     <Compile Include="DomainContext\Implementation\DomainContext.cs" />
     <Compile Include="DomainContext\IDomainContext.cs" />

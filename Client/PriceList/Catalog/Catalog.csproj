@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\CatalogBrandModel.cs" />
+    <Compile Include="Model\CatalogDirectoryModel.cs" />
     <Compile Include="Model\CatalogModel.cs" />
     <Compile Include="Model\CatalogPageSource.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -65,6 +66,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="SearchCriteria\CatalogSearchCriteria.cs" />
+    <Compile Include="ViewModel\CatalogDirectoryViewModel.cs" />
     <Compile Include="ViewModel\CatalogEdvanceSearchViewModel.cs" />
     <Compile Include="ViewModel\CatalogNavigateViewModel.cs" />
     <Compile Include="View\CatalogControl.xaml.cs">
@@ -90,6 +92,9 @@
     </Compile>
     <Compile Include="View\Search\AdvanceSearchControl.xaml.cs">
       <DependentUpon>AdvanceSearchControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Search\CatalogDirectorySearchControl.xaml.cs">
+      <DependentUpon>CatalogDirectorySearchControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Search\CommodityDirectionControl.xaml.cs">
       <DependentUpon>CommodityDirectionControl.xaml</DependentUpon>
@@ -166,6 +171,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Search\AdvanceSearchControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Search\CatalogDirectorySearchControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
