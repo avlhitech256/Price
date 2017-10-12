@@ -48,20 +48,19 @@ namespace Catalog.ViewModel
 
             if (SearchCriteria != null)
             {
+                SearchCriteria.DirectoryItemsChanged += SearchCriteria_DirectoryItemsChanged;
                 SearchCriteria.EnabledEdvanceSearchChanged += SearchCriteria_EnabledEdvanceSearchChanged;
             }
         }
 
+        private void SearchCriteria_DirectoryItemsChanged(object sender, System.EventArgs e)
+        {
+            Refresh();
+        }
+
         private void SearchCriteria_EnabledEdvanceSearchChanged(object sender, Common.Event.DoubleAnimationEventArgs e)
         {
-            if (SearchCriteria != null)
-            {
-                if (SearchCriteria.Vaz || SearchCriteria.Zaz || SearchCriteria.Gaz)
-                {
-                    Refresh();
-                }
-            }
-            else
+            if (SearchCriteria != null && !SearchCriteria.EnabledEdvanceSearch)
             {
                 Refresh();
             }

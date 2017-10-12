@@ -23,6 +23,8 @@ namespace DatabaseService.DataService
 
         void LoadPhotos(BasketItemEntity entity);
 
+        void LoadParent(DirectoryEntity entity);
+
         void AddPhoto(CatalogItemEntity entity, byte[] photo);
 
         decimal GetCount(CatalogItemEntity entity);

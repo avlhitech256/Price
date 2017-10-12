@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using Common.Annotations;
 using Common.Data.Notifier;
 using Common.Event;
 using DatabaseService.DataBaseContext.Entities;
+using Domain.Data.Object;
 
 namespace Catalog.SearchCriteria
 {
@@ -57,8 +60,6 @@ namespace Catalog.SearchCriteria
         private List<Guid> commodityGasDirection;
         private List<Guid> commodityInstrumentDirection;
 
-
-
         #endregion
 
         #region Constructors
@@ -68,6 +69,7 @@ namespace Catalog.SearchCriteria
             edvanceSearchWidth = 0;
             enabledEdvanceSearch = false;
             FirstBrandItemEntity = new BrandItemEntity {Id = -1L, Code = Guid.NewGuid(), Name = "Все бренды"};
+            SelectedDirectoryItems = new ObservableCollection<DirectoryItem>();
             InitCommodityDirection();
             Clear();
             SearchComplited();
@@ -374,7 +376,7 @@ namespace Catalog.SearchCriteria
         {
             get
             {
-                return enabledEdvanceSearch;
+                return Vaz || Gaz || Zaz || Chemistry || Battery || Gas || Instrument; 
             }
             private set
             {
@@ -410,6 +412,8 @@ namespace Catalog.SearchCriteria
             }
         }
 
+        public ObservableCollection<DirectoryItem> SelectedDirectoryItems { get; }
+
         #endregion
 
         #region Methods
@@ -438,6 +442,11 @@ namespace Catalog.SearchCriteria
         private void OnSearchCriteriaCleared()
         {
             SearchCriteriaCleared?.Invoke(this, new EventArgs());
+        }
+
+        private void OnDirectoryChanged()
+        {
+            DirectoryItemsChanged?.Invoke(this, new EventArgs());
         }
 
         private void OnEnabledEdvanceSearchChanged()
@@ -471,6 +480,7 @@ namespace Catalog.SearchCriteria
             Battery = false;
             Gas = false;
             Instrument = false;
+            SelectedDirectoryItems.Clear();
         }
 
         private bool SearchCriteriaIsEmpty()
@@ -495,6 +505,11 @@ namespace Catalog.SearchCriteria
         {
             CopyValueToOld();
             IsModified = false;
+        }
+
+        public void DirectoryComplited()
+        {
+            OnDirectoryChanged();
         }
 
         private void CopyValueToOld()
@@ -635,11 +650,18 @@ namespace Catalog.SearchCriteria
             return criteria;
         }
 
+        public List<long> GetDirectoryIds()
+        {
+            return SelectedDirectoryItems.Select(x => x.Id).ToList();
+        } 
+
         #endregion
 
         #region Events
 
         public event EventHandler SearchCriteriaChanged;
+
+        public event EventHandler DirectoryItemsChanged;
 
         public event EventHandler SearchCriteriaCleared;
 

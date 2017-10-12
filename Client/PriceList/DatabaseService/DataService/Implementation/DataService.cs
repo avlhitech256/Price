@@ -85,6 +85,14 @@ namespace DatabaseService.DataService.Implementation
             }
         }
 
+        public void LoadParent(DirectoryEntity entity)
+        {
+            if (!DataBaseContext.Entry(entity).Reference(p => p.Parent).IsLoaded)
+            {
+                DataBaseContext.Entry(entity).Reference(p => p.Parent).Load();
+            }
+        }
+
         public void LoadBasket(CatalogItemEntity entity)
         {
             if (!DataBaseContext.Entry(entity).Collection(c => c.BasketItems).IsLoaded)

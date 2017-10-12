@@ -170,6 +170,7 @@ namespace Catalog.Model
                 DateTimeOffset dateForNew = DateTimeOffset.Now.AddDays(-14);
                 DateTimeOffset dateForPrice = DateTimeOffset.Now.AddDays(-7);
                 List<Guid> commodityDirectionCriteria = SearchCriteria?.GetCommodityDirectionCriteria() ?? new List<Guid>();
+                List<long> directoryIds = SearchCriteria?.GetDirectoryIds() ?? new List<long>();
 
                 items = DataService.Select<BrandItemEntity>()
                     .SelectMany(x => x.CatalogItems)
@@ -186,6 +187,7 @@ namespace Catalog.Model
                                  x.Status == CatalogItemStatus.PriceIsUp && x.LastUpdatedStatus >= dateForPrice))
                     .Where(x => !commodityDirectionCriteria.Any() || 
                                 x.CommodityDirection.Any(c => commodityDirectionCriteria.Contains(c.Code)))
+                    .Where(x => directoryIds.Contains(x.Directory.Id))
                     .Select(x => x.Brand)
                     .Distinct()
                     .OrderBy(x => x.Name);

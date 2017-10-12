@@ -32,11 +32,18 @@
     <Border CornerRadius="3" BorderThickness="1">
         <Grid>
             <Grid.ColumnDefinitions>
+                <ColumnDefinition x:Name="LeftColumn" Width="0"></ColumnDefinition>
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <search1:AdvanceSearchControl x:Name="LeftAdvanceSearchControl" Width="0" Grid.Column="0"/>
-            <Grid Grid.Column="1">
+            <search1:AdvanceSearchControl x:Name="LeftAdvanceSearchControl" Width="Auto" Grid.Column="0"/>
+            <GridSplitter x:Name="Splitter" 
+                          Grid.Column="1" 
+                          VerticalAlignment="Stretch" 
+                          HorizontalAlignment="Center" 
+                          Width="0"
+                          IsEnabled="False"/>
+            <Grid Grid.Column="2">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition Height="Auto"></RowDefinition>

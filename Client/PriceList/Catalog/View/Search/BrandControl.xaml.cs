@@ -7,9 +7,13 @@ namespace Catalog.View.Search
     /// </summary>
     public partial class BrandControl : UserControl
     {
+        #region Constructors
+
         public BrandControl()
         {
             InitializeComponent();
         }
+
+        #endregion
     }
 }

@@ -413,7 +413,9 @@ namespace Catalog.Model
                 DateTimeOffset dateForNew = DateTimeOffset.Now.AddDays(-14);
                 DateTimeOffset dateForPrice = DateTimeOffset.Now.AddDays(-7);
                 List<Guid> commodityDirectionCriteria = SearchCriteria?.GetCommodityDirectionCriteria() ?? new List<Guid>();
-
+                List<long> directoryIds = SearchCriteria?.GetDirectoryIds() ?? new List<long>();
+                bool enableExternalBrandItem = ExternalBrandItem != null;
+                long externalBrandId = ExternalBrandItem?.Id ?? -1L;
 
                 items = DataService.Select<CatalogItemEntity>()
                     .Include(x => x.BasketItems)
@@ -424,7 +426,8 @@ namespace Catalog.Model
                                  (SearchCriteria.IsNew && x.Status == CatalogItemStatus.New && x.DateOfCreation >= dateForNew) ||
                                  (SearchCriteria.PriceIsDown && x.Status == CatalogItemStatus.PriceIsDown && x.LastUpdatedStatus >= dateForPrice) ||
                                  (SearchCriteria.PriceIsUp && x.Status == CatalogItemStatus.PriceIsUp && x.LastUpdatedStatus >= dateForPrice))
-                    .Where(x => x.Brand.Id == ExternalBrandItem.Id)
+                    .Where(x => directoryIds.Any() && directoryIds.Contains(x.Directory.Id))
+                    .Where(x => x.Brand.Id == externalBrandId)
                     .Where(x => !commodityDirectionCriteria.Any() || x.CommodityDirection.Any(c => commodityDirectionCriteria.Contains(c.Code)));
             }
 

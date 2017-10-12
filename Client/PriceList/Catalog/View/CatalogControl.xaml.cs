@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media.Animation;
 using Catalog.ViewModel;
 using Common.Event;
 using Common.Messenger.Implementation;
+using CommonControl.Animation;
 using CommonControl.SearchControl;
 using Domain.Data.Object;
+using static System.Double;
 
 namespace Catalog.View
 {
@@ -14,10 +18,22 @@ namespace Catalog.View
     /// </summary>
     public partial class CatalogControl : SearchControl
     {
+        #region Members
+
+        private double lastWindth = 0;
+
+        #endregion
+
+        #region Constructors
+
         public CatalogControl()
         {
             InitializeComponent();
         }
+
+        #endregion
+
+        #region Methods
 
         protected override void SetDomainContext()
         {
@@ -48,19 +64,44 @@ namespace Catalog.View
 
         private void ShowAdvanceSearchControl(DoubleAnimationEventArgs args)
         {
-            int commonTime = (LeftAdvanceSearchControl.ActualWidth - args.To) > 0 ? 300 : 150;
-            int time = Math.Abs((int)((LeftAdvanceSearchControl.ActualWidth - args.To) * commonTime / 110));
+            int commonTime = (LeftColumn.ActualWidth - args.To) > 0 ? 300 : 200;
+            int time = Math.Abs((int)((LeftColumn.ActualWidth - args.To) * commonTime / 110));
 
-            var animation = new DoubleAnimation
+            if (Math.Abs(lastWindth) < Epsilon)
             {
-                From = LeftAdvanceSearchControl.ActualWidth,
-                To = args.To,
+                lastWindth = args.To;
+            }
+
+            double to;
+
+            if (Math.Abs(args.To) < Epsilon)
+            {
+                lastWindth = LeftColumn.ActualWidth;
+                to = 0;
+            }
+            else
+            {
+                to = lastWindth;
+            }
+            
+            var animation = new GridLengthAnimation
+            {
+                From = new GridLength(LeftColumn.ActualWidth, GridUnitType.Pixel),
+                To = new GridLength(to, GridUnitType.Pixel),
                 Duration = TimeSpan.FromMilliseconds(time)
             };
 
-            LeftAdvanceSearchControl.BeginAnimation(WidthProperty, animation);
-        }
+            animation.Completed += delegate
+            {
+                bool enable = args.To > 0;
+                Splitter.IsEnabled = enable;
+                Splitter.Visibility = enable ? Visibility.Visible : Visibility.Collapsed;
+                Splitter.Width = enable ? 3 : 0;
+            };
 
+            LeftColumn.BeginAnimation(ColumnDefinition.WidthProperty, animation);
+        }
+         
 
         private bool CanShowAdvanceSearchControl(DoubleAnimationEventArgs args)
         {
@@ -80,5 +121,7 @@ namespace Catalog.View
         {
             return item != null;
         }
+
+        #endregion
     }
 }

@@ -7,9 +7,13 @@ namespace Catalog.View.Search
     /// </summary>
     public partial class CommodityDirectionControl : UserControl
     {
+        #region Constructors
+
         public CommodityDirectionControl()
         {
             InitializeComponent();
         }
+
+        #endregion
     }
 }

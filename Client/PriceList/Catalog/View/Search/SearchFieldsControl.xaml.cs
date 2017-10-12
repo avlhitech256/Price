@@ -7,9 +7,13 @@ namespace Catalog.View.Search
     /// </summary>
     public partial class SearchFieldsControl : UserControl
     {
+        #region Constructors
+
         public SearchFieldsControl()
         {
             InitializeComponent();
         }
+
+        #endregion
     }
 }

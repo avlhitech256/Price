@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using Common.Data.Notifier;
 using DatabaseService.DataBaseContext.Entities;
 using DatabaseService.DataService;
-using Media.Image;
 
 namespace Domain.Data.Object
 {
@@ -14,17 +14,20 @@ namespace Domain.Data.Object
 
         private DirectoryEntity entity;
         private bool selected;
-        private List<DirectoryItem> subdirectories;
+        private DirectoryItem parent;
+        private readonly IDataService dataService;
 
         #endregion
 
         #region Constructors
 
-        public DirectoryItem(DirectoryEntity entity)
+        public DirectoryItem(IDataService dataService, DirectoryEntity entity)
         {
+            this.dataService = dataService;
             Entity = entity;
             Selected = false;
-            Subdirectories = new List<DirectoryItem>();
+            Subdirectories = new ObservableCollection<DirectoryItem>();
+            SubscribeEvents();
         }
 
         #endregion
@@ -111,20 +114,56 @@ namespace Domain.Data.Object
             }
         }
 
-        public List<DirectoryItem> Subdirectories
+        public DirectoryItem Parent
         {
             get
             {
-                return subdirectories;
+                return parent;
             }
             set
             {
-                if (subdirectories != value)
+                DirectoryEntity parentValue = LoadParent();
+
+                if (parent != value && (value == null || (parentValue != null && value.Id == parentValue.Id)))
                 {
-                    subdirectories = value;
+                    parent = value;
                     OnPropertyChanged();
                 }
             }
+        }
+
+        public ObservableCollection<DirectoryItem> Subdirectories { get; }
+
+        #endregion
+
+        #region Methods
+
+        private void SubscribeEvents()
+        {
+            Subdirectories.CollectionChanged += Subdirectories_CollectionChanged; ;
+        }
+
+        private void Subdirectories_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    e.NewItems.Cast<DirectoryItem>().ToList().ForEach(x => x.Parent = this);
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    e.OldItems.Cast<DirectoryItem>().ToList().ForEach(x => x.Parent = null);
+                    break;
+                case NotifyCollectionChangedAction.Replace:
+                    e.NewItems.Cast<DirectoryItem>().ToList().ForEach(x => x.Parent = this);
+                    e.OldItems.Cast<DirectoryItem>().ToList().ForEach(x => x.Parent = null);
+                    break;
+            }
+        }
+
+        private DirectoryEntity LoadParent()
+        {
+            dataService.LoadParent(Entity);
+            return Entity.Parent;
         }
 
         #endregion

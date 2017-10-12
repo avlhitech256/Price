@@ -2,11 +2,8 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Windows.Controls;
-using System.Windows.Documents;
 using Catalog.SearchCriteria;
 using Common.Data.Enum;
-using Common.Data.Holders;
 using Common.Data.Notifier;
 using DatabaseService.DataBaseContext.Entities;
 using DatabaseService.DataService;
@@ -19,9 +16,8 @@ namespace Catalog.Model
     {
         #region Members
 
-        private TreeViewItem selectedItem;
-        private List<TreeViewItem> entities;
-        private IDomainContext domainContext;
+        private DirectoryItem selectedItem;
+        private ObservableCollection<DirectoryItem> entities;
 
         #endregion
 
@@ -31,7 +27,7 @@ namespace Catalog.Model
         {
             DomainContext = domainContext;
             SearchCriteria = searchCriteria;
-            Entities = new List<TreeViewItem>();
+            Entities = new ObservableCollection<DirectoryItem>();
         }
 
         private IDomainContext DomainContext { get; }
@@ -45,7 +41,7 @@ namespace Catalog.Model
 
         #region Properties
 
-        public TreeViewItem SelectedItem
+        public DirectoryItem SelectedItem
         {
             get
             {
@@ -61,7 +57,7 @@ namespace Catalog.Model
             }
         }
 
-        public List<TreeViewItem> Entities
+        public ObservableCollection<DirectoryItem> Entities
         {
             get
             {
@@ -84,86 +80,94 @@ namespace Catalog.Model
         {
             if (SearchCriteria != null)
             {
-                long directoryId = ((DirectoryItem) SelectedItem?.Tag)?.Id ?? -1L;
+                long directoryId = SelectedItem?.Id ?? -1L;
                 Entities.Clear();
-                LongHolder position = new LongHolder { Value = 0 };
-
-                CreateDirectoryItems().ForEach(x => Entities.Add(CreateTreeViewItem(x)));
+                Entities = CreateDirectoryItems();
                 OnPropertyChanged(nameof(Entities));
-                SelectedItem = Entities.FirstOrDefault(x => ((DirectoryItem)x?.Tag)?.Id == directoryId) ?? Entities.FirstOrDefault();
+                SelectedItem = Entities.FirstOrDefault(x => x.Id == directoryId) ?? Entities.FirstOrDefault();
             }
         }
 
-        private TreeViewItem CreateTreeViewItem(DirectoryItem item)
-        {
-            TreeViewItem treeViewItem = null;
-
-            if (item != null)
-            {
-                treeViewItem = new TreeViewItem
-                {
-                    Tag = item,
-                    Header = item.Name
-                };
-
-                if (item.Subdirectories != null && item.Subdirectories.Any())
-                {
-                    item.Subdirectories.ForEach(x => treeViewItem.Items.Add(CreateTreeViewItem(x)));
-                } 
-            }
-
-            return treeViewItem;
-        }
-
-        private List<DirectoryItem> CreateDirectoryItems()
+        private ObservableCollection<DirectoryItem> CreateDirectoryItems()
         {
             List<DirectoryEntity> items = GetItems().ToList();
-            List<DirectoryItem> result = new List<DirectoryItem>();
-            items.ForEach(x => CreateItems(result, new DirectoryItem(x)));
+            ObservableCollection<DirectoryItem> result = new ObservableCollection<DirectoryItem>();
+            items.ForEach(x => CreateItems(result, x));
             return result;
         }
 
-        private void CreateItems(List<DirectoryItem> result, DirectoryItem item)
+        private void CreateItems(ObservableCollection<DirectoryItem> result, DirectoryEntity item)
         {
-            if (SearchInResult(result, item) && DataService?.DataBaseContext != null)
-            {
-                DirectoryEntity entity = DataService.DataBaseContext.DirectoryEntities
-                    .FirstOrDefault(x => x.SubDirectory.Contains(item.Entity));
+            DirectoryItem newItem = new DirectoryItem(DataService, item);
+            bool continueProcessing = true;
 
-                if (entity == null)
+            do
+            {
+                DataService.LoadParent(newItem.Entity);
+                DirectoryEntity parentEntity = newItem.Entity.Parent;
+
+                if (parentEntity == null)
                 {
-                    result.Add(item);
+                    result.Add(newItem);
+                    continueProcessing = false;
                 }
-                else
+                else 
                 {
-                    DirectoryItem newItem = new DirectoryItem(entity);
-                    newItem.Subdirectories.Add(item);
-                    SearchInResult(result, newItem);
+                    if (AddDirectoryItem(result, newItem))
+                    {
+                        continueProcessing = false;
+                    }
+                    else
+                    {
+                        DirectoryItem parentItem = new DirectoryItem(DataService, parentEntity);
+                        parentItem.Subdirectories.Add(newItem);
+                        newItem = parentItem;
+                    }
                 }
-            }
+
+            } while (continueProcessing);
         }
 
-        private bool SearchInResult(List<DirectoryItem> result, DirectoryItem item)
+        private bool AddDirectoryItem(ObservableCollection<DirectoryItem> items, DirectoryItem item)
         {
-            bool isSearch = false;
+            bool result = false;
 
-            foreach (DirectoryItem directoryItem in result)
+            foreach (DirectoryItem resultItem in items)
             {
-                if (directoryItem.Entity.SubDirectory.Contains(item.Entity))
-                {
-                    directoryItem.Subdirectories.Add(item);
-                    isSearch = true;
-                    break;
-                }
+                result = AddItem(resultItem, item);
 
-                if (SearchInResult(directoryItem.Subdirectories, item))
+                if (result)
                 {
-                    isSearch = true;
                     break;
                 }
             }
 
-            return isSearch;
+            return result;
+        }
+
+        private bool AddItem(DirectoryItem resultItem, DirectoryItem item)
+        {
+            bool result = false;
+
+            if (resultItem.Id == item.Entity.Parent.Id)
+            {
+                resultItem.Subdirectories.Add(item);
+                result = true;
+            }
+            else if (resultItem.Subdirectories != null && resultItem.Subdirectories.Any())
+            {
+                foreach (DirectoryItem subdirectoryItem in resultItem.Subdirectories)
+                {
+                    result = AddItem(subdirectoryItem, item);
+
+                    if (result)
+                    {
+                        break;
+                    }
+                }
+            }
+
+            return result;
         }
 
         private IQueryable<DirectoryEntity> GetItems()

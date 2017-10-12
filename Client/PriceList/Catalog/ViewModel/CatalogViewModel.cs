@@ -29,6 +29,7 @@ namespace Catalog.ViewModel
             ShowPhotoOnMouseDoubleClick = false;
             Model = new CatalogModel(domainContext);
             CatalogNavigateViewModel = new CatalogNavigateViewModel(Model);
+            CatalogDirectoryViewModel = new CatalogDirectoryViewModel(domainContext, Model?.SearchCriteria);
             CatalogEdvanceSearchViewModel = new CatalogEdvanceSearchViewModel(domainContext, Model?.SearchCriteria);
             SubscribeEvents();
             SubscribeMessenger();
@@ -50,6 +51,8 @@ namespace Catalog.ViewModel
         public CatalogSearchCriteria SearchCriteria => Model?.SearchCriteria;
 
         public CatalogNavigateViewModel CatalogNavigateViewModel { get; }
+
+        public CatalogDirectoryViewModel CatalogDirectoryViewModel { get; }
 
         public CatalogEdvanceSearchViewModel CatalogEdvanceSearchViewModel { get; }
 
@@ -198,10 +201,10 @@ namespace Catalog.ViewModel
         {
             if (e.PropertyName == nameof(CatalogEdvanceSearchViewModel.SelectedItem) && Model != null)
             {
-                if (CatalogEdvanceSearchViewModel.SelectedItem != null)
-                {
+                //if (CatalogEdvanceSearchViewModel.SelectedItem != null)
+                //{
                     RefreshEdvanceSearch();
-                }
+                //}
             }
         }
 
@@ -331,6 +334,11 @@ namespace Catalog.ViewModel
         private void OnShowAdvanceSearchControl(object sender, DoubleAnimationEventArgs e)
         {
             Messenger?.Send(CommandName.ShowAdvanceSearchControl, e);
+
+            if (SearchCriteria != null && !SearchCriteria.EnabledEdvanceSearch)
+            {
+                Model.SelectEntities();
+            }
         }
 
         private void OnEdvanceSearchWidthChanged(object sender, MinWidthEventArgs e)

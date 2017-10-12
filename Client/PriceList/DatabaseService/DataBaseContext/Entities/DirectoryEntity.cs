@@ -13,6 +13,8 @@ namespace DatabaseService.DataBaseContext.Entities
         [MaxLength(255)]
         public string Name { get; set; }
 
+        public virtual DirectoryEntity Parent { get; set; }
+
         public virtual List<DirectoryEntity> SubDirectory { get; set; }
 
         public virtual List<CatalogItemEntity> CatalogItems { get; set; }
