@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Linq;
 
-namespace Common.Convert.Implementation
+namespace Common.Service.Implementation
 {
     public static class Convert
     {

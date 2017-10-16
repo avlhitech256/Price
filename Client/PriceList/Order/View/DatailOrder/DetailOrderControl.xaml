@@ -5,11 +5,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Order.View.DatailOrder"
              xmlns:resultSearch="clr-namespace:Order.View.ResultSearch"
-             xmlns:implementation="clr-namespace:Common.Convert.Implementation;assembly=Common"
+             xmlns:implementation1="clr-namespace:Common.Service.Implementation;assembly=Common"
              mc:Ignorable="d" 
              d:DesignHeight="150" d:DesignWidth="1100">
     <UserControl.Resources>
-        <implementation:InverseBoolConverter x:Key="InverseBoolConverter"/>
+        <implementation1:InverseBoolConverter x:Key="InverseBoolConverter"/>
         <DataTemplate x:Key="TextColumnTemplate">
             <TextBox Text="{Binding Path=Count, StringFormat={}{0:n2}, Mode=TwoWay}" 
                      TextAlignment="Right"

@@ -31,6 +31,10 @@
     <DebugSymbols>false</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -45,12 +49,15 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Convert\IConvertService.cs" />
-    <Compile Include="Convert\Implementation\Convert.cs" />
-    <Compile Include="Convert\Implementation\ConvertService.cs" />
-    <Compile Include="Convert\Implementation\DateTimeToDateTimeOffsetConverter.cs" />
-    <Compile Include="Convert\Implementation\InverseBoolConverter.cs" />
-    <Compile Include="Convert\Implementation\StringToOrderStatus.cs" />
+    <Compile Include="Data\Enum\AsyncOperationType.cs" />
+    <Compile Include="Service\IAsyncOperationService.cs" />
+    <Compile Include="Service\IConvertService.cs" />
+    <Compile Include="Service\Implementation\AsyncOperationService .cs" />
+    <Compile Include="Service\Implementation\Convert.cs" />
+    <Compile Include="Service\Implementation\ConvertService.cs" />
+    <Compile Include="Service\Implementation\DateTimeToDateTimeOffsetConverter.cs" />
+    <Compile Include="Service\Implementation\InverseBoolConverter.cs" />
+    <Compile Include="Service\Implementation\StringToOrderStatus.cs" />
     <Compile Include="Data\Constant\Flag.cs" />
     <Compile Include="Data\Enum\CatalogItemStatus.cs" />
     <Compile Include="Data\Enum\MenuItemName.cs" />
@@ -66,6 +73,7 @@
     <Compile Include="Event\EventHandlers.cs" />
     <Compile Include="Event\MenuChangedEventArgs.cs" />
     <Compile Include="Event\MinWidthEventArgs.cs" />
+    <Compile Include="Event\PriceEventArgs.cs" />
     <Compile Include="Event\SetMenuFocusEventArgs.cs" />
     <Compile Include="Event\TopMenuMouseOverEventArgs.cs" />
     <Compile Include="Messenger\IMessenger.cs" />
@@ -74,9 +82,13 @@
     <Compile Include="Messenger\Implementation\MessengerCommand.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Thread\UIContext.cs" />
     <Compile Include="ViewModel\Command\CommonCommand.cs" />
     <Compile Include="ViewModel\Command\DelegateCommand.cs" />
     <Compile Include="ViewModel\IChildWindowViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

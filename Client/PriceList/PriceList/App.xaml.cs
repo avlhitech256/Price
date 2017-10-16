@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using Common.Thread;
 
 namespace PriceList
 {
@@ -7,5 +8,9 @@ namespace PriceList
     /// </summary>
     public partial class App : Application
     {
+        public App()
+        {
+            UIContext.Initialize();
+        }
     }
 }

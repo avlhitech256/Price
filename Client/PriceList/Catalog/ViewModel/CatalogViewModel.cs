@@ -20,6 +20,13 @@ namespace Catalog.ViewModel
 {
     public class CatalogViewModel : Notifier, IControlViewModel
     {
+        #region Members
+
+        public Action<string> ShowWaitScreen;
+        public Action HideWaitScreen;
+
+        #endregion
+
         #region Constructors
 
         public CatalogViewModel(IDomainContext domainContext)
@@ -28,8 +35,12 @@ namespace Catalog.ViewModel
             HasChanges = false;
             ShowPhotoOnMouseDoubleClick = false;
             Model = new CatalogModel(domainContext);
+            ShowWaitScreen = delegate { };
+            HideWaitScreen = delegate { };
             CatalogNavigateViewModel = new CatalogNavigateViewModel(Model);
             CatalogDirectoryViewModel = new CatalogDirectoryViewModel(domainContext, Model?.SearchCriteria);
+            CatalogDirectoryViewModel.ShowWaitScreen = x => { ShowWaitScreen.Invoke(x); };
+            CatalogDirectoryViewModel.HideWaitScreen = () => { HideWaitScreen.Invoke(); };
             CatalogEdvanceSearchViewModel = new CatalogEdvanceSearchViewModel(domainContext, Model?.SearchCriteria);
             SubscribeEvents();
             SubscribeMessenger();

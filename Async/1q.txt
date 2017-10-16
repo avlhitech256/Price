@@ -1,0 +1,98 @@
+        public TasklistFormViewModel(
+            ISecurityProvider securityProvider,
+            ITasklistEventsRouter tasklistEventsRouter,
+            ICommandsContainer commands,
+            IAsyncOperationService asyncOperationService,
+            ILayoutStorageRepository layoutStorageRepository,
+            ITasklistSession tasklistSession,
+            ITasklistSettingsService tasklistSettingsService,
+            ITATCalculationService tatCalculationService,
+            ITimerService timerService,
+            IFormattingService formattingService,
+            IPrintService printService,
+            ICommandsContainer commandsContainer,
+            ITaskListModificationsService taskListModificationsService,
+            IUserDecisionsService userDecisionsService,
+            ISaveTasklistService saveTasklistService)
+        {
+            this.securityProvider = securityProvider;
+            this.tasklistEventsRouter = tasklistEventsRouter;
+            this.commands = commands;
+            this.asyncOperationService = asyncOperationService;
+            this.layoutStorageRepository = layoutStorageRepository;
+            this.tasklistSession = tasklistSession;
+            this.tasklistSettingsService = tasklistSettingsService;
+            this.tatCalculationService = tatCalculationService;
+            this.timerService = timerService;
+            this.formattingService = formattingService;
+            this.printService = printService;
+            this.taskListModificationsService = taskListModificationsService;
+            this.userDecisionsService = userDecisionsService;
+            this.saveTasklistService = saveTasklistService;
+
+            TasklistHeaderGroupCaptionSections = new ObservableCollection<HeaderCaptionItem>();
+            ResultDetailsHeaderGroupCaptionSections = new ObservableCollection<HeaderCaptionItem>();
+
+            tasklistSession.TasklistLoaded += OnTasklistLoaded;
+            tasklistSession.TasklistSaved += OnTasklistSaved;
+            tasklistSession.CurrentGroupDataChanged += TasklistSession_DetailsDataChanged;
+            taskListModificationsService.TasklistChanged += OnTasklistChanged;
+
+            applyLayoutCommand = new DelegateCommand(ApplyTasklistLayouts);
+            printCommand = new DelegateCommand(Print, CanPrint);
+
+            saveCommand = new DelegateCommand(() => DoSave(OnSaveCompleted), CanDoSave);
+            saveOrderCommand = new DelegateCommand(() => DoSave(OnSaveCompleted), CanDoSaveOrder);
+
+            commandsContainer.Register(CommandName.Save, saveCommand);
+            commandsContainer.Register(CommandName.SaveOrder, saveOrderCommand);
+
+            AsyncOperationType[] waitFormSupported =
+            {
+                AsyncOperationType.Saving, AsyncOperationType.SearchDynamic,
+                AsyncOperationType.RefreshStatic, AsyncOperationType.RefreshDynamic
+            };
+
+            asyncOperationService.OperationStarted += (s, args) =>
+            {
+                if (waitFormSupported.Contains(args.Value))
+                {
+                    ShowWaitForm(args.Value);
+                }
+            };
+            asyncOperationService.OperationCompleted += (s, args) =>
+            {
+               if (waitFormSupported.Contains(args.Value))
+               {
+                  HideWaitForm();
+               }
+            };
+        }
+
+
+        public Action<AsyncOperationType> ShowWaitForm = delegate { };
+        public Action HideWaitForm = delegate { };
+
+
+        private static string GetDescription(AsyncOperationType type)
+        {
+            string description = string.Empty;
+            if (type == AsyncOperationType.Saving)
+            {
+                description = TasklistPresentation.Properties.Resources.Saving;
+            }
+            else if (type == AsyncOperationType.SearchDynamic ||
+                type == AsyncOperationType.RefreshStatic ||
+                type == AsyncOperationType.RefreshDynamic)
+            {
+                description = TasklistPresentation.Properties.Resources.Reloading;
+            }
+
+            return description;
+        }
+
+        private void ShowWaitForm(AsyncOperationType type)
+        {
+            this.ShowWaitForm(GetDescription(type));
+        }
+

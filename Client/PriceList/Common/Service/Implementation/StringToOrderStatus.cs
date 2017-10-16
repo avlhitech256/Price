@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Data;
+using Common.Convert;
 using Common.Data.Enum;
 
-namespace Common.Convert.Implementation
+namespace Common.Service.Implementation
 {
     public class StringToOrderStatus : IValueConverter
     {
-        private IConvertService convertService;
+        private readonly IConvertService convertService;
 
         public StringToOrderStatus()
         {

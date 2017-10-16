@@ -48,10 +48,18 @@
     <Compile Include="Animation\ExpanderDoubleAnimation.cs" />
     <Compile Include="Animation\GridLengthAnimation.cs" />
     <Compile Include="EditControl\EditControl.cs" />
+    <Compile Include="LoadingControl\AtomLoadingControl.xaml.cs">
+      <DependentUpon>AtomLoadingControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LoadingControl\WaitControl.xaml.cs">
+      <DependentUpon>WaitControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LoadingControl\WaitWindow.xaml.cs">
+      <DependentUpon>WaitWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SearchControl\SearchControl.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{FC5AA2B4-3B40-468F-B13E-F16B2EE8FDEA}</Project>
@@ -65,6 +73,21 @@
       <Project>{b7fc1012-787d-489f-a846-32062538cb77}</Project>
       <Name>Media</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Page Include="LoadingControl\AtomLoadingControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LoadingControl\WaitControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LoadingControl\WaitWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

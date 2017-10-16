@@ -1,9 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Catalog.Model;
 using Catalog.SearchCriteria;
+using Common.Data.Enum;
 using Common.Data.Notifier;
+using Common.Service;
+using CommonControl.LoadingControl;
 using Domain.Data.Object;
 using Domain.DomainContext;
 
@@ -14,6 +18,10 @@ namespace Catalog.ViewModel
         #region Members
 
         private readonly CatalogSearchCriteria searchCriteria;
+        private readonly IAsyncOperationService asyncOperationService;
+        public Action<string> ShowWaitScreen;
+        public Action HideWaitScreen;
+        private readonly AsyncOperationType[] waitFormSupported;
 
         #endregion
 
@@ -21,7 +29,11 @@ namespace Catalog.ViewModel
 
         public CatalogDirectoryViewModel(IDomainContext domainContext, CatalogSearchCriteria searchCriteria)
         {
+            asyncOperationService = domainContext.AsyncOperationService;
             this.searchCriteria = searchCriteria;
+            ShowWaitScreen = delegate { };
+            HideWaitScreen = delegate { };
+            waitFormSupported = new[] { AsyncOperationType.LoadCatalog };
             Model = new CatalogDirectoryModel(domainContext, searchCriteria);
             SubscribeEvents();
         }
@@ -48,9 +60,32 @@ namespace Catalog.ViewModel
         }
 
         public ObservableCollection<DirectoryItem> Entities => Model?.Entities;
+
         #endregion
 
         #region Methods
+
+        private void ShowWaitScreenWithType(AsyncOperationType type)
+        {
+            ShowWaitScreen.Invoke(GetDescription(type));
+        }
+
+        private static string GetDescription(AsyncOperationType type)
+        {
+            string description = string.Empty;
+
+            if (type == AsyncOperationType.LoadCatalog)
+            {
+                description = "Подождите, идет формирование каталогов";
+            }
+            else 
+            {
+                description = String.Empty;
+            }
+
+            return description;
+        }
+
 
         public void Refresh()
         {
@@ -126,16 +161,54 @@ namespace Catalog.ViewModel
             {
                 searchCriteria.EnabledEdvanceSearchChanged += SearchCriteria_EnabledEdvanceSearchChanged;
             }
+
+            if (asyncOperationService != null)
+            {
+                asyncOperationService.OperationStarted += (s, args) =>
+                {
+                    if (waitFormSupported.Contains(args.Value))
+                    {
+                        ShowWaitScreenWithType(args.Value);
+                    }
+                };
+
+                asyncOperationService.OperationCompleted += (s, args) =>
+                {
+                    if (waitFormSupported.Contains(args.Value))
+                    {
+                        HideWaitScreen();
+                    }
+                };
+            }
         }
 
         private void SearchCriteria_EnabledEdvanceSearchChanged(object sender, Common.Event.DoubleAnimationEventArgs e)
         {
             if (searchCriteria.EnabledEdvanceSearch)
             {
+                //var waitWindows = new WaitWindow();
+                //waitWindows.ShowDialog();
+                asyncOperationService.PerformAsyncOperation(AsyncOperationType.LoadCatalog, LoadDirectory, true, null);
+                //Model.SelectEntities();
+                //searchCriteria.SelectedDirectoryItems.Clear();
+                //searchCriteria.DirectoryComplited();
+                //waitWindows.Close();
+            }
+        }
+
+        private bool LoadDirectory(bool needToLoad)
+        {
+            bool result = false;
+
+            if (needToLoad)
+            {
                 Model.SelectEntities();
                 searchCriteria.SelectedDirectoryItems.Clear();
                 searchCriteria.DirectoryComplited();
+                result = true;
             }
+
+            return result;
         }
 
         private void Model_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)

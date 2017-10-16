@@ -2,11 +2,12 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media.Animation;
 using Catalog.ViewModel;
+using Common.Data.Enum;
 using Common.Event;
 using Common.Messenger.Implementation;
 using CommonControl.Animation;
+using CommonControl.LoadingControl;
 using CommonControl.SearchControl;
 using Domain.Data.Object;
 using static System.Double;
@@ -20,7 +21,8 @@ namespace Catalog.View
     {
         #region Members
 
-        private double lastWindth = 0;
+        private double lastWindth;
+        private WaitWindow waitScreen;
 
         #endregion
 
@@ -37,6 +39,13 @@ namespace Catalog.View
 
         protected override void SetDomainContext()
         {
+            var viewModel = DataContext as CatalogViewModel;
+
+            if (viewModel != null)
+            {
+                viewModel.ShowWaitScreen = ShowWaitScreen;
+                viewModel.HideWaitScreen = HideWaitScreen;
+            }
         }
 
         protected override void SubscribeMessenger()
@@ -120,6 +129,29 @@ namespace Catalog.View
         private bool CanSetImage(CatalogItem item)
         {
             return item != null;
+        }
+
+        private void ShowWaitScreen(string message)
+        {
+            if (waitScreen == null)
+            {
+                waitScreen = new WaitWindow();
+                waitScreen.Text = message;
+                waitScreen.ShowDialog();
+            }
+            else
+            {
+                waitScreen.Text = message;
+            }
+        }
+
+        private void HideWaitScreen()
+        {
+            if (waitScreen != null)
+            {
+                waitScreen.Close();
+                waitScreen = null;
+            }
         }
 
         #endregion

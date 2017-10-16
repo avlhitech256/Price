@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace Common.Convert.Implementation
+namespace Common.Service.Implementation
 {
     public class DateTimeToDateTimeOffsetConverter : IValueConverter
     {

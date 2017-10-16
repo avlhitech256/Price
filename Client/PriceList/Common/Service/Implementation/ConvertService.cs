@@ -1,7 +1,8 @@
 ﻿using System;
+using Common.Convert;
 using Common.Data.Enum;
 
-namespace Common.Convert.Implementation
+namespace Common.Service.Implementation
 {
     public class ConvertService : IConvertService
     {
