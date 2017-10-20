@@ -19,6 +19,13 @@ namespace Order.ViewModel
 {
     public class OrderViewModel : Notifier, IControlViewModel
     {
+        #region Members
+
+        private bool isWaiting;
+        private bool isLoading;
+
+        #endregion
+
         #region Constructors
 
         public OrderViewModel(IDomainContext domainContext)
@@ -86,6 +93,42 @@ namespace Order.ViewModel
         private IOrderModel Model { get; }
 
         public DetailOrderViewModel DetailViewModel { get; }
+
+        public Action<string> ShowWaitScreen { get; set; }
+
+        public Action HideWaitScreen { get; set; }
+
+        public bool IsWaiting
+        {
+            get
+            {
+                return isWaiting;
+            }
+            set
+            {
+                if (isWaiting != value)
+                {
+                    isWaiting = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public bool IsLoading
+        {
+            get
+            {
+                return isLoading;
+            }
+            set
+            {
+                if (isLoading != value)
+                {
+                    isLoading = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public OrderItem SelectedItem
         {

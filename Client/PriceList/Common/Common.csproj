@@ -53,6 +53,7 @@
     <Compile Include="Service\IAsyncOperationService.cs" />
     <Compile Include="Service\IConvertService.cs" />
     <Compile Include="Service\Implementation\AsyncOperationService .cs" />
+    <Compile Include="Service\Implementation\BoolToVisibilityConverter.cs" />
     <Compile Include="Service\Implementation\Convert.cs" />
     <Compile Include="Service\Implementation\ConvertService.cs" />
     <Compile Include="Service\Implementation\DateTimeToDateTimeOffsetConverter.cs" />

@@ -1,0 +1,173 @@
+﻿<UserControl x:Class="WPFWait.LoadingControl.AtomLoadingControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WPFWait.LoadingControl"
+             mc:Ignorable="d" 
+             d:DesignHeight="60" d:DesignWidth="60" MinWidth="60" MinHeight="60" MaxWidth="60" MaxHeight="60">
+    <UserControl.Resources>
+        <Storyboard x:Key="Storyboard1">
+            <DoubleAnimationUsingPath Duration="0:0:1" Source="X" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="ellipse" RepeatBehavior="Forever">
+                <DoubleAnimationUsingPath.PathGeometry>
+                    <PathGeometry Figures="M-0.5,-0.13189031 C-4.4856124,2.1692041 -13.089173,-5.270977 -19.71659,-16.75 C-26.344007,-28.229023 -28.485612,-39.400015 -24.5,-41.70111 C-20.514388,-44.002204 -11.910827,-36.562023 -5.2834103,-25.083 C1.3440067,-13.603977 3.4856124,-2.4329847 -0.5,-0.13189031 z"/>
+                </DoubleAnimationUsingPath.PathGeometry>
+            </DoubleAnimationUsingPath>
+            <DoubleAnimationUsingPath Duration="0:0:1" Source="Y" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="ellipse" RepeatBehavior="Forever">
+                <DoubleAnimationUsingPath.PathGeometry>
+                    <PathGeometry Figures="M-0.5,-0.13189031 C-4.4856124,2.1692041 -13.089173,-5.270977 -19.71659,-16.75 C-26.344007,-28.229023 -28.485612,-39.400015 -24.5,-41.70111 C-20.514388,-44.002204 -11.910827,-36.562023 -5.2834103,-25.083 C1.3440067,-13.603977 3.4856124,-2.4329847 -0.5,-0.13189031 z"/>
+                </DoubleAnimationUsingPath.PathGeometry>
+            </DoubleAnimationUsingPath>
+            <DoubleAnimationUsingPath Duration="0:0:1" Source="X" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="ellipse1" RepeatBehavior="Forever">
+                <DoubleAnimationUsingPath.PathGeometry>
+                    <PathGeometry Figures="M-0.5,-0.20110969 C3.4856124,2.0999847 1.3440067,13.270977 -5.2834103,24.75 C-11.910827,36.229023 -20.514388,43.669204 -24.5,41.36811 C-28.485612,39.067015 -26.344007,27.896023 -19.71659,16.417 C-13.089173,4.937977 -4.4856124,-2.5022041 -0.5,-0.20110969 z"/>
+                </DoubleAnimationUsingPath.PathGeometry>
+            </DoubleAnimationUsingPath>
+            <DoubleAnimationUsingPath Duration="0:0:1" Source="Y" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="ellipse1" RepeatBehavior="Forever">
+                <DoubleAnimationUsingPath.PathGeometry>
+                    <PathGeometry Figures="M-0.5,-0.20110969 C3.4856124,2.0999847 1.3440067,13.270977 -5.2834103,24.75 C-11.910827,36.229023 -20.514388,43.669204 -24.5,41.36811 C-28.485612,39.067015 -26.344007,27.896023 -19.71659,16.417 C-13.089173,4.937977 -4.4856124,-2.5022041 -0.5,-0.20110969 z"/>
+                </DoubleAnimationUsingPath.PathGeometry>
+            </DoubleAnimationUsingPath>
+            <DoubleAnimationUsingPath Duration="0:0:1" Source="X" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="ellipse2" RepeatBehavior="Forever">
+                <DoubleAnimationUsingPath.PathGeometry>
+                    <PathGeometry Figures="M-0.331,1.0005 C-0.331,-3.6016888 10.414166,-7.3325 23.669,-7.3325 C36.923834,-7.3325 47.669,-3.6016888 47.669,1.0005 C47.669,5.6026888 36.923834,9.3335 23.669,9.3335 C10.414166,9.3335 -0.331,5.6026888 -0.331,1.0005 z"/>
+                </DoubleAnimationUsingPath.PathGeometry>
+            </DoubleAnimationUsingPath>
+            <DoubleAnimationUsingPath Duration="0:0:1" Source="Y" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="ellipse2" RepeatBehavior="Forever">
+                <DoubleAnimationUsingPath.PathGeometry>
+                    <PathGeometry Figures="M-0.331,1.0005 C-0.331,-3.6016888 10.414166,-7.3325 23.669,-7.3325 C36.923834,-7.3325 47.669,-3.6016888 47.669,1.0005 C47.669,5.6026888 36.923834,9.3335 23.669,9.3335 C10.414166,9.3335 -0.331,5.6026888 -0.331,1.0005 z"/>
+                </DoubleAnimationUsingPath.PathGeometry>
+            </DoubleAnimationUsingPath>
+            <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(GradientBrush.GradientStops)[1].(GradientStop.Color)" Storyboard.TargetName="ellipseBIG">
+                <EasingColorKeyFrame KeyTime="0" Value="#FFF6FF9C">
+                    <EasingColorKeyFrame.EasingFunction>
+                        <CubicEase EasingMode="EaseInOut"/>
+                    </EasingColorKeyFrame.EasingFunction>
+                </EasingColorKeyFrame>
+            </ColorAnimationUsingKeyFrames>
+            <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(GradientBrush.GradientStops)[0].(GradientStop.Color)" Storyboard.TargetName="ellipseBIG">
+                <EasingColorKeyFrame KeyTime="0" Value="#FFE4EE13">
+                    <EasingColorKeyFrame.EasingFunction>
+                        <CubicEase EasingMode="EaseInOut"/>
+                    </EasingColorKeyFrame.EasingFunction>
+                </EasingColorKeyFrame>
+            </ColorAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="ellipseBIG">
+                <EasingDoubleKeyFrame KeyTime="0" Value="10">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CubicEase EasingMode="EaseInOut"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Height)" Storyboard.TargetName="ellipseBIG">
+                <EasingDoubleKeyFrame KeyTime="0" Value="10">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CubicEase EasingMode="EaseInOut"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </UserControl.Resources>
+    <UserControl.Triggers>
+        <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+            <BeginStoryboard Storyboard="{StaticResource Storyboard1}"/>
+        </EventTrigger>
+    </UserControl.Triggers>
+    <Grid>
+        <Ellipse HorizontalAlignment="Center" Margin="0" Stroke="#FF7C7C7C" Width="50" StrokeThickness="2" RenderTransformOrigin="0.5,0.5" Grid.Column="1" Height="18.666" VerticalAlignment="Center">
+            <Ellipse.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="60"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Ellipse.RenderTransform>
+        </Ellipse>
+        <Ellipse HorizontalAlignment="Center" Margin="0" Stroke="#FF7C7C7C" Width="50" StrokeThickness="2" RenderTransformOrigin="0.5,0.5" Grid.Column="1" Height="18.666" VerticalAlignment="Center">
+            <Ellipse.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="300"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Ellipse.RenderTransform>
+        </Ellipse>
+        <Ellipse HorizontalAlignment="Center" Margin="0" Stroke="#FF7C7C7C" Width="50" StrokeThickness="2" RenderTransformOrigin="0.5,0.5" Grid.Column="1" Height="18.666" VerticalAlignment="Center">
+            <Ellipse.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="180"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Ellipse.RenderTransform>
+        </Ellipse>
+
+        <Ellipse x:Name="ellipseBIG" HorizontalAlignment="Center" Margin="0" Stroke="#FF2E00FF" Width="10" Height="10" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5" StrokeThickness="0">
+            <Ellipse.Fill>
+                <RadialGradientBrush Center="0.7,0.6" GradientOrigin="0.7,0.6">
+                    <GradientStop Color="#FFC8D818" Offset="1"/>
+                    <GradientStop Color="#FFF6FF9C"/>
+                </RadialGradientBrush>
+            </Ellipse.Fill>
+            <Ellipse.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Ellipse.RenderTransform>
+        </Ellipse>
+        <Ellipse x:Name="ellipse2" HorizontalAlignment="Left" Stroke="#FF2E00FF" Width="8" RenderTransformOrigin="0.5,0.5" StrokeThickness="0" Height="8" Margin="2.208,26.125,0,25.875" MinWidth="8" MinHeight="8" MaxWidth="8" MaxHeight="8">
+            <Ellipse.Fill>
+                <RadialGradientBrush Center="0.7,0.6" GradientOrigin="0.7,0.6">
+                    <GradientStop Color="#FFD30000" Offset="1"/>
+                    <GradientStop Color="#FFFF8C8C"/>
+                </RadialGradientBrush>
+            </Ellipse.Fill>
+            <Ellipse.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Ellipse.RenderTransform>
+        </Ellipse>
+        <Ellipse x:Name="ellipse1" HorizontalAlignment="Right" Margin="0,5,14.5,0" Stroke="#FF2E00FF" Width="8" Height="8" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" StrokeThickness="0">
+            <Ellipse.Fill>
+                <RadialGradientBrush Center="0.7,0.6" GradientOrigin="0.7,0.6">
+                    <GradientStop Color="#FF008D0D" Offset="1"/>
+                    <GradientStop Color="#FF00FF17"/>
+                </RadialGradientBrush>
+            </Ellipse.Fill>
+            <Ellipse.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Ellipse.RenderTransform>
+        </Ellipse>
+        <Ellipse x:Name="ellipse" HorizontalAlignment="Right" Margin="0,0,14.5,3.75" Stroke="#FF2E00FF" Width="8" Height="8" VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.5" StrokeThickness="0" d:LayoutOverrides="VerticalAlignment">
+            <Ellipse.Fill>
+                <RadialGradientBrush Center="0.7,0.6" GradientOrigin="0.7,0.6">
+                    <GradientStop Color="#FF2300FF" Offset="1"/>
+                    <GradientStop Color="#FF9D8EFF"/>
+                </RadialGradientBrush>
+            </Ellipse.Fill>
+            <Ellipse.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Ellipse.RenderTransform>
+        </Ellipse>
+    </Grid>
+</UserControl>

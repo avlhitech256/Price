@@ -19,6 +19,13 @@ namespace Basket.ViewModel
 {
     public class BasketViewModel : Notifier, IControlViewModel
     {
+        #region Members
+
+        private bool isWaiting;
+        private bool isLoading;
+
+        #endregion
+
         #region Constructors
 
         public BasketViewModel(IDomainContext domainContext)
@@ -49,6 +56,42 @@ namespace Basket.ViewModel
         private BasketModel Model { get; }
 
         public OrderViewModel OrderViewModel { get; }
+
+        public Action<string> ShowWaitScreen { get; set; }
+
+        public Action HideWaitScreen { get; set; }
+
+        public bool IsWaiting
+        {
+            get
+            {
+                return isWaiting;
+            }
+            set
+            {
+                if (isWaiting != value)
+                {
+                    isWaiting = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public bool IsLoading
+        {
+            get
+            {
+                return isLoading;
+            }
+            set
+            {
+                if (isLoading != value)
+                {
+                    isLoading = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public BasketItem SelectedItem
         {

@@ -22,8 +22,8 @@ namespace Catalog.ViewModel
     {
         #region Members
 
-        public Action<string> ShowWaitScreen;
-        public Action HideWaitScreen;
+        private bool isWaiting;
+        private bool isLoading;
 
         #endregion
 
@@ -34,9 +34,11 @@ namespace Catalog.ViewModel
             DomainContext = domainContext;
             HasChanges = false;
             ShowPhotoOnMouseDoubleClick = false;
-            Model = new CatalogModel(domainContext);
             ShowWaitScreen = delegate { };
             HideWaitScreen = delegate { };
+            IsWaiting = false;
+            IsLoading = false;
+            Model = new CatalogModel(domainContext);
             CatalogNavigateViewModel = new CatalogNavigateViewModel(Model);
             CatalogDirectoryViewModel = new CatalogDirectoryViewModel(domainContext, Model?.SearchCriteria);
             CatalogDirectoryViewModel.ShowWaitScreen = x => { ShowWaitScreen.Invoke(x); };
@@ -66,6 +68,42 @@ namespace Catalog.ViewModel
         public CatalogDirectoryViewModel CatalogDirectoryViewModel { get; }
 
         public CatalogEdvanceSearchViewModel CatalogEdvanceSearchViewModel { get; }
+
+        public Action<string> ShowWaitScreen { get; set; }
+
+        public Action HideWaitScreen { get; set; }
+
+        public bool IsWaiting
+        {
+            get
+            {
+                return isWaiting;
+            }
+            set
+            {
+                if (isWaiting != value)
+                {
+                    isWaiting = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public bool IsLoading
+        {
+            get
+            {
+                return isLoading;
+            }
+            set
+            {
+                if (isLoading != value)
+                {
+                    isLoading = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public CatalogItem SelectedItem
         {

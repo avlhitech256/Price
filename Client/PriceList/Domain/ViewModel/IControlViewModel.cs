@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using Common.Annotations;
 using Common.Messenger;
 using Domain.DomainContext;
@@ -20,6 +21,14 @@ namespace Domain.ViewModel
         bool IsEditControl { get; set; }
 
         bool HasChanges { get; }
+
+        Action<string> ShowWaitScreen { get; set; }
+
+        Action HideWaitScreen { get; set; }
+
+        bool IsLoading { get; set; }
+
+        bool IsWaiting { get; set; }
 
         void ApplySearchCriteria();
 

@@ -17,7 +17,7 @@ namespace Catalog.Model
         #region Members
 
         private DirectoryItem selectedItem;
-        private ObservableCollection<DirectoryItem> entities;
+        private List<DirectoryItem> entities;
 
         #endregion
 
@@ -27,7 +27,7 @@ namespace Catalog.Model
         {
             DomainContext = domainContext;
             SearchCriteria = searchCriteria;
-            Entities = new ObservableCollection<DirectoryItem>();
+            Entities = new List<DirectoryItem>();
         }
 
         private IDomainContext DomainContext { get; }
@@ -57,7 +57,7 @@ namespace Catalog.Model
             }
         }
 
-        public ObservableCollection<DirectoryItem> Entities
+        public List<DirectoryItem> Entities
         {
             get
             {
@@ -80,23 +80,32 @@ namespace Catalog.Model
         {
             if (SearchCriteria != null)
             {
-                long directoryId = SelectedItem?.Id ?? -1L;
-                Entities.Clear();
-                Entities = CreateDirectoryItems();
-                OnPropertyChanged(nameof(Entities));
-                SelectedItem = Entities.FirstOrDefault(x => x.Id == directoryId) ?? Entities.FirstOrDefault();
+                try
+                {
+                    long directoryId = SelectedItem?.Id ?? -1L;
+
+                    Entities.Clear();
+                    Entities = CreateDirectoryItems();
+                    OnPropertyChanged(nameof(Entities));
+                    SelectedItem = Entities.FirstOrDefault(x => x.Id == directoryId) ?? Entities.FirstOrDefault();
+                }
+                catch (Exception e)
+                {
+                    ;
+                    //throw;
+                }
             }
         }
 
-        private ObservableCollection<DirectoryItem> CreateDirectoryItems()
+        private List<DirectoryItem> CreateDirectoryItems()
         {
             List<DirectoryEntity> items = GetItems().ToList();
-            ObservableCollection<DirectoryItem> result = new ObservableCollection<DirectoryItem>();
+            List<DirectoryItem> result = new List<DirectoryItem>();
             items.ForEach(x => CreateItems(result, x));
             return result;
         }
 
-        private void CreateItems(ObservableCollection<DirectoryItem> result, DirectoryEntity item)
+        private void CreateItems(List<DirectoryItem> result, DirectoryEntity item)
         {
             DirectoryItem newItem = new DirectoryItem(DataService, item);
             bool continueProcessing = true;
@@ -128,7 +137,7 @@ namespace Catalog.Model
             } while (continueProcessing);
         }
 
-        private bool AddDirectoryItem(ObservableCollection<DirectoryItem> items, DirectoryItem item)
+        private bool AddDirectoryItem(List<DirectoryItem> items, DirectoryItem item)
         {
             bool result = false;
 

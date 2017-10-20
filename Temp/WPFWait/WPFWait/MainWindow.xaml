@@ -1,0 +1,30 @@
+﻿<Window x:Class="WPFWait.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPFWait"
+        xmlns:converter="clr-namespace:WPFWait.Converter"
+        xmlns:loadingControl="clr-namespace:WPFWait.LoadingControl"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <Window.Resources>
+        <converter:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    </Window.Resources>
+    <Grid>
+        <Grid>
+            <!--Put your main content here-->
+            <TextBlock Text="Real Data Visability"></TextBlock>
+            <Button Content="Start" Height="20" Width="100" Click="ButtonBase_OnClick"></Button>
+        </Grid>
+        <Rectangle x:Name="LoadingBackgroung"
+                   Fill="Lavender" 
+                   Opacity="0" 
+                   Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}"/>
+        <loadingControl:WaitControl x:Name="WaitControl"
+                                    Width="350" 
+                                    Height="80" 
+                                    Visibility="{Binding IsWaiting, Converter={StaticResource BoolToVisibilityConverter}}"/>
+        <!--You could add a 'Please Wait' TextBlock here-->
+    </Grid>
+</Window>

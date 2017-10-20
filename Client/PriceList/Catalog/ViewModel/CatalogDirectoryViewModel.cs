@@ -7,7 +7,6 @@ using Catalog.SearchCriteria;
 using Common.Data.Enum;
 using Common.Data.Notifier;
 using Common.Service;
-using CommonControl.LoadingControl;
 using Domain.Data.Object;
 using Domain.DomainContext;
 
@@ -59,7 +58,7 @@ namespace Catalog.ViewModel
             }
         }
 
-        public ObservableCollection<DirectoryItem> Entities => Model?.Entities;
+        public List<DirectoryItem> Entities => Model?.Entities;
 
         #endregion
 
@@ -80,7 +79,7 @@ namespace Catalog.ViewModel
             }
             else 
             {
-                description = String.Empty;
+                description = string.Empty;
             }
 
             return description;
@@ -186,13 +185,10 @@ namespace Catalog.ViewModel
         {
             if (searchCriteria.EnabledEdvanceSearch)
             {
-                //var waitWindows = new WaitWindow();
-                //waitWindows.ShowDialog();
                 asyncOperationService.PerformAsyncOperation(AsyncOperationType.LoadCatalog, LoadDirectory, true, null);
                 //Model.SelectEntities();
                 //searchCriteria.SelectedDirectoryItems.Clear();
                 //searchCriteria.DirectoryComplited();
-                //waitWindows.Close();
             }
         }
 

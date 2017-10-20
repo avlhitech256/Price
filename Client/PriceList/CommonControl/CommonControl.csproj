@@ -59,6 +59,9 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SearchControl\SearchControl.cs" />
+    <Compile Include="Service\ILoadingService.cs" />
+    <Compile Include="Service\Implementation\LoadingService.cs" />
+    <Compile Include="Service\Implementation\LoadingStatus.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

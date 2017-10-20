@@ -3,13 +3,14 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Catalog.ViewModel;
-using Common.Data.Enum;
 using Common.Event;
 using Common.Messenger.Implementation;
 using CommonControl.Animation;
-using CommonControl.LoadingControl;
 using CommonControl.SearchControl;
+using CommonControl.Service;
+using CommonControl.Service.Implementation;
 using Domain.Data.Object;
+using Domain.ViewModel;
 using static System.Double;
 
 namespace Catalog.View
@@ -22,7 +23,7 @@ namespace Catalog.View
         #region Members
 
         private double lastWindth;
-        private WaitWindow waitScreen;
+        private ILoadingService loadService;
 
         #endregion
 
@@ -39,12 +40,11 @@ namespace Catalog.View
 
         protected override void SetDomainContext()
         {
-            var viewModel = DataContext as CatalogViewModel;
+            var viewModel = DataContext as IControlViewModel;
 
             if (viewModel != null)
             {
-                viewModel.ShowWaitScreen = ShowWaitScreen;
-                viewModel.HideWaitScreen = HideWaitScreen;
+                loadService = new LoadingService(viewModel, LoadingBackgroung, WaitControl);
             }
         }
 
@@ -129,29 +129,6 @@ namespace Catalog.View
         private bool CanSetImage(CatalogItem item)
         {
             return item != null;
-        }
-
-        private void ShowWaitScreen(string message)
-        {
-            if (waitScreen == null)
-            {
-                waitScreen = new WaitWindow();
-                waitScreen.Text = message;
-                waitScreen.ShowDialog();
-            }
-            else
-            {
-                waitScreen.Text = message;
-            }
-        }
-
-        private void HideWaitScreen()
-        {
-            if (waitScreen != null)
-            {
-                waitScreen.Close();
-                waitScreen = null;
-            }
         }
 
         #endregion
