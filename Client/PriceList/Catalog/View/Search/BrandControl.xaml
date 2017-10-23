@@ -27,8 +27,8 @@
                       Height="Auto"
                       Grid.Row="1"
                       Foreground="#FF000059"
-                      ItemsSource="{Binding Path=CatalogEdvanceSearchViewModel.Entities}"
-                      SelectedItem="{Binding Path=CatalogEdvanceSearchViewModel.SelectedItem, Mode=TwoWay}"
+                      ItemsSource="{Binding Path=CatalogBrandViewModel.Entities}"
+                      SelectedItem="{Binding Path=CatalogBrandViewModel.SelectedItem, Mode=TwoWay}"
                       IsReadOnly="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn IsReadOnly="True" 
@@ -47,6 +47,28 @@
                     </DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
+            <TreeView x:Name="TreeView"
+                      Grid.Row="1" 
+                      Height="Auto" 
+                      Width="Auto"
+                      HorizontalAlignment="Left" 
+                      VerticalAlignment="Top" 
+                      ItemsSource="{Binding Path=CatalogBrandViewModel.Entities}">
+                <TreeView.ItemContainerStyle>
+                    <Style TargetType="TreeViewItem">
+                        <Setter Property="IsExpanded" Value="True"></Setter>
+                    </Style>
+                </TreeView.ItemContainerStyle>
+                <TreeView.ItemTemplate>
+                    <HierarchicalDataTemplate ItemsSource="{Binding Subbrands}">
+                        <CheckBox IsChecked="{Binding Selected}" 
+                                  Click="CheckBox_Click" 
+                                  Loaded="CheckBox_Loaded">
+                            <TextBlock Text="{Binding Name}"></TextBlock>
+                        </CheckBox>
+                    </HierarchicalDataTemplate>
+                </TreeView.ItemTemplate>
+            </TreeView>
         </Grid>
     </Border>
 </UserControl>

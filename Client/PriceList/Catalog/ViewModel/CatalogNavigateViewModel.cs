@@ -7,7 +7,9 @@ namespace Catalog.ViewModel
 {
     public class CatalogNavigateViewModel : Notifier
     {
-        #region
+        #region Members
+
+        public Action<LoadingType> LoadData;
 
         #endregion
 
@@ -15,6 +17,7 @@ namespace Catalog.ViewModel
 
         public CatalogNavigateViewModel(CatalogModel model)
         {
+            LoadData = delegate { };
             Model = model;
             CreateCommands();
             SubscribeEvetns();
@@ -33,6 +36,8 @@ namespace Catalog.ViewModel
         public DelegateCommand NextCommand { get; private set; }
 
         public DelegateCommand LastCommand { get; private set; }
+
+        public DelegateCommand RefreshEntities { get; set; }
 
         private int StartRowIndex
         {
@@ -123,7 +128,8 @@ namespace Catalog.ViewModel
         private void GoToFirst(object parametr)
         {
             Model.StartRowIndex = 0;
-            Model.SelectEntities();
+            LoadData(LoadingType.ChangedSelectedPage);
+            //Model.SelectEntities();
         }
 
         private bool CanGoToFirst(object parametr)
@@ -134,7 +140,8 @@ namespace Catalog.ViewModel
         private void GoToPrevious(object parametr)
         {
             StartRowIndex = StartRowIndex >= MaximumRows ? StartRowIndex - MaximumRows : 0;
-            Model.SelectEntities();
+            LoadData(LoadingType.ChangedSelectedPage);
+            //Model.SelectEntities();
         }
 
         private bool CanGoToPrevious(object parametr)
@@ -145,7 +152,8 @@ namespace Catalog.ViewModel
         private void GoToNext(object parametr)
         {
             StartRowIndex = StartRowIndex + MaximumRows;
-            Model.SelectEntities();
+            LoadData(LoadingType.ChangedSelectedPage);
+            //Model.SelectEntities();
         }
 
         private bool CanGoToNext(object parametr)
@@ -156,7 +164,8 @@ namespace Catalog.ViewModel
         private void GoToLast(object parametr)
         {
             Model.StartRowIndex = (CountOfPages - 1) * MaximumRows;
-            Model.SelectEntities();
+            LoadData(LoadingType.ChangedSelectedPage);
+            //Model.SelectEntities();
         }
 
         private bool CanGoToLast(object parametr)
@@ -180,10 +189,6 @@ namespace Catalog.ViewModel
         {
             Model.SelectEntities();
         }
-
-        #endregion
-
-        #region Events
 
         #endregion
     }

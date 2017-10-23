@@ -13,7 +13,7 @@ namespace WPFWait
     /// </summary>
     public partial class MainWindow : Window
     {
-        private DispatcherTimer splashAnimationTimer;
+        private readonly DispatcherTimer splashAnimationTimer;
         public MainWindow()
         {
             InitializeComponent();

@@ -69,7 +69,8 @@ namespace Catalog.SearchCriteria
             edvanceSearchWidth = 0;
             enabledEdvanceSearch = false;
             FirstBrandItemEntity = new BrandItemEntity {Id = -1L, Code = Guid.NewGuid(), Name = "Все бренды"};
-            SelectedDirectoryItems = new ObservableCollection<DirectoryItem>();
+            SelectedDirectoryItems = new List<DirectoryItem>();
+            SelectedBrandItems = new List<BrandItem>();
             InitCommodityDirection();
             Clear();
             SearchComplited();
@@ -100,8 +101,8 @@ namespace Catalog.SearchCriteria
                 if (isModified != value)
                 {
                     isModified = value;
-                    OnPropertyChanged();
                     OnSearchCriteriaChanged();
+                    OnPropertyChanged();
                 }
             }
         }
@@ -247,8 +248,8 @@ namespace Catalog.SearchCriteria
                 if (isEmpty != value)
                 {
                     isEmpty = value;
-                    OnPropertyChanged();
                     OnSearchCriteriaCleared();
+                    OnPropertyChanged();
                 }
             }
         }
@@ -264,8 +265,8 @@ namespace Catalog.SearchCriteria
                 if (vaz != value)
                 {
                     vaz = value;
-                    OnPropertyChanged();
                     CalculateEdvanceSearchWidth();
+                    OnPropertyChanged();
                 }
             }
         }
@@ -281,8 +282,8 @@ namespace Catalog.SearchCriteria
                 if (gaz != value)
                 {
                     gaz = value;
-                    OnPropertyChanged();
                     CalculateEdvanceSearchWidth();
+                    OnPropertyChanged();
                 }
             }
         }
@@ -298,8 +299,8 @@ namespace Catalog.SearchCriteria
                 if (zaz != value)
                 {
                     zaz = value;
-                    OnPropertyChanged();
                     CalculateEdvanceSearchWidth();
+                    OnPropertyChanged();
                 }
             }
         }
@@ -315,8 +316,8 @@ namespace Catalog.SearchCriteria
                 if (chemistry != value)
                 {
                     chemistry = value;
-                    OnPropertyChanged();
                     CalculateEdvanceSearchWidth();
+                    OnPropertyChanged();
                 }
             }
         }
@@ -332,8 +333,8 @@ namespace Catalog.SearchCriteria
                 if (battery != value)
                 {
                     battery = value;
-                    OnPropertyChanged();
                     CalculateEdvanceSearchWidth();
+                    OnPropertyChanged();
                 }
             }
         }
@@ -349,8 +350,8 @@ namespace Catalog.SearchCriteria
                 if (gas != value)
                 {
                     gas = value;
-                    OnPropertyChanged();
                     CalculateEdvanceSearchWidth();
+                    OnPropertyChanged();
                 }
             }
         }
@@ -366,8 +367,8 @@ namespace Catalog.SearchCriteria
                 if (instrument != value)
                 {
                     instrument = value;
-                    OnPropertyChanged();
                     CalculateEdvanceSearchWidth();
+                    OnPropertyChanged();
                 }
             }
         }
@@ -384,9 +385,9 @@ namespace Catalog.SearchCriteria
                 {
                     enabledEdvanceSearch = value;
                     OnEnabledEdvanceSearchChanged();
-                    OnPropertyChanged();
                     OnPropertyChanged(nameof(EnableEdvanceTree));
                     OnPropertyChanged(nameof(EnableBrandComboBox));
+                    OnPropertyChanged();
                 }
             }
         }
@@ -412,7 +413,9 @@ namespace Catalog.SearchCriteria
             }
         }
 
-        public ObservableCollection<DirectoryItem> SelectedDirectoryItems { get; }
+        public List<DirectoryItem> SelectedDirectoryItems { get; }
+
+        public List<BrandItem> SelectedBrandItems { get; }
 
         #endregion
 
@@ -449,6 +452,11 @@ namespace Catalog.SearchCriteria
             DirectoryItemsChanged?.Invoke(this, new EventArgs());
         }
 
+        private void OnBrandChanged()
+        {
+            BrandItemsChanged?.Invoke(this, new EventArgs());
+        }
+
         private void OnEnabledEdvanceSearchChanged()
         {
             var args = EnabledEdvanceSearch
@@ -481,6 +489,7 @@ namespace Catalog.SearchCriteria
             Gas = false;
             Instrument = false;
             SelectedDirectoryItems.Clear();
+            SelectedBrandItems.Clear();
         }
 
         private bool SearchCriteriaIsEmpty()
@@ -508,6 +517,11 @@ namespace Catalog.SearchCriteria
         }
 
         public void DirectoryComplited()
+        {
+            OnDirectoryChanged();
+        }
+
+        public void BrandComplited()
         {
             OnDirectoryChanged();
         }
@@ -653,7 +667,12 @@ namespace Catalog.SearchCriteria
         public List<long> GetDirectoryIds()
         {
             return SelectedDirectoryItems.Select(x => x.Id).ToList();
-        } 
+        }
+
+        public List<long> GetBrandIds()
+        {
+            return SelectedBrandItems.Select(x => x.Id).ToList();
+        }
 
         #endregion
 
@@ -662,6 +681,8 @@ namespace Catalog.SearchCriteria
         public event EventHandler SearchCriteriaChanged;
 
         public event EventHandler DirectoryItemsChanged;
+
+        public event EventHandler BrandItemsChanged;
 
         public event EventHandler SearchCriteriaCleared;
 

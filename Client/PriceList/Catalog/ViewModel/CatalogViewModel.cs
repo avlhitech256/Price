@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows;
 using Catalog.Model;
 using Catalog.SearchCriteria;
 using Common.Data.Enum;
@@ -10,6 +10,7 @@ using Common.Data.Notifier;
 using Common.Event;
 using Common.Messenger;
 using Common.Messenger.Implementation;
+using Common.Service;
 using Common.ViewModel.Command;
 using Domain.Data.Object;
 using Domain.DomainContext;
@@ -24,6 +25,8 @@ namespace Catalog.ViewModel
 
         private bool isWaiting;
         private bool isLoading;
+        private readonly IAsyncOperationService asyncOperationService;
+        private readonly AsyncOperationType[] waitFormSupported;
 
         #endregion
 
@@ -32,21 +35,32 @@ namespace Catalog.ViewModel
         public CatalogViewModel(IDomainContext domainContext)
         {
             DomainContext = domainContext;
+
+            waitFormSupported = new[]
+            {
+                AsyncOperationType.LoadCatalog,
+                AsyncOperationType.LoadBrands,
+                AsyncOperationType.LoadDirectories
+            };
+
+            asyncOperationService = domainContext.AsyncOperationService;
             HasChanges = false;
             ShowPhotoOnMouseDoubleClick = false;
             ShowWaitScreen = delegate { };
+            SetWaitScreenMessage = delegate { };
             HideWaitScreen = delegate { };
+            RefreshView = delegate { };
             IsWaiting = false;
             IsLoading = false;
             Model = new CatalogModel(domainContext);
             CatalogNavigateViewModel = new CatalogNavigateViewModel(Model);
+            CatalogNavigateViewModel.LoadData = LoadData;
             CatalogDirectoryViewModel = new CatalogDirectoryViewModel(domainContext, Model?.SearchCriteria);
-            CatalogDirectoryViewModel.ShowWaitScreen = x => { ShowWaitScreen.Invoke(x); };
-            CatalogDirectoryViewModel.HideWaitScreen = () => { HideWaitScreen.Invoke(); };
-            CatalogEdvanceSearchViewModel = new CatalogEdvanceSearchViewModel(domainContext, Model?.SearchCriteria);
+            CatalogBrandViewModel = new CatalogBrandViewModel(domainContext, Model?.SearchCriteria);
             SubscribeEvents();
             SubscribeMessenger();
             InitCommands();
+            CatalogNavigateViewModel.RefreshEntities = RefreshEntities;
         }
 
         #endregion
@@ -67,11 +81,15 @@ namespace Catalog.ViewModel
 
         public CatalogDirectoryViewModel CatalogDirectoryViewModel { get; }
 
-        public CatalogEdvanceSearchViewModel CatalogEdvanceSearchViewModel { get; }
+        public CatalogBrandViewModel CatalogBrandViewModel { get; }
 
         public Action<string> ShowWaitScreen { get; set; }
 
+        public Action<string> SetWaitScreenMessage { get; set; }
+
         public Action HideWaitScreen { get; set; }
+
+        public Action RefreshView { get; set; }
 
         public bool IsWaiting
         {
@@ -123,13 +141,15 @@ namespace Catalog.ViewModel
 
         }
 
-        public ObservableCollection<CatalogItem> Entities => Model?.Entities;
+        public List<CatalogItem> Entities => Model?.Entities;
 
-        public ObservableCollection<BrandItem> BrandItems => Model?.BrandItems;
+        public List<BrandItem> BrandItems => Model?.BrandItems;
 
         public DelegateCommand SearchCommand { get; private set; }
 
         public DelegateCommand ClearCommand { get; private set; }
+
+        public DelegateCommand RefreshEntities { get; private set; }
 
         public bool ReadOnly { get; set; }
         public bool Enabled { get; set; }
@@ -217,17 +237,158 @@ namespace Catalog.ViewModel
                 Model.PropertyChanged += OnChangedSelectedItem;
                 Model.CountChanged += OnCountChanged;
 
-                if (Model.SearchCriteria != null)
+                if (SearchCriteria != null)
                 {
-                    Model.SearchCriteria.EnabledEdvanceSearchChanged += OnShowAdvanceSearchControl;
-                    Model.SearchCriteria.EdvanceSearchWidthChanged += OnEdvanceSearchWidthChanged;
-                    Model.SearchCriteria.PropertyChanged += SearchCriteria_PropertyChanged;
+                    SearchCriteria.EnabledEdvanceSearchChanged += OnShowAdvanceSearchControl;
+                    SearchCriteria.EdvanceSearchWidthChanged += OnEdvanceSearchWidthChanged;
+                    SearchCriteria.PropertyChanged += SearchCriteria_PropertyChanged;
+                    SearchCriteria.EnabledEdvanceSearchChanged += SearchCriteria_EnabledEdvanceSearchChanged;
+                    SearchCriteria.DirectoryItemsChanged += SearchCriteria_DirectoryItemsChanged;
+                    SearchCriteria.BrandItemsChanged += SearchCriteria_BrandItemsChanged;
                 }
             }
 
-            if (CatalogEdvanceSearchViewModel != null)
+            if (CatalogBrandViewModel != null)
             {
-                CatalogEdvanceSearchViewModel.PropertyChanged += CatalogEdvanceSearchViewModel_PropertyChanged;
+                CatalogBrandViewModel.PropertyChanged += CatalogBrandViewModel_PropertyChanged;
+            }
+
+            if (asyncOperationService != null)
+            {
+                asyncOperationService.OperationStarted += (s, args) =>
+                {
+                    if (waitFormSupported.Contains(args.Value))
+                    {
+                        ShowWaitScreenWithType(args.Value);
+                    }
+                };
+
+                asyncOperationService.OperationCompleted += (s, args) =>
+                {
+                    if (waitFormSupported.Contains(args.Value))
+                    {
+                        HideWaitScreen();
+                    }
+                };
+            }
+        }
+
+        private void ShowWaitScreenWithType(AsyncOperationType type)
+        {
+            ShowWaitScreen.Invoke(GetDescription(type));
+        }
+
+        private static string GetDescription(AsyncOperationType type)
+        {
+            string description;
+
+            switch (type)
+            {
+                case AsyncOperationType.LoadCatalog:
+                    description = "Подождите, идет формирование страницы прайс листа";
+                    break;
+                case AsyncOperationType.LoadBrands:
+                    description = "Подождите, идет формирование списка брендов";
+                    break;
+                case AsyncOperationType.LoadDirectories:
+                    description = "Подождите, идет формирование списка каталогов";
+                    break;
+                default:
+                    description = "Подождите, идет загрузка данных";
+                    break;
+            }
+
+            return description;
+        }
+
+        public void Init()
+        {
+            LoadData(LoadingType.ChangedSearchCriteria);
+        }
+
+        private void LoadData(LoadingType loadingType)
+        {
+            if (!IsLoading)
+            {
+                switch (loadingType)
+                {
+                    case LoadingType.ChangedDataInCurrentPage:
+                    case LoadingType.ChangedSelectedPage:
+                    case LoadingType.ChangedSearchCriteria:
+                    case LoadingType.ChangedBrandItems:
+                        asyncOperationService
+                            .PerformAsyncOperation(AsyncOperationType.LoadCatalog, LoadPricelist, !IsLoading,
+                                ActionAfterLoadDaata);
+                        break;
+                    case LoadingType.ChangedDirectoryItems:
+                        asyncOperationService
+                            .PerformAsyncOperation(AsyncOperationType.LoadBrands, LoadBrands, !IsLoading,
+                                ActionAfterLoadDaata);
+                        break;
+                    case LoadingType.СhangedAdvancedSearch:
+                        asyncOperationService
+                            .PerformAsyncOperation(AsyncOperationType.LoadDirectories, LoadDirectories, !IsLoading,
+                                ActionAfterLoadDaata);
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+        }
+
+        private object LoadPricelist(bool needToUpdate)
+        {
+            if (needToUpdate)
+            {
+                Model.SelectEntities();
+            }
+
+            return needToUpdate;
+        }
+
+        private object LoadBrands(bool needToUpdate)
+        {
+            if (needToUpdate)
+            {
+                CatalogBrandViewModel.Refresh();
+                SetWaitScreenMessage.Invoke(GetDescription(AsyncOperationType.LoadCatalog));
+                LoadPricelist(true);
+            }
+
+            return needToUpdate;
+        }
+
+        private object LoadDirectories(bool needToUpdate)
+        {
+            if (needToUpdate)
+            {
+                CatalogDirectoryViewModel.Refresh();
+                SetWaitScreenMessage.Invoke(GetDescription(AsyncOperationType.LoadBrands));
+                CatalogBrandViewModel.Refresh();
+                SetWaitScreenMessage.Invoke(GetDescription(AsyncOperationType.LoadCatalog));
+                LoadPricelist(true);
+            }
+
+            return needToUpdate;
+        }
+
+        private void ActionAfterLoadDaata(Exception e, object needToUpdate)
+        {
+            if ((bool) needToUpdate)
+            {
+                Application.Current.Dispatcher.Invoke(
+                    () =>
+                    {
+                        SearchCommand?.RiseCanExecute();
+                        ClearCommand?.RiseCanExecute();
+                        CatalogNavigateViewModel.FirstCommand.RiseCanExecute();
+                        CatalogNavigateViewModel.PreviousCommand.RiseCanExecute();
+                        CatalogNavigateViewModel.NextCommand.RiseCanExecute();
+                        CatalogNavigateViewModel.LastCommand.RiseCanExecute();
+                        OnPropertyChanged(nameof(Entities));
+                        OnPropertyChanged(nameof(SelectedItem));
+                        RefreshView();
+                    });
             }
         }
 
@@ -242,25 +403,46 @@ namespace Catalog.ViewModel
                  e.PropertyName == nameof(SearchCriteria.Gas) ||
                  e.PropertyName == nameof(SearchCriteria.Instrument)))
             {
-                RefreshEdvanceSearch();
+                LoadData(SearchCriteria.EnabledEdvanceSearch
+                    ? LoadingType.СhangedAdvancedSearch
+                    : LoadingType.ChangedSearchCriteria);
             }
         }
 
-        private void CatalogEdvanceSearchViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void SearchCriteria_DirectoryItemsChanged(object sender, System.EventArgs e)
         {
-            if (e.PropertyName == nameof(CatalogEdvanceSearchViewModel.SelectedItem) && Model != null)
+            LoadData(LoadingType.ChangedDirectoryItems);
+        }
+
+        private void SearchCriteria_BrandItemsChanged(object sender, EventArgs e)
+        {
+            LoadData(LoadingType.ChangedSearchCriteria);
+        }
+
+        private void SearchCriteria_EnabledEdvanceSearchChanged(object sender, Common.Event.DoubleAnimationEventArgs e)
+        {
+            LoadData(SearchCriteria.EnabledEdvanceSearch
+                ? LoadingType.СhangedAdvancedSearch
+                : LoadingType.ChangedSearchCriteria);
+        }
+
+        private void CatalogBrandViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(CatalogBrandViewModel.SelectedItem) && Model != null)
             {
-                //if (CatalogEdvanceSearchViewModel.SelectedItem != null)
+                //if (CatalogBrandViewModel.SelectedItem != null)
                 //{
-                    RefreshEdvanceSearch();
+                    //RefreshEdvanceSearch();
                 //}
             }
         }
 
         private void RefreshEdvanceSearch()
         {
-            Model.ExternalBrandItem = CatalogEdvanceSearchViewModel.SelectedItem;
-            Model.SelectEntities();
+            // TODO Основная вычетка данных для EdvanceSearch
+            Model.ExternalBrandItem = CatalogBrandViewModel.SelectedItem;
+            LoadData(LoadingType.СhangedAdvancedSearch);
+            //Model.SelectEntities();
         }
 
         private void OnCountChanged(object sender, DecimalValueChangedEventArgs e)
@@ -277,14 +459,18 @@ namespace Catalog.ViewModel
             if (Messenger != null)
             {
                 Messenger?.MultiRegister<DecimalValueChangedEventArgs>(CommandName.RefreshCount,
-                                                                       RefreshCount, CanRefreshCount);
-                Messenger.Register<EventArgs>(CommandName.RefreshPriceList, DoRefreshPriceList, CanDoRefreshPriceList);
+                                                                       RefreshCount, 
+                                                                       CanRefreshCount);
+                Messenger.Register<EventArgs>(CommandName.RefreshPriceList, 
+                                              DoRefreshPriceList, 
+                                              CanDoRefreshPriceList);
             }
         }
 
         private void DoRefreshPriceList(EventArgs args)
         {
-            Model.SelectEntities();
+            LoadData(LoadingType.ChangedDataInCurrentPage);
+            //Model.SelectEntities();
         }
 
         private bool CanDoRefreshPriceList(EventArgs args)
@@ -296,7 +482,8 @@ namespace Catalog.ViewModel
         {
             if (Entities.All(x => x.Entity.Id != args.Id))
             {
-                Model.SelectEntities();
+                LoadData(LoadingType.ChangedDataInCurrentPage);
+                //Model.SelectEntities();
             }
             else
             {
@@ -321,20 +508,24 @@ namespace Catalog.ViewModel
         {
             SearchCommand = new DelegateCommand(DoSearch, CanDoSearch);
             ClearCommand = new DelegateCommand(DoClear, CanDoClear);
+            RefreshEntities = new DelegateCommand(x => RefreshView());
         }
 
         private void SubscribeCommand()
         {
             if (SearchCriteria != null)
             {
-                SearchCriteria.SearchCriteriaChanged += OnCanDoSearchChanged;
-                SearchCriteria.SearchCriteriaCleared += OnCanDoClear;
+                SearchCriteria.SearchCriteriaChanged += (sender, e) => 
+                    Application.Current.Dispatcher.Invoke(() => OnCanDoSearchChanged(sender, e));
+                SearchCriteria.SearchCriteriaCleared += (sender, e) => 
+                    Application.Current.Dispatcher.Invoke(() => OnCanDoClear(sender, e));
             }
         }
 
         private void DoSearch(object parametr)
         {
-            Model.SelectEntities();
+            LoadData(LoadingType.ChangedSearchCriteria);
+            //Model.SelectEntities();
         }
 
         private bool CanDoSearch(object parametr)
@@ -349,7 +540,9 @@ namespace Catalog.ViewModel
 
         private void DoClear(object parametr)
         {
-            Model?.Clear();
+            SearchCriteria.Clear();
+            LoadData(LoadingType.ChangedSearchCriteria);
+            //Model?.Clear();
         }
 
         private bool CanDoClear(object parametr)
@@ -386,7 +579,8 @@ namespace Catalog.ViewModel
 
             if (SearchCriteria != null && !SearchCriteria.EnabledEdvanceSearch)
             {
-                Model.SelectEntities();
+                LoadData(LoadingType.ChangedSearchCriteria);
+                //Model.SelectEntities();
             }
         }
 
@@ -412,7 +606,8 @@ namespace Catalog.ViewModel
         public void SelectNexPageData()
         {
             StartRowIndex += MaximumRows;
-            Model.SelectEntities();
+            LoadData(LoadingType.ChangedSelectedPage);
+            //Model.SelectEntities();
         }
 
         #endregion

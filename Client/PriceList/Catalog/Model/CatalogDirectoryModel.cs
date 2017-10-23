@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using Catalog.SearchCriteria;
 using Common.Data.Enum;
@@ -129,6 +128,7 @@ namespace Catalog.Model
                     else
                     {
                         DirectoryItem parentItem = new DirectoryItem(DataService, parentEntity);
+                        newItem.Parent = parentItem;
                         parentItem.Subdirectories.Add(newItem);
                         newItem = parentItem;
                     }
@@ -160,6 +160,7 @@ namespace Catalog.Model
 
             if (resultItem.Id == item.Entity.Parent.Id)
             {
+                item.Parent = resultItem;
                 resultItem.Subdirectories.Add(item);
                 result = true;
             }

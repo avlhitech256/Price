@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
@@ -26,8 +27,7 @@ namespace Domain.Data.Object
             this.dataService = dataService;
             Entity = entity;
             Selected = false;
-            Subdirectories = new ObservableCollection<DirectoryItem>();
-            SubscribeEvents();
+            Subdirectories = new List<DirectoryItem>();
         }
 
         #endregion
@@ -132,33 +132,11 @@ namespace Domain.Data.Object
             }
         }
 
-        public ObservableCollection<DirectoryItem> Subdirectories { get; }
+        public List<DirectoryItem> Subdirectories { get; }
 
         #endregion
 
         #region Methods
-
-        private void SubscribeEvents()
-        {
-            Subdirectories.CollectionChanged += Subdirectories_CollectionChanged; ;
-        }
-
-        private void Subdirectories_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            switch (e.Action)
-            {
-                case NotifyCollectionChangedAction.Add:
-                    e.NewItems.Cast<DirectoryItem>().ToList().ForEach(x => x.Parent = this);
-                    break;
-                case NotifyCollectionChangedAction.Remove:
-                    e.OldItems.Cast<DirectoryItem>().ToList().ForEach(x => x.Parent = null);
-                    break;
-                case NotifyCollectionChangedAction.Replace:
-                    e.NewItems.Cast<DirectoryItem>().ToList().ForEach(x => x.Parent = this);
-                    e.OldItems.Cast<DirectoryItem>().ToList().ForEach(x => x.Parent = null);
-                    break;
-            }
-        }
 
         private DirectoryEntity LoadParent()
         {

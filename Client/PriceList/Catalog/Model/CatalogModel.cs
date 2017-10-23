@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
+using System.Windows;
 using Catalog.SearchCriteria;
 using Common.Data.Enum;
 using Common.Data.Holders;
@@ -23,8 +23,8 @@ namespace Catalog.Model
 
         private CatalogItem selectedItem;
         private CatalogItem oldSelectedItem;
-        private ObservableCollection<CatalogItem> entities;
-        private ObservableCollection<BrandItem> brandItems;
+        private List<CatalogItem> entities;
+        private List<BrandItem> brandItems;
         private BrandItem externalBrandItem;
         private BrandItem oldExternalBrandItem;
         private decimal amount;
@@ -46,13 +46,13 @@ namespace Catalog.Model
             StartRowIndex = 0;
             oldMaximumRows = MaximumRows;
             needToUpdateCount = true;
-            Entities = new ObservableCollection<CatalogItem>();
+            Entities = new List<CatalogItem>();
             cacheCatalogItems = new Dictionary<int, List<CatalogItem>>();
-            BrandItems = new ObservableCollection<BrandItem>();
+            BrandItems = new List<BrandItem>();
             SearchCriteria = new CatalogSearchCriteria();
             SubscribeEvents();
             SelectBrandPopupItems();
-            SelectEntities();
+            //SelectEntities();
         }
 
         #endregion
@@ -88,7 +88,7 @@ namespace Catalog.Model
             }
         }
 
-        public ObservableCollection<CatalogItem> Entities
+        public List<CatalogItem> Entities
         {
             get
             {
@@ -104,7 +104,7 @@ namespace Catalog.Model
             }
         }
 
-        public ObservableCollection<BrandItem> BrandItems
+        public List<BrandItem> BrandItems
         {
             get
             {
@@ -276,29 +276,50 @@ namespace Catalog.Model
             return result;
         }
 
+        public void RefreshEntities()
+        {
+            OnPropertyChanged(nameof(Entities));
+        }
+
         public void SelectEntities()
         {
-            if (SearchCriteria != null)
+            try
             {
-                long catalogId = SelectedItem?.Id ?? -1L;
-                Entities.Clear();
-
-                if (SearchCriteria.IsModified || ExternalBrandItemIsChanged())
+                if (SearchCriteria != null)
                 {
-                    StartRowIndex = 0;
-                    count = GetCount();
-                    needToUpdateCount = false;
-                    oldExternalBrandItem = ExternalBrandItem;
-                    OnPropertyChanged(nameof(Count));
-                }
+                    long catalogId = SelectedItem?.Id ?? -1L;
+                    Entities.Clear();
 
-                if (StartRowIndex < Count)
-                {
-                    GetItems(StartRowIndex, MaximumRows).ForEach(x => Entities.Add(x));
-                    OnPropertyChanged(nameof(Entities));
-                    SelectedItem = Entities.FirstOrDefault(x => x.Id == catalogId) ?? Entities.FirstOrDefault();
-                    SearchCriteria.SearchComplited();
+                    if (SearchCriteria.IsModified || ExternalBrandItemIsChanged())
+                    {
+                        count = GetCount();
+                        needToUpdateCount = false;
+                        oldExternalBrandItem = ExternalBrandItem;
+                        Application.Current.Dispatcher.Invoke(
+                            () =>
+                            {
+                                StartRowIndex = 0;
+                                OnPropertyChanged(nameof(Count));
+                            });
+                    }
+
+                    if (StartRowIndex < Count)
+                    {
+                        GetItems(StartRowIndex, MaximumRows).ForEach(x => Entities.Add(x));
+                        Application.Current.Dispatcher.Invoke(
+                            () =>
+                            {
+                                OnPropertyChanged(nameof(Entities));
+                                SelectedItem = Entities.FirstOrDefault(x => x.Id == catalogId) ?? Entities.FirstOrDefault();
+                                SearchCriteria.SearchComplited();
+                            });
+                        
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+                ; //TODO Вывести Exception в стилизированное окно ошибок
             }
         }
 

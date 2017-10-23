@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using Catalog.ViewModel;
@@ -84,7 +85,10 @@ namespace Catalog.View.ResultSearch
             //}
         }
 
-        #endregion
+        public void Refresh()
+        {
+            CollectionViewSource.GetDefaultView(ResultSearchDataGrid.ItemsSource).Refresh();
+        } 
 
         private void ResultSearchDataGrid_OnLoadingRow(object sender, DataGridRowEventArgs e)
         {
@@ -133,5 +137,7 @@ namespace Catalog.View.ResultSearch
             lightRadBrush = new SolidColorBrush(Colors.LightPink);
             lightGreenBrush = new SolidColorBrush(Colors.PaleGreen);
         }
+
+        #endregion
     }
 }

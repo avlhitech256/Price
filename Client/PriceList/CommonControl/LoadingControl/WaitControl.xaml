@@ -5,16 +5,21 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CommonControl.LoadingControl"
              mc:Ignorable="d" 
-             d:DesignHeight="80" d:DesignWidth="400">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="80"></ColumnDefinition>
-            <ColumnDefinition Width="Auto"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-        <local:AtomLoadingControl Grid.Column="0"/>
-        <Label x:Name="LoadingLabel" Grid.Column="1"
+             d:DesignHeight="80" d:DesignWidth="400" BorderBrush="Black">
+    <Border BorderBrush="MidnightBlue" 
+            BorderThickness="1" 
+            CornerRadius="40" 
+            Background="White">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <local:AtomLoadingControl Grid.Column="0"/>
+            <Label x:Name="LoadingLabel" Grid.Column="1"
                Content="Подождите, идет загрузка данных..."
                VerticalContentAlignment="Center" Margin="12,0,20,0"
                />
-    </Grid>
+        </Grid>
+    </Border>
 </UserControl>

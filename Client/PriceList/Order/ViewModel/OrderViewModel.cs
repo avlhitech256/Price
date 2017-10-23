@@ -31,6 +31,12 @@ namespace Order.ViewModel
         public OrderViewModel(IDomainContext domainContext)
         {
             DomainContext = domainContext;
+            ShowWaitScreen = delegate { };
+            SetWaitScreenMessage = delegate { };
+            HideWaitScreen = delegate { };
+            RefreshView = delegate { };
+            IsWaiting = false;
+            IsLoading = false;
             Model = new OrderModel(domainContext);
             DetailViewModel = new DetailOrderViewModel(domainContext);
             DetailViewModel.CurrentOrder = SelectedItem;
@@ -90,13 +96,22 @@ namespace Order.ViewModel
             throw new NotImplementedException();
         }
 
+        public void Init()
+        {
+            throw new NotImplementedException();
+        }
+
         private IOrderModel Model { get; }
 
         public DetailOrderViewModel DetailViewModel { get; }
 
         public Action<string> ShowWaitScreen { get; set; }
 
+        public Action<string> SetWaitScreenMessage { get; set; }
+
         public Action HideWaitScreen { get; set; }
+
+        public Action RefreshView { get; set; }
 
         public bool IsWaiting
         {

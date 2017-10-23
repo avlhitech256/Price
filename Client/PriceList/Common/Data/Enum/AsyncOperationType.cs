@@ -3,6 +3,8 @@
     public enum AsyncOperationType
     {
         CheckDatabase,
-        LoadCatalog
+        LoadCatalog,
+        LoadBrands,
+        LoadDirectories
     }
 }

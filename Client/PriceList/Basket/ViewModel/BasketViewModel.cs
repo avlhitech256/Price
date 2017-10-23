@@ -31,6 +31,12 @@ namespace Basket.ViewModel
         public BasketViewModel(IDomainContext domainContext)
         {
             DomainContext = domainContext;
+            ShowWaitScreen = delegate { };
+            SetWaitScreenMessage = delegate { };
+            HideWaitScreen = delegate { };
+            RefreshView = delegate { };
+            IsWaiting = false;
+            IsLoading = false;
             Model = new BasketModel(domainContext);
             OrderViewModel = new OrderViewModel(domainContext);
             HasChanges = false;
@@ -59,7 +65,11 @@ namespace Basket.ViewModel
 
         public Action<string> ShowWaitScreen { get; set; }
 
+        public Action<string> SetWaitScreenMessage { get; set; }
+
         public Action HideWaitScreen { get; set; }
+
+        public Action RefreshView { get; set; }
 
         public bool IsWaiting
         {
@@ -161,6 +171,11 @@ namespace Basket.ViewModel
         public void Delete()
         {
             throw new System.NotImplementedException();
+        }
+
+        public void Init()
+        {
+            throw new NotImplementedException();
         }
 
         private void InitCommands()

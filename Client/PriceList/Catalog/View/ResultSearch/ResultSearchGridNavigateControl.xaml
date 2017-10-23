@@ -18,18 +18,21 @@
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
+            <Button Content="Обновить"
+                Grid.Column="0"
+                Width="100"
+                Style="{DynamicResource ButtonStyle}"
+                Command="{Binding Path=RefreshEntities}"/>
             <Button Content="В начало"
                 Grid.Column="1"
                 Width="100"
                 Style="{DynamicResource ButtonStyle}"
-                Command="{Binding Path=CatalogNavigateViewModel.FirstCommand}"
-                IsDefault="True"/>
+                Command="{Binding Path=CatalogNavigateViewModel.FirstCommand}"/>
             <Button Content="Предыдущая"
                 Grid.Column="2"
                 Width="100"
                 Style="{DynamicResource ButtonStyle}"
-                Command="{Binding Path=CatalogNavigateViewModel.PreviousCommand}"
-                IsDefault="True"/>
+                Command="{Binding Path=CatalogNavigateViewModel.PreviousCommand}"/>
             <TextBox Grid.Column="3"
                      MinWidth="50"
                      Foreground="#FF000059"
@@ -50,14 +53,12 @@
                 Grid.Column="5"
                 Width="100"
                 Style="{DynamicResource ButtonStyle}"
-                Command="{Binding Path=CatalogNavigateViewModel.NextCommand}"
-                IsDefault="True"/>
+                Command="{Binding Path=CatalogNavigateViewModel.NextCommand}"/>
             <Button Content="В конец"
                 Grid.Column="6"
                 Width="100"
                 Style="{DynamicResource ButtonStyle}"
-                Command="{Binding Path=CatalogNavigateViewModel.LastCommand}"
-                IsDefault="True"/>
+                Command="{Binding Path=CatalogNavigateViewModel.LastCommand}"/>
             <DockPanel Grid.Column="7"
                        Dock="Right">
                 <TextBox MinWidth="50"

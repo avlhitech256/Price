@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using Catalog.SearchCriteria;
 using Common.Data.Enum;
@@ -18,7 +17,7 @@ namespace Catalog.Model
         #region Members
 
         private BrandItem selectedItem;
-        private ObservableCollection<BrandItem> entities;
+        private List<BrandItem> entities;
 
         #endregion
 
@@ -28,7 +27,7 @@ namespace Catalog.Model
         {
             DomainContext = domainContext;
             SearchCriteria = searchCriteria;
-            Entities = new ObservableCollection<BrandItem>();
+            Entities = new List<BrandItem>();
         }
 
         #endregion
@@ -57,7 +56,7 @@ namespace Catalog.Model
             }
         }
 
-        public ObservableCollection<BrandItem> Entities
+        public List<BrandItem> Entities
         {
             get
             {
@@ -197,6 +196,5 @@ namespace Catalog.Model
         }
 
         #endregion
-
     }
 }

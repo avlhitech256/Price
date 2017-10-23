@@ -12,6 +12,7 @@ namespace CommonControl.Service.Implementation
     {
         #region Members
 
+        private readonly double maxBackgroundOpacity;
         private LoadingStatus loadingStatus;
         private readonly Rectangle background;
         private readonly WaitControl loadControl;
@@ -25,6 +26,7 @@ namespace CommonControl.Service.Implementation
         {
             this.viewModel = viewModel;
             InitViewModel();
+            maxBackgroundOpacity = 0.6;
             this.background = background;
             this.loadControl = loadControl;
             WaitToContinueTime = TimeSpan.FromMilliseconds(300);
@@ -58,18 +60,23 @@ namespace CommonControl.Service.Implementation
 
         private void InitViewModel()
         {
-            viewModel.ShowWaitScreen = ShowWaitScreen;
-            viewModel.HideWaitScreen = HideWaitScreen;
+            viewModel.ShowWaitScreen = (x) => Application.Current.Dispatcher.Invoke(() => ShowWaitScreen(x));
+            viewModel.SetWaitScreenMessage = (x) => Application.Current.Dispatcher.Invoke(() => SetWaitScreenMessage(x));
+            viewModel.HideWaitScreen = () => Application.Current.Dispatcher.Invoke(HideWaitScreen);
         }
 
         private void ShowWaitScreen(string message)
+        {
+            SetWaitScreenMessage(message);
+            BeginUpdate();
+        }
+
+        private void SetWaitScreenMessage(string message)
         {
             if (!string.IsNullOrWhiteSpace(message))
             {
                 loadControl.Text = message;
             }
-
-            BeginUpdate();
         }
 
         public void HideWaitScreen()
@@ -115,7 +122,7 @@ namespace CommonControl.Service.Implementation
                 var animation = new DoubleAnimation
                 {
                     From = background.Opacity,
-                    To = 0.7,
+                    To = maxBackgroundOpacity,
                     Duration = StartAnimationTime
                 };
 
@@ -162,7 +169,7 @@ namespace CommonControl.Service.Implementation
                 splashAnimationTimer.Interval = FinishAnimationTime;
                 splashAnimationTimer.Start();
 
-                var animation = new DoubleAnimation
+                var animation =  new DoubleAnimation
                 {
                     From = loadControl.Opacity,
                     To = 0,

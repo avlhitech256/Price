@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Common.Data.Notifier;
 using DatabaseService.DataBaseContext.Entities;
 
@@ -9,6 +10,7 @@ namespace Domain.Data.Object
         #region Members
 
         private long position;
+        private bool selected;
 
         #endregion
 
@@ -17,6 +19,8 @@ namespace Domain.Data.Object
         public BrandItem(BrandItemEntity entity)
         {
             Entity = entity;
+            Selected = false;
+            Subbrands = new List<BrandItem>();
         }
 
         #endregion
@@ -46,6 +50,24 @@ namespace Domain.Data.Object
         public Guid Code => Entity.Code;
 
         public string Name => Entity.Name;
+
+        public bool Selected
+        {
+            get
+            {
+                return selected;
+            }
+            set
+            {
+                if (selected != value)
+                {
+                    selected = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public List<BrandItem> Subbrands { get; }
 
         #endregion
     }

@@ -44,7 +44,9 @@ namespace Catalog.View
 
             if (viewModel != null)
             {
+                viewModel.RefreshView = ResultSearchGridControl.Refresh;
                 loadService = new LoadingService(viewModel, LoadingBackgroung, WaitControl);
+                viewModel.Init();
             }
         }
 

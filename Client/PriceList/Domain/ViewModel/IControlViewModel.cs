@@ -24,7 +24,11 @@ namespace Domain.ViewModel
 
         Action<string> ShowWaitScreen { get; set; }
 
+        Action<string> SetWaitScreenMessage { get; set; }
+
         Action HideWaitScreen { get; set; }
+
+        Action RefreshView { get; set; } 
 
         bool IsLoading { get; set; }
 
@@ -43,5 +47,7 @@ namespace Domain.ViewModel
         bool Save();
 
         void Delete();
+
+        void Init();
     }
 }

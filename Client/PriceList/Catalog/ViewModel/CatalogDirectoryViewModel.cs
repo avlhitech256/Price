@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using Catalog.Model;
 using Catalog.SearchCriteria;
@@ -17,10 +16,6 @@ namespace Catalog.ViewModel
         #region Members
 
         private readonly CatalogSearchCriteria searchCriteria;
-        private readonly IAsyncOperationService asyncOperationService;
-        public Action<string> ShowWaitScreen;
-        public Action HideWaitScreen;
-        private readonly AsyncOperationType[] waitFormSupported;
 
         #endregion
 
@@ -28,11 +23,7 @@ namespace Catalog.ViewModel
 
         public CatalogDirectoryViewModel(IDomainContext domainContext, CatalogSearchCriteria searchCriteria)
         {
-            asyncOperationService = domainContext.AsyncOperationService;
             this.searchCriteria = searchCriteria;
-            ShowWaitScreen = delegate { };
-            HideWaitScreen = delegate { };
-            waitFormSupported = new[] { AsyncOperationType.LoadCatalog };
             Model = new CatalogDirectoryModel(domainContext, searchCriteria);
             SubscribeEvents();
         }
@@ -64,31 +55,11 @@ namespace Catalog.ViewModel
 
         #region Methods
 
-        private void ShowWaitScreenWithType(AsyncOperationType type)
-        {
-            ShowWaitScreen.Invoke(GetDescription(type));
-        }
-
-        private static string GetDescription(AsyncOperationType type)
-        {
-            string description = string.Empty;
-
-            if (type == AsyncOperationType.LoadCatalog)
-            {
-                description = "Подождите, идет формирование каталогов";
-            }
-            else 
-            {
-                description = string.Empty;
-            }
-
-            return description;
-        }
-
-
         public void Refresh()
         {
             Model?.SelectEntities();
+            searchCriteria?.SelectedDirectoryItems?.Clear();
+            searchCriteria?.DirectoryComplited();
         }
 
         public void OnCheck(DirectoryItem item)
@@ -109,6 +80,8 @@ namespace Catalog.ViewModel
 
         private void SetCheck(DirectoryItem item)
         {
+            AddItem(item);
+
             while (item.Parent != null)
             {
                 item.Parent.Selected = item.Selected;
@@ -156,55 +129,6 @@ namespace Catalog.ViewModel
                 Model.PropertyChanged += Model_PropertyChanged;
             }
 
-            if (searchCriteria != null)
-            {
-                searchCriteria.EnabledEdvanceSearchChanged += SearchCriteria_EnabledEdvanceSearchChanged;
-            }
-
-            if (asyncOperationService != null)
-            {
-                asyncOperationService.OperationStarted += (s, args) =>
-                {
-                    if (waitFormSupported.Contains(args.Value))
-                    {
-                        ShowWaitScreenWithType(args.Value);
-                    }
-                };
-
-                asyncOperationService.OperationCompleted += (s, args) =>
-                {
-                    if (waitFormSupported.Contains(args.Value))
-                    {
-                        HideWaitScreen();
-                    }
-                };
-            }
-        }
-
-        private void SearchCriteria_EnabledEdvanceSearchChanged(object sender, Common.Event.DoubleAnimationEventArgs e)
-        {
-            if (searchCriteria.EnabledEdvanceSearch)
-            {
-                asyncOperationService.PerformAsyncOperation(AsyncOperationType.LoadCatalog, LoadDirectory, true, null);
-                //Model.SelectEntities();
-                //searchCriteria.SelectedDirectoryItems.Clear();
-                //searchCriteria.DirectoryComplited();
-            }
-        }
-
-        private bool LoadDirectory(bool needToLoad)
-        {
-            bool result = false;
-
-            if (needToLoad)
-            {
-                Model.SelectEntities();
-                searchCriteria.SelectedDirectoryItems.Clear();
-                searchCriteria.DirectoryComplited();
-                result = true;
-            }
-
-            return result;
         }
 
         private void Model_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
