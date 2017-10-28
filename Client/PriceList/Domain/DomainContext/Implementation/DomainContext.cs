@@ -4,9 +4,7 @@ using Common.Convert;
 using Common.Data.Notifier;
 using Common.Messenger;
 using Common.Messenger.Implementation;
-using Common.Service;
 using Common.Service.Implementation;
-using Common.Thread;
 using DatabaseService.DataService;
 using DatabaseService.DataService.Implementation;
 using Domain.Service.Precision;
@@ -49,7 +47,6 @@ namespace Domain.DomainContext.Implementation
             DataService = new DataService();
             OptionService = new OptionService(DataService);
             ConvertService = new ConvertService();
-            AsyncOperationService = new AsyncOperationService(UIContext.Current);
         }
 
         #endregion
@@ -131,8 +128,6 @@ namespace Domain.DomainContext.Implementation
         public IOptionService OptionService { get; }
 
         public IConvertService ConvertService { get; }
-
-        public IAsyncOperationService AsyncOperationService { get; }
 
         #endregion
     }

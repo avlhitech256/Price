@@ -1,7 +1,6 @@
 ﻿using Common.Annotations;
 using Common.Convert;
 using Common.Messenger;
-using Common.Service;
 using DatabaseService.DataService;
 using Domain.Service.Precision;
 using Domain.ViewModel;
@@ -48,7 +47,5 @@ namespace Domain.DomainContext
         IOptionService OptionService { get; }
 
         IConvertService ConvertService { get; }
-
-        IAsyncOperationService AsyncOperationService { get; }
     }
 }

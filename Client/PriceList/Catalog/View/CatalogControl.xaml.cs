@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using Catalog.ViewModel;
 using Common.Event;
 using Common.Messenger.Implementation;
@@ -36,18 +37,43 @@ namespace Catalog.View
 
         #endregion
 
+        #region Properties
+
+        IControlViewModel ViewModel => DataContext as IControlViewModel;
+
+        #endregion
+
         #region Methods
 
         protected override void SetDomainContext()
         {
-            var viewModel = DataContext as IControlViewModel;
+            if (ViewModel != null)
+            {
+                ViewModel.RefreshView = RefreshView;
+                loadService = new LoadingService(ViewModel, LoadingBackgroung, WaitControl);
+                ViewModel.Init();
+                InitSplitterPosition();
+            }
+        }
+
+        private void InitSplitterPosition()
+        {
+            CatalogViewModel viewModel = ViewModel as CatalogViewModel;
 
             if (viewModel != null)
             {
-                viewModel.RefreshView = RefreshView;
-                loadService = new LoadingService(viewModel, LoadingBackgroung, WaitControl);
-                viewModel.Init();
+                double width = viewModel.SplitterPosition;
+                LeftColumn.Width = new GridLength(width, GridUnitType.Pixel);
+                SetSplitter(width);
             }
+        }
+
+        private void SetSplitter(double width)
+        {
+            bool enable = width > 0;
+            Splitter.IsEnabled = enable;
+            Splitter.Visibility = enable ? Visibility.Visible : Visibility.Collapsed;
+            Splitter.Width = enable ? 3 : 0;
         }
 
         private void RefreshView()
@@ -111,15 +137,26 @@ namespace Catalog.View
 
             animation.Completed += delegate
             {
-                bool enable = args.To > 0;
-                Splitter.IsEnabled = enable;
-                Splitter.Visibility = enable ? Visibility.Visible : Visibility.Collapsed;
-                Splitter.Width = enable ? 3 : 0;
+                SetSplitter(args.To);
+
+                if (args.To > 0)
+                {
+                    SaveSplitterPosition();
+                }
             };
 
             LeftColumn.BeginAnimation(ColumnDefinition.WidthProperty, animation);
         }
-         
+
+        private void SaveSplitterPosition()
+        {
+            CatalogViewModel viewModel = ViewModel as CatalogViewModel;
+
+            if (viewModel != null)
+            {
+                viewModel.SplitterPosition = LeftColumn.ActualWidth;
+            }
+        }
 
         private bool CanShowAdvanceSearchControl(DoubleAnimationEventArgs args)
         {
@@ -141,5 +178,10 @@ namespace Catalog.View
         }
 
         #endregion
+
+        private void Splitter_OnDragCompleted(object sender, DragCompletedEventArgs e)
+        {
+            SaveSplitterPosition();
+        }
     }
 }

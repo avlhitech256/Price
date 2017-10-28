@@ -18,11 +18,6 @@
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Content="Обновить"
-                Grid.Column="0"
-                Width="100"
-                Style="{DynamicResource ButtonStyle}"
-                Command="{Binding Path=RefreshEntities}"/>
             <Button Content="В начало"
                 Grid.Column="1"
                 Width="100"

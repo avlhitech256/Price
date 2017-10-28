@@ -158,8 +158,6 @@ namespace PriceList.View.TopMenu
             menuItemMap.Clear();
         }
 
-        #endregion
-
         private void MenuItem_OnMouseEnter(object sender, MouseEventArgs e)
         {
             SetMouseOver(sender, true);
@@ -196,10 +194,29 @@ namespace PriceList.View.TopMenu
             return true;
         }
 
+        private void EnableMenu(EnableMenuEventArgs args)
+        {
+            Menu.IsEnabled = args.Enable;
+        }
+
+        private bool CanEnableMenu(EnableMenuEventArgs args)
+        {
+            return Menu != null && args != null;
+        }
 
         private void SubscribeMessenger()
         {
-            Messenger.Register<SetMenuFocusEventArgs>(CommandName.SetFocusTopMenu, SetFocusTopMenu, CanSetFocusTopMenu);
+            if (Messenger != null)
+            {
+                Messenger.Register<SetMenuFocusEventArgs>(CommandName.SetFocusTopMenu, 
+                                                          SetFocusTopMenu,
+                                                          CanSetFocusTopMenu);
+                Messenger.Register<EnableMenuEventArgs>(CommandName.EnableMenu,
+                                                        EnableMenu,
+                                                        CanEnableMenu);
+            }
         }
+
+        #endregion
     }
 }

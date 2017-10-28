@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using Catalog.Model;
 using Catalog.SearchCriteria;
 using Common.Data.Notifier;

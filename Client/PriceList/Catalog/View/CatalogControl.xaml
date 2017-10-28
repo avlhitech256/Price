@@ -34,9 +34,9 @@
         <Border CornerRadius="3" BorderThickness="1">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition x:Name="LeftColumn" Width="0"></ColumnDefinition>
-                    <ColumnDefinition Width="Auto"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="0" x:Name="LeftColumn"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <search1:AdvanceSearchControl x:Name="LeftAdvanceSearchControl" Width="Auto" Grid.Column="0"/>
                 <GridSplitter x:Name="Splitter" 
@@ -44,7 +44,8 @@
                           VerticalAlignment="Stretch" 
                           HorizontalAlignment="Center" 
                           Width="0"
-                          IsEnabled="False"/>
+                          IsEnabled="False"
+                          DragCompleted="Splitter_OnDragCompleted"    />
                 <Grid Grid.Column="2">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"></RowDefinition>

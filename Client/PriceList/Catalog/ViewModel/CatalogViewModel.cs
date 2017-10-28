@@ -11,6 +11,8 @@ using Common.Event;
 using Common.Messenger;
 using Common.Messenger.Implementation;
 using Common.Service;
+using Common.Service.Implementation;
+using Common.Thread;
 using Common.ViewModel.Command;
 using Domain.Data.Object;
 using Domain.DomainContext;
@@ -23,6 +25,7 @@ namespace Catalog.ViewModel
     {
         #region Members
 
+        private bool isInited;
         private bool isWaiting;
         private bool isLoading;
         private readonly IAsyncOperationService asyncOperationService;
@@ -34,6 +37,8 @@ namespace Catalog.ViewModel
 
         public CatalogViewModel(IDomainContext domainContext)
         {
+            isInited = false;
+            SplitterPosition = 0;
             DomainContext = domainContext;
 
             waitFormSupported = new[]
@@ -43,7 +48,7 @@ namespace Catalog.ViewModel
                 AsyncOperationType.LoadDirectories
             };
 
-            asyncOperationService = domainContext.AsyncOperationService;
+            asyncOperationService = new AsyncOperationService(UIContext.Current);
             HasChanges = false;
             ShowPhotoOnMouseDoubleClick = false;
             ShowWaitScreen = delegate { };
@@ -60,7 +65,6 @@ namespace Catalog.ViewModel
             SubscribeEvents();
             SubscribeMessenger();
             InitCommands();
-            CatalogNavigateViewModel.RefreshEntities = RefreshEntities;
         }
 
         #endregion
@@ -151,12 +155,14 @@ namespace Catalog.ViewModel
 
         public DelegateCommand ClearCommand { get; private set; }
 
-        public DelegateCommand RefreshEntities { get; private set; }
-
         public bool ReadOnly { get; set; }
+
         public bool Enabled { get; set; }
+
         public bool IsEditControl { get; set; }
+
         public bool HasChanges { get; }
+
         public void ApplySearchCriteria()
         {
             throw new NotImplementedException();
@@ -228,6 +234,8 @@ namespace Catalog.ViewModel
 
         public int Count => Model.Count;
 
+        public double SplitterPosition { get; set; }
+
         #endregion
 
         #region Methods
@@ -258,6 +266,9 @@ namespace Catalog.ViewModel
                     {
                         ShowWaitScreenWithType(args.Value);
                     }
+
+                    Application.Current.Dispatcher.Invoke(
+                        () => Messenger?.Send(CommandName.EnableMenu, new EnableMenuEventArgs(false)));
                 };
 
                 asyncOperationService.OperationCompleted += (s, args) =>
@@ -266,6 +277,9 @@ namespace Catalog.ViewModel
                     {
                         HideWaitScreen();
                     }
+
+                    Application.Current.Dispatcher.Invoke(
+                        () => Messenger?.Send(CommandName.EnableMenu, new EnableMenuEventArgs(true)));
                 };
             }
         }
@@ -300,7 +314,11 @@ namespace Catalog.ViewModel
 
         public void Init()
         {
-            LoadData(LoadingType.ChangedSearchCriteria);
+            if (!isInited)
+            {
+                isInited = true;
+                LoadData(LoadingType.ChangedSearchCriteria);
+            }
         }
 
         private void LoadData(LoadingType loadingType)
@@ -493,7 +511,6 @@ namespace Catalog.ViewModel
         {
             SearchCommand = new DelegateCommand(DoSearch, CanDoSearch);
             ClearCommand = new DelegateCommand(DoClear, CanDoClear);
-            RefreshEntities = new DelegateCommand(x => RefreshView());
         }
 
         private void SubscribeCommand()

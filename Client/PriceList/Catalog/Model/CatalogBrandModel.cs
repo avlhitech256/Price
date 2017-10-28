@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
-using System.Windows.Documents;
 using Catalog.SearchCriteria;
 using Common.Data.Enum;
 using Common.Data.Holders;

@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\Enum\AsyncOperationType.cs" />
+    <Compile Include="Event\EnableMenuEventArgs.cs" />
     <Compile Include="Service\IAsyncOperationService.cs" />
     <Compile Include="Service\IConvertService.cs" />
     <Compile Include="Service\Implementation\AsyncOperationService .cs" />
