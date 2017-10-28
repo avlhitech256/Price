@@ -260,11 +260,11 @@ namespace Catalog.Model
             }
         }
 
-        public void Clear()
-        {
-            SearchCriteria.Clear();
-            SelectEntities();
-        }
+        //public void Clear()
+        //{
+        //    SearchCriteria.Clear();
+        //    SelectEntities();
+        //}
 
         private bool ExternalBrandItemIsChanged()
         {
@@ -290,7 +290,7 @@ namespace Catalog.Model
                     long catalogId = SelectedItem?.Id ?? -1L;
                     Entities.Clear();
 
-                    if (SearchCriteria.IsModified || ExternalBrandItemIsChanged())
+                    if (SearchCriteria.IsModified || SearchCriteria.BrandItemIdsChanged || SearchCriteria.DirectoryItemIdsChanged)
                     {
                         count = GetCount();
                         needToUpdateCount = false;
@@ -433,10 +433,13 @@ namespace Catalog.Model
                 string[] articles = prepareArray(SearchCriteria.Article);
                 DateTimeOffset dateForNew = DateTimeOffset.Now.AddDays(-14);
                 DateTimeOffset dateForPrice = DateTimeOffset.Now.AddDays(-7);
-                List<Guid> commodityDirectionCriteria = SearchCriteria?.GetCommodityDirectionCriteria() ?? new List<Guid>();
-                List<long> directoryIds = SearchCriteria?.GetDirectoryIds() ?? new List<long>();
-                bool enableExternalBrandItem = ExternalBrandItem != null;
-                long externalBrandId = ExternalBrandItem?.Id ?? -1L;
+                List<Guid> commodityDirectionAvtoCriteria = 
+                    SearchCriteria?.GetCommodityDirectionCriteria(CommodityDirectionType.Avto) ?? new List<Guid>();
+                List<Guid> commodityDirectionOtherCriteria =
+                    SearchCriteria?.GetCommodityDirectionCriteria(CommodityDirectionType.Other) ?? new List<Guid>();
+                List<long> directoryIds = SearchCriteria?.GetDirectoryIds().ToList();
+                List<long> brandAvtoIds = SearchCriteria?.GetAvtoBrandIds() ?? new List<long>();
+                List<long> brandOtherIds = SearchCriteria?.GetOtherBrandIds() ?? new List<long>();
 
                 items = DataService.Select<CatalogItemEntity>()
                     .Include(x => x.BasketItems)
@@ -447,9 +450,24 @@ namespace Catalog.Model
                                  (SearchCriteria.IsNew && x.Status == CatalogItemStatus.New && x.DateOfCreation >= dateForNew) ||
                                  (SearchCriteria.PriceIsDown && x.Status == CatalogItemStatus.PriceIsDown && x.LastUpdatedStatus >= dateForPrice) ||
                                  (SearchCriteria.PriceIsUp && x.Status == CatalogItemStatus.PriceIsUp && x.LastUpdatedStatus >= dateForPrice))
-                    .Where(x => directoryIds.Any() && directoryIds.Contains(x.Directory.Id))
-                    .Where(x => x.Brand.Id == externalBrandId)
-                    .Where(x => !commodityDirectionCriteria.Any() || x.CommodityDirection.Any(c => commodityDirectionCriteria.Contains(c.Code)));
+                    .Where(x => !directoryIds.Any() || directoryIds.Any(id => id == -2))
+                    .Where(x => (!brandAvtoIds.Any() && !brandOtherIds.Any()) || brandAvtoIds.Contains(x.Brand.Id))
+                    .Where(x => commodityDirectionAvtoCriteria.Any() && x.CommodityDirection.Any(c => commodityDirectionAvtoCriteria.Contains(c.Code)))
+                    .Distinct()
+                    .Union(DataService.Select<CatalogItemEntity>()
+                    .Include(x => x.BasketItems)
+                    .Where(x => !codes.Any() || codes.Contains(x.Code))
+                    .Where(n => !lexemes.Any() || lexemes.All(s => n.Name.Contains(s)))
+                    .Where(x => !articles.Any() || articles.Contains(x.Article))
+                    .Where(x => (!SearchCriteria.IsNew && !SearchCriteria.PriceIsDown && !SearchCriteria.PriceIsUp) ||
+                                 (SearchCriteria.IsNew && x.Status == CatalogItemStatus.New && x.DateOfCreation >= dateForNew) ||
+                                 (SearchCriteria.PriceIsDown && x.Status == CatalogItemStatus.PriceIsDown && x.LastUpdatedStatus >= dateForPrice) ||
+                                 (SearchCriteria.PriceIsUp && x.Status == CatalogItemStatus.PriceIsUp && x.LastUpdatedStatus >= dateForPrice))
+                    .Where(x => !directoryIds.Any() || directoryIds.Contains(x.Directory.Id))
+                    .Where(x => (!brandAvtoIds.Any() && !brandOtherIds.Any()) || brandOtherIds.Contains(x.Brand.Id))
+                    .Where(x => commodityDirectionOtherCriteria.Any() && x.CommodityDirection.Any(c => commodityDirectionOtherCriteria.Contains(c.Code)))
+                    .Distinct())
+                    .Distinct();
             }
 
             return items;

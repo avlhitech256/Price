@@ -90,6 +90,8 @@ namespace Catalog.ViewModel
         public Action HideWaitScreen { get; set; }
 
         public Action RefreshView { get; set; }
+        public Action RefreshDirectoryView { get; set; }
+        public Action RefreshBrandView { get; set; }
 
         public bool IsWaiting
         {
@@ -157,37 +159,37 @@ namespace Catalog.ViewModel
         public bool HasChanges { get; }
         public void ApplySearchCriteria()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public void Clear()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public void Add()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public void View()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public void Edit()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public bool Save()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public void Delete()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public bool ShowPhotoOnMouseDoubleClick { get; set; }
@@ -246,11 +248,6 @@ namespace Catalog.ViewModel
                     SearchCriteria.DirectoryItemsChanged += SearchCriteria_DirectoryItemsChanged;
                     SearchCriteria.BrandItemsChanged += SearchCriteria_BrandItemsChanged;
                 }
-            }
-
-            if (CatalogBrandViewModel != null)
-            {
-                CatalogBrandViewModel.PropertyChanged += CatalogBrandViewModel_PropertyChanged;
             }
 
             if (asyncOperationService != null)
@@ -379,6 +376,7 @@ namespace Catalog.ViewModel
                 Application.Current.Dispatcher.Invoke(
                     () =>
                     {
+                        SearchCriteria?.SearchComplited();
                         SearchCommand?.RiseCanExecute();
                         ClearCommand?.RiseCanExecute();
                         CatalogNavigateViewModel.FirstCommand.RiseCanExecute();
@@ -394,22 +392,30 @@ namespace Catalog.ViewModel
 
         private void SearchCriteria_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (SearchCriteria != null && SearchCriteria.EnabledEdvanceSearch &&
+            if (SearchCriteria != null && 
                 (e.PropertyName == nameof(SearchCriteria.Vaz) ||
                  e.PropertyName == nameof(SearchCriteria.Gaz) ||
                  e.PropertyName == nameof(SearchCriteria.Zaz) ||
                  e.PropertyName == nameof(SearchCriteria.Chemistry) ||
                  e.PropertyName == nameof(SearchCriteria.Battery) ||
                  e.PropertyName == nameof(SearchCriteria.Gas) ||
-                 e.PropertyName == nameof(SearchCriteria.Instrument)))
+                 e.PropertyName == nameof(SearchCriteria.Instrument) ||
+                 e.PropertyName == nameof(SearchCriteria.IsNew) ||
+                 e.PropertyName == nameof(SearchCriteria.PriceIsUp) ||
+                 e.PropertyName == nameof(SearchCriteria.PriceIsDown)))
             {
                 LoadData(SearchCriteria.EnabledEdvanceSearch
                     ? LoadingType.СhangedAdvancedSearch
                     : LoadingType.ChangedSearchCriteria);
             }
+            else if (SearchCriteria != null && !SearchCriteria.EnabledEdvanceSearch &&
+                     e.PropertyName == nameof(SearchCriteria.BrandId))
+            {
+                LoadData(LoadingType.ChangedSearchCriteria);
+            }
         }
 
-        private void SearchCriteria_DirectoryItemsChanged(object sender, System.EventArgs e)
+        private void SearchCriteria_DirectoryItemsChanged(object sender, EventArgs e)
         {
             LoadData(LoadingType.ChangedDirectoryItems);
         }
@@ -419,30 +425,11 @@ namespace Catalog.ViewModel
             LoadData(LoadingType.ChangedSearchCriteria);
         }
 
-        private void SearchCriteria_EnabledEdvanceSearchChanged(object sender, Common.Event.DoubleAnimationEventArgs e)
+        private void SearchCriteria_EnabledEdvanceSearchChanged(object sender, DoubleAnimationEventArgs e)
         {
             LoadData(SearchCriteria.EnabledEdvanceSearch
                 ? LoadingType.СhangedAdvancedSearch
                 : LoadingType.ChangedSearchCriteria);
-        }
-
-        private void CatalogBrandViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(CatalogBrandViewModel.SelectedItem) && Model != null)
-            {
-                //if (CatalogBrandViewModel.SelectedItem != null)
-                //{
-                    //RefreshEdvanceSearch();
-                //}
-            }
-        }
-
-        private void RefreshEdvanceSearch()
-        {
-            // TODO Основная вычетка данных для EdvanceSearch
-            Model.ExternalBrandItem = CatalogBrandViewModel.SelectedItem;
-            LoadData(LoadingType.СhangedAdvancedSearch);
-            //Model.SelectEntities();
         }
 
         private void OnCountChanged(object sender, DecimalValueChangedEventArgs e)
@@ -470,7 +457,6 @@ namespace Catalog.ViewModel
         private void DoRefreshPriceList(EventArgs args)
         {
             LoadData(LoadingType.ChangedDataInCurrentPage);
-            //Model.SelectEntities();
         }
 
         private bool CanDoRefreshPriceList(EventArgs args)
@@ -483,7 +469,6 @@ namespace Catalog.ViewModel
             if (Entities.All(x => x.Entity.Id != args.Id))
             {
                 LoadData(LoadingType.ChangedDataInCurrentPage);
-                //Model.SelectEntities();
             }
             else
             {
@@ -524,8 +509,9 @@ namespace Catalog.ViewModel
 
         private void DoSearch(object parametr)
         {
-            LoadData(LoadingType.ChangedSearchCriteria);
-            //Model.SelectEntities();
+            LoadData(SearchCriteria.EnabledEdvanceSearch
+                ? LoadingType.СhangedAdvancedSearch
+                : LoadingType.ChangedSearchCriteria);
         }
 
         private bool CanDoSearch(object parametr)
@@ -542,7 +528,6 @@ namespace Catalog.ViewModel
         {
             SearchCriteria.Clear();
             LoadData(LoadingType.ChangedSearchCriteria);
-            //Model?.Clear();
         }
 
         private bool CanDoClear(object parametr)
@@ -580,7 +565,6 @@ namespace Catalog.ViewModel
             if (SearchCriteria != null && !SearchCriteria.EnabledEdvanceSearch)
             {
                 LoadData(LoadingType.ChangedSearchCriteria);
-                //Model.SelectEntities();
             }
         }
 
@@ -607,7 +591,6 @@ namespace Catalog.ViewModel
         {
             StartRowIndex += MaximumRows;
             LoadData(LoadingType.ChangedSelectedPage);
-            //Model.SelectEntities();
         }
 
         #endregion

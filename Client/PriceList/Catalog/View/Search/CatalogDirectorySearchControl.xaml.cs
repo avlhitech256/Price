@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using Catalog.ViewModel;
 using Domain.Data.Object;
 
@@ -47,6 +48,10 @@ namespace Catalog.View.Search
             {
                 ViewModel.OnCheck(item);
             }
+        }
+        public void Refresh()
+        {
+            CollectionViewSource.GetDefaultView(TreeView.ItemsSource).Refresh();
         }
 
         #endregion

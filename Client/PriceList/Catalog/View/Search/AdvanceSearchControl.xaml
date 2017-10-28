@@ -26,7 +26,7 @@
                 BorderBrush="CadetBlue" 
                 Margin="3"
                 BorderThickness="1"/>
-        <search:CatalogDirectorySearchControl Grid.Row="1"/>
-        <search:BrandControl Grid.Row="2"/>
+        <search:CatalogDirectorySearchControl x:Name="DirectorySearchControl" Grid.Row="1"/>
+        <search:BrandControl x:Name="BrandSearchControl" Grid.Row="2"/>
     </Grid>
 </UserControl>

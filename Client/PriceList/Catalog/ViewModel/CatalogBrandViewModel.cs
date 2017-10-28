@@ -75,52 +75,34 @@ namespace Catalog.ViewModel
             if (item.Selected)
             {
                 AddItem(item);
-                SetCheck(item);
             }
             else
             {
                 DeleteItem(item);
-                SetUncheck(item);
             }
 
             SearchCriteria.BrandComplited();
         }
 
-        private void SetCheck(BrandItem item)
-        {
-            AddItem(item);
-        }
-
-        private void SetUncheck(BrandItem item)
-        {
-            if (item.Subbrands != null && item.Subbrands.Any())
-            {
-                List<BrandItem> subdirectories = item.Subbrands.ToList();
-                subdirectories.ForEach(
-                    x =>
-                    {
-                        x.Selected = item.Selected && x.Selected;
-
-                        if (!x.Selected)
-                        {
-                            DeleteItem(x);
-                        }
-                    });
-                subdirectories.ForEach(SetUncheck);
-            }
-        }
-
         private void AddItem(BrandItem item)
         {
-            if (SearchCriteria != null && !SearchCriteria.SelectedBrandItems.Contains(item))
+            if (SearchCriteria != null && Model != null)
             {
-                SearchCriteria.SelectedBrandItems.Add(item);
+                if (Model.AutoEntities.Contains(item))
+                {
+                    SearchCriteria.SelectedAvtoBrandItems.Add(item);
+                }
+                else if(Model.OtherEntities.Contains(item))
+                {
+                    SearchCriteria.SelectedOtherBrandItems.Add(item);
+                }
             }
         }
 
         private void DeleteItem(BrandItem item)
         {
-            SearchCriteria?.SelectedBrandItems?.Remove(item);
+            SearchCriteria?.SelectedAvtoBrandItems?.Remove(item);
+            SearchCriteria?.SelectedOtherBrandItems?.Remove(item);
         }
 
         #endregion

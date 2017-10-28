@@ -44,10 +44,17 @@ namespace Catalog.View
 
             if (viewModel != null)
             {
-                viewModel.RefreshView = ResultSearchGridControl.Refresh;
+                viewModel.RefreshView = RefreshView;
                 loadService = new LoadingService(viewModel, LoadingBackgroung, WaitControl);
                 viewModel.Init();
             }
+        }
+
+        private void RefreshView()
+        {
+            LeftAdvanceSearchControl.DirectorySearchControl.Refresh();
+            LeftAdvanceSearchControl.BrandSearchControl.Refresh();
+            ResultSearchGridControl.Refresh();
         }
 
         protected override void SubscribeMessenger()

@@ -1,0 +1,1 @@
+﻿select Code, Name from BrandItemEntities Brand where (select Count(*) from BrandItemEntities CountBrand where CountBrand.Name = Brand.Name) > 1;

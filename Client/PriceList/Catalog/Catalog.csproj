@@ -66,6 +66,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="SearchCriteria\CatalogSearchCriteria.cs" />
+    <Compile Include="SearchCriteria\CommodityDirectionType.cs" />
     <Compile Include="ViewModel\CatalogDirectoryViewModel.cs" />
     <Compile Include="ViewModel\CatalogBrandViewModel.cs" />
     <Compile Include="ViewModel\CatalogNavigateViewModel.cs" />

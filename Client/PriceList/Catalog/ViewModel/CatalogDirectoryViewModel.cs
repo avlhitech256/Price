@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Catalog.Model;
 using Catalog.SearchCriteria;
-using Common.Data.Enum;
 using Common.Data.Notifier;
-using Common.Service;
 using Domain.Data.Object;
 using Domain.DomainContext;
 
@@ -58,8 +55,6 @@ namespace Catalog.ViewModel
         public void Refresh()
         {
             Model?.SelectEntities();
-            searchCriteria?.SelectedDirectoryItems?.Clear();
-            searchCriteria?.DirectoryComplited();
         }
 
         public void OnCheck(DirectoryItem item)
@@ -72,7 +67,7 @@ namespace Catalog.ViewModel
             else
             {
                 DeleteItem(item);
-                SetUncheck(item);
+                //SetUncheck(item);
             }
 
             searchCriteria.DirectoryComplited();
@@ -80,34 +75,46 @@ namespace Catalog.ViewModel
 
         private void SetCheck(DirectoryItem item)
         {
-            AddItem(item);
-
-            while (item.Parent != null)
+            if (item.Selected && item.Subdirectories != null && item.Subdirectories.Any())
             {
-                item.Parent.Selected = item.Selected;
-                item = item.Parent;
-                AddItem(item);
-            }
-        }
-
-        private void SetUncheck(DirectoryItem item)
-        {
-            if (item.Subdirectories != null && item.Subdirectories.Any())
-            {
-                List<DirectoryItem> subdirectories = item.Subdirectories.ToList();
-                subdirectories.ForEach(
+                item.Subdirectories.ForEach(
                     x =>
                     {
-                        x.Selected = item.Selected && x.Selected;
-
-                        if (!x.Selected)
-                        {
-                            DeleteItem(x);
-                        }
+                        x.Selected = item.Selected;
+                        AddItem(x);
+                        SetCheck(x);
                     });
-                subdirectories.ForEach(SetUncheck);
             }
         }
+
+        //private void SetCheck(DirectoryItem item)
+        //{
+        //    while (item.Parent != null)
+        //    {
+        //        item.Parent.Selected = item.Selected;
+        //        item = item.Parent;
+        //        AddItem(item);
+        //    }
+        //}
+
+        //private void SetUncheck(DirectoryItem item)
+        //{
+        //    if (item.Subdirectories != null && item.Subdirectories.Any())
+        //    {
+        //        List<DirectoryItem> subdirectories = item.Subdirectories.ToList();
+        //        subdirectories.ForEach(
+        //            x =>
+        //            {
+        //                x.Selected = item.Selected && x.Selected;
+
+        //                if (!x.Selected)
+        //                {
+        //                    DeleteItem(x);
+        //                }
+        //            });
+        //        subdirectories.ForEach(SetUncheck);
+        //    }
+        //}
 
         private void AddItem(DirectoryItem item)
         {

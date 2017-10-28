@@ -10,7 +10,7 @@
         <Grid x:Name="GroupGrid">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*" x:Name="TreeRow"></RowDefinition>
             </Grid.RowDefinitions>
             <Label Name="TitleResult" 
                    Content="Товарные группы" 
@@ -23,8 +23,8 @@
                    Background="{DynamicResource DefaultGradientBrush}"/>
             <TreeView x:Name="TreeView"
                       Grid.Row="1" 
-                      Height="Auto" 
-                      Width="Auto"
+                      Height="{Binding ElementName=TreeRow, Path=ActualHeight}" 
+                      Width="{Binding ElementName=GroupGrid, Path=ActualWidth}"
                       HorizontalAlignment="Left" 
                       VerticalAlignment="Top" 
                       ItemsSource="{Binding Path=CatalogDirectoryViewModel.Entities}">

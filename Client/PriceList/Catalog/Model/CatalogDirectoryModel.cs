@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 using Catalog.SearchCriteria;
 using Common.Data.Enum;
 using Common.Data.Notifier;
@@ -84,9 +85,23 @@ namespace Catalog.Model
                     long directoryId = SelectedItem?.Id ?? -1L;
 
                     Entities.Clear();
-                    Entities = CreateDirectoryItems();
-                    OnPropertyChanged(nameof(Entities));
-                    SelectedItem = Entities.FirstOrDefault(x => x.Id == directoryId) ?? Entities.FirstOrDefault();
+                    List<DirectoryItem> loadedEntities = CreateDirectoryItems();
+
+                    if (SearchCriteria?.SelectedDirectoryItems != null && SearchCriteria.SelectedDirectoryItems.Any())
+                    {
+                        loadedEntities.ForEach(x => x.Selected = SearchCriteria.SelectedDirectoryItems.Any(d => d.Id == x.Id && d.Selected));
+                        SearchCriteria.SelectedDirectoryItems.Clear();
+                        loadedEntities.Where(x => x.Selected).ToList().ForEach(s => SearchCriteria.SelectedDirectoryItems.Add(s));
+                    }
+
+                    Application.Current.Dispatcher.Invoke(
+                        () =>
+                        {
+                            Entities = loadedEntities;
+                            OnPropertyChanged(nameof(Entities));
+                            SelectedItem = Entities?.FirstOrDefault(x => x.Id == directoryId) ?? Entities?.FirstOrDefault();
+                            SearchCriteria?.DirectoryComplited();
+                        });
                 }
                 catch (Exception e)
                 {
@@ -100,6 +115,13 @@ namespace Catalog.Model
         {
             List<DirectoryEntity> items = GetItems().ToList();
             List<DirectoryItem> result = new List<DirectoryItem>();
+
+            if (SearchCriteria.EnableEdvanceFakeTree)
+            {
+                result.Add(new DirectoryItem(DataService, 
+                    new DirectoryEntity { Id = -2, Name = "Запчасти легковых автомобилей"}));
+            }
+
             items.ForEach(x => CreateItems(result, x));
             return result;
         }
@@ -258,7 +280,8 @@ namespace Catalog.Model
                 string[] articles = prepareArray(SearchCriteria.Article);
                 DateTimeOffset dateForNew = DateTimeOffset.Now.AddDays(-14);
                 DateTimeOffset dateForPrice = DateTimeOffset.Now.AddDays(-7);
-                List<Guid> commodityDirectionCriteria = SearchCriteria?.GetCommodityDirectionCriteria() ?? new List<Guid>();
+                List<Guid> commodityDirectionCriteria = 
+                    SearchCriteria?.GetCommodityDirectionCriteria(CommodityDirectionType.Other) ?? new List<Guid>();
 
                 items = DataService.Select<BrandItemEntity>()
                     .SelectMany(x => x.CatalogItems)
@@ -273,7 +296,7 @@ namespace Catalog.Model
                                  x.Status == CatalogItemStatus.PriceIsDown && x.LastUpdatedStatus >= dateForPrice) ||
                                 (SearchCriteria.PriceIsUp &&
                                  x.Status == CatalogItemStatus.PriceIsUp && x.LastUpdatedStatus >= dateForPrice))
-                    .Where(x => !commodityDirectionCriteria.Any() ||
+                    .Where(x => commodityDirectionCriteria.Any() &&
                                 x.CommodityDirection.Any(c => commodityDirectionCriteria.Contains(c.Code)))
                     .Select(x => x.Directory)
                     .Distinct()

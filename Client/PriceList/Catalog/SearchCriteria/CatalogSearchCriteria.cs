@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Common.Annotations;
@@ -34,6 +33,9 @@ namespace Catalog.SearchCriteria
         private bool instrument;
         private bool enabledEdvanceSearch;
         private int edvanceSearchWidth;
+        private bool brandItemIdsChanged;
+        private bool directoryItemIdsChanged;
+
 
         private string oldCode;
         private string oldName;
@@ -69,8 +71,9 @@ namespace Catalog.SearchCriteria
             edvanceSearchWidth = 0;
             enabledEdvanceSearch = false;
             FirstBrandItemEntity = new BrandItemEntity {Id = -1L, Code = Guid.NewGuid(), Name = "Все бренды"};
-            SelectedDirectoryItems = new List<DirectoryItem>();
-            SelectedBrandItems = new List<BrandItem>();
+            SelectedDirectoryItems = new HashSet<DirectoryItem>();
+            SelectedAvtoBrandItems = new HashSet<BrandItem>();
+            SelectedOtherBrandItems = new HashSet<BrandItem>();
             InitCommodityDirection();
             Clear();
             SearchComplited();
@@ -394,6 +397,8 @@ namespace Catalog.SearchCriteria
 
         public bool EnableBrandComboBox => !EnabledEdvanceSearch;
 
+        public bool EnableEdvanceFakeTree => Vaz || Gaz || Zaz;
+
         public bool EnableEdvanceTree => Chemistry || Battery || Gas || Instrument;
 
         private int EdvanceSearchWidth
@@ -413,9 +418,39 @@ namespace Catalog.SearchCriteria
             }
         }
 
-        public List<DirectoryItem> SelectedDirectoryItems { get; }
+        public HashSet<DirectoryItem> SelectedDirectoryItems { get; }
 
-        public List<BrandItem> SelectedBrandItems { get; }
+        public HashSet<BrandItem> SelectedAvtoBrandItems { get; }
+
+        public HashSet<BrandItem> SelectedOtherBrandItems { get; }
+
+        public bool DirectoryItemIdsChanged
+        {
+            get
+            {
+                bool result = directoryItemIdsChanged;
+                directoryItemIdsChanged = false;
+                return result;
+            }
+            private set
+            {
+                brandItemIdsChanged = value;
+            }
+        }
+
+        public bool BrandItemIdsChanged
+        {
+            get
+            {
+                bool result = brandItemIdsChanged;
+                brandItemIdsChanged = false;
+                return result;
+            }
+            private set
+            {
+                brandItemIdsChanged = value;
+            }
+        }
 
         #endregion
 
@@ -449,11 +484,13 @@ namespace Catalog.SearchCriteria
 
         private void OnDirectoryChanged()
         {
+            DirectoryItemIdsChanged = true;
             DirectoryItemsChanged?.Invoke(this, new EventArgs());
         }
 
         private void OnBrandChanged()
         {
+            BrandItemIdsChanged = true;
             BrandItemsChanged?.Invoke(this, new EventArgs());
         }
 
@@ -489,7 +526,10 @@ namespace Catalog.SearchCriteria
             Gas = false;
             Instrument = false;
             SelectedDirectoryItems.Clear();
-            SelectedBrandItems.Clear();
+            SelectedAvtoBrandItems.Clear();
+            SelectedOtherBrandItems.Clear();
+            DirectoryItemIdsChanged = true;
+            BrandItemIdsChanged = true;
         }
 
         private bool SearchCriteriaIsEmpty()
@@ -523,7 +563,7 @@ namespace Catalog.SearchCriteria
 
         public void BrandComplited()
         {
-            OnDirectoryChanged();
+            OnBrandChanged();
         }
 
         private void CopyValueToOld()
@@ -622,41 +662,41 @@ namespace Catalog.SearchCriteria
             };
         }
 
-        public List<Guid> GetCommodityDirectionCriteria()
+        public List<Guid> GetCommodityDirectionCriteria(CommodityDirectionType type = CommodityDirectionType.All)
         {
             List<Guid> criteria = new List<Guid>();
 
-            if (Vaz)
+            if (Vaz && (type == CommodityDirectionType.All || type == CommodityDirectionType.Avto))
             {
                 criteria.AddRange(CommodityVazDirection);
             }
 
-            if (Gaz)
+            if (Gaz && (type == CommodityDirectionType.All || type == CommodityDirectionType.Avto))
             {
                 criteria.AddRange(CommodityGazDirection);
             }
 
-            if (Zaz)
+            if (Zaz && (type == CommodityDirectionType.All || type == CommodityDirectionType.Avto))
             {
                 criteria.AddRange(CommodityZazDirection);
             }
 
-            if (Chemistry)
+            if (Chemistry && (type == CommodityDirectionType.All || type == CommodityDirectionType.Other))
             {
                 criteria.AddRange(CommodityChemistryDirection);
             }
 
-            if (Battery)
+            if (Battery && (type == CommodityDirectionType.All || type == CommodityDirectionType.Other))
             {
                 criteria.AddRange(CommodityBatteryDirection);
             }
 
-            if (Gas)
+            if (Gas && (type == CommodityDirectionType.All || type == CommodityDirectionType.Other))
             {
                 criteria.AddRange(CommodityGasDirection);
             }
 
-            if (Instrument)
+            if (Instrument && (type == CommodityDirectionType.All || type == CommodityDirectionType.Other))
             {
                 criteria.AddRange(CommodityInstrumentDirection);
             }
@@ -664,14 +704,28 @@ namespace Catalog.SearchCriteria
             return criteria;
         }
 
+        private void ClearItems()
+        {
+            SelectedDirectoryItems.Clear();
+            SelectedAvtoBrandItems.Clear();
+            SelectedOtherBrandItems.Clear();
+            DirectoryItemIdsChanged = true;
+            BrandItemIdsChanged = true;
+        }
+
         public List<long> GetDirectoryIds()
         {
             return SelectedDirectoryItems.Select(x => x.Id).ToList();
         }
 
-        public List<long> GetBrandIds()
+        public List<long> GetAvtoBrandIds()
         {
-            return SelectedBrandItems.Select(x => x.Id).ToList();
+            return SelectedAvtoBrandItems.Select(x => x.Id).ToList();
+        }
+
+        public List<long> GetOtherBrandIds()
+        {
+            return SelectedOtherBrandItems.Select(x => x.Id).ToList();
         }
 
         #endregion
