@@ -7,10 +7,10 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="150">
     <Border>
-        <Grid x:Name="GroupGrid">
+        <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="*" x:Name="TreeRow"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
             <Label Name="TitleResult" 
                    Content="Товарные группы" 
@@ -21,28 +21,30 @@
                    Foreground="White" 
                    HorizontalContentAlignment="Center"
                    Background="{DynamicResource DefaultGradientBrush}"/>
-            <TreeView x:Name="TreeView"
-                      Grid.Row="1" 
-                      Height="{Binding ElementName=TreeRow, Path=ActualHeight}" 
-                      Width="{Binding ElementName=GroupGrid, Path=ActualWidth}"
+            <Grid x:Name="TreeViewGrid"
+                  Grid.Row="1">
+                <TreeView x:Name="TreeView"
+                      Height="{Binding ElementName=TreeViewGrid, Path=ActualHeight, Mode=OneWay}" 
+                      Width="{Binding ElementName=TreeViewGrid, Path=ActualWidth, Mode=OneWay}"
                       HorizontalAlignment="Left" 
                       VerticalAlignment="Top" 
                       ItemsSource="{Binding Path=CatalogDirectoryViewModel.Entities}">
-                <TreeView.ItemContainerStyle>
-                    <Style TargetType="TreeViewItem">
-                        <Setter Property="IsExpanded" Value="True"></Setter>
-                    </Style>
-                </TreeView.ItemContainerStyle>
-                <TreeView.ItemTemplate>
-                    <HierarchicalDataTemplate ItemsSource="{Binding Subdirectories}">
-                        <CheckBox IsChecked="{Binding Selected}" 
+                    <TreeView.ItemContainerStyle>
+                        <Style TargetType="TreeViewItem">
+                            <Setter Property="IsExpanded" Value="True"></Setter>
+                        </Style>
+                    </TreeView.ItemContainerStyle>
+                    <TreeView.ItemTemplate>
+                        <HierarchicalDataTemplate ItemsSource="{Binding Subdirectories}">
+                            <CheckBox IsChecked="{Binding Selected}" 
                                   Click="CheckBox_Click" 
                                   Loaded="CheckBox_Loaded">
-                            <TextBlock Text="{Binding Name}"></TextBlock>
-                        </CheckBox>
-                    </HierarchicalDataTemplate>
-                </TreeView.ItemTemplate>
-            </TreeView>
+                                <TextBlock Text="{Binding Name}"></TextBlock>
+                            </CheckBox>
+                        </HierarchicalDataTemplate>
+                    </TreeView.ItemTemplate>
+                </TreeView>
+            </Grid>
         </Grid>
     </Border>
 </UserControl>

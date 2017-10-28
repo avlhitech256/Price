@@ -79,3 +79,9 @@
                             </DataTemplate>
                         </DataGridTextColumn.HeaderTemplate>
                     </DataGridTextColumn>
+
+
+//*************************************************
+
+                      Height="{Binding ElementName=TreeRow, Path=ActualHeight, Mode=OneWay}" 
+                      Width="{Binding ElementName=GroupGrid, Path=ActualWidth, Mode=OneWay}"
