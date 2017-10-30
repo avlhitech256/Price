@@ -7,6 +7,7 @@
         xmlns:footerStatusBar="clr-namespace:PriceList.View.FooterStatusBar"
         xmlns:header="clr-namespace:PriceList.View.Header"
         xmlns:topMenu="clr-namespace:PriceList.View.TopMenu"
+        xmlns:loadingControl="clr-namespace:CommonControl.LoadingControl;assembly=CommonControl"
         mc:Ignorable="d"
         Title="Прайс лист «Авто Тренд»" Height="650" Width="1170" MinHeight="650"  MinWidth="1070" WindowState="Maximized">
     <DockPanel>
@@ -19,6 +20,16 @@
             <header:HeaderControl x:Name="TopHeaderControl" Grid.Row="0" />
             <topMenu:TopMenuControl x:Name="TopMenuControl" Grid.Row="1" />
         </Grid>
-        <UserControl x:Name="EntryControl" Content="{Binding Path=View}"/>
+        <Grid>
+            <UserControl x:Name="EntryControl" Content="{Binding Path=View}"/>
+            <Rectangle x:Name="LoadingBackgroung"
+                   Fill="White" 
+                   Opacity="0" 
+                   Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}"/>
+            <loadingControl:WaitControl x:Name="WaitControl"
+                                    Width="450" 
+                                    Height="80" 
+                                    Visibility="{Binding IsWaiting, Converter={StaticResource BoolToVisibilityConverter}}"/>
+        </Grid>
     </DockPanel>
 </Window>

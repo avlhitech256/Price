@@ -8,8 +8,6 @@ using Common.Event;
 using Common.Messenger.Implementation;
 using CommonControl.Animation;
 using CommonControl.SearchControl;
-using CommonControl.Service;
-using CommonControl.Service.Implementation;
 using Domain.Data.Object;
 using Domain.ViewModel;
 using static System.Double;
@@ -24,7 +22,6 @@ namespace Catalog.View
         #region Members
 
         private double lastWindth;
-        private ILoadingService loadService;
 
         #endregion
 
@@ -50,7 +47,6 @@ namespace Catalog.View
             if (ViewModel != null)
             {
                 ViewModel.RefreshView = RefreshView;
-                loadService = new LoadingService(ViewModel, LoadingBackgroung, WaitControl);
                 ViewModel.Init();
                 InitSplitterPosition();
             }

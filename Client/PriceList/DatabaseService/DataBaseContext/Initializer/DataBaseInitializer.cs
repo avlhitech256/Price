@@ -16,6 +16,7 @@ using Json.Contract;
 using Json.Service;
 using Json.Service.Implementation;
 using Media.Image;
+using CommodityDirection = Common.Data.Enum.CommodityDirection;
 using Directory = Json.Contract.Directory;
 
 namespace DatabaseService.DataBaseContext.Initializer
@@ -64,6 +65,7 @@ namespace DatabaseService.DataBaseContext.Initializer
 
                 CreateBrandItems(dataBaseContext, metaData);
                 CreateDirectoryItems(dataBaseContext, metaData);
+                CreateProductDirection(dataBaseContext);
                 CreateNomenclatureGroupItems(dataBaseContext, metaData);
                 CreateCommodityDirectionsItems(dataBaseContext, metaData);
                 PopulateOptionItemEntities(dataBaseContext, clients);
@@ -123,6 +125,66 @@ namespace DatabaseService.DataBaseContext.Initializer
                     });
 
                 Save(dataBaseContext);
+            }
+        }
+
+        private void CreateProductDirection(DataBaseContext dataBaseContext)
+        {
+            try
+            {
+                ProductDirectionEntity item = dataBaseContext.ProductDirectionEntities.Create();
+                item.Direction = CommodityDirection.Vaz;
+                Guid code = Guid.Parse("1FF0EBCD-1507-40E9-A409-2AF3B8F77D49");
+                item.Directory = dataBaseContext.DirectoryEntities.FirstOrDefault(x => x.Code == code);
+                dataBaseContext.ProductDirectionEntities.Add(item);
+
+                item = dataBaseContext.ProductDirectionEntities.Create();
+                item.Direction = CommodityDirection.Gaz;
+                code = Guid.Parse("9B6B4325-B435-4D65-925E-4921F09D461F");
+                item.Directory = dataBaseContext.DirectoryEntities.FirstOrDefault(x => x.Code == code);
+                dataBaseContext.ProductDirectionEntities.Add(item);
+
+                item = dataBaseContext.ProductDirectionEntities.Create();
+                item.Direction = CommodityDirection.Zaz;
+                code = Guid.Parse("264D3368-ECA8-4F2F-9C3B-7B7CC582C7FD");
+                item.Directory = dataBaseContext.DirectoryEntities.FirstOrDefault(x => x.Code == code);
+                dataBaseContext.ProductDirectionEntities.Add(item);
+
+                item = dataBaseContext.ProductDirectionEntities.Create();
+                item.Direction = CommodityDirection.Chemistry;
+                code = Guid.Parse("78DC5231-C9D8-49A1-9FC5-AD18BF71DC13");
+                item.Directory = dataBaseContext.DirectoryEntities.FirstOrDefault(x => x.Code == code);
+                dataBaseContext.ProductDirectionEntities.Add(item);
+
+                item = dataBaseContext.ProductDirectionEntities.Create();
+                item.Direction = CommodityDirection.Battery;
+                code = Guid.Parse("C7667731-5CFE-4BB6-90DC-8520C87F4FA0");
+                item.Directory = dataBaseContext.DirectoryEntities.FirstOrDefault(x => x.Code == code);
+                dataBaseContext.ProductDirectionEntities.Add(item);
+
+                item = dataBaseContext.ProductDirectionEntities.Create();
+                item.Direction = CommodityDirection.Gas;
+                code = Guid.Parse("A4151BE4-3D3F-4A18-A3D1-4BF48F03AB6C");
+                item.Directory = dataBaseContext.DirectoryEntities.FirstOrDefault(x => x.Code == code);
+                dataBaseContext.ProductDirectionEntities.Add(item);
+
+                item = dataBaseContext.ProductDirectionEntities.Create();
+                item.Direction = CommodityDirection.Instrument;
+                code = Guid.Parse("AFEDE7C9-85E0-4C60-A5FB-0D81B0771D3D");
+                item.Directory = dataBaseContext.DirectoryEntities.FirstOrDefault(x => x.Code == code);
+                dataBaseContext.ProductDirectionEntities.Add(item);
+
+                item = dataBaseContext.ProductDirectionEntities.Create();
+                item.Direction = CommodityDirection.Common;
+                code = Guid.Parse("80135062-F8F6-4C5A-AFD2-48A0117EB2B6");
+                item.Directory = dataBaseContext.DirectoryEntities.FirstOrDefault(x => x.Code == code);
+                dataBaseContext.ProductDirectionEntities.Add(item);
+
+                Save(dataBaseContext);
+            }
+            catch (Exception e)
+            {
+                ;//throw;
             }
         }
 
@@ -295,7 +357,7 @@ namespace DatabaseService.DataBaseContext.Initializer
             }
         }
 
-        private CommodityDirectionEntity Assemble(CommodityDirection commodityDirection)
+        private CommodityDirectionEntity Assemble(Json.Contract.CommodityDirection commodityDirection)
         {
             CommodityDirectionEntity commodityDirectionItem = null;
 
@@ -895,33 +957,45 @@ namespace DatabaseService.DataBaseContext.Initializer
         }
         private void PopulateOptionItemEntities(DataBaseContext dataBaseContext, Clients clients = null)
         {
+            Client client = clients != null && clients.Contragent.Any() ? clients.Contragent.FirstOrDefault() : null;
+
             List<OptionItemEntity> optionItems = new List<OptionItemEntity>
             {
                 new OptionItemEntity
                 {
-                    Code = "LOGIN",
+                    Code = OptionName.Login,
                     Name = "User Login",
-                    Value = clients != null && clients.Contragent.Any()
-                        ? clients.Contragent.FirstOrDefault()?.Login
-                        : "autotrend"
+                    Value = client != null ? client.Login : "autotrend"
                 },
                 new OptionItemEntity
                 {
-                    Code = "PASSWORD",
+                    Code = OptionName.Password,
                     Name = "User Password",
                     Value = ""
                 },
                 new OptionItemEntity
                 {
-                    Code = "LASTORDERNUMBER",
+                    Code = OptionName.Debt,
+                    Name = "Mutual Settlements",
+                    Value = client?.MutualSettlements
+                },
+                new OptionItemEntity
+                {
+                    Code = OptionName.OverdueAccountsReceivable,
+                    Name = "Overdue accounts receivable",
+                    Value = client?.PDZ
+                },
+                new OptionItemEntity
+                {
+                    Code = OptionName.LastOrderNumber,
                     Name = "Last Order Number",
                     Value = "0"
                 },
                 new OptionItemEntity
                 {
-                    Code = "CATALOGMAXIMUMROWS",
+                    Code = OptionName.CatalogMaximumRows,
                     Name = "Maximum Rows Displayed in Catalog Entry",
-                    Value = "20"
+                    Value = "13"
                 }
             };
 

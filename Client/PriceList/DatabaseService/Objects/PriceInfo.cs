@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace DatabaseService.Objects
+﻿namespace DatabaseService.Objects
 {
     public class PriceInfo
     {
@@ -12,7 +10,7 @@ namespace DatabaseService.Objects
             Currency = currency;
         }
 
-        public PriceInfo() : this(0M, String.Empty) { }
+        public PriceInfo() : this(0M, string.Empty) { }
 
         #endregion
 

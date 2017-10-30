@@ -111,7 +111,7 @@ namespace PriceList.ViewModel.TopMenu
 
         private bool CanRefreshBasketCapture(EventArgs args)
         {
-            return true;
+            return !DomainContext.IsLoading;
         }
 
         #endregion

@@ -6,6 +6,10 @@
 
         string Password { get; set; }
 
+        string OverdueAccountsReceivable { get; set; }
+
+        string Debt { get; set; }
+
         long LastOrderNumber { get; set; }
 
         bool ShowPhotoOnMouseDoubleClick { get; set; }

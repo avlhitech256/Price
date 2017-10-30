@@ -12,6 +12,7 @@ namespace PriceList.ViewModel.MainWindow
 
         private object view;
 
+
         #endregion
 
         #region Constructors
@@ -21,6 +22,7 @@ namespace PriceList.ViewModel.MainWindow
             DomainContext = domainContext;
             ViewModelRouter = new ViewModelRouter(DomainContext);
             SubscribeMessenger();
+            SubscribeEvents();
         }
 
         #endregion
@@ -51,6 +53,10 @@ namespace PriceList.ViewModel.MainWindow
 
         }
 
+        public bool IsLoading => DomainContext?.IsLoading ?? false;
+
+        public bool IsWaiting => DomainContext?.IsWaiting ?? false;
+
         #endregion
 
         #region Methods
@@ -58,6 +64,27 @@ namespace PriceList.ViewModel.MainWindow
         private void SubscribeMessenger()
         {
             Messenger?.Register<MenuChangedEventArgs>(CommandName.SetEntryControl, SetEntryControl, CanSetEntryControl);
+        }
+
+        private void SubscribeEvents()
+        {
+            if (DomainContext != null)
+            {
+                DomainContext.PropertyChanged += DomainContext_PropertyChanged;
+            }
+        }
+
+        private void DomainContext_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case nameof(DomainContext.IsLoading):
+                    OnPropertyChanged(nameof(IsLoading));
+                    break;
+                case nameof(DomainContext.IsWaiting):
+                    OnPropertyChanged(nameof(IsWaiting));
+                    break;
+            }
         }
 
         public void SetEntryControl(MenuChangedEventArgs args)

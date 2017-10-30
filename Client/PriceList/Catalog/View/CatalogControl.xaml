@@ -58,14 +58,5 @@
                 </Grid>
             </Grid>
         </Border>
-        <Rectangle x:Name="LoadingBackgroung"
-                   Fill="White" 
-                   Opacity="0" 
-                   Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}"/>
-        <loadingControl:WaitControl x:Name="WaitControl"
-                                    Width="450" 
-                                    Height="80" 
-                                    Visibility="{Binding IsWaiting, Converter={StaticResource BoolToVisibilityConverter}}"/>
-
     </Grid>
 </searchControl:SearchControl>

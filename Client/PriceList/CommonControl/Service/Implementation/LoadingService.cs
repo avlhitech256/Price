@@ -4,7 +4,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using CommonControl.LoadingControl;
-using Domain.ViewModel;
+using Domain.DomainContext;
 
 namespace CommonControl.Service.Implementation
 {
@@ -17,15 +17,15 @@ namespace CommonControl.Service.Implementation
         private readonly Rectangle background;
         private readonly WaitControl loadControl;
         private readonly DispatcherTimer splashAnimationTimer;
-        private readonly IControlViewModel viewModel;
+        private readonly ILoadingContext loadingContext;
 
         #endregion
 
         #region Constructors
-        public LoadingService(IControlViewModel viewModel, Rectangle background, WaitControl loadControl)
+        public LoadingService(ILoadingContext loadingContext, Rectangle background, WaitControl loadControl)
         {
-            this.viewModel = viewModel;
-            InitViewModel();
+            this.loadingContext = loadingContext;
+            InitLoadingContext();
             maxBackgroundOpacity = 0.6;
             this.background = background;
             this.loadControl = loadControl;
@@ -58,11 +58,11 @@ namespace CommonControl.Service.Implementation
 
         #region Methods
 
-        private void InitViewModel()
+        private void InitLoadingContext()
         {
-            viewModel.ShowWaitScreen = (x) => Application.Current.Dispatcher.Invoke(() => ShowWaitScreen(x));
-            viewModel.SetWaitScreenMessage = (x) => Application.Current.Dispatcher.Invoke(() => SetWaitScreenMessage(x));
-            viewModel.HideWaitScreen = () => Application.Current.Dispatcher.Invoke(HideWaitScreen);
+            loadingContext.ShowWaitScreen = (x) => Application.Current.Dispatcher.Invoke(() => ShowWaitScreen(x));
+            loadingContext.SetWaitScreenMessage = (x) => Application.Current.Dispatcher.Invoke(() => SetWaitScreenMessage(x));
+            loadingContext.HideWaitScreen = () => Application.Current.Dispatcher.Invoke(HideWaitScreen);
         }
 
         private void ShowWaitScreen(string message)
@@ -88,7 +88,7 @@ namespace CommonControl.Service.Implementation
         {
             splashAnimationTimer.Stop();
 
-            if (viewModel != null)
+            if (loadingContext != null)
             {
                 switch (loadingStatus)
                 {
@@ -111,10 +111,10 @@ namespace CommonControl.Service.Implementation
         {
             splashAnimationTimer.Stop();
 
-            if (viewModel != null)
+            if (loadingContext != null)
             {
-                viewModel.IsLoading = true;
-                viewModel.IsWaiting = false;
+                loadingContext.IsLoading = true;
+                loadingContext.IsWaiting = false;
                 loadingStatus = LoadingStatus.BeginLoading;
                 splashAnimationTimer.Interval = WaitToContinueTime;
                 splashAnimationTimer.Start();
@@ -134,10 +134,10 @@ namespace CommonControl.Service.Implementation
         {
             splashAnimationTimer.Stop();
 
-            if (viewModel != null)
+            if (loadingContext != null)
             {
-                viewModel.IsLoading = true;
-                viewModel.IsWaiting = true;
+                loadingContext.IsLoading = true;
+                loadingContext.IsWaiting = true;
                 loadingStatus = LoadingStatus.ContinueLoading;
 
                 if (AutoEnd)
@@ -161,10 +161,10 @@ namespace CommonControl.Service.Implementation
         {
             splashAnimationTimer.Stop();
 
-            if (viewModel != null)
+            if (loadingContext != null)
             {
-                viewModel.IsLoading = true;
-                viewModel.IsWaiting = true;
+                loadingContext.IsLoading = true;
+                loadingContext.IsWaiting = true;
                 loadingStatus = LoadingStatus.ComplateLoading;
                 splashAnimationTimer.Interval = FinishAnimationTime;
                 splashAnimationTimer.Start();
@@ -185,10 +185,10 @@ namespace CommonControl.Service.Implementation
         {
             splashAnimationTimer.Stop();
 
-            if (viewModel != null)
+            if (loadingContext != null)
             {
-                viewModel.IsLoading = false;
-                viewModel.IsWaiting = false;
+                loadingContext.IsLoading = false;
+                loadingContext.IsWaiting = false;
             }
         }
 

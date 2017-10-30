@@ -110,6 +110,10 @@ namespace Order.ViewModel
         public Action<string> SetWaitScreenMessage { get; set; }
 
         public Action HideWaitScreen { get; set; }
+        public void SetWaitMessage(AsyncOperationType type)
+        {
+            throw new NotImplementedException();
+        }
 
         public Action RefreshView { get; set; }
 

@@ -1,0 +1,1 @@
+﻿select * from DirectoryEntities where Parent_Id is null;

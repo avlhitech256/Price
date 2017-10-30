@@ -11,8 +11,6 @@ using Common.Event;
 using Common.Messenger;
 using Common.Messenger.Implementation;
 using Common.Service;
-using Common.Service.Implementation;
-using Common.Thread;
 using Common.ViewModel.Command;
 using Domain.Data.Object;
 using Domain.DomainContext;
@@ -26,10 +24,6 @@ namespace Catalog.ViewModel
         #region Members
 
         private bool isInited;
-        private bool isWaiting;
-        private bool isLoading;
-        private readonly IAsyncOperationService asyncOperationService;
-        private readonly AsyncOperationType[] waitFormSupported;
 
         #endregion
 
@@ -40,23 +34,9 @@ namespace Catalog.ViewModel
             isInited = false;
             SplitterPosition = 0;
             DomainContext = domainContext;
-
-            waitFormSupported = new[]
-            {
-                AsyncOperationType.LoadCatalog,
-                AsyncOperationType.LoadBrands,
-                AsyncOperationType.LoadDirectories
-            };
-
-            asyncOperationService = new AsyncOperationService(UIContext.Current);
             HasChanges = false;
             ShowPhotoOnMouseDoubleClick = false;
-            ShowWaitScreen = delegate { };
-            SetWaitScreenMessage = delegate { };
-            HideWaitScreen = delegate { };
             RefreshView = delegate { };
-            IsWaiting = false;
-            IsLoading = false;
             Model = new CatalogModel(domainContext);
             CatalogNavigateViewModel = new CatalogNavigateViewModel(Model);
             CatalogNavigateViewModel.LoadData = LoadData;
@@ -73,6 +53,8 @@ namespace Catalog.ViewModel
 
         public IDomainContext DomainContext { get; }
 
+        public IAsyncOperationService AsyncOperationService => DomainContext?.AsyncOperationService;
+
         public IMessenger Messenger => DomainContext?.Messenger;
 
         private IPhotoService PhotoService => DomainContext?.PhotoService;
@@ -87,47 +69,10 @@ namespace Catalog.ViewModel
 
         public CatalogBrandViewModel CatalogBrandViewModel { get; }
 
-        public Action<string> ShowWaitScreen { get; set; }
-
-        public Action<string> SetWaitScreenMessage { get; set; }
-
-        public Action HideWaitScreen { get; set; }
-
         public Action RefreshView { get; set; }
-        public Action RefreshDirectoryView { get; set; }
-        public Action RefreshBrandView { get; set; }
-
-        public bool IsWaiting
-        {
-            get
-            {
-                return isWaiting;
-            }
-            set
-            {
-                if (isWaiting != value)
-                {
-                    isWaiting = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public bool IsLoading
-        {
-            get
-            {
-                return isLoading;
-            }
-            set
-            {
-                if (isLoading != value)
-                {
-                    isLoading = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
+        
+        public bool IsWaiting => DomainContext?.IsWaiting ?? false;
+        public bool IsLoading => DomainContext?.IsLoading ?? false;
 
         public CatalogItem SelectedItem
         {
@@ -258,58 +203,6 @@ namespace Catalog.ViewModel
                 }
             }
 
-            if (asyncOperationService != null)
-            {
-                asyncOperationService.OperationStarted += (s, args) =>
-                {
-                    if (waitFormSupported.Contains(args.Value))
-                    {
-                        ShowWaitScreenWithType(args.Value);
-                    }
-
-                    Application.Current.Dispatcher.Invoke(
-                        () => Messenger?.Send(CommandName.EnableMenu, new EnableMenuEventArgs(false)));
-                };
-
-                asyncOperationService.OperationCompleted += (s, args) =>
-                {
-                    if (waitFormSupported.Contains(args.Value))
-                    {
-                        HideWaitScreen();
-                    }
-
-                    Application.Current.Dispatcher.Invoke(
-                        () => Messenger?.Send(CommandName.EnableMenu, new EnableMenuEventArgs(true)));
-                };
-            }
-        }
-
-        private void ShowWaitScreenWithType(AsyncOperationType type)
-        {
-            ShowWaitScreen.Invoke(GetDescription(type));
-        }
-
-        private static string GetDescription(AsyncOperationType type)
-        {
-            string description;
-
-            switch (type)
-            {
-                case AsyncOperationType.LoadCatalog:
-                    description = "Подождите, идет формирование страницы прайс листа";
-                    break;
-                case AsyncOperationType.LoadBrands:
-                    description = "Подождите, идет формирование списка брендов";
-                    break;
-                case AsyncOperationType.LoadDirectories:
-                    description = "Подождите, идет формирование списка каталогов";
-                    break;
-                default:
-                    description = "Подождите, идет загрузка данных";
-                    break;
-            }
-
-            return description;
         }
 
         public void Init()
@@ -331,17 +224,17 @@ namespace Catalog.ViewModel
                     case LoadingType.ChangedSelectedPage:
                     case LoadingType.ChangedSearchCriteria:
                     case LoadingType.ChangedBrandItems:
-                        asyncOperationService
+                        AsyncOperationService
                             .PerformAsyncOperation(AsyncOperationType.LoadCatalog, LoadPricelist, !IsLoading,
                                 ActionAfterLoadDaata);
                         break;
                     case LoadingType.ChangedDirectoryItems:
-                        asyncOperationService
+                        AsyncOperationService
                             .PerformAsyncOperation(AsyncOperationType.LoadBrands, LoadBrands, !IsLoading,
                                 ActionAfterLoadDaata);
                         break;
                     case LoadingType.СhangedAdvancedSearch:
-                        asyncOperationService
+                        AsyncOperationService
                             .PerformAsyncOperation(AsyncOperationType.LoadDirectories, LoadDirectories, !IsLoading,
                                 ActionAfterLoadDaata);
                         break;
@@ -366,7 +259,7 @@ namespace Catalog.ViewModel
             if (needToUpdate)
             {
                 CatalogBrandViewModel.Refresh();
-                SetWaitScreenMessage.Invoke(GetDescription(AsyncOperationType.LoadCatalog));
+                DomainContext?.SetWaitMessage(AsyncOperationType.LoadCatalog);
                 LoadPricelist(true);
             }
 
@@ -378,9 +271,10 @@ namespace Catalog.ViewModel
             if (needToUpdate)
             {
                 CatalogDirectoryViewModel.Refresh();
-                SetWaitScreenMessage.Invoke(GetDescription(AsyncOperationType.LoadBrands));
+                DomainContext?.SetWaitMessage(AsyncOperationType.LoadBrands);
+
                 CatalogBrandViewModel.Refresh();
-                SetWaitScreenMessage.Invoke(GetDescription(AsyncOperationType.LoadCatalog));
+                DomainContext?.SetWaitMessage(AsyncOperationType.LoadCatalog);
                 LoadPricelist(true);
             }
 

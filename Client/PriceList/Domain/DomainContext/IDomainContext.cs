@@ -1,6 +1,8 @@
-﻿using Common.Annotations;
+﻿using System.ComponentModel;
+using Common.Annotations;
 using Common.Convert;
 using Common.Messenger;
+using Common.Service;
 using DatabaseService.DataService;
 using Domain.Service.Precision;
 using Domain.ViewModel;
@@ -11,7 +13,7 @@ using Photo.Service;
 
 namespace Domain.DomainContext
 {
-    public interface IDomainContext
+    public interface IDomainContext : ILoadingContext, INotifyPropertyChanged
     {
         [CanBeNull]
         IMessenger Messenger { get; }
@@ -34,6 +36,9 @@ namespace Domain.DomainContext
         [CanBeNull]
         IDataService DataService { get; }
 
+        [CanBeNull]
+        IAsyncOperationService AsyncOperationService { get; }
+
         bool IsEditControl { get; set; }
 
         string UserName { get; }
@@ -44,8 +49,14 @@ namespace Domain.DomainContext
 
         string DataBaseServer { get; set; }
 
+        string OverdueAccountsReceivable { get; set; }
+
+        string Debd { get; set; }
+
         IOptionService OptionService { get; }
 
         IConvertService ConvertService { get; }
+
+        void Refresh();
     }
 }

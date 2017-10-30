@@ -7,6 +7,8 @@ using System.Windows.Media.Animation;
 using Common.Event;
 using Common.Messenger;
 using Common.Messenger.Implementation;
+using CommonControl.Service;
+using CommonControl.Service.Implementation;
 using Domain.DomainContext;
 using Domain.DomainContext.Implementation;
 using Photo.ViewModel;
@@ -23,6 +25,7 @@ namespace PriceList.View.Main
         #region Members
 
         private Timer mainTimer;
+        private readonly ILoadingService loadService;
 
         #endregion
 
@@ -36,6 +39,7 @@ namespace PriceList.View.Main
             InitializeComponent();
             DomainContext = new DomainContext();
             DataContext = new MainWindowViewModel(DomainContext);
+            loadService = new LoadingService(DomainContext, LoadingBackgroung, WaitControl);
 
             SetDomainContext();
             SubscribeMessenger();

@@ -6,7 +6,7 @@ using Domain.DomainContext;
 
 namespace Domain.ViewModel
 {
-    public interface IControlViewModel : INotifyPropertyChanged
+    public interface IControlViewModel : INotifyPropertyChanged//, ILoadingContext
     {
         [CanBeNull]
         IDomainContext DomainContext { get; }
@@ -22,17 +22,7 @@ namespace Domain.ViewModel
 
         bool HasChanges { get; }
 
-        Action<string> ShowWaitScreen { get; set; }
-
-        Action<string> SetWaitScreenMessage { get; set; }
-
-        Action HideWaitScreen { get; set; }
-
         Action RefreshView { get; set; } 
-
-        bool IsLoading { get; set; }
-
-        bool IsWaiting { get; set; }
 
         void ApplySearchCriteria();
 

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Common.Data.Constant;
+using Common.Data.Enum;
 using DatabaseService.DataService;
 
 namespace Options.Service.Implementation
@@ -11,7 +12,6 @@ namespace Options.Service.Implementation
         private readonly IDataService dataService;
         private readonly Dictionary<string, string> optionCache;
         private readonly List<string> existOptionCache;
-        private int catalogMaximumRows;
 
         #endregion
 
@@ -49,6 +49,30 @@ namespace Options.Service.Implementation
             set
             {
                 SetOption(OptionName.Password, value);
+            }
+        }
+
+        public string OverdueAccountsReceivable
+        {
+            get
+            {
+                return GetOption(OptionName.OverdueAccountsReceivable);
+            }
+            set
+            {
+                SetOption(OptionName.OverdueAccountsReceivable, value);
+            }
+        }
+
+        public string Debt
+        {
+            get
+            {
+                return GetOption(OptionName.Debt);
+            }
+            set
+            {
+                SetOption(OptionName.Debt, value);
             }
         }
 
