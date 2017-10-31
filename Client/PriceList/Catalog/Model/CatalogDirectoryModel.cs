@@ -87,11 +87,16 @@ namespace Catalog.Model
                     Entities.Clear();
                     List<DirectoryItem> loadedEntities = GetItems();//CreateDirectoryItems();
 
-                    if (SearchCriteria?.SelectedDirectoryItems != null && SearchCriteria.SelectedDirectoryItems.Any())
+                    if (SearchCriteria != null)
                     {
-                        loadedEntities.ForEach(x => x.Selected = SearchCriteria.SelectedDirectoryItems.Any(d => d.Id == x.Id && d.Selected));
-                        SearchCriteria.SelectedDirectoryItems.Clear();
-                        loadedEntities.Where(x => x.Selected).ToList().ForEach(s => SearchCriteria.SelectedDirectoryItems.Add(s));
+                        SearchCriteria.DirectoryItems = GetDirectiryItems(loadedEntities);
+
+                        if (SearchCriteria.SelectedDirectoryItems != null && SearchCriteria.SelectedDirectoryItems.Any())
+                        {
+                            loadedEntities.ForEach(x => x.Selected = SearchCriteria.SelectedDirectoryItems.Any(d => d.Id == x.Id && d.Selected));
+                            SearchCriteria.SelectedDirectoryItems.Clear();
+                            loadedEntities.Where(x => x.Selected).ToList().ForEach(s => SearchCriteria.SelectedDirectoryItems.Add(s));
+                        }
                     }
 
                     Application.Current.Dispatcher.Invoke(
@@ -110,6 +115,22 @@ namespace Catalog.Model
                 }
             }
         }
+
+        private List<DirectoryItem> GetDirectiryItems(List<DirectoryItem> items)
+        {
+            List<DirectoryItem> result = new List<DirectoryItem>(items);
+
+            items.ForEach(
+                x =>
+                {
+                    if (x != null && x.Subdirectories.Any())
+                    {
+                        result.AddRange(GetDirectiryItems(x.Subdirectories));
+                    }
+                });
+
+            return result;
+        } 
 
         //private List<DirectoryItem> CreateDirectoryItems()
         //{
@@ -205,7 +226,7 @@ namespace Catalog.Model
         //private IQueryable<DirectoryEntity> GetItems()
         //{
 
-        //    return SearchCriteria != null && SearchCriteria.EnabledEdvanceSearch ? GetEdvanceItems() : GetStandardItems();
+        //    return SearchCriteria != null && SearchCriteria.EnabledAdvancedSearch ? GetEdvanceItems() : GetStandardItems();
         //}
 
         //private IQueryable<DirectoryEntity> GetStandardItems()
@@ -312,37 +333,42 @@ namespace Catalog.Model
 
             if (SearchCriteria.Vaz)
             {
-                items.Add(CreateDirectoryItem(CommodityDirection.Vaz));
+                items.Add(GetDirectoryTopItem(CommodityDirection.Vaz));
             }
 
             if (SearchCriteria.Gaz)
             {
-                items.Add(CreateDirectoryItem(CommodityDirection.Gaz));
+                items.Add(GetDirectoryTopItem(CommodityDirection.Gaz));
             }
 
             if (SearchCriteria.Zaz)
             {
-                items.Add(CreateDirectoryItem(CommodityDirection.Zaz));
+                items.Add(GetDirectoryTopItem(CommodityDirection.Zaz));
             }
 
             if (SearchCriteria.Chemistry)
             {
-                items.Add(CreateDirectoryItem(CommodityDirection.Chemistry));
+                items.Add(GetDirectoryTopItem(CommodityDirection.Chemistry));
             }
 
             if (SearchCriteria.Battery)
             {
-                items.Add(CreateDirectoryItem(CommodityDirection.Battery));
+                items.Add(GetDirectoryTopItem(CommodityDirection.Battery));
             }
 
             if (SearchCriteria.Gas)
             {
-                items.Add(CreateDirectoryItem(CommodityDirection.Gas));
+                items.Add(GetDirectoryTopItem(CommodityDirection.Gas));
             }
 
             if (SearchCriteria.Instrument)
             {
-                items.Add(CreateDirectoryItem(CommodityDirection.Instrument));
+                items.Add(GetDirectoryTopItem(CommodityDirection.Instrument));
+            }
+
+            if (SearchCriteria.EnabledAdvancedSearch)
+            {
+                items.Add(GetCommonDirectory());
             }
 
             return items;

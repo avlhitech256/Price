@@ -263,7 +263,7 @@ namespace Catalog.Model
 
         private bool ExternalBrandItemIsChanged()
         {
-            bool result = SearchCriteria.EnabledEdvanceSearch &&
+            bool result = SearchCriteria.EnabledAdvancedSearch &&
                           (oldExternalBrandItem != null && ExternalBrandItem == null) ||
                           (oldExternalBrandItem == null && ExternalBrandItem != null) ||
                           (oldExternalBrandItem != null && ExternalBrandItem != null && 
@@ -320,7 +320,7 @@ namespace Catalog.Model
 
         private List<CatalogItem> GetItems(int startRow, int maxRows)
         {
-            if (oldMaximumRows != MaximumRows || SearchCriteria.IsModified || SearchCriteria.EnabledEdvanceSearch)
+            if (oldMaximumRows != MaximumRows || SearchCriteria.IsModified || SearchCriteria.EnabledAdvancedSearch)
             {
                 cacheCatalogItems.Clear();
                 oldMaximumRows = MaximumRows;
@@ -361,7 +361,7 @@ namespace Catalog.Model
         private IQueryable<CatalogItemEntity> GetItems()
         {
 
-            return SearchCriteria != null && SearchCriteria.EnabledEdvanceSearch ? GetEdvanceItems() : GetStandardItems();
+            return SearchCriteria != null && SearchCriteria.EnabledAdvancedSearch ? GetEdvanceItems() : GetStandardItems();
         }
 
         private IQueryable<CatalogItemEntity> GetStandardItems()
@@ -432,7 +432,9 @@ namespace Catalog.Model
                 DateTimeOffset dateForNew = DateTimeOffset.Now.AddDays(-14);
                 DateTimeOffset dateForPrice = DateTimeOffset.Now.AddDays(-7);
                 List<long> directoryIds = SearchCriteria?.GetDirectoryIds().ToList();
+                List<long> selectedDirectoryIds = SearchCriteria?.GetSelectedDirectoryIds().ToList();
                 List<long> brandIds = SearchCriteria?.GetBrandIds() ?? new List<long>();
+                List<long> selectedBrandIds = SearchCriteria?.GetSelectedBrandIds() ?? new List<long>();
 
                 items = DataService.Select<CatalogItemEntity>()
                     .Include(x => x.BasketItems)
@@ -443,8 +445,8 @@ namespace Catalog.Model
                                  (SearchCriteria.IsNew && x.Status == CatalogItemStatus.New && x.DateOfCreation >= dateForNew) ||
                                  (SearchCriteria.PriceIsDown && x.Status == CatalogItemStatus.PriceIsDown && x.LastUpdatedStatus >= dateForPrice) ||
                                  (SearchCriteria.PriceIsUp && x.Status == CatalogItemStatus.PriceIsUp && x.LastUpdatedStatus >= dateForPrice))
-                    .Where(x => !directoryIds.Any() || directoryIds.Contains(x.Directory.Id))
-                    .Where(x => !brandIds.Any() || brandIds.Contains(x.Brand.Id))
+                    .Where(x => (!selectedDirectoryIds.Any() && directoryIds.Contains(x.Directory.Id)) || selectedDirectoryIds.Contains(x.Directory.Id))
+                    .Where(x => (!selectedBrandIds.Any() && brandIds.Contains(x.Brand.Id)) || selectedBrandIds.Contains(x.Brand.Id))
                     .Distinct();
             }
 

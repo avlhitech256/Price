@@ -73,8 +73,8 @@ namespace Catalog.SearchCriteria
             FirstBrandItemEntity = new BrandItemEntity {Id = -1L, Code = Guid.NewGuid(), Name = "Все бренды"};
             SelectedDirectoryItems = new HashSet<DirectoryItem>();
             SelectedBrandItems = new HashSet<BrandItem>();
-            //SelectedAvtoBrandItems = new HashSet<BrandItem>();
-            //SelectedOtherBrandItems = new HashSet<BrandItem>();
+            DirectoryItems = new List<DirectoryItem>();
+            BrandItems = new List<BrandItem>();
             InitCommodityDirection();
             Clear();
             SearchComplited();
@@ -377,7 +377,7 @@ namespace Catalog.SearchCriteria
             }
         }
 
-        public bool EnabledEdvanceSearch
+        public bool EnabledAdvancedSearch
         {
             get
             {
@@ -396,7 +396,7 @@ namespace Catalog.SearchCriteria
             }
         }
 
-        public bool EnableBrandComboBox => !EnabledEdvanceSearch;
+        public bool EnableBrandComboBox => !EnabledAdvancedSearch;
 
         public bool EnableEdvanceFakeTree => Vaz || Gaz || Zaz;
 
@@ -419,7 +419,11 @@ namespace Catalog.SearchCriteria
             }
         }
 
+        public List<DirectoryItem> DirectoryItems { get; set; }
+
         public HashSet<DirectoryItem> SelectedDirectoryItems { get; }
+
+        public List<BrandItem> BrandItems { get; set; }
 
         public HashSet<BrandItem> SelectedBrandItems { get; }
 
@@ -465,7 +469,7 @@ namespace Catalog.SearchCriteria
             base.OnPropertyChanged(propertyName);
 
             if (propertyName != nameof(IsModified) &&
-                propertyName != nameof(EnabledEdvanceSearch) &&
+                propertyName != nameof(EnabledAdvancedSearch) &&
                 propertyName != nameof(EdvanceSearchWidth) &&
                 propertyName != nameof(IsEmpty))
             {
@@ -499,7 +503,7 @@ namespace Catalog.SearchCriteria
 
         private void OnEnabledEdvanceSearchChanged()
         {
-            var args = EnabledEdvanceSearch
+            var args = EnabledAdvancedSearch
                 ? new DoubleAnimationEventArgs(0, 150)
                 : new DoubleAnimationEventArgs(150, 0);
             EnabledEdvanceSearchChanged?.Invoke(this, args);
@@ -608,8 +612,8 @@ namespace Catalog.SearchCriteria
 
         private void CalculateEdvanceSearchWidth()
         {
-            EnabledEdvanceSearch = Vaz || Gaz || Zaz || Chemistry || Battery || Gas || Instrument;
-            EdvanceSearchWidth = EnabledEdvanceSearch ? 150 : 0;
+            EnabledAdvancedSearch = Vaz || Gaz || Zaz || Chemistry || Battery || Gas || Instrument;
+            EdvanceSearchWidth = EnabledAdvancedSearch ? 150 : 0;
         }
 
         private void InitCommodityDirection()
@@ -718,16 +722,25 @@ namespace Catalog.SearchCriteria
             BrandItemIdsChanged = true;
         }
 
-        public List<long> GetDirectoryIds()
+        public List<long> GetSelectedDirectoryIds()
         {
             return SelectedDirectoryItems.Select(x => x.Id).Distinct().ToList();
         }
 
-        public List<long> GetBrandIds()
+        public List<long> GetSelectedBrandIds()
         {
             return SelectedBrandItems.Select(x => x.Id).Distinct().ToList();
         }
 
+        public List<long> GetDirectoryIds()
+        {
+            return DirectoryItems.Select(x => x.Id).Distinct().ToList();
+        }
+
+        public List<long> GetBrandIds()
+        {
+            return BrandItems.Select(x => x.Id).Distinct().ToList();
+        }
         //public List<long> GetAvtoBrandIds()
         //{
         //    return SelectedAvtoBrandItems.Select(x => x.Id).ToList();

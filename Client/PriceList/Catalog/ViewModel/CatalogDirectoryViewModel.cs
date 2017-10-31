@@ -57,35 +57,60 @@ namespace Catalog.ViewModel
             Model?.SelectEntities();
         }
 
+        //public void OnCheck(DirectoryItem item)
+        //{
+        //    if (item.Selected)
+        //    {
+        //        AddItem(item);
+        //        SetCheck(item);
+        //    }
+        //    else
+        //    {
+        //        DeleteItem(item);
+        //        //SetUncheck(item);
+        //    }
+
+        //    searchCriteria.DirectoryComplited();
+        //}
+
         public void OnCheck(DirectoryItem item)
         {
-            if (item.Selected)
+            if (item != null)
             {
-                AddItem(item);
-                SetCheck(item);
-            }
-            else
-            {
-                DeleteItem(item);
-                //SetUncheck(item);
-            }
+                if (item.Selected)
+                {
+                    AddItem(item);
+                }
+                else
+                {
+                    DeleteItem(item);
+                }
 
-            searchCriteria.DirectoryComplited();
+                if (item.Subdirectories != null && item.Subdirectories.Any())
+                {
+                    item.Subdirectories.ForEach(
+                        x =>
+                        {
+                            x.Selected = item.Selected;
+                            OnCheck(x);
+                        });
+                }
+            }
         }
 
-        private void SetCheck(DirectoryItem item)
-        {
-            if (item.Selected && item.Subdirectories != null && item.Subdirectories.Any())
-            {
-                item.Subdirectories.ForEach(
-                    x =>
-                    {
-                        x.Selected = item.Selected;
-                        AddItem(x);
-                        SetCheck(x);
-                    });
-            }
-        }
+        //private void SetCheck(DirectoryItem item)
+        //{
+        //    if (item.Selected && item.Subdirectories != null && item.Subdirectories.Any())
+        //    {
+        //        item.Subdirectories.ForEach(
+        //            x =>
+        //            {
+        //                x.Selected = item.Selected;
+        //                AddItem(x);
+        //                SetCheck(x);
+        //            });
+        //    }
+        //}
 
         //private void SetCheck(DirectoryItem item)
         //{
@@ -118,15 +143,12 @@ namespace Catalog.ViewModel
 
         private void AddItem(DirectoryItem item)
         {
-            if (!searchCriteria.SelectedDirectoryItems.Contains(item))
-            {
-                searchCriteria.SelectedDirectoryItems.Add(item);
-            }
+            searchCriteria?.SelectedDirectoryItems?.Add(item);
         }
 
         private void DeleteItem(DirectoryItem item)
         {
-            searchCriteria.SelectedDirectoryItems.Remove(item);
+            searchCriteria?.SelectedDirectoryItems?.Remove(item);
         }
 
         private void SubscribeEvents()

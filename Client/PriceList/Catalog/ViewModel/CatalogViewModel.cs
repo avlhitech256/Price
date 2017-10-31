@@ -316,11 +316,11 @@ namespace Catalog.ViewModel
                  e.PropertyName == nameof(SearchCriteria.PriceIsUp) ||
                  e.PropertyName == nameof(SearchCriteria.PriceIsDown)))
             {
-                LoadData(SearchCriteria.EnabledEdvanceSearch
+                LoadData(SearchCriteria.EnabledAdvancedSearch
                     ? LoadingType.СhangedAdvancedSearch
                     : LoadingType.ChangedSearchCriteria);
             }
-            else if (SearchCriteria != null && !SearchCriteria.EnabledEdvanceSearch &&
+            else if (SearchCriteria != null && !SearchCriteria.EnabledAdvancedSearch &&
                      e.PropertyName == nameof(SearchCriteria.BrandId))
             {
                 LoadData(LoadingType.ChangedSearchCriteria);
@@ -339,7 +339,7 @@ namespace Catalog.ViewModel
 
         private void SearchCriteria_EnabledEdvanceSearchChanged(object sender, DoubleAnimationEventArgs e)
         {
-            LoadData(SearchCriteria.EnabledEdvanceSearch
+            LoadData(SearchCriteria.EnabledAdvancedSearch
                 ? LoadingType.СhangedAdvancedSearch
                 : LoadingType.ChangedSearchCriteria);
         }
@@ -420,7 +420,7 @@ namespace Catalog.ViewModel
 
         private void DoSearch(object parametr)
         {
-            LoadData(SearchCriteria.EnabledEdvanceSearch
+            LoadData(SearchCriteria.EnabledAdvancedSearch
                 ? LoadingType.СhangedAdvancedSearch
                 : LoadingType.ChangedSearchCriteria);
         }
@@ -473,7 +473,7 @@ namespace Catalog.ViewModel
         {
             Messenger?.Send(CommandName.ShowAdvanceSearchControl, e);
 
-            if (SearchCriteria != null && !SearchCriteria.EnabledEdvanceSearch)
+            if (SearchCriteria != null && !SearchCriteria.EnabledAdvancedSearch)
             {
                 LoadData(LoadingType.ChangedSearchCriteria);
             }

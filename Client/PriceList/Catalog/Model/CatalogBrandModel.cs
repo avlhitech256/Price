@@ -87,15 +87,18 @@ namespace Catalog.Model
                     Entities.Clear();
                     LongHolder position = new LongHolder { Value = 0 };
 
-                    List<BrandItem> loadedEntities = GetItems()
-                        .Select(x => new BrandItem(x) { Position = position.Value++ })
-                        .ToList();
+                    List<BrandItem> loadedEntities = 
+                        GetItems().Select(x => new BrandItem(x) { Position = position.Value++ }).ToList();
 
-                    loadedEntities.ForEach(
-                        x => x.Selected = SearchCriteria.SelectedBrandItems.Any(s => s.Id == x.Id && s.Selected));
+                    if (SearchCriteria != null)
+                    {
+                        loadedEntities.ForEach(
+                            x => x.Selected = SearchCriteria.SelectedBrandItems.Any(s => s.Id == x.Id && s.Selected));
 
-                    SearchCriteria.SelectedBrandItems.Clear();
-                    Entities.Where(x => x.Selected).ToList().ForEach(x => SearchCriteria.SelectedBrandItems.Add(x));
+                        SearchCriteria.BrandItems = loadedEntities;
+                        SearchCriteria.SelectedBrandItems.Clear();
+                        Entities.Where(x => x.Selected).ToList().ForEach(x => SearchCriteria.SelectedBrandItems.Add(x));
+                    }
 
                     Application.Current.Dispatcher.Invoke(
                         () =>
@@ -139,6 +142,7 @@ namespace Catalog.Model
                 string[] articles = prepareArray(SearchCriteria.Article);
                 DateTimeOffset dateForNew = DateTimeOffset.Now.AddDays(-14);
                 DateTimeOffset dateForPrice = DateTimeOffset.Now.AddDays(-7);
+                List<long> selectedDirectoryIds = SearchCriteria?.GetSelectedDirectoryIds() ?? new List<long>();
                 List<long> directoryIds = SearchCriteria?.GetDirectoryIds() ?? new List<long>();
 
                 items = DataService.Select<BrandItemEntity>()
@@ -154,7 +158,7 @@ namespace Catalog.Model
                                  x.Status == CatalogItemStatus.PriceIsDown && x.LastUpdatedStatus >= dateForPrice) ||
                                 (SearchCriteria.PriceIsUp &&
                                  x.Status == CatalogItemStatus.PriceIsUp && x.LastUpdatedStatus >= dateForPrice))
-                    .Where(x => !directoryIds.Any() || directoryIds.Contains(x.Directory.Id))
+                    .Where(x => (!selectedDirectoryIds.Any() && directoryIds.Contains(x.Directory.Id)) || selectedDirectoryIds.Contains(x.Directory.Id))
                     .Select(x => x.Brand)
                     .Distinct()
                     .OrderBy(x => x.Name)
