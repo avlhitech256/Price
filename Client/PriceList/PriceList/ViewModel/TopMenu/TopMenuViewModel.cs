@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Windows;
+using Common.Data.Enum;
 using Common.Data.Notifier;
 using Common.Event;
 using Common.Messenger;
 using Common.Messenger.Implementation;
+using Common.Service;
 using DatabaseService.DataService;
 using Domain.DomainContext;
 using Domain.Service.Precision;
@@ -17,6 +20,7 @@ namespace PriceList.ViewModel.TopMenu
         private MenuItemsStyle menuItemsStyle;
         private string basketCaption;
         private const string CurrencySuffix = " грн.";
+        private bool databaseIsVerified;
 
         #endregion
 
@@ -24,6 +28,8 @@ namespace PriceList.ViewModel.TopMenu
 
         public TopMenuViewModel(IDomainContext domainContext)
         {
+            databaseIsVerified = false;
+            BasketCaption = "0.00" + CurrencySuffix;
             DomainContext = domainContext;
             menuItemsStyle = new MenuItemsStyle(DomainContext,
                                                 ColorService.CreateBrush(0x2B, 0x3E, 0x80), 
@@ -39,6 +45,8 @@ namespace PriceList.ViewModel.TopMenu
         #region Properties
 
         private IDomainContext DomainContext { get; }
+
+        private IAsyncOperationService AsyncOperationService => DomainContext?.AsyncOperationService;
 
         private IMessenger Messenger => DomainContext?.Messenger;
 
@@ -105,8 +113,38 @@ namespace PriceList.ViewModel.TopMenu
 
         private void RefreshBasketCapture(EventArgs args = null)
         {
-            decimal sum = DatabaseService.GetSumBasket();
-            BasketCaption = PrecisionService?.Convert(sum) + CurrencySuffix;
+            //decimal sum = DatabaseService.GetSumBasket();
+            //BasketCaption = PrecisionService?.Convert(sum) + CurrencySuffix;
+            AsyncOperationService
+                .PerformAsyncOperation(databaseIsVerified ? AsyncOperationType.GetSumBasket : AsyncOperationType.CheckDatabase,
+                                       GetSumBasket, !DomainContext?.IsLoading ?? false, ActionAfterGetSumBasket);
+
+        }
+
+        private void ActionAfterGetSumBasket(Exception e, object sum)
+        {
+            if (e == null)
+            {
+                Application.Current.Dispatcher.Invoke(() => BasketCaption = (string) sum);
+            }
+            else
+            {
+                throw e;
+            }
+        }
+
+        private object GetSumBasket(bool allowToGet)
+        {
+            string result = string.Empty;
+            databaseIsVerified = true;
+
+            if (allowToGet)
+            {
+                decimal sum = DatabaseService.GetSumBasket();
+                result = PrecisionService?.Convert(sum) + CurrencySuffix;
+            }
+
+            return result;
         }
 
         private bool CanRefreshBasketCapture(EventArgs args)

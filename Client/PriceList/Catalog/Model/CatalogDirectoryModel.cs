@@ -85,7 +85,7 @@ namespace Catalog.Model
                     long directoryId = SelectedItem?.Id ?? -1L;
 
                     Entities.Clear();
-                    List<DirectoryItem> loadedEntities = CreateDirectoryItems();
+                    List<DirectoryItem> loadedEntities = GetItems();//CreateDirectoryItems();
 
                     if (SearchCriteria?.SelectedDirectoryItems != null && SearchCriteria.SelectedDirectoryItems.Any())
                     {
@@ -111,199 +111,289 @@ namespace Catalog.Model
             }
         }
 
-        private List<DirectoryItem> CreateDirectoryItems()
-        {
-            List<DirectoryEntity> items = GetItems().ToList();
-            List<DirectoryItem> result = new List<DirectoryItem>();
+        //private List<DirectoryItem> CreateDirectoryItems()
+        //{
+        //    List<DirectoryEntity> items = GetItems().ToList();
+        //    List<DirectoryItem> result = new List<DirectoryItem>();
 
-            if (SearchCriteria.EnableEdvanceFakeTree)
+        //    if (SearchCriteria.EnableEdvanceFakeTree)
+        //    {
+        //        result.Add(new DirectoryItem(DataService, 
+        //            new DirectoryEntity { Id = -2, Name = "Запчасти легковых автомобилей"}));
+        //    }
+
+        //    items.ForEach(x => CreateItems(result, x));
+        //    return result;
+        //}
+
+        //private void CreateItems(List<DirectoryItem> result, DirectoryEntity item)
+        //{
+        //    DirectoryItem newItem = new DirectoryItem(DataService, item);
+        //    bool continueProcessing = true;
+
+        //    do
+        //    {
+        //        DataService.LoadParent(newItem.Entity);
+        //        DirectoryEntity parentEntity = newItem.Entity.Parent;
+
+        //        if (parentEntity == null)
+        //        {
+        //            result.Add(newItem);
+        //            continueProcessing = false;
+        //        }
+        //        else 
+        //        {
+        //            if (AddDirectoryItem(result, newItem))
+        //            {
+        //                continueProcessing = false;
+        //            }
+        //            else
+        //            {
+        //                DirectoryItem parentItem = new DirectoryItem(DataService, parentEntity);
+        //                newItem.Parent = parentItem;
+        //                parentItem.Subdirectories.Add(newItem);
+        //                newItem = parentItem;
+        //            }
+        //        }
+
+        //    } while (continueProcessing);
+        //}
+
+        //private bool AddDirectoryItem(List<DirectoryItem> items, DirectoryItem item)
+        //{
+        //    bool result = false;
+
+        //    foreach (DirectoryItem resultItem in items)
+        //    {
+        //        result = AddItem(resultItem, item);
+
+        //        if (result)
+        //        {
+        //            break;
+        //        }
+        //    }
+
+        //    return result;
+        //}
+
+        //private bool AddItem(DirectoryItem resultItem, DirectoryItem item)
+        //{
+        //    bool result = false;
+
+        //    if (resultItem.Id == item.Entity.Parent.Id)
+        //    {
+        //        item.Parent = resultItem;
+        //        resultItem.Subdirectories.Add(item);
+        //        result = true;
+        //    }
+        //    else if (resultItem.Subdirectories != null && resultItem.Subdirectories.Any())
+        //    {
+        //        foreach (DirectoryItem subdirectoryItem in resultItem.Subdirectories)
+        //        {
+        //            result = AddItem(subdirectoryItem, item);
+
+        //            if (result)
+        //            {
+        //                break;
+        //            }
+        //        }
+        //    }
+
+        //    return result;
+        //}
+
+        //private IQueryable<DirectoryEntity> GetItems()
+        //{
+
+        //    return SearchCriteria != null && SearchCriteria.EnabledEdvanceSearch ? GetEdvanceItems() : GetStandardItems();
+        //}
+
+        //private IQueryable<DirectoryEntity> GetStandardItems()
+        //{
+        //    IQueryable<DirectoryEntity> items = null;
+
+        //    if (SearchCriteria != null)
+        //    {
+        //        Func<string, string[]> prepareArray =
+        //            x =>
+        //            {
+        //                List<string> results = new List<string>();
+
+        //                if (!string.IsNullOrWhiteSpace(x))
+        //                {
+        //                    results = x.Split(',', ' ').ToList();
+        //                    results.RemoveAll(string.IsNullOrWhiteSpace);
+        //                }
+
+        //                return results.ToArray();
+        //            };
+
+        //        string[] codes = prepareArray(SearchCriteria.Code);
+        //        string[] lexemes = prepareArray(SearchCriteria.Name);
+        //        string[] articles = prepareArray(SearchCriteria.Article);
+        //        DateTimeOffset dateForNew = DateTimeOffset.Now.AddDays(-14);
+        //        DateTimeOffset dateForPrice = DateTimeOffset.Now.AddDays(-7);
+
+        //        items = DataService.Select<DirectoryEntity>()
+        //            .SelectMany(x => x.CatalogItems)
+        //            .Distinct()
+        //            .Where(x => !codes.Any() || codes.Contains(x.Code))
+        //            .Where(x => !lexemes.Any() || lexemes.All(s => x.Name.Contains(s)))
+        //            .Where(x => !articles.Any() || articles.Contains(x.Article))
+        //            .Where(x => (!SearchCriteria.IsNew && !SearchCriteria.PriceIsDown && !SearchCriteria.PriceIsUp) ||
+        //                        (SearchCriteria.IsNew &&
+        //                         x.Status == CatalogItemStatus.New && x.DateOfCreation >= dateForNew) ||
+        //                        (SearchCriteria.PriceIsDown &&
+        //                         x.Status == CatalogItemStatus.PriceIsDown && x.LastUpdatedStatus >= dateForPrice) ||
+        //                        (SearchCriteria.PriceIsUp &&
+        //                         x.Status == CatalogItemStatus.PriceIsUp && x.LastUpdatedStatus >= dateForPrice))
+        //            .Select(x => x.Directory)
+        //            .Distinct()
+        //            .OrderBy(x => x.Name);
+        //    }
+
+        //    return items;
+        //}
+
+        //private IQueryable<DirectoryEntity> GetEdvanceItems()
+        //{
+        //    IQueryable<DirectoryEntity> items = null;
+
+        //    if (SearchCriteria != null)
+        //    {
+        //        Func<string, string[]> prepareArray =
+        //            x =>
+        //            {
+        //                List<string> results = new List<string>();
+
+        //                if (!string.IsNullOrWhiteSpace(x))
+        //                {
+        //                    results = x.Split(',', ' ').ToList();
+        //                    results.RemoveAll(string.IsNullOrWhiteSpace);
+        //                }
+
+        //                return results.ToArray();
+        //            };
+
+        //        string[] codes = prepareArray(SearchCriteria.Code);
+        //        string[] lexemes = prepareArray(SearchCriteria.Name);
+        //        string[] articles = prepareArray(SearchCriteria.Article);
+        //        DateTimeOffset dateForNew = DateTimeOffset.Now.AddDays(-14);
+        //        DateTimeOffset dateForPrice = DateTimeOffset.Now.AddDays(-7);
+        //        List<Guid> commodityDirectionCriteria = 
+        //            SearchCriteria?.GetCommodityDirectionCriteria(CommodityDirectionType.Other) ?? new List<Guid>();
+
+        //        items = DataService.Select<BrandItemEntity>()
+        //            .SelectMany(x => x.CatalogItems)
+        //            .Distinct()
+        //            .Where(x => !codes.Any() || codes.Contains(x.Code))
+        //            .Where(x => !lexemes.Any() || lexemes.All(s => x.Name.Contains(s)))
+        //            .Where(x => !articles.Any() || articles.Contains(x.Article))
+        //            .Where(x => (!SearchCriteria.IsNew && !SearchCriteria.PriceIsDown && !SearchCriteria.PriceIsUp) ||
+        //                        (SearchCriteria.IsNew &&
+        //                         x.Status == CatalogItemStatus.New && x.DateOfCreation >= dateForNew) ||
+        //                        (SearchCriteria.PriceIsDown &&
+        //                         x.Status == CatalogItemStatus.PriceIsDown && x.LastUpdatedStatus >= dateForPrice) ||
+        //                        (SearchCriteria.PriceIsUp &&
+        //                         x.Status == CatalogItemStatus.PriceIsUp && x.LastUpdatedStatus >= dateForPrice))
+        //            .Where(x => commodityDirectionCriteria.Any() &&
+        //                        x.CommodityDirection.Any(c => commodityDirectionCriteria.Contains(c.Code)))
+        //            .Select(x => x.Directory)
+        //            .Distinct()
+        //            .OrderBy(x => x.Name);
+        //    }
+
+        //    return items;
+        //}
+
+        private List<DirectoryItem> GetItems()
+        {
+            var items = new List<DirectoryItem>();
+
+            if (SearchCriteria.Vaz)
             {
-                result.Add(new DirectoryItem(DataService, 
-                    new DirectoryEntity { Id = -2, Name = "Запчасти легковых автомобилей"}));
+                items.Add(CreateDirectoryItem(CommodityDirection.Vaz));
             }
 
-            items.ForEach(x => CreateItems(result, x));
-            return result;
-        }
-
-        private void CreateItems(List<DirectoryItem> result, DirectoryEntity item)
-        {
-            DirectoryItem newItem = new DirectoryItem(DataService, item);
-            bool continueProcessing = true;
-
-            do
+            if (SearchCriteria.Gaz)
             {
-                DataService.LoadParent(newItem.Entity);
-                DirectoryEntity parentEntity = newItem.Entity.Parent;
-
-                if (parentEntity == null)
-                {
-                    result.Add(newItem);
-                    continueProcessing = false;
-                }
-                else 
-                {
-                    if (AddDirectoryItem(result, newItem))
-                    {
-                        continueProcessing = false;
-                    }
-                    else
-                    {
-                        DirectoryItem parentItem = new DirectoryItem(DataService, parentEntity);
-                        newItem.Parent = parentItem;
-                        parentItem.Subdirectories.Add(newItem);
-                        newItem = parentItem;
-                    }
-                }
-
-            } while (continueProcessing);
-        }
-
-        private bool AddDirectoryItem(List<DirectoryItem> items, DirectoryItem item)
-        {
-            bool result = false;
-
-            foreach (DirectoryItem resultItem in items)
-            {
-                result = AddItem(resultItem, item);
-
-                if (result)
-                {
-                    break;
-                }
+                items.Add(CreateDirectoryItem(CommodityDirection.Gaz));
             }
 
-            return result;
-        }
-
-        private bool AddItem(DirectoryItem resultItem, DirectoryItem item)
-        {
-            bool result = false;
-
-            if (resultItem.Id == item.Entity.Parent.Id)
+            if (SearchCriteria.Zaz)
             {
-                item.Parent = resultItem;
-                resultItem.Subdirectories.Add(item);
-                result = true;
-            }
-            else if (resultItem.Subdirectories != null && resultItem.Subdirectories.Any())
-            {
-                foreach (DirectoryItem subdirectoryItem in resultItem.Subdirectories)
-                {
-                    result = AddItem(subdirectoryItem, item);
-
-                    if (result)
-                    {
-                        break;
-                    }
-                }
+                items.Add(CreateDirectoryItem(CommodityDirection.Zaz));
             }
 
-            return result;
-        }
-
-        private IQueryable<DirectoryEntity> GetItems()
-        {
-
-            return SearchCriteria != null && SearchCriteria.EnabledEdvanceSearch ? GetEdvanceItems() : GetStandardItems();
-        }
-
-        private IQueryable<DirectoryEntity> GetStandardItems()
-        {
-            IQueryable<DirectoryEntity> items = null;
-
-            if (SearchCriteria != null)
+            if (SearchCriteria.Chemistry)
             {
-                Func<string, string[]> prepareArray =
-                    x =>
-                    {
-                        List<string> results = new List<string>();
+                items.Add(CreateDirectoryItem(CommodityDirection.Chemistry));
+            }
 
-                        if (!string.IsNullOrWhiteSpace(x))
-                        {
-                            results = x.Split(',', ' ').ToList();
-                            results.RemoveAll(string.IsNullOrWhiteSpace);
-                        }
+            if (SearchCriteria.Battery)
+            {
+                items.Add(CreateDirectoryItem(CommodityDirection.Battery));
+            }
 
-                        return results.ToArray();
-                    };
+            if (SearchCriteria.Gas)
+            {
+                items.Add(CreateDirectoryItem(CommodityDirection.Gas));
+            }
 
-                string[] codes = prepareArray(SearchCriteria.Code);
-                string[] lexemes = prepareArray(SearchCriteria.Name);
-                string[] articles = prepareArray(SearchCriteria.Article);
-                DateTimeOffset dateForNew = DateTimeOffset.Now.AddDays(-14);
-                DateTimeOffset dateForPrice = DateTimeOffset.Now.AddDays(-7);
-
-                items = DataService.Select<DirectoryEntity>()
-                    .SelectMany(x => x.CatalogItems)
-                    .Distinct()
-                    .Where(x => !codes.Any() || codes.Contains(x.Code))
-                    .Where(x => !lexemes.Any() || lexemes.All(s => x.Name.Contains(s)))
-                    .Where(x => !articles.Any() || articles.Contains(x.Article))
-                    .Where(x => (!SearchCriteria.IsNew && !SearchCriteria.PriceIsDown && !SearchCriteria.PriceIsUp) ||
-                                (SearchCriteria.IsNew &&
-                                 x.Status == CatalogItemStatus.New && x.DateOfCreation >= dateForNew) ||
-                                (SearchCriteria.PriceIsDown &&
-                                 x.Status == CatalogItemStatus.PriceIsDown && x.LastUpdatedStatus >= dateForPrice) ||
-                                (SearchCriteria.PriceIsUp &&
-                                 x.Status == CatalogItemStatus.PriceIsUp && x.LastUpdatedStatus >= dateForPrice))
-                    .Select(x => x.Directory)
-                    .Distinct()
-                    .OrderBy(x => x.Name);
+            if (SearchCriteria.Instrument)
+            {
+                items.Add(CreateDirectoryItem(CommodityDirection.Instrument));
             }
 
             return items;
         }
 
-        private IQueryable<DirectoryEntity> GetEdvanceItems()
+        private DirectoryItem CreateDirectoryItem(CommodityDirection direction)
         {
-            IQueryable<DirectoryEntity> items = null;
+            DirectoryItem item = GetDirectoryTopItem(direction);
+            DirectoryItem commonItem = GetCommonDirectory();
+            item.Subdirectories.Add(commonItem);
+            commonItem.Parent = item;
+            return item;
+        }
 
-            if (SearchCriteria != null)
+        private DirectoryItem GetCommonDirectory()
+        {
+            return GetDirectoryTopItem(CommodityDirection.Common);
+        }
+
+        private DirectoryItem GetDirectoryTopItem(CommodityDirection direction)
+        {
+            DirectoryItem item = null;
+
+            DirectoryEntity entity =
+                DataService.Select<ProductDirectionEntity>()
+                    .FirstOrDefault(x => x.Direction == direction)?
+                    .Directory;
+
+            if (entity != null)
             {
-                Func<string, string[]> prepareArray =
-                    x =>
-                    {
-                        List<string> results = new List<string>();
-
-                        if (!string.IsNullOrWhiteSpace(x))
-                        {
-                            results = x.Split(',', ' ').ToList();
-                            results.RemoveAll(string.IsNullOrWhiteSpace);
-                        }
-
-                        return results.ToArray();
-                    };
-
-                string[] codes = prepareArray(SearchCriteria.Code);
-                string[] lexemes = prepareArray(SearchCriteria.Name);
-                string[] articles = prepareArray(SearchCriteria.Article);
-                DateTimeOffset dateForNew = DateTimeOffset.Now.AddDays(-14);
-                DateTimeOffset dateForPrice = DateTimeOffset.Now.AddDays(-7);
-                List<Guid> commodityDirectionCriteria = 
-                    SearchCriteria?.GetCommodityDirectionCriteria(CommodityDirectionType.Other) ?? new List<Guid>();
-
-                items = DataService.Select<BrandItemEntity>()
-                    .SelectMany(x => x.CatalogItems)
-                    .Distinct()
-                    .Where(x => !codes.Any() || codes.Contains(x.Code))
-                    .Where(x => !lexemes.Any() || lexemes.All(s => x.Name.Contains(s)))
-                    .Where(x => !articles.Any() || articles.Contains(x.Article))
-                    .Where(x => (!SearchCriteria.IsNew && !SearchCriteria.PriceIsDown && !SearchCriteria.PriceIsUp) ||
-                                (SearchCriteria.IsNew &&
-                                 x.Status == CatalogItemStatus.New && x.DateOfCreation >= dateForNew) ||
-                                (SearchCriteria.PriceIsDown &&
-                                 x.Status == CatalogItemStatus.PriceIsDown && x.LastUpdatedStatus >= dateForPrice) ||
-                                (SearchCriteria.PriceIsUp &&
-                                 x.Status == CatalogItemStatus.PriceIsUp && x.LastUpdatedStatus >= dateForPrice))
-                    .Where(x => commodityDirectionCriteria.Any() &&
-                                x.CommodityDirection.Any(c => commodityDirectionCriteria.Contains(c.Code)))
-                    .Select(x => x.Directory)
-                    .Distinct()
-                    .OrderBy(x => x.Name);
+                item = new DirectoryItem(DataService, entity);
+                CreateSubDirectory(item);
             }
 
-            return items;
+            return item;
+        }
+
+        private void CreateSubDirectory(DirectoryItem item)
+        {
+            if (item != null && item.Entity.SubDirectory.Any())
+            {
+                item.Entity.SubDirectory.ForEach(
+                    x =>
+                    {
+                        DirectoryItem subDirectory = new DirectoryItem(DataService, x);
+                        item.Subdirectories.Add(subDirectory);
+                        subDirectory.Parent = item;
+                        CreateSubDirectory(subDirectory);
+                    });
+            }
+
         }
 
         #endregion

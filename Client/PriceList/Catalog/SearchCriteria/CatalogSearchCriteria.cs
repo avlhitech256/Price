@@ -72,8 +72,9 @@ namespace Catalog.SearchCriteria
             enabledEdvanceSearch = false;
             FirstBrandItemEntity = new BrandItemEntity {Id = -1L, Code = Guid.NewGuid(), Name = "Все бренды"};
             SelectedDirectoryItems = new HashSet<DirectoryItem>();
-            SelectedAvtoBrandItems = new HashSet<BrandItem>();
-            SelectedOtherBrandItems = new HashSet<BrandItem>();
+            SelectedBrandItems = new HashSet<BrandItem>();
+            //SelectedAvtoBrandItems = new HashSet<BrandItem>();
+            //SelectedOtherBrandItems = new HashSet<BrandItem>();
             InitCommodityDirection();
             Clear();
             SearchComplited();
@@ -420,9 +421,11 @@ namespace Catalog.SearchCriteria
 
         public HashSet<DirectoryItem> SelectedDirectoryItems { get; }
 
-        public HashSet<BrandItem> SelectedAvtoBrandItems { get; }
+        public HashSet<BrandItem> SelectedBrandItems { get; }
 
-        public HashSet<BrandItem> SelectedOtherBrandItems { get; }
+        //public HashSet<BrandItem> SelectedAvtoBrandItems { get; }
+
+        //public HashSet<BrandItem> SelectedOtherBrandItems { get; }
 
         public bool DirectoryItemIdsChanged
         {
@@ -526,8 +529,9 @@ namespace Catalog.SearchCriteria
             Gas = false;
             Instrument = false;
             SelectedDirectoryItems.Clear();
-            SelectedAvtoBrandItems.Clear();
-            SelectedOtherBrandItems.Clear();
+            SelectedBrandItems.Clear();
+            //SelectedAvtoBrandItems.Clear();
+            //SelectedOtherBrandItems.Clear();
             DirectoryItemIdsChanged = true;
             BrandItemIdsChanged = true;
         }
@@ -707,26 +711,32 @@ namespace Catalog.SearchCriteria
         private void ClearItems()
         {
             SelectedDirectoryItems.Clear();
-            SelectedAvtoBrandItems.Clear();
-            SelectedOtherBrandItems.Clear();
+            SelectedBrandItems.Clear();
+            //SelectedAvtoBrandItems.Clear();
+            //SelectedOtherBrandItems.Clear();
             DirectoryItemIdsChanged = true;
             BrandItemIdsChanged = true;
         }
 
         public List<long> GetDirectoryIds()
         {
-            return SelectedDirectoryItems.Select(x => x.Id).ToList();
+            return SelectedDirectoryItems.Select(x => x.Id).Distinct().ToList();
         }
 
-        public List<long> GetAvtoBrandIds()
+        public List<long> GetBrandIds()
         {
-            return SelectedAvtoBrandItems.Select(x => x.Id).ToList();
+            return SelectedBrandItems.Select(x => x.Id).Distinct().ToList();
         }
 
-        public List<long> GetOtherBrandIds()
-        {
-            return SelectedOtherBrandItems.Select(x => x.Id).ToList();
-        }
+        //public List<long> GetAvtoBrandIds()
+        //{
+        //    return SelectedAvtoBrandItems.Select(x => x.Id).ToList();
+        //}
+
+        //public List<long> GetOtherBrandIds()
+        //{
+        //    return SelectedOtherBrandItems.Select(x => x.Id).ToList();
+        //}
 
         #endregion
 

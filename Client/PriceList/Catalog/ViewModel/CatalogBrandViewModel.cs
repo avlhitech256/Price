@@ -87,21 +87,25 @@ namespace Catalog.ViewModel
         {
             if (SearchCriteria != null && Model != null)
             {
-                if (Model.AutoEntities.Contains(item))
-                {
-                    SearchCriteria.SelectedAvtoBrandItems.Add(item);
-                }
-                else if(Model.OtherEntities.Contains(item))
-                {
-                    SearchCriteria.SelectedOtherBrandItems.Add(item);
-                }
+                //if (Model.AutoEntities.Contains(item))
+                //{
+                //    SearchCriteria.SelectedAvtoBrandItems.Add(item);
+                //}
+                //else if(Model.OtherEntities.Contains(item))
+                //{
+                //    SearchCriteria.SelectedOtherBrandItems.Add(item);
+                //}
+
+                SearchCriteria.SelectedBrandItems.Add(item);
             }
         }
 
         private void DeleteItem(BrandItem item)
         {
-            SearchCriteria?.SelectedAvtoBrandItems?.Remove(item);
-            SearchCriteria?.SelectedOtherBrandItems?.Remove(item);
+            //SearchCriteria?.SelectedAvtoBrandItems?.Remove(item);
+            //SearchCriteria?.SelectedOtherBrandItems?.Remove(item);
+
+            SearchCriteria?.SelectedBrandItems?.Remove(item);
         }
 
         #endregion

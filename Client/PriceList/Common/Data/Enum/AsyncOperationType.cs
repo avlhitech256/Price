@@ -5,6 +5,7 @@
         CheckDatabase,
         LoadCatalog,
         LoadBrands,
-        LoadDirectories
+        LoadDirectories,
+        GetSumBasket
     }
 }

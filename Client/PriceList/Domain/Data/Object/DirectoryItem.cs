@@ -121,7 +121,7 @@ namespace Domain.Data.Object
             {
                 DirectoryEntity parentValue = LoadParent();
 
-                if (parent != value && (value == null || (parentValue != null && value.Id == parentValue.Id)))
+                if (parent != value && (value == null || parentValue == null || value.Id == parentValue.Id))
                 {
                     parent = value;
                     OnPropertyChanged();

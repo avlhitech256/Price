@@ -52,7 +52,9 @@ namespace Domain.DomainContext.Implementation
 {
                 AsyncOperationType.LoadCatalog,
                 AsyncOperationType.LoadBrands,
-                AsyncOperationType.LoadDirectories
+                AsyncOperationType.LoadDirectories,
+                AsyncOperationType.CheckDatabase, 
+                AsyncOperationType.GetSumBasket
             };
 
             AsyncOperationService = new AsyncOperationService(UIContext.Current);
