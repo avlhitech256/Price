@@ -187,6 +187,23 @@ namespace Domain.Data.Object
                 }
             }
         }
+
+        public decimal BatchOfSales
+        {
+            get
+            {
+                return Entity.BatchOfSales;
+            }
+            set
+            {
+                if (Entity.BatchOfSales != value)
+                {
+                    Entity.BatchOfSales = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public string Balance
         {
             get

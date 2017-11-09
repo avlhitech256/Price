@@ -15,5 +15,7 @@
         bool ShowPhotoOnMouseDoubleClick { get; set; }
 
         int CatalogMaximumRows { get; set; }
+
+        double SplitterPosition { get; set; }
     }
 }

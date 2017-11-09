@@ -1,7 +1,7 @@
 ﻿using System;
 using Common.Data.Enum;
 
-namespace Common.Convert
+namespace Common.Service
 {
     public interface IConvertService
     {

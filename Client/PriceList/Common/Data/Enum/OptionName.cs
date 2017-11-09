@@ -9,5 +9,6 @@
         public const string LastOrderNumber = "LASTORDERNUMBER";
         public const string ShowPhotoOnMouseDoubleClick = "SHOWPHOTOONMOUSEDOUBLECLICK";
         public const string CatalogMaximumRows = "CATALOGMAXIMUMROWS";
+        public const string SplitterPosition = "SPLITTERPOSITION";
     }
 }

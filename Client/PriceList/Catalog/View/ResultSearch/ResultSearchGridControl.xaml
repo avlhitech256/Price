@@ -6,8 +6,11 @@
              xmlns:local="clr-namespace:Catalog.View"
              xmlns:webControls="clr-namespace:System.Web.UI.WebControls;assembly=System.Web"
              xmlns:resultSearch="clr-namespace:Catalog.View.ResultSearch"
+             xmlns:validationRule="clr-namespace:Common.ValidationRule;assembly=Common"
+             xmlns:validation="clr-namespace:Domain.Data.Validation;assembly=Domain"
+             xmlns:proxy="clr-namespace:CommonControl.Proxy;assembly=CommonControl"
              mc:Ignorable="d" 
-             d:DesignHeight="200" d:DesignWidth="1030">
+             d:DesignHeight="200" d:DesignWidth="1230">
 
     <UserControl.Resources>
         <Style x:Key="DataGridCellRight" TargetType="{x:Type DataGridCell}">
@@ -24,6 +27,9 @@
             </GradientBrush.GradientStops>
         </LinearGradientBrush>
 
+        <CollectionViewSource x:Key="ResourceEntities" Source="{Binding Entities}"/>
+        <proxy:BindingProxy x:Key="Proxy" Data="{Binding}"/>
+        
     </UserControl.Resources>
     
     <Border>
@@ -55,6 +61,36 @@
                       MouseDoubleClick="ResultSearchDataGrid_OnMouseDoubleClick"
                       SelectionChanged="ResultSearchDataGrid_OnSelectionChanged"
                       LoadingRow="ResultSearchDataGrid_OnLoadingRow">
+                <DataGrid.Resources>
+                    <Style x:Key="ErrorStyle" TargetType="{x:Type TextBox}">
+                        <Setter Property="Padding" Value="-2"/>
+                        <Style.Triggers>
+                            <Trigger Property="Validation.HasError" Value="True">
+                                <Setter Property="Foreground" Value="Red"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                                <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self},
+                                                                           Path=(Validation.Errors)[0].ErrorContent}"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.Resources>
+                <DataGrid.RowValidationErrorTemplate>
+                    <ControlTemplate>
+                        <Grid Margin="0,-2,0,-2"
+                              ToolTip="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGridRow}},
+                                                Path=(Validation.Errors)[0].ErrorContent}">
+                            <Ellipse StrokeThickness="0" 
+                                     Fill="Red" 
+                                     Width="{TemplateBinding FontSize}" 
+                                     Height="{TemplateBinding FontSize}"/>
+                            <TextBlock Text="!" 
+                                       FontSize="{TemplateBinding FontSize}" 
+                                       FontWeight="Bold" 
+                                       Foreground="White" 
+                                       HorizontalAlignment="Center"  />
+                        </Grid>
+                    </ControlTemplate>
+                </DataGrid.RowValidationErrorTemplate>
                 <DataGrid.Columns>
                     <DataGridTextColumn IsReadOnly="True" 
                                     Width="55"
@@ -192,6 +228,26 @@
                             </DataTemplate>
                         </DataGridTextColumn.HeaderTemplate>
                     </DataGridTextColumn>
+                    <DataGridTextColumn x:Name="BatchOfSalesColumn"
+                                        IsReadOnly="True" 
+                                        Width="Auto"
+                                        Binding="{Binding Path=BatchOfSales, Mode=OneWay}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style>
+                                <Setter Property="TextBlock.TextAlignment" Value="Right" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                        <DataGridTextColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="Партия продажи" 
+                                       Width="80" 
+                                       TextWrapping="Wrap" 
+                                       TextAlignment="Center" 
+                                       VerticalAlignment="Center">
+                                </TextBlock>
+                            </DataTemplate>
+                        </DataGridTextColumn.HeaderTemplate>
+                    </DataGridTextColumn>
                     <DataGridTextColumn IsReadOnly="True" 
                                     Width="Auto"
                                     Binding="{Binding Path=Balance, Mode=OneWay}">
@@ -226,8 +282,23 @@
                         </DataGridTextColumn.HeaderTemplate>
                     </DataGridTextColumn>
                     <DataGridTextColumn IsReadOnly="False" 
-                                        Width="*"
-                                        Binding="{Binding Path=Count, StringFormat={}{0:n2} , Mode=TwoWay}">
+                                        EditingElementStyle="{StaticResource ErrorStyle}"
+                                        Width="*">
+                        <DataGridTextColumn.Binding>
+                            <Binding Path="Count"
+                                     StringFormat="{}{0:n2}"
+                                     Mode="TwoWay">
+                                <Binding.ValidationRules>
+                                    <validation:BatchOfSalesRule>
+                                        <validation:BatchOfSalesRule.ValidValue>
+                                            <validation:BatchValue SelectedItem="{Binding Data.SelectedItem, Source={StaticResource Proxy}, Mode=OneWay}"
+                                                                   HasError="{Binding Data.HasError, Source={StaticResource Proxy}, Mode=OneWay}"/>
+                                        </validation:BatchOfSalesRule.ValidValue>
+                                    </validation:BatchOfSalesRule>
+                                    <ExceptionValidationRule/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </DataGridTextColumn.Binding>
                         <DataGridTextColumn.ElementStyle>
                             <Style>
                                 <Setter Property="TextBlock.TextAlignment" Value="Right" />
@@ -246,8 +317,7 @@
                     </DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
-            <resultSearch:ResultSearchGridNavigateControl x:Name="GridNavigateControl" 
-                                                          Grid.Row="2"/>
+            <resultSearch:ResultSearchGridNavigateControl x:Name="GridNavigateControl" Grid.Row="2"/>
         </Grid>
     </Border>
 </UserControl>

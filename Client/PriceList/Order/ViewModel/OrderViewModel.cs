@@ -35,8 +35,11 @@ namespace Order.ViewModel
             SetWaitScreenMessage = delegate { };
             HideWaitScreen = delegate { };
             RefreshView = delegate { };
+            SetEnabled = delegate { };
+            HasResultGridErrors = () => false;
             IsWaiting = false;
             IsLoading = false;
+            HasChanges = false;
             Model = new OrderModel(domainContext);
             DetailViewModel = new DetailOrderViewModel(domainContext);
             DetailViewModel.CurrentOrder = SelectedItem;
@@ -60,6 +63,10 @@ namespace Order.ViewModel
         public bool IsEditControl { get; set; }
 
         public bool HasChanges { get; }
+
+        public Action<bool> SetEnabled { get; set; }
+
+        public Func<bool> HasResultGridErrors { get; set; }
 
         public void ApplySearchCriteria()
         {

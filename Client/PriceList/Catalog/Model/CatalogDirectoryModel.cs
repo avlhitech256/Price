@@ -93,16 +93,16 @@ namespace Catalog.Model
 
                         if (SearchCriteria.SelectedDirectoryItems != null && SearchCriteria.SelectedDirectoryItems.Any())
                         {
-                            loadedEntities.ForEach(x => x.Selected = SearchCriteria.SelectedDirectoryItems.Any(d => d.Id == x.Id && d.Selected));
+                            SearchCriteria.DirectoryItems.ForEach(x => x.Selected = SearchCriteria.SelectedDirectoryItems.Any(d => d.Id == x.Id && d.Selected));
                             SearchCriteria.SelectedDirectoryItems.Clear();
-                            loadedEntities.Where(x => x.Selected).ToList().ForEach(s => SearchCriteria.SelectedDirectoryItems.Add(s));
+                            SearchCriteria.DirectoryItems.Where(x => x.Selected).ToList().ForEach(s => SearchCriteria.SelectedDirectoryItems.Add(s));
                         }
                     }
 
                     Application.Current.Dispatcher.Invoke(
                         () =>
                         {
-                            Entities = loadedEntities;
+                            Entities.AddRange(loadedEntities);
                             OnPropertyChanged(nameof(Entities));
                             SelectedItem = Entities?.FirstOrDefault(x => x.Id == directoryId) ?? Entities?.FirstOrDefault();
                             SearchCriteria?.DirectoryComplited();

@@ -52,6 +52,9 @@
     <Compile Include="Data\Object\CatalogItem.cs" />
     <Compile Include="Data\Object\DirectoryItem.cs" />
     <Compile Include="Data\Object\OrderItem.cs" />
+    <Compile Include="Data\Validation\BatchOfSalesRowRule.cs" />
+    <Compile Include="Data\Validation\BatchOfSalesRule.cs" />
+    <Compile Include="Data\Validation\BatchValue.cs" />
     <Compile Include="DomainContext\ILoadingContext.cs" />
     <Compile Include="DomainContext\Implementation\DomainContext.cs" />
     <Compile Include="DomainContext\IDomainContext.cs" />

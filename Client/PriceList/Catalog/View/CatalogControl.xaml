@@ -52,7 +52,7 @@
                         <RowDefinition Height="Auto"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <search1:MainSearchControl Grid.Row="0"></search1:MainSearchControl>
+                    <search1:MainSearchControl x:Name="MainSearchControl" Grid.Row="0"></search1:MainSearchControl>
                     <detail1:DetailControl x:Name="DetailControl" Grid.Row="1" Height="0"/>
                     <resultSearch:ResultSearchGridControl x:Name="ResultSearchGridControl" Grid.Row="2"/>
                 </Grid>

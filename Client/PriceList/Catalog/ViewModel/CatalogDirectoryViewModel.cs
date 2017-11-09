@@ -57,23 +57,16 @@ namespace Catalog.ViewModel
             Model?.SelectEntities();
         }
 
-        //public void OnCheck(DirectoryItem item)
-        //{
-        //    if (item.Selected)
-        //    {
-        //        AddItem(item);
-        //        SetCheck(item);
-        //    }
-        //    else
-        //    {
-        //        DeleteItem(item);
-        //        //SetUncheck(item);
-        //    }
-
-        //    searchCriteria.DirectoryComplited();
-        //}
-
         public void OnCheck(DirectoryItem item)
+        {
+            if (item != null)
+            {
+                SelectTreeItem(item);
+                searchCriteria.DirectoryComplited();
+            }
+        }
+
+        private void SelectTreeItem(DirectoryItem item)
         {
             if (item != null)
             {
@@ -92,54 +85,11 @@ namespace Catalog.ViewModel
                         x =>
                         {
                             x.Selected = item.Selected;
-                            OnCheck(x);
+                            SelectTreeItem(x);
                         });
                 }
             }
         }
-
-        //private void SetCheck(DirectoryItem item)
-        //{
-        //    if (item.Selected && item.Subdirectories != null && item.Subdirectories.Any())
-        //    {
-        //        item.Subdirectories.ForEach(
-        //            x =>
-        //            {
-        //                x.Selected = item.Selected;
-        //                AddItem(x);
-        //                SetCheck(x);
-        //            });
-        //    }
-        //}
-
-        //private void SetCheck(DirectoryItem item)
-        //{
-        //    while (item.Parent != null)
-        //    {
-        //        item.Parent.Selected = item.Selected;
-        //        item = item.Parent;
-        //        AddItem(item);
-        //    }
-        //}
-
-        //private void SetUncheck(DirectoryItem item)
-        //{
-        //    if (item.Subdirectories != null && item.Subdirectories.Any())
-        //    {
-        //        List<DirectoryItem> subdirectories = item.Subdirectories.ToList();
-        //        subdirectories.ForEach(
-        //            x =>
-        //            {
-        //                x.Selected = item.Selected && x.Selected;
-
-        //                if (!x.Selected)
-        //                {
-        //                    DeleteItem(x);
-        //                }
-        //            });
-        //        subdirectories.ForEach(SetUncheck);
-        //    }
-        //}
 
         private void AddItem(DirectoryItem item)
         {

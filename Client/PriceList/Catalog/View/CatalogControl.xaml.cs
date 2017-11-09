@@ -3,6 +3,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using Catalog.View.ResultSearch;
 using Catalog.ViewModel;
 using Common.Event;
 using Common.Messenger.Implementation;
@@ -47,6 +48,17 @@ namespace Catalog.View
             if (ViewModel != null)
             {
                 ViewModel.RefreshView = RefreshView;
+                var viewModel = ViewModel as CatalogViewModel;
+
+                if (viewModel != null)
+                {
+                    viewModel.RefreshDirectoryView = LeftAdvanceSearchControl.DirectorySearchControl.Refresh;
+                    viewModel.RefreshBrandView = LeftAdvanceSearchControl.BrandSearchControl.Refresh;
+                    viewModel.RefreshCatalogView = ResultSearchGridControl.Refresh;
+                }
+
+                ViewModel.SetEnabled = SetEnabled;
+                ViewModel.HasResultGridErrors = ResultSearchGridControl.HasResultGridErrors;
                 ViewModel.Init();
                 InitSplitterPosition();
             }
@@ -58,7 +70,7 @@ namespace Catalog.View
 
             if (viewModel != null)
             {
-                double width = viewModel.SplitterPosition;
+                double width = viewModel.SearchCriteria.EnabledAdvancedSearch ? viewModel.SplitterPosition : 0;
                 LeftColumn.Width = new GridLength(width, GridUnitType.Pixel);
                 SetSplitter(width);
             }
@@ -77,6 +89,13 @@ namespace Catalog.View
             LeftAdvanceSearchControl.DirectorySearchControl.Refresh();
             LeftAdvanceSearchControl.BrandSearchControl.Refresh();
             ResultSearchGridControl.Refresh();
+        }
+
+        private void SetEnabled(bool enable)
+        {
+            LeftAdvanceSearchControl.IsEnabled = enable;
+            MainSearchControl.IsEnabled = enable;
+            ResultSearchGridControl.GridNavigateControl.IsEnabled = enable;
         }
 
         protected override void SubscribeMessenger()

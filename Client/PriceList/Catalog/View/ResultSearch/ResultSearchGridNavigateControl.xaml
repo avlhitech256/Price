@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Catalog.View.ResultSearch"
+             xmlns:validationRule="clr-namespace:Common.ValidationRule;assembly=Common"
              mc:Ignorable="d" 
              d:DesignHeight="40" d:DesignWidth="900">
     <Border>
@@ -58,14 +59,24 @@
                        Dock="Right">
                 <TextBox MinWidth="50"
                          DockPanel.Dock="Right"
-                         Foreground="#FF000059"
                          VerticalAlignment="Center" 
                          FontWeight="Bold" 
                          FontStyle="Italic"               
                          Margin="0,0,10,0"
-                         Text="{Binding Path=CatalogNavigateViewModel.MaximumRows, UpdateSourceTrigger=PropertyChanged}" 
                          KeyDown="MaxRow_OnKeyDown"
-                         LostFocus="MaxRow_OnLostFocus"/>
+                         LostFocus="MaxRow_OnLostFocus"
+                         Style="{DynamicResource TextBoxStyle}">
+                    <TextBox.Text>
+                        <Binding Path="CatalogNavigateViewModel.MaximumRows"
+                                 UpdateSourceTrigger="PropertyChanged"
+                                 NotifyOnValidationError="True">
+                            <Binding.ValidationRules>
+                                <validationRule:MaxRowRule Min="5" Max="50"/>
+                                <ExceptionValidationRule/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
                 <Label MinWidth="100"
                        DockPanel.Dock="Right"
                        VerticalAlignment="Center"

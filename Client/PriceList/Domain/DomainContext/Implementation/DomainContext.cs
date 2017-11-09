@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Windows;
 using Common.Annotations;
-using Common.Convert;
 using Common.Data.Enum;
 using Common.Data.Notifier;
 using Common.Event;
@@ -64,7 +63,7 @@ namespace Domain.DomainContext.Implementation
             PhotoService = new PhotoService(Messenger, ImageService);
             PrecisionService = new PrecisionService(2, true);
             DataService = new DataService();
-            OptionService = new OptionService(DataService);
+            OptionService = new OptionService();
             ConvertService = new ConvertService();
             Init();
             SubscribeEvents();

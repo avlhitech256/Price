@@ -103,7 +103,7 @@ namespace Catalog.Model
                     Application.Current.Dispatcher.Invoke(
                         () =>
                         {
-                            Entities = loadedEntities;
+                            Entities.AddRange(loadedEntities);
                             OnPropertyChanged(nameof(Entities));
                             SelectedItem = Entities.FirstOrDefault(x => x.Id == brandId) ?? Entities.FirstOrDefault();
                             SearchCriteria.BrandComplited();

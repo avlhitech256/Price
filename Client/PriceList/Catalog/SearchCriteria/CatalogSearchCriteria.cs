@@ -388,6 +388,7 @@ namespace Catalog.SearchCriteria
                 if (enabledEdvanceSearch != value)
                 {
                     enabledEdvanceSearch = value;
+                    IsModified = true;
                     OnEnabledEdvanceSearchChanged();
                     OnPropertyChanged(nameof(EnableEdvanceTree));
                     OnPropertyChanged(nameof(EnableBrandComboBox));
@@ -426,10 +427,6 @@ namespace Catalog.SearchCriteria
         public List<BrandItem> BrandItems { get; set; }
 
         public HashSet<BrandItem> SelectedBrandItems { get; }
-
-        //public HashSet<BrandItem> SelectedAvtoBrandItems { get; }
-
-        //public HashSet<BrandItem> SelectedOtherBrandItems { get; }
 
         public bool DirectoryItemIdsChanged
         {
@@ -534,8 +531,6 @@ namespace Catalog.SearchCriteria
             Instrument = false;
             SelectedDirectoryItems.Clear();
             SelectedBrandItems.Clear();
-            //SelectedAvtoBrandItems.Clear();
-            //SelectedOtherBrandItems.Clear();
             DirectoryItemIdsChanged = true;
             BrandItemIdsChanged = true;
         }
@@ -716,8 +711,6 @@ namespace Catalog.SearchCriteria
         {
             SelectedDirectoryItems.Clear();
             SelectedBrandItems.Clear();
-            //SelectedAvtoBrandItems.Clear();
-            //SelectedOtherBrandItems.Clear();
             DirectoryItemIdsChanged = true;
             BrandItemIdsChanged = true;
         }
@@ -741,15 +734,6 @@ namespace Catalog.SearchCriteria
         {
             return BrandItems.Select(x => x.Id).Distinct().ToList();
         }
-        //public List<long> GetAvtoBrandIds()
-        //{
-        //    return SelectedAvtoBrandItems.Select(x => x.Id).ToList();
-        //}
-
-        //public List<long> GetOtherBrandIds()
-        //{
-        //    return SelectedOtherBrandItems.Select(x => x.Id).ToList();
-        //}
 
         #endregion
 

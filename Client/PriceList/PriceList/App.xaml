@@ -182,6 +182,35 @@
             </Style.Setters>
         </Style>
 
+        <Style TargetType="TextBox" x:Key="TextBoxStyle">
+            <Style.Setters>
+                <Setter Property="Validation.ErrorTemplate">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <DockPanel LastChildFill="True">
+                                <TextBlock DockPanel.Dock="Right" 
+                                                       Foreground="Red" 
+                                                       FontSize="14" 
+                                                       FontWeight="Bold"
+                                                       Text="*"/>
+                                <Border BorderBrush="DarkBlue" BorderThickness="1">
+                                    <AdornedElementPlaceholder Name="adornerPlaceholder"/>
+                                </Border>
+                            </DockPanel>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Foreground" Value="#FF000059"></Setter>
+            </Style.Setters>
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="Foreground" Value="Red"/>
+                    <Setter Property="ToolTip" 
+                                            Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
         <implementation:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
 
     </Application.Resources>

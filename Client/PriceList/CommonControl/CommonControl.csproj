@@ -58,6 +58,7 @@
       <DependentUpon>WaitWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Proxy\BindingProxy.cs" />
     <Compile Include="SearchControl\SearchControl.cs" />
     <Compile Include="Service\ILoadingService.cs" />
     <Compile Include="Service\Implementation\LoadingService.cs" />

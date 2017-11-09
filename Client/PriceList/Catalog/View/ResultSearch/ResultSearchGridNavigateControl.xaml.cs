@@ -33,7 +33,7 @@ namespace Catalog.View.ResultSearch
             if (e.Key == Key.Enter)
             {
                 ViewModel.CatalogNavigateViewModel.ValidateCurrentPage();
-                ViewModel.CatalogNavigateViewModel.LoadCurrentPage();
+                ViewModel.LoadCurrentPage();
             }
         }
 
@@ -42,7 +42,7 @@ namespace Catalog.View.ResultSearch
         private void CurrentPage_OnLostFocus(object sender, RoutedEventArgs e)
         {
             ViewModel.CatalogNavigateViewModel.ValidateCurrentPage();
-            ViewModel.CatalogNavigateViewModel.LoadCurrentPage();
+            ViewModel.LoadCurrentPage();
         }
 
         private void MaxRow_OnKeyDown(object sender, KeyEventArgs e)
@@ -50,14 +50,18 @@ namespace Catalog.View.ResultSearch
             if (e.Key == Key.Enter)
             {
                 ViewModel.CatalogNavigateViewModel.ValidateMaximumRows();
-                ViewModel.CatalogNavigateViewModel.LoadCurrentPage();
+                ViewModel.LoadCurrentPage();
             }
         }
 
         private void MaxRow_OnLostFocus(object sender, RoutedEventArgs e)
         {
-            ViewModel.CatalogNavigateViewModel.ValidateMaximumRows();
-            ViewModel.CatalogNavigateViewModel.LoadCurrentPage();
+
+            //if (ViewModel?.SearchCriteria?.EnabledAdvancedSearch ?? false)
+            //{
+            //    ViewModel.CatalogNavigateViewModel.ValidateMaximumRows();
+            //    ViewModel.LoadCurrentPage();
+            //}
         }
     }
 }

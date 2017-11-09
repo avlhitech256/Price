@@ -1,7 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using Common.Data.Constant;
 using Common.Data.Enum;
+using DatabaseService.DataBaseContext.Entities;
 using DatabaseService.DataService;
+using DatabaseService.DataService.Implementation;
 
 namespace Options.Service.Implementation
 {
@@ -17,9 +21,9 @@ namespace Options.Service.Implementation
 
         #region Constructors
 
-        public OptionService(IDataService dataService)
+        public OptionService()
         {
-            this.dataService = dataService;
+            this.dataService = new DataService();
             optionCache = new Dictionary<string, string>();
             existOptionCache = new List<string>();
         }
@@ -119,6 +123,18 @@ namespace Options.Service.Implementation
             }
         }
 
+        public double SplitterPosition
+        {
+            get
+            {
+                return GetDoubleOption(OptionName.SplitterPosition);
+            }
+            set
+            {
+                SetDoubleOption(OptionName.SplitterPosition, value);
+            }
+        }
+
         #endregion
 
         #region Methods
@@ -129,7 +145,7 @@ namespace Options.Service.Implementation
 
             if (!value)
             {
-                value = dataService.ExistOption(optionCode);
+                value = ExistDbOption(optionCode);
 
                 if (value)
                 {
@@ -188,14 +204,36 @@ namespace Options.Service.Implementation
             SetOption(optionCode, value.ToString());
         }
 
+        private void SetDoubleOption(string optionCode, double value)
+        {
+            SetOption(optionCode, value.ToString(CultureInfo.InvariantCulture));
+        }
+
+        private double GetDoubleOption(string optionCode)
+        {
+            double value;
+
+            if (!double.TryParse(GetOption(optionCode), out value))
+            {
+                value = 0;
+                SetDoubleOption(optionCode, value);
+            }
+
+            return value;
+        }
+
         private string GetOption(string optionCode)
         {
             string value;
 
             if (!optionCache.TryGetValue(optionCode, out value))
             {
-                value = dataService.GetOption(optionCode);
-                optionCache.Add(optionCode, value);
+                value = GetDbOption(optionCode);
+
+                if (value != null)
+                {
+                    optionCache.Add(optionCode, value);
+                }
             }
 
             return value;
@@ -214,7 +252,59 @@ namespace Options.Service.Implementation
                     optionCache.Add(optionCode, value);
                 }
 
-                dataService.SetOption(optionCode, value);
+                SetDbOption(optionCode, value);
+            }
+        }
+
+        private bool ExistDbOption(string optionCode)
+        {
+            bool value = false;
+
+            if (!string.IsNullOrWhiteSpace(optionCode))
+            {
+                OptionItemEntity option = dataService.Select<OptionItemEntity>().FirstOrDefault(x => x.Code == optionCode);
+
+                if (option != null)
+                {
+                    value = true;
+                }
+            }
+
+            return value;
+        }
+
+        public string GetDbOption(string optionCode)
+        {
+            string value = string.Empty;
+
+            if (!string.IsNullOrWhiteSpace(optionCode))
+            {
+                OptionItemEntity option = dataService.Select<OptionItemEntity>().FirstOrDefault(x => x.Code == optionCode);
+
+                if (option != null)
+                {
+                    value = option.Value;
+                }
+            }
+
+            return value;
+        }
+
+        public void SetDbOption(string optionCode, string value)
+        {
+            if (!string.IsNullOrWhiteSpace(optionCode))
+            {
+                OptionItemEntity option = dataService.Select<OptionItemEntity>().FirstOrDefault(x => x.Code == optionCode);
+
+                if (option == null)
+                {
+                    option = dataService.DataBaseContext.OptionItemEntities.Create();
+                    option.Code = optionCode;
+                    dataService.DataBaseContext.OptionItemEntities.Add(option);
+                }
+
+                option.Value = value;
+                dataService.DataBaseContext.SaveChanges();
             }
         }
 

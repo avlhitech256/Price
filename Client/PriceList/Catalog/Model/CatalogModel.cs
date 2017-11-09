@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Windows;
-using System.Windows.Documents;
 using Catalog.SearchCriteria;
 using Common.Data.Enum;
 using Common.Data.Holders;
@@ -15,6 +14,7 @@ using Domain.Data.Object;
 using Domain.DomainContext;
 using Media.Image;
 using Options.Service;
+using static System.Double;
 
 namespace Catalog.Model
 {
@@ -169,6 +169,22 @@ namespace Catalog.Model
             }
         }
 
+        public double SplitterPosition
+        {
+            get
+            {
+                return OptionService?.SplitterPosition ?? 150;
+            }
+            set
+            {
+                if (OptionService != null && Math.Abs(OptionService.SplitterPosition - value) > Epsilon)
+                {
+                    OptionService.SplitterPosition = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public int Count
         {
             get
@@ -268,6 +284,7 @@ namespace Catalog.Model
                           (oldExternalBrandItem == null && ExternalBrandItem != null) ||
                           (oldExternalBrandItem != null && ExternalBrandItem != null && 
                            oldExternalBrandItem.Id != ExternalBrandItem.Id);
+
             return result;
         }
 
@@ -284,6 +301,12 @@ namespace Catalog.Model
                 {
                     long catalogId = SelectedItem?.Id ?? -1L;
                     Entities.Clear();
+
+                    if (!SearchCriteria.EnabledAdvancedSearch)
+                    {
+                        SearchCriteria.SelectedBrandItems.Clear();
+                        SearchCriteria.SelectedDirectoryItems.Clear();
+                    }
 
                     if (SearchCriteria.IsModified || SearchCriteria.BrandItemIdsChanged || SearchCriteria.DirectoryItemIdsChanged)
                     {

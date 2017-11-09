@@ -7,17 +7,11 @@ namespace Catalog.ViewModel
 {
     public class CatalogNavigateViewModel : Notifier
     {
-        #region Members
-
-        public Action<LoadingType> LoadData;
-
-        #endregion
-
         #region Constructors
 
-        public CatalogNavigateViewModel(CatalogModel model)
+        public CatalogNavigateViewModel(CatalogViewModel viewModel, CatalogModel model)
         {
-            LoadData = delegate { };
+            ViewModel = viewModel;
             Model = model;
             CreateCommands();
             SubscribeEvetns();
@@ -26,6 +20,8 @@ namespace Catalog.ViewModel
         #endregion
 
         #region Properties
+
+        private CatalogViewModel ViewModel { get; }
 
         private CatalogModel Model { get; }
 
@@ -128,49 +124,45 @@ namespace Catalog.ViewModel
         private void GoToFirst(object parametr)
         {
             Model.StartRowIndex = 0;
-            LoadData(LoadingType.ChangedSelectedPage);
-            //Model.SelectEntities();
+            ViewModel.LoadData(LoadingType.ChangedSelectedPage);
         }
 
         private bool CanGoToFirst(object parametr)
         {
-            return Model.StartRowIndex != 0;
+            return Model.StartRowIndex != 0 && !ViewModel.HasError.Value;
         }
 
         private void GoToPrevious(object parametr)
         {
             StartRowIndex = StartRowIndex >= MaximumRows ? StartRowIndex - MaximumRows : 0;
-            LoadData(LoadingType.ChangedSelectedPage);
-            //Model.SelectEntities();
+            ViewModel.LoadData(LoadingType.ChangedSelectedPage);
         }
 
         private bool CanGoToPrevious(object parametr)
         {
-            return StartRowIndex > 0;
+            return StartRowIndex > 0 && !ViewModel.HasError.Value;
         }
 
         private void GoToNext(object parametr)
         {
             StartRowIndex = StartRowIndex + MaximumRows;
-            LoadData(LoadingType.ChangedSelectedPage);
-            //Model.SelectEntities();
+            ViewModel.LoadData(LoadingType.ChangedSelectedPage);
         }
 
         private bool CanGoToNext(object parametr)
         {
-            return StartRowIndex < Count - MaximumRows;
+            return StartRowIndex < Count - MaximumRows && !ViewModel.HasError.Value;
         }
 
         private void GoToLast(object parametr)
         {
             Model.StartRowIndex = (CountOfPages - 1) * MaximumRows;
-            LoadData(LoadingType.ChangedSelectedPage);
-            //Model.SelectEntities();
+            ViewModel.LoadData(LoadingType.ChangedSelectedPage);
         }
 
         private bool CanGoToLast(object parametr)
         {
-            return StartRowIndex < Count - MaximumRows;
+            return StartRowIndex < Count - MaximumRows && !ViewModel.HasError.Value;
         }
 
         public void ValidateCurrentPage()
@@ -183,11 +175,6 @@ namespace Catalog.ViewModel
         public void ValidateMaximumRows()
         {
             MaximumRows = MaximumRows > 100 ? 100 : MaximumRows < 5 ? 5 : MaximumRows;
-        }
-
-        public void LoadCurrentPage()
-        {
-            Model.SelectEntities();
         }
 
         #endregion

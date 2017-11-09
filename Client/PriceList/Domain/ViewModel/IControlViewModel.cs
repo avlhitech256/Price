@@ -24,6 +24,10 @@ namespace Domain.ViewModel
 
         Action RefreshView { get; set; } 
 
+        Action<bool> SetEnabled { get; set; }
+
+        Func<bool> HasResultGridErrors { get; set; }
+
         void ApplySearchCriteria();
 
         void Clear();

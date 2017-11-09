@@ -59,7 +59,6 @@
     <Compile Include="Model\CatalogBrandModel.cs" />
     <Compile Include="Model\CatalogDirectoryModel.cs" />
     <Compile Include="Model\CatalogModel.cs" />
-    <Compile Include="Model\CatalogPageSource.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

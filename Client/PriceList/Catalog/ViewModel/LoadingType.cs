@@ -7,6 +7,7 @@
         ChangedSearchCriteria,
         ChangedBrandItems,
         ChangedDirectoryItems,
-        СhangedAdvancedSearch
+        СhangedAdvancedSearch,
+        ChangedMaxRows
     }
 }

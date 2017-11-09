@@ -35,6 +35,8 @@ namespace Basket.ViewModel
             SetWaitScreenMessage = delegate { };
             HideWaitScreen = delegate { };
             RefreshView = delegate { };
+            SetEnabled = delegate { };
+            HasResultGridErrors = () => false;
             IsWaiting = false;
             IsLoading = false;
             Model = new BasketModel(domainContext);
@@ -68,12 +70,17 @@ namespace Basket.ViewModel
         public Action<string> SetWaitScreenMessage { get; set; }
 
         public Action HideWaitScreen { get; set; }
+
         public void SetWaitMessage(AsyncOperationType type)
         {
             throw new NotImplementedException();
         }
 
         public Action RefreshView { get; set; }
+
+        public Action<bool> SetEnabled { get; set; }
+
+        public Func<bool> HasResultGridErrors { get; set; }
 
         public bool IsWaiting
         {

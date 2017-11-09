@@ -1,0 +1,27 @@
+System.Windows.Markup.XamlParseException произошло
+  HResult=-2146233087
+  LineNumber=256
+  LinePosition=70
+  Message="Задание свойства "Common.ValidationRule.BatchOfSalesRule.Batch" вызвало исключение.": номер строки "256" и позиция в строке "70".
+  Source=PresentationFramework
+  StackTrace:
+       в System.Windows.Markup.WpfXamlLoader.Load(XamlReader xamlReader, IXamlObjectWriterFactory writerFactory, Boolean skipJournaledProperties, Object rootObject, XamlObjectWriterSettings settings, Uri baseUri)
+  InnerException: 
+       HResult=-2147024809
+       Message=Невозможно преобразовать объект типа "System.Windows.Data.Binding" к типу "System.Decimal".
+       Source=mscorlib
+       StackTrace:
+            в System.RuntimeType.TryChangeType(Object value, Binder binder, CultureInfo culture, Boolean needsSpecialCast)
+            в System.RuntimeType.CheckValue(Object value, Binder binder, CultureInfo culture, BindingFlags invokeAttr)
+            в System.Reflection.MethodBase.CheckArguments(Object[] parameters, Binder binder, BindingFlags invokeAttr, CultureInfo culture, Signature sig)
+            в System.Reflection.RuntimeMethodInfo.InvokeArgumentsCheck(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+            в System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+            в System.Reflection.MethodBase.Invoke(Object obj, Object[] parameters)
+            в System.Xaml.Schema.SafeReflectionInvoker.InvokeMethodCritical(MethodInfo method, Object instance, Object[] args)
+            в System.Xaml.Schema.SafeReflectionInvoker.InvokeMethod(MethodInfo method, Object instance, Object[] args)
+            в System.Xaml.Schema.XamlMemberInvoker.SetValueSafeCritical(Object instance, Object value)
+            в System.Xaml.Schema.XamlMemberInvoker.SetValue(Object instance, Object value)
+            в System.Windows.Baml2006.WpfMemberInvoker.SetValue(Object instance, Object value)
+            в MS.Internal.Xaml.Runtime.ClrObjectRuntime.SetValue(XamlMember member, Object obj, Object value)
+            в MS.Internal.Xaml.Runtime.ClrObjectRuntime.SetValue(Object inst, XamlMember property, Object value)
+       InnerException: 

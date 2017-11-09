@@ -996,6 +996,12 @@ namespace DatabaseService.DataBaseContext.Initializer
                     Code = OptionName.CatalogMaximumRows,
                     Name = "Maximum Rows Displayed in Catalog Entry",
                     Value = "13"
+                },
+                new OptionItemEntity
+                {
+                    Code = OptionName.SplitterPosition,
+                    Name = "Start Splitter position in Catalog Entry",
+                    Value = "150"
                 }
             };
 

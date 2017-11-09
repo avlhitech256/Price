@@ -130,7 +130,7 @@ namespace DatabaseService.DataService.Implementation
         }
         public decimal GetCount(CatalogItemEntity entity)
         {
-            decimal count = GetBasketEntity(entity)?.Count ?? 0;
+            decimal count = entity != null ? GetBasketEntity(entity)?.Count ?? 0 : 0;
             return count;
         }
 
@@ -175,57 +175,6 @@ namespace DatabaseService.DataService.Implementation
                 .Select(x => x.Count*x.CatalogItem.Price)
                 .Sum();
             return sum;
-        }
-
-        public bool ExistOption(string optionCode)
-        {
-            bool value = false;
-
-            if (!string.IsNullOrWhiteSpace(optionCode))
-            {
-                OptionItemEntity option = Select<OptionItemEntity>().FirstOrDefault(x => x.Code == optionCode);
-
-                if (option != null)
-                {
-                    value = true;
-                }
-            }
-
-            return value;
-        }
-
-        public string GetOption(string optionCode)
-        {
-            string value = string.Empty;
-
-            if (!string.IsNullOrWhiteSpace(optionCode))
-            {
-                OptionItemEntity option = Select<OptionItemEntity>().FirstOrDefault(x => x.Code == optionCode);
-
-                if (option != null)
-                {
-                    value = option.Value;
-                }
-            }
-
-            return value;
-        }
-
-        public void SetOption(string optionCode, string value)
-        {
-            if (!string.IsNullOrWhiteSpace(optionCode))
-            {
-                OptionItemEntity option = Select<OptionItemEntity>().FirstOrDefault(x => x.Code == optionCode);
-
-                if (option == null)
-                {
-                    option = DataBaseContext.OptionItemEntities.Create();
-                    option.Code = optionCode;
-                }
-
-                option.Value = value;
-                DataBaseContext.SaveChanges();
-            }
         }
 
         public void CalculateOrderSum(BasketItemEntity basketItem)

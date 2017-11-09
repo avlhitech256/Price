@@ -33,13 +33,7 @@ namespace DatabaseService.DataService
 
         void SetOrderStatus(OrderEntity order, OrderStatus status);
 
-        bool ExistOption(string optionCode);
-
         decimal GetSumBasket();
-
-        string GetOption(string optionCode);
-
-        void SetOption(string optionCode, string value);
 
         void CalculateOrderSum(BasketItemEntity basketItem);
     }

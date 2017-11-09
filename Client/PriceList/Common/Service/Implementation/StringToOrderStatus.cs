@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Data;
-using Common.Convert;
 using Common.Data.Enum;
 
 namespace Common.Service.Implementation

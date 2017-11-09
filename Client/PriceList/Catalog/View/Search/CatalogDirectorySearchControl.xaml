@@ -31,7 +31,7 @@
                       ItemsSource="{Binding Path=CatalogDirectoryViewModel.Entities}">
                     <TreeView.ItemContainerStyle>
                         <Style TargetType="TreeViewItem">
-                            <Setter Property="IsExpanded" Value="True"></Setter>
+                            <Setter Property="IsExpanded" Value="False"></Setter>
                         </Style>
                     </TreeView.ItemContainerStyle>
                     <TreeView.ItemTemplate>

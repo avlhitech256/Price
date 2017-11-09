@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Text;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
@@ -136,6 +138,34 @@ namespace Catalog.View.ResultSearch
             lightBlueBrush = new SolidColorBrush(Colors.LightSkyBlue);
             lightRadBrush = new SolidColorBrush(Colors.LightPink);
             lightGreenBrush = new SolidColorBrush(Colors.PaleGreen);
+        }
+
+        public bool HasResultGridErrors()
+        {
+            var sb = new StringBuilder();
+            GetErrors(sb, ResultSearchDataGrid);
+            return !string.IsNullOrWhiteSpace(sb.ToString());
+        }
+
+        private void GetErrors(StringBuilder sb, DependencyObject obj)
+        {
+            foreach (object child in LogicalTreeHelper.GetChildren(obj))
+            {
+                TextBox element = child as TextBox;
+                if (element == null) continue;
+
+                if (Validation.GetHasError(element))
+                {
+                    sb.Append(element.Text + " найдена ошибка:\r\n");
+                    foreach (ValidationError error in Validation.GetErrors(element))
+                    {
+                        sb.Append("  " + error.ErrorContent.ToString());
+                        sb.Append("\r\n");
+                    }
+                }
+
+                GetErrors(sb, element);
+            }
         }
 
         #endregion
