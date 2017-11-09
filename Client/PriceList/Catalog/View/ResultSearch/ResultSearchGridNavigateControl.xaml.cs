@@ -57,11 +57,8 @@ namespace Catalog.View.ResultSearch
         private void MaxRow_OnLostFocus(object sender, RoutedEventArgs e)
         {
 
-            //if (ViewModel?.SearchCriteria?.EnabledAdvancedSearch ?? false)
-            //{
-            //    ViewModel.CatalogNavigateViewModel.ValidateMaximumRows();
-            //    ViewModel.LoadCurrentPage();
-            //}
+            ViewModel.CatalogNavigateViewModel.ValidateMaximumRows();
+            ViewModel.LoadCurrentPage(50);
         }
     }
 }

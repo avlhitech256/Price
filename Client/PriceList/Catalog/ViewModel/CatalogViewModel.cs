@@ -30,7 +30,7 @@ namespace Catalog.ViewModel
         private bool isInited;
         private BoolHolder hasError;
         //private readonly Queue<Action> loadQueue;
-        //private readonly DispatcherTimer loadTimer;
+        private readonly DispatcherTimer loadTimer;
 
         #endregion
 
@@ -49,9 +49,9 @@ namespace Catalog.ViewModel
             RefreshCatalogView = delegate { };
             SetEnabled = delegate { };
             HasResultGridErrors = () => false;
-            //loadTimer = new DispatcherTimer();
-            //loadTimer.Interval = TimeSpan.FromMilliseconds(10);
-            //loadTimer.Tick += LoadData_Tick;
+            loadTimer = new DispatcherTimer();
+            loadTimer.Interval = TimeSpan.FromMilliseconds(10);
+            loadTimer.Tick += LoadData_Tick;
             //loadQueue = new Queue<Action>();
             Model = new CatalogModel(domainContext);
             CatalogNavigateViewModel = new CatalogNavigateViewModel(this, Model);
@@ -302,8 +302,22 @@ namespace Catalog.ViewModel
             }
         }
 
-        public void LoadCurrentPage()
+        public void LoadCurrentPage(int pause = 0)
         {
+            if (pause > 0)
+            {
+                loadTimer.Interval = TimeSpan.FromMilliseconds(pause);
+                loadTimer.Start();
+            }
+            else
+            {
+                LoadData(LoadingType.ChangedDataInCurrentPage);
+            }
+        }
+
+        private void LoadData_Tick(object sender, EventArgs e)
+        {
+            loadTimer.Stop();
             LoadData(LoadingType.ChangedDataInCurrentPage);
         }
 
@@ -337,20 +351,6 @@ namespace Catalog.ViewModel
                 }
             }
         }
-
-        //private void LoadData_Tick(object sender, EventArgs e)
-        //{
-        //    loadTimer.Stop();
-
-        //    if (IsLoading)
-        //    {
-        //        loadTimer.Start();
-        //    }
-        //    else if (loadQueue.Count > 0)
-        //    {
-        //        loadQueue.Dequeue().Invoke();
-        //    }
-        //}
 
         private object LoadPricelist(bool needToUpdate)
         {
@@ -405,11 +405,6 @@ namespace Catalog.ViewModel
                         OnPropertyChanged(nameof(Entities));
                         OnPropertyChanged(nameof(SelectedItem));
                         RefreshCatalogView();
-
-                        //if (loadQueue.Count > 0)
-                        //{
-                        //    loadTimer.Start();
-                        //}
                     });
             }
         }
@@ -433,11 +428,6 @@ namespace Catalog.ViewModel
                         RefreshDirectoryView();
                         RefreshBrandView();
                         RefreshCatalogView();
-
-                        //if (loadQueue.Count > 0)
-                        //{
-                        //    loadTimer.Start();
-                        //}
                     });
             }
         }
@@ -460,11 +450,6 @@ namespace Catalog.ViewModel
                         OnPropertyChanged(nameof(SelectedItem));
                         RefreshBrandView();
                         RefreshCatalogView();
-
-                        //if (loadQueue.Count > 0)
-                        //{
-                        //    loadTimer.Start();
-                        //}
                     });
             }
         }
@@ -483,19 +468,9 @@ namespace Catalog.ViewModel
                  e.PropertyName == nameof(SearchCriteria.PriceIsUp) ||
                  e.PropertyName == nameof(SearchCriteria.PriceIsDown)))
             {
-                //if (!IsLoading)
-                //{
-                    LoadData(SearchCriteria.EnabledAdvancedSearch
-                        ? LoadingType.СhangedAdvancedSearch
-                        : LoadingType.ChangedSearchCriteria);
-                //}
-                //else
-                //{
-                //    Action loadData = () => LoadData(SearchCriteria.EnabledAdvancedSearch
-                //        ? LoadingType.СhangedAdvancedSearch
-                //        : LoadingType.ChangedSearchCriteria);
-                //    loadQueue.Enqueue(loadData);
-                //}
+                LoadData(SearchCriteria.EnabledAdvancedSearch
+                    ? LoadingType.СhangedAdvancedSearch
+                    : LoadingType.ChangedSearchCriteria);
             }
             else if (SearchCriteria != null && !SearchCriteria.EnabledAdvancedSearch && 
                      e.PropertyName == nameof(SearchCriteria.EnabledAdvancedSearch))
