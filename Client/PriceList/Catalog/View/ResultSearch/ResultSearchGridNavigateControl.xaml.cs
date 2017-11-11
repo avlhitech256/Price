@@ -58,7 +58,7 @@ namespace Catalog.View.ResultSearch
         {
 
             ViewModel.CatalogNavigateViewModel.ValidateMaximumRows();
-            ViewModel.LoadCurrentPage(50);
+            ViewModel.LoadCurrentPage(300);
         }
     }
 }

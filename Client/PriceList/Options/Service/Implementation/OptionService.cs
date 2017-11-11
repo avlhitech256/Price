@@ -23,7 +23,7 @@ namespace Options.Service.Implementation
 
         public OptionService()
         {
-            this.dataService = new DataService();
+            dataService = new DataService();
             optionCache = new Dictionary<string, string>();
             existOptionCache = new List<string>();
         }
@@ -139,7 +139,7 @@ namespace Options.Service.Implementation
 
         #region Methods
 
-        private bool ExistOption(string optionCode)
+        public bool ExistOption(string optionCode)
         {
             bool value = existOptionCache.Contains(optionCode);
 
@@ -156,37 +156,34 @@ namespace Options.Service.Implementation
             return value;
         }
 
-        private bool GetBooleanOption(string optionCode)
+        public bool GetBooleanOption(string optionCode)
         {
             bool value = GetOption(optionCode) == Flag.Yes;
 
             return value;
         }
 
-        private void SetBooleanOption(string optionCode, bool value)
+        public Dictionary<string, bool> GetBooleanOptions(IEnumerable<string> optionCodes)
+        {
+            var result = new Dictionary<string, bool>();
+            optionCodes.ToList().ForEach(x => result.Add(x, GetBooleanOption(x)));
+            return result;
+        }
+
+        public void SetBooleanOption(string optionCode, bool value)
         {
             SetOption(optionCode, value ? Flag.Yes : Flag.No);
         }
 
-        private long GetLongOption(string optionCode)
+        public void SetBooleanOptions(Dictionary<string, bool> options)
         {
-            long value;
-            
-            if (!long.TryParse(GetOption(optionCode), out value))
+            foreach (KeyValuePair<string, bool> item in options)
             {
-                value = 0L;
-                SetLongOption(optionCode, value);
+                SetBooleanOption(item.Key, item.Value);
             }
-
-            return value;
         }
 
-        private void SetLongOption(string optionCode, long value)
-        {
-            SetOption(optionCode, value.ToString());
-        }
-
-        private int GetIntOption(string optionCode)
+        public int GetIntOption(string optionCode)
         {
             int value;
 
@@ -199,17 +196,60 @@ namespace Options.Service.Implementation
             return value;
         }
 
-        private void SetIntOption(string optionCode, int value)
+        public Dictionary<string, int> GetIntOptions(IEnumerable<string> optionCodes)
+        {
+            Dictionary<string, int> result = new Dictionary<string, int>();
+            optionCodes.ToList().ForEach(x => result.Add(x, GetIntOption(x)));
+            return result;
+        }
+
+        public void SetIntOption(string optionCode, int value)
         {
             SetOption(optionCode, value.ToString());
         }
 
-        private void SetDoubleOption(string optionCode, double value)
+        public void SetIntOptions(Dictionary<string, int> options)
         {
-            SetOption(optionCode, value.ToString(CultureInfo.InvariantCulture));
+            foreach (KeyValuePair<string, int> item in options)
+            {
+                SetIntOption(item.Key, item.Value);
+            }
         }
 
-        private double GetDoubleOption(string optionCode)
+        public long GetLongOption(string optionCode)
+        {
+            long value;
+            
+            if (!long.TryParse(GetOption(optionCode), out value))
+            {
+                value = 0L;
+                SetLongOption(optionCode, value);
+            }
+
+            return value;
+        }
+
+        public Dictionary<string, long> GetLongOptions(IEnumerable<string> optionCodes)
+        {
+            var result = new Dictionary<string, long>();
+            optionCodes.ToList().ForEach(x => result.Add(x, GetLongOption(x)));
+            return result;
+        }
+
+        public void SetLongOption(string optionCode, long value)
+        {
+            SetOption(optionCode, value.ToString());
+        }
+
+        public void SetLongOptions(Dictionary<string, long> options)
+        {
+            foreach (KeyValuePair<string, long> item in options)
+            {
+                SetLongOption(item.Key, item.Value);
+            }
+        }
+
+        public double GetDoubleOption(string optionCode)
         {
             double value;
 
@@ -222,7 +262,27 @@ namespace Options.Service.Implementation
             return value;
         }
 
-        private string GetOption(string optionCode)
+        public Dictionary<string, double> GetDoubleOptions(IEnumerable<string> optionCodes)
+        {
+            Dictionary<string, double> result = new Dictionary<string, double>();
+            optionCodes.ToList().ForEach(x => result.Add(x, GetDoubleOption(x)));
+            return result;
+        }
+
+        public void SetDoubleOption(string optionCode, double value)
+        {
+            SetOption(optionCode, value.ToString(CultureInfo.InvariantCulture));
+        }
+
+        public void SetDoubleOptions(Dictionary<string, double> options)
+        {
+            foreach (KeyValuePair<string, double> item in options)
+            {
+                SetDoubleOption(item.Key, item.Value);
+            }
+        }
+
+        public string GetOption(string optionCode)
         {
             string value;
 
@@ -239,7 +299,14 @@ namespace Options.Service.Implementation
             return value;
         }
 
-        private void SetOption(string optionCode, string value)
+        public Dictionary<string, string> GetOption(IEnumerable<string> optionCodes)
+        {
+            Dictionary<string, string> result = new Dictionary<string, string>();
+            optionCodes.ToList().ForEach(x => result.Add(x, GetOption(x)));
+            return result;
+        }
+
+        public void SetOption(string optionCode, string value)
         {
             if (!string.IsNullOrWhiteSpace(optionCode) && value != GetOption(optionCode))
             {
@@ -253,6 +320,14 @@ namespace Options.Service.Implementation
                 }
 
                 SetDbOption(optionCode, value);
+            }
+        }
+
+        public void SetOptions(Dictionary<string, string> options)
+        {
+            foreach (KeyValuePair<string, string> item in options)
+            {
+                SetOption(item.Key, item.Value);
             }
         }
 

@@ -30,7 +30,7 @@ namespace Catalog.ViewModel
         private bool isInited;
         private BoolHolder hasError;
         //private readonly Queue<Action> loadQueue;
-        private readonly DispatcherTimer loadTimer;
+        private readonly Timer loadTimer;
 
         #endregion
 
@@ -49,9 +49,9 @@ namespace Catalog.ViewModel
             RefreshCatalogView = delegate { };
             SetEnabled = delegate { };
             HasResultGridErrors = () => false;
-            loadTimer = new DispatcherTimer();
-            loadTimer.Interval = TimeSpan.FromMilliseconds(10);
-            loadTimer.Tick += LoadData_Tick;
+            loadTimer = new Timer();
+            loadTimer.Interval = 300;TimeSpan.FromMilliseconds(10);
+            loadTimer.Elapsed += LoadData_Tick;
             //loadQueue = new Queue<Action>();
             Model = new CatalogModel(domainContext);
             CatalogNavigateViewModel = new CatalogNavigateViewModel(this, Model);
@@ -306,7 +306,7 @@ namespace Catalog.ViewModel
         {
             if (pause > 0)
             {
-                loadTimer.Interval = TimeSpan.FromMilliseconds(pause);
+                loadTimer.Interval = pause; //TimeSpan.FromMilliseconds(pause);
                 loadTimer.Start();
             }
             else

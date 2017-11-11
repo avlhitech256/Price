@@ -1,13 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Xaml;
 using Catalog.ViewModel;
 using Common.Data.Enum;
 using Domain.Data.Object;
+using Domain.DomainContext;
+using Options.Service;
+using Options.Service.Implementation;
 
 namespace Catalog.View.ResultSearch
 {
@@ -22,7 +28,7 @@ namespace Catalog.View.ResultSearch
         private SolidColorBrush lightBlueBrush;
         private SolidColorBrush lightRadBrush;
         private SolidColorBrush lightGreenBrush;
-
+        private readonly Dictionary<DataGridColumn, string> columns;
 
         #endregion
 
@@ -32,6 +38,20 @@ namespace Catalog.View.ResultSearch
         {
             InitializeComponent();
             InitBrushs();
+            columns = new Dictionary<DataGridColumn, string>
+            {
+                { NumberColumn, "" },
+                { CodeColumn, "" },
+                { ArticleColumn, "" },
+                { NameColumn, "" },
+                { BrandColumn, "" },
+                { UnitColumn, "" },
+                { EnterpriceNormPackColumn, "" },
+                { BatchOfSalesColumn, "" },
+                { BalanceColumn, "" },
+                { PriceColumn, "" },
+                { CountColumn, "" }
+            };
         }
 
         #endregion
@@ -39,6 +59,10 @@ namespace Catalog.View.ResultSearch
         #region Properties
 
         private CatalogViewModel ViewModel => (CatalogViewModel) DataContext;
+
+        private IDomainContext DomainContext => ViewModel?.DomainContext;
+
+        private IOptionService OptionService => DomainContext.OptionService;
 
         #endregion
 
@@ -89,7 +113,7 @@ namespace Catalog.View.ResultSearch
 
         public void Refresh()
         {
-            CollectionViewSource.GetDefaultView(ResultSearchDataGrid.ItemsSource).Refresh();
+            CollectionViewSource.GetDefaultView(ResultSearchDataGrid.ItemsSource).Refresh(); ResultSearchDataGrid.
         } 
 
         private void ResultSearchDataGrid_OnLoadingRow(object sender, DataGridRowEventArgs e)
