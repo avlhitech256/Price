@@ -37,8 +37,6 @@ namespace Catalog.View.ResultSearch
             }
         }
 
-        #endregion
-
         private void CurrentPage_OnLostFocus(object sender, RoutedEventArgs e)
         {
             ViewModel.CatalogNavigateViewModel.ValidateCurrentPage();
@@ -60,5 +58,7 @@ namespace Catalog.View.ResultSearch
             ViewModel.CatalogNavigateViewModel.ValidateMaximumRows();
             ViewModel.LoadCurrentPage(300);
         }
+
+        #endregion
     }
 }

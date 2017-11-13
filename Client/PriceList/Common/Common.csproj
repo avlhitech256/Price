@@ -49,9 +49,11 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Constant\CatalogColumnNames.cs" />
+    <Compile Include="Data\Constant\PrefixOptions.cs" />
     <Compile Include="Data\Enum\AsyncOperationType.cs" />
     <Compile Include="Data\Enum\CommodityDirection.cs" />
-    <Compile Include="Data\Enum\OptionName.cs" />
+    <Compile Include="Data\Constant\OptionName.cs" />
     <Compile Include="Data\Holders\BoolHolder.cs" />
     <Compile Include="Event\EnableMenuEventArgs.cs" />
     <Compile Include="Service\IAsyncOperationService.cs" />

@@ -60,7 +60,11 @@
                       MouseUp="ResultSearchDataGrid_OnMouseUp"
                       MouseDoubleClick="ResultSearchDataGrid_OnMouseDoubleClick"
                       SelectionChanged="ResultSearchDataGrid_OnSelectionChanged"
-                      LoadingRow="ResultSearchDataGrid_OnLoadingRow">
+                      LoadingRow="ResultSearchDataGrid_OnLoadingRow"
+                      ColumnDisplayIndexChanged="ResultSearchDataGrid_OnColumnDisplayIndexChanged"
+                      DataContextChanged="ResultSearchDataGrid_OnDataContextChanged"
+                      LayoutUpdated="ResultSearchDataGrid_OnLayoutUpdated"
+                      SizeChanged="ResultSearchDataGrid_OnSizeChanged">
                 <DataGrid.Resources>
                     <Style x:Key="ErrorStyle" TargetType="{x:Type TextBox}">
                         <Setter Property="Padding" Value="-2"/>
@@ -137,7 +141,7 @@
                     </DataGridTemplateColumn>
                     <DataGridTextColumn x:Name="CodeColumn"
                                         IsReadOnly="True" 
-                                        Width="Auto"
+                                        Width="75"
                                         Binding="{Binding Path=Code, Mode=OneWay}">
                         <DataGridTextColumn.HeaderTemplate>
                             <DataTemplate>
@@ -153,7 +157,7 @@
                     </DataGridTextColumn>
                     <DataGridTextColumn x:Name="ArticleColumn"
                                         IsReadOnly="True" 
-                                        Width="Auto"
+                                        Width="112"
                                         Binding="{Binding Path=Article, Mode=OneWay}">
                         <DataGridTextColumn.HeaderTemplate>
                             <DataTemplate>
@@ -168,7 +172,7 @@
                     </DataGridTextColumn>
                     <DataGridTextColumn x:Name="NameColumn"
                                         IsReadOnly="True" 
-                                        Width="Auto"
+                                        Width="330"
                                         MaxWidth="550"
                                         Binding="{Binding Path=Name, Mode=OneWay}">
                         <DataGridTextColumn.HeaderTemplate>
@@ -184,7 +188,7 @@
                     </DataGridTextColumn>
                     <DataGridTextColumn x:Name="BrandColumn"
                                         IsReadOnly="True" 
-                                        Width="Auto"
+                                        Width="110"
                                         Binding="{Binding Path=Brand, Mode=OneWay}">
                         <DataGridTextColumn.HeaderTemplate>
                             <DataTemplate>
@@ -199,7 +203,7 @@
                     </DataGridTextColumn>
                     <DataGridTextColumn x:Name="UnitColumn"
                                         IsReadOnly="True" 
-                                        Width="Auto"
+                                        Width="50"
                                         Binding="{Binding Path=Unit, Mode=OneWay}">
                         <DataGridTextColumn.ElementStyle>
                             <Style>
@@ -219,7 +223,7 @@
                     </DataGridTextColumn>
                     <DataGridTextColumn x:Name="EnterpriceNormPackColumn"
                                         IsReadOnly="True" 
-                                        Width="Auto"
+                                        Width="90"
                                         Binding="{Binding Path=EnterpriceNormPack, Mode=OneWay}">
                         <DataGridTextColumn.ElementStyle>
                             <Style>
@@ -239,7 +243,7 @@
                     </DataGridTextColumn>
                     <DataGridTextColumn x:Name="BatchOfSalesColumn"
                                         IsReadOnly="True" 
-                                        Width="Auto"
+                                        Width="90"
                                         Binding="{Binding Path=BatchOfSales, Mode=OneWay}">
                         <DataGridTextColumn.ElementStyle>
                             <Style>
@@ -259,7 +263,7 @@
                     </DataGridTextColumn>
                     <DataGridTextColumn x:Name="BalanceColumn"
                                         IsReadOnly="True" 
-                                        Width="Auto"
+                                        Width="95"
                                         Binding="{Binding Path=Balance, Mode=OneWay}">
                         <DataGridTextColumn.HeaderTemplate>
                             <DataTemplate>
@@ -274,7 +278,7 @@
                     </DataGridTextColumn>
                     <DataGridTextColumn x:Name="PriceColumn"
                                         IsReadOnly="True" 
-                                        Width="Auto"
+                                        Width="90"
                                         Binding="{Binding Path=Price, Mode=OneWay}">
                         <DataGridTextColumn.ElementStyle>
                             <Style>
@@ -295,7 +299,7 @@
                     <DataGridTextColumn x:Name="CountColumn"
                                         IsReadOnly="False" 
                                         EditingElementStyle="{StaticResource ErrorStyle}"
-                                        Width="*">
+                                        Width="200">
                         <DataGridTextColumn.Binding>
                             <Binding Path="Count"
                                      StringFormat="{}{0:n2}"

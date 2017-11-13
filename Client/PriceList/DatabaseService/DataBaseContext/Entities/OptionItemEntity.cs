@@ -6,7 +6,7 @@ namespace DatabaseService.DataBaseContext.Entities
     {
         public long Id { get; set; }
 
-        [MaxLength(30)]
+        [MaxLength(50)]
         public string Code { get; set; }
 
         [MaxLength(255)]

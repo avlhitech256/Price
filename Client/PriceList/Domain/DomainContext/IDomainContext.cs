@@ -9,6 +9,7 @@ using Media.Color;
 using Media.Image;
 using Options.Service;
 using Photo.Service;
+using Template.Service;
 
 namespace Domain.DomainContext
 {
@@ -53,6 +54,8 @@ namespace Domain.DomainContext
         string Debd { get; set; }
 
         IOptionService OptionService { get; }
+
+        ITemplateService TemplateService { get; }
 
         IConvertService ConvertService { get; }
 

@@ -141,6 +141,10 @@
       <Project>{EE93DDA8-DF77-4E53-8B34-6439F3079748}</Project>
       <Name>Photo</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Template\Template.csproj">
+      <Project>{C57FBEC8-8F6E-46EC-BF2F-EB2396F188DF}</Project>
+      <Name>Template</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Page Include="View\CatalogControl.xaml">

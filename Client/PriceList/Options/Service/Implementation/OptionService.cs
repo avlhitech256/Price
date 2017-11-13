@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using Common.Data.Constant;
@@ -354,11 +355,19 @@ namespace Options.Service.Implementation
 
             if (!string.IsNullOrWhiteSpace(optionCode))
             {
-                OptionItemEntity option = dataService.Select<OptionItemEntity>().FirstOrDefault(x => x.Code == optionCode);
-
-                if (option != null)
+                try
                 {
-                    value = option.Value;
+                    OptionItemEntity option = dataService.Select<OptionItemEntity>().FirstOrDefault(x => x.Code == optionCode);
+
+                    if (option != null)
+                    {
+                        value = option.Value;
+                    }
+                }
+                catch (Exception e)
+                {
+
+                    ;//throw;
                 }
             }
 

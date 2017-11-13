@@ -22,6 +22,8 @@ using Options.Service;
 using Options.Service.Implementation;
 using Photo.Service;
 using Photo.Service.Implementation;
+using Template.Service;
+using Template.Service.Implementation;
 
 namespace Domain.DomainContext.Implementation
 {
@@ -64,6 +66,7 @@ namespace Domain.DomainContext.Implementation
             PrecisionService = new PrecisionService(2, true);
             DataService = new DataService();
             OptionService = new OptionService();
+            TemplateService = new TemplateService(OptionService);
             ConvertService = new ConvertService();
             Init();
             SubscribeEvents();
@@ -182,6 +185,8 @@ namespace Domain.DomainContext.Implementation
         }
 
         public IOptionService OptionService { get; }
+
+        public ITemplateService TemplateService { get; }
 
         public IConvertService ConvertService { get; }
 

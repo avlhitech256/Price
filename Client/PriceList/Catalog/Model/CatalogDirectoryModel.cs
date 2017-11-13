@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using Catalog.SearchCriteria;
 using Common.Data.Enum;
 using Common.Data.Notifier;
@@ -330,50 +331,67 @@ namespace Catalog.Model
         private List<DirectoryItem> GetItems()
         {
             var items = new List<DirectoryItem>();
+            DirectoryItem item;
 
             if (SearchCriteria.Vaz)
             {
-                items.Add(GetDirectoryTopItem(CommodityDirection.Vaz));
+                item = GetDirectoryTopItem(CommodityDirection.Vaz);
+                AddItem(items, item);
             }
 
             if (SearchCriteria.Gaz)
             {
-                items.Add(GetDirectoryTopItem(CommodityDirection.Gaz));
+                item = GetDirectoryTopItem(CommodityDirection.Gaz);
+                AddItem(items, item);
             }
 
             if (SearchCriteria.Zaz)
             {
-                items.Add(GetDirectoryTopItem(CommodityDirection.Zaz));
+                item = GetDirectoryTopItem(CommodityDirection.Zaz);
+                AddItem(items, item);
             }
 
             if (SearchCriteria.Chemistry)
             {
-                items.Add(GetDirectoryTopItem(CommodityDirection.Chemistry));
+                item = GetDirectoryTopItem(CommodityDirection.Chemistry);
+                AddItem(items, item);
             }
 
             if (SearchCriteria.Battery)
             {
-                items.Add(GetDirectoryTopItem(CommodityDirection.Battery));
+                item = GetDirectoryTopItem(CommodityDirection.Battery);
+                AddItem(items, item);
             }
 
             if (SearchCriteria.Gas)
             {
-                items.Add(GetDirectoryTopItem(CommodityDirection.Gas));
+                item = GetDirectoryTopItem(CommodityDirection.Gas);
+                AddItem(items, item);
             }
 
             if (SearchCriteria.Instrument)
             {
-                items.Add(GetDirectoryTopItem(CommodityDirection.Instrument));
+                item = GetDirectoryTopItem(CommodityDirection.Instrument);
+                AddItem(items, item);
             }
 
             if (SearchCriteria.EnabledAdvancedSearch)
             {
-                items.Add(GetCommonDirectory());
+                item = GetCommonDirectory();
+                AddItem(items, item);
             }
 
             return items;
         }
 
+        private void AddItem(List<DirectoryItem> items, DirectoryItem item)
+        {
+
+            if (item != null)
+            {
+                items.Add(item);
+            }
+        }
         private DirectoryItem CreateDirectoryItem(CommodityDirection direction)
         {
             DirectoryItem item = GetDirectoryTopItem(direction);

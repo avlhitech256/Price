@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Timers;
 using System.Windows;
-using System.Windows.Threading;
 using Catalog.Model;
 using Catalog.SearchCriteria;
 using Common.Data.Enum;
@@ -323,6 +322,8 @@ namespace Catalog.ViewModel
 
         public void LoadData(LoadingType loadingType)
         {
+            loadTimer.Stop();
+
             if (!IsLoading)
             {
                 switch (loadingType)

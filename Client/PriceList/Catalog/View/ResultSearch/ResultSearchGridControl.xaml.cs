@@ -7,13 +7,14 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Xaml;
+using Catalog.SearchCriteria;
 using Catalog.ViewModel;
+using Common.Data.Constant;
 using Common.Data.Enum;
 using Domain.Data.Object;
 using Domain.DomainContext;
-using Options.Service;
-using Options.Service.Implementation;
+using Template.Service;
+using Template.Service.Implementation;
 
 namespace Catalog.View.ResultSearch
 {
@@ -29,6 +30,7 @@ namespace Catalog.View.ResultSearch
         private SolidColorBrush lightRadBrush;
         private SolidColorBrush lightGreenBrush;
         private readonly Dictionary<DataGridColumn, string> columns;
+        private bool isUpdateTemplate;
 
         #endregion
 
@@ -36,21 +38,23 @@ namespace Catalog.View.ResultSearch
 
         public ResultSearchGridControl()
         {
+            isUpdateTemplate = false;
             InitializeComponent();
             InitBrushs();
             columns = new Dictionary<DataGridColumn, string>
             {
-                { NumberColumn, "" },
-                { CodeColumn, "" },
-                { ArticleColumn, "" },
-                { NameColumn, "" },
-                { BrandColumn, "" },
-                { UnitColumn, "" },
-                { EnterpriceNormPackColumn, "" },
-                { BatchOfSalesColumn, "" },
-                { BalanceColumn, "" },
-                { PriceColumn, "" },
-                { CountColumn, "" }
+                { NumberColumn, CatalogColumnNames.NumberColumnName },
+                { PhotoIconColumn, CatalogColumnNames.PhotoColumnName },
+                { CodeColumn, CatalogColumnNames.CodeColumnName },
+                { ArticleColumn, CatalogColumnNames.ArticleColumn },
+                { NameColumn, CatalogColumnNames.NameColumn },
+                { BrandColumn, CatalogColumnNames.BrandColumn },
+                { UnitColumn, CatalogColumnNames.UnitColumn },
+                { EnterpriceNormPackColumn, CatalogColumnNames.EnterpriceNormPackColumn },
+                { BatchOfSalesColumn, CatalogColumnNames.BatchOfSalesColumn },
+                { BalanceColumn, CatalogColumnNames.BalanceColumn },
+                { PriceColumn, CatalogColumnNames.PriceColumn },
+                { CountColumn, CatalogColumnNames.CountColumn }
             };
         }
 
@@ -60,13 +64,64 @@ namespace Catalog.View.ResultSearch
 
         private CatalogViewModel ViewModel => (CatalogViewModel) DataContext;
 
+        private CatalogSearchCriteria SearchCriteria => ViewModel?.SearchCriteria;
+
         private IDomainContext DomainContext => ViewModel?.DomainContext;
 
-        private IOptionService OptionService => DomainContext.OptionService;
+        private ITemplateService TemplateService => DomainContext?.TemplateService;
 
         #endregion
 
         #region Methods
+
+        public void GetTemplate()
+        {
+            if (TemplateService.IsExistCatalogTemplate(SearchCriteria.EnabledAdvancedSearch))
+            {
+                CatalogTemplate template = TemplateService.GetCatalogTemplate(SearchCriteria.EnabledAdvancedSearch);
+                isUpdateTemplate = true;
+
+                foreach (KeyValuePair<DataGridColumn, string> item in columns)
+                {
+                    double width;
+
+                    if (!Equals(item.Key, PhotoIconColumn) && template.GridColumnsWidth.TryGetValue(item.Value, out width))
+                    {
+                        item.Key.Width = width;
+                    }
+                }
+
+                isUpdateTemplate = false;
+            }
+            else
+            {
+                SetTemplate();
+            }
+        }
+
+        private void SetTemplate()
+        {
+            if (!isUpdateTemplate)
+            {
+                var columnsWidth = new Dictionary<string, double>();
+
+                ResultSearchDataGrid.Columns.ToList().ForEach(
+                    x =>
+                    {
+                        string columnName;
+
+                        if (columns.TryGetValue(x, out columnName))
+                        {
+                            columnsWidth.Add(columnName, x.ActualWidth);
+                        }
+                    });
+
+                var template = new CatalogTemplate();
+                template.GridColumnsWidth = columnsWidth;
+                template.IsAdvanceSearch = SearchCriteria.EnabledAdvancedSearch;
+                TemplateService?.SetCatalogTemplate(template);
+            }
+        }
 
         private void ResultSearchDataGrid_OnMouseUp(object sender, MouseButtonEventArgs e)
         {
@@ -113,7 +168,7 @@ namespace Catalog.View.ResultSearch
 
         public void Refresh()
         {
-            CollectionViewSource.GetDefaultView(ResultSearchDataGrid.ItemsSource).Refresh(); ResultSearchDataGrid.
+            CollectionViewSource.GetDefaultView(ResultSearchDataGrid.ItemsSource).Refresh();
         } 
 
         private void ResultSearchDataGrid_OnLoadingRow(object sender, DataGridRowEventArgs e)
@@ -193,5 +248,25 @@ namespace Catalog.View.ResultSearch
         }
 
         #endregion
+
+        private void ResultSearchDataGrid_OnColumnDisplayIndexChanged(object sender, DataGridColumnEventArgs e)
+        {
+            SetTemplate();
+        }
+
+        private void ResultSearchDataGrid_OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            GetTemplate();
+        }
+
+        private void ResultSearchDataGrid_OnLayoutUpdated(object sender, EventArgs e)
+        {
+            SetTemplate();
+        }
+
+        private void ResultSearchDataGrid_OnSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            //SetTemplate();
+        }
     }
 }

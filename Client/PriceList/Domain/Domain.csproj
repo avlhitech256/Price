@@ -89,6 +89,10 @@
       <Project>{ee93dda8-df77-4e53-8b34-6439f3079748}</Project>
       <Name>Photo</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Template\Template.csproj">
+      <Project>{c57fbec8-8f6e-46ec-bf2f-eb2396f188df}</Project>
+      <Name>Template</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

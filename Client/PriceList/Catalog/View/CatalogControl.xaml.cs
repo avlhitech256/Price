@@ -3,7 +3,6 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using Catalog.View.ResultSearch;
 using Catalog.ViewModel;
 using Common.Event;
 using Common.Messenger.Implementation;

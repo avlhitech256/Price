@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using Common.Annotations;
+using Common.Data.Constant;
 using Common.Data.Enum;
 using Common.Service.Implementation;
 using DatabaseService.DataBaseContext.Entities;
@@ -1002,6 +1003,162 @@ namespace DatabaseService.DataBaseContext.Initializer
                     Code = OptionName.SplitterPosition,
                     Name = "Start Splitter position in Catalog Entry",
                     Value = "150"
+                },
+                new OptionItemEntity
+                {
+                    Code = CatalogColumnNames.NumberColumnName + PrefixOptions.Width,
+                    Name = PrefixOptions.Width + " of " + CatalogColumnNames.NumberColumnName + "column",
+                    Value = "55"
+                },
+                new OptionItemEntity
+                {
+                    Code = CatalogColumnNames.PhotoColumnName + PrefixOptions.Width,
+                    Name = PrefixOptions.Width + " of " + CatalogColumnNames.PhotoColumnName + "column",
+                    Value = "40"
+                },
+                new OptionItemEntity
+                {
+                    Code = CatalogColumnNames.CodeColumnName + PrefixOptions.Width,
+                    Name = PrefixOptions.Width + " of " + CatalogColumnNames.CodeColumnName + "column",
+                    Value = "75"
+                },
+                new OptionItemEntity
+                {
+                    Code = CatalogColumnNames.ArticleColumn + PrefixOptions.Width,
+                    Name = PrefixOptions.Width + " of " + CatalogColumnNames.ArticleColumn + "column",
+                    Value = "112"
+                },
+                new OptionItemEntity
+                {
+                    Code = CatalogColumnNames.NameColumn + PrefixOptions.Width,
+                    Name = PrefixOptions.Width + " of " + CatalogColumnNames.NameColumn + "column",
+                    Value = "330"
+                },
+                new OptionItemEntity
+                {
+                    Code = CatalogColumnNames.BrandColumn + PrefixOptions.Width,
+                    Name = PrefixOptions.Width + " of " + CatalogColumnNames.BrandColumn + "column",
+                    Value = "110"
+                },
+                new OptionItemEntity
+                {
+                    Code = CatalogColumnNames.UnitColumn + PrefixOptions.Width,
+                    Name = PrefixOptions.Width + " of " + CatalogColumnNames.UnitColumn + "column",
+                    Value = "50"
+                },
+                new OptionItemEntity
+                {
+                    Code = CatalogColumnNames.EnterpriceNormPackColumn + PrefixOptions.Width,
+                    Name = PrefixOptions.Width + " of " + CatalogColumnNames.EnterpriceNormPackColumn + "column",
+                    Value = "90"
+                },
+                new OptionItemEntity
+                {
+                    Code = CatalogColumnNames.BatchOfSalesColumn + PrefixOptions.Width,
+                    Name = PrefixOptions.Width + " of " + CatalogColumnNames.BatchOfSalesColumn + "column",
+                    Value = "90"
+                },
+                new OptionItemEntity
+                {
+                    Code = CatalogColumnNames.BalanceColumn + PrefixOptions.Width,
+                    Name = PrefixOptions.Width + " of " + CatalogColumnNames.BalanceColumn + "column",
+                    Value = "95"
+                },
+                new OptionItemEntity
+                {
+                    Code = CatalogColumnNames.PriceColumn + PrefixOptions.Width,
+                    Name = PrefixOptions.Width + " of " + CatalogColumnNames.PriceColumn + "column",
+                    Value = "90"
+                },
+                new OptionItemEntity
+                {
+                    Code = CatalogColumnNames.CountColumn + PrefixOptions.Width,
+                    Name = PrefixOptions.Width + " of " + CatalogColumnNames.CountColumn + "column",
+                    Value = "110"
+                },
+                new OptionItemEntity
+                {
+                    Code = PrefixOptions.Advance + CatalogColumnNames.NumberColumnName + PrefixOptions.Width,
+                    Name = PrefixOptions.Width + " of " + CatalogColumnNames.NumberColumnName + "column during " + 
+                           PrefixOptions.Advance + " search",
+                    Value = "55"
+                },
+                new OptionItemEntity
+                {
+                    Code = PrefixOptions.Advance + CatalogColumnNames.PhotoColumnName + PrefixOptions.Width,
+                    Name = PrefixOptions.Width + " of " + CatalogColumnNames.PhotoColumnName + "column during " + 
+                           PrefixOptions.Advance + " search",
+                    Value = "40"
+                },
+                new OptionItemEntity
+                {
+                    Code = PrefixOptions.Advance + CatalogColumnNames.CodeColumnName + PrefixOptions.Width,
+                    Name = PrefixOptions.Width + " of " + CatalogColumnNames.CodeColumnName + "column during " + 
+                           PrefixOptions.Advance + " search",
+                    Value = "75"
+                },
+                new OptionItemEntity
+                {
+                    Code = PrefixOptions.Advance + CatalogColumnNames.ArticleColumn + PrefixOptions.Width,
+                    Name = PrefixOptions.Width + " of " + CatalogColumnNames.ArticleColumn + "column during " +
+                           PrefixOptions.Advance + " search",
+                    Value = "112"
+                },
+                new OptionItemEntity
+                {
+                    Code = PrefixOptions.Advance + CatalogColumnNames.NameColumn + PrefixOptions.Width,
+                    Name = PrefixOptions.Width + " of " + CatalogColumnNames.NameColumn + "column during " +
+                           PrefixOptions.Advance + " search",
+                    Value = "330"
+                },
+                new OptionItemEntity
+                {
+                    Code = PrefixOptions.Advance + CatalogColumnNames.BrandColumn + PrefixOptions.Width,
+                    Name = PrefixOptions.Width + " of " + CatalogColumnNames.BrandColumn + "column during " +
+                           PrefixOptions.Advance + " search",
+                    Value = "110"
+                },
+                new OptionItemEntity
+                {
+                    Code = PrefixOptions.Advance + CatalogColumnNames.UnitColumn + PrefixOptions.Width,
+                    Name = PrefixOptions.Width + " of " + CatalogColumnNames.UnitColumn + "column during " +
+                           PrefixOptions.Advance + " search",
+                    Value = "50"
+                },
+                new OptionItemEntity
+                {
+                    Code = PrefixOptions.Advance + CatalogColumnNames.EnterpriceNormPackColumn + PrefixOptions.Width,
+                    Name = PrefixOptions.Width + " of " + CatalogColumnNames.EnterpriceNormPackColumn + "column during " +
+                           PrefixOptions.Advance + " search",
+                    Value = "90"
+                },
+                new OptionItemEntity
+                {
+                    Code = PrefixOptions.Advance + CatalogColumnNames.BatchOfSalesColumn + PrefixOptions.Width,
+                    Name = PrefixOptions.Width + " of " + CatalogColumnNames.BatchOfSalesColumn + "column during " +
+                           PrefixOptions.Advance + " search",
+                    Value = "90"
+                },
+                new OptionItemEntity
+                {
+                    Code = PrefixOptions.Advance + CatalogColumnNames.BalanceColumn + PrefixOptions.Width,
+                    Name = PrefixOptions.Width + " of " + CatalogColumnNames.BalanceColumn + "column during " +
+                           PrefixOptions.Advance + " search",
+                    Value = "95"
+                },
+                new OptionItemEntity
+                {
+                    Code = PrefixOptions.Advance + CatalogColumnNames.PriceColumn + PrefixOptions.Width,
+                    Name = PrefixOptions.Width + " of " + CatalogColumnNames.PriceColumn + "column during " +
+                           PrefixOptions.Advance + " search",
+                    Value = "90"
+                },
+                new OptionItemEntity
+                {
+                    Code = PrefixOptions.Advance + CatalogColumnNames.CountColumn + PrefixOptions.Width,
+                    Name = PrefixOptions.Width + " of " + CatalogColumnNames.CountColumn + "column during " +
+                           PrefixOptions.Advance + " search",
+                    Value = "110"
                 }
             };
 

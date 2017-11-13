@@ -105,7 +105,13 @@ namespace Catalog.Model
                         {
                             Entities.AddRange(loadedEntities);
                             OnPropertyChanged(nameof(Entities));
-                            SelectedItem = Entities.FirstOrDefault(x => x.Id == brandId) ?? Entities.FirstOrDefault();
+                            BrandItem brandItem = Entities.FirstOrDefault(x => x.Id == brandId) ?? Entities.FirstOrDefault();
+
+                            if (brandItem != null)
+                            {
+                                SelectedItem = brandItem;
+                            }
+
                             SearchCriteria.BrandComplited();
                         });
                 }
