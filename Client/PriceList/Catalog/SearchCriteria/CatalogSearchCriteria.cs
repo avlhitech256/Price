@@ -268,6 +268,7 @@ namespace Catalog.SearchCriteria
             {
                 if (vaz != value)
                 {
+                    OnBeforeChange(value);
                     vaz = value;
                     CalculateEdvanceSearchWidth();
                     OnPropertyChanged();
@@ -285,6 +286,7 @@ namespace Catalog.SearchCriteria
             {
                 if (gaz != value)
                 {
+                    OnBeforeChange(value);
                     gaz = value;
                     CalculateEdvanceSearchWidth();
                     OnPropertyChanged();
@@ -302,6 +304,7 @@ namespace Catalog.SearchCriteria
             {
                 if (zaz != value)
                 {
+                    OnBeforeChange(value);
                     zaz = value;
                     CalculateEdvanceSearchWidth();
                     OnPropertyChanged();
@@ -319,6 +322,7 @@ namespace Catalog.SearchCriteria
             {
                 if (chemistry != value)
                 {
+                    OnBeforeChange(value);
                     chemistry = value;
                     CalculateEdvanceSearchWidth();
                     OnPropertyChanged();
@@ -336,6 +340,7 @@ namespace Catalog.SearchCriteria
             {
                 if (battery != value)
                 {
+                    OnBeforeChange(value);
                     battery = value;
                     CalculateEdvanceSearchWidth();
                     OnPropertyChanged();
@@ -353,6 +358,7 @@ namespace Catalog.SearchCriteria
             {
                 if (gas != value)
                 {
+                    OnBeforeChange(value);
                     gas = value;
                     CalculateEdvanceSearchWidth();
                     OnPropertyChanged();
@@ -370,6 +376,7 @@ namespace Catalog.SearchCriteria
             {
                 if (instrument != value)
                 {
+                    OnBeforeChange(value);
                     instrument = value;
                     CalculateEdvanceSearchWidth();
                     OnPropertyChanged();
@@ -496,6 +503,12 @@ namespace Catalog.SearchCriteria
         {
             BrandItemIdsChanged = true;
             BrandItemsChanged?.Invoke(this, new EventArgs());
+        }
+
+        private void OnBeforeChange(bool value)
+        {
+            var args = new BeforeChangeArgs(value || EnabledAdvancedSearch);
+            SearchCriteriaBeforeChanged?.Invoke(this, args);
         }
 
         private void OnEnabledEdvanceSearchChanged()
@@ -738,6 +751,8 @@ namespace Catalog.SearchCriteria
         #endregion
 
         #region Events
+
+        public event BeforeChangeEventHandler SearchCriteriaBeforeChanged;
 
         public event EventHandler SearchCriteriaChanged;
 

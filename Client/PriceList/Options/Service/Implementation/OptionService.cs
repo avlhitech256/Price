@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using Common.Data.Constant;
-using Common.Data.Enum;
+using Common.Data.Holders;
 using DatabaseService.DataBaseContext.Entities;
 using DatabaseService.DataService;
 using DatabaseService.DataService.Implementation;
@@ -15,7 +15,7 @@ namespace Options.Service.Implementation
         #region Members
 
         private readonly IDataService dataService;
-        private readonly Dictionary<string, string> optionCache;
+        private readonly Dictionary<string, StringHolder> optionCache;
         private readonly List<string> existOptionCache;
 
         #endregion
@@ -25,7 +25,7 @@ namespace Options.Service.Implementation
         public OptionService()
         {
             dataService = new DataService();
-            optionCache = new Dictionary<string, string>();
+            optionCache = new Dictionary<string, StringHolder>();
             existOptionCache = new List<string>();
         }
 
@@ -285,19 +285,25 @@ namespace Options.Service.Implementation
 
         public string GetOption(string optionCode)
         {
-            string value;
+            string option;
+            StringHolder value;
 
-            if (!optionCache.TryGetValue(optionCode, out value))
+            if (optionCache.TryGetValue(optionCode, out value))
             {
-                value = GetDbOption(optionCode);
+                option = value.Value;
+            }
+            else
+            {
+                option = GetDbOption(optionCode);
+                value = new StringHolder(option);
 
-                if (value != null)
+                if (!string.IsNullOrWhiteSpace(value.Value))
                 {
                     optionCache.Add(optionCode, value);
                 }
             }
 
-            return value;
+            return option;
         }
 
         public Dictionary<string, string> GetOption(IEnumerable<string> optionCodes)
@@ -311,13 +317,24 @@ namespace Options.Service.Implementation
         {
             if (!string.IsNullOrWhiteSpace(optionCode) && value != GetOption(optionCode))
             {
-                if (optionCache.ContainsKey(optionCode))
+                StringHolder option;
+
+                if (optionCache.TryGetValue(optionCode, out option))
                 {
-                    optionCache[optionCode] = value;
+                    if (option == null)
+                    {
+                        option = new StringHolder(value);
+                        optionCache[optionCode] = option;
+                    }
+                    else
+                    {
+                        option.Value = value;
+                    }
                 }
                 else
                 {
-                    optionCache.Add(optionCode, value);
+                    option = new StringHolder(value);
+                    optionCache.Add(optionCode, option);
                 }
 
                 SetDbOption(optionCode, value);

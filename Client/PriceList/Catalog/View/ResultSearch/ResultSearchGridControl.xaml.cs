@@ -31,6 +31,7 @@ namespace Catalog.View.ResultSearch
         private SolidColorBrush lightGreenBrush;
         private readonly Dictionary<DataGridColumn, string> columns;
         private bool isUpdateTemplate;
+        private CatalogSearchCriteria oldSearchCriteria;
 
         #endregion
 
@@ -39,6 +40,7 @@ namespace Catalog.View.ResultSearch
         public ResultSearchGridControl()
         {
             isUpdateTemplate = false;
+            oldSearchCriteria = null;
             InitializeComponent();
             InitBrushs();
             columns = new Dictionary<DataGridColumn, string>
@@ -56,6 +58,8 @@ namespace Catalog.View.ResultSearch
                 { PriceColumn, CatalogColumnNames.PriceColumn },
                 { CountColumn, CatalogColumnNames.CountColumn }
             };
+
+            Unloaded += OnUnloaded;
         }
 
         #endregion
@@ -169,6 +173,7 @@ namespace Catalog.View.ResultSearch
         public void Refresh()
         {
             CollectionViewSource.GetDefaultView(ResultSearchDataGrid.ItemsSource).Refresh();
+            GetTemplate();
         } 
 
         private void ResultSearchDataGrid_OnLoadingRow(object sender, DataGridRowEventArgs e)
@@ -256,17 +261,49 @@ namespace Catalog.View.ResultSearch
 
         private void ResultSearchDataGrid_OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
+            SubscribeEvent();
             GetTemplate();
         }
 
-        private void ResultSearchDataGrid_OnLayoutUpdated(object sender, EventArgs e)
+        private void SubscribeEvent()
+        {
+            if (oldSearchCriteria != null)
+            {
+                oldSearchCriteria.SearchCriteriaChanged -= OnSearchCriteriaChanged;
+                oldSearchCriteria.SearchCriteriaBeforeChanged -= SearchCriteriaBeforeChanged;
+            }
+
+            if (SearchCriteria != null)
+            {
+                SearchCriteria.SearchCriteriaBeforeChanged += SearchCriteriaBeforeChanged;
+                SearchCriteria.SearchCriteriaChanged += OnSearchCriteriaChanged;
+            }
+        }
+
+        private void SearchCriteriaBeforeChanged(object sender, Common.Event.BeforeChangeArgs e)
         {
             SetTemplate();
         }
 
-        private void ResultSearchDataGrid_OnSizeChanged(object sender, SizeChangedEventArgs e)
+        private void OnSearchCriteriaChanged(object sender, EventArgs eventArgs)
         {
-            //SetTemplate();
+            GetTemplate();
+        }
+
+        //private void ResultSearchDataGrid_OnLayoutUpdated(object sender, EventArgs e)
+        //{
+        //    SetTemplate();
+        //}
+
+        //private void ResultSearchDataGrid_OnSizeChanged(object sender, SizeChangedEventArgs e)
+        //{
+        //    //SetTemplate();
+        //}
+
+        private void OnUnloaded(object sender, RoutedEventArgs routedEventArgs)
+        {
+            SetTemplate();
         }
     }
 }
+

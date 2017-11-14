@@ -62,9 +62,7 @@
                       SelectionChanged="ResultSearchDataGrid_OnSelectionChanged"
                       LoadingRow="ResultSearchDataGrid_OnLoadingRow"
                       ColumnDisplayIndexChanged="ResultSearchDataGrid_OnColumnDisplayIndexChanged"
-                      DataContextChanged="ResultSearchDataGrid_OnDataContextChanged"
-                      LayoutUpdated="ResultSearchDataGrid_OnLayoutUpdated"
-                      SizeChanged="ResultSearchDataGrid_OnSizeChanged">
+                      DataContextChanged="ResultSearchDataGrid_OnDataContextChanged">
                 <DataGrid.Resources>
                     <Style x:Key="ErrorStyle" TargetType="{x:Type TextBox}">
                         <Setter Property="Padding" Value="-2"/>

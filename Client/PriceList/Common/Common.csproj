@@ -55,6 +55,8 @@
     <Compile Include="Data\Enum\CommodityDirection.cs" />
     <Compile Include="Data\Constant\OptionName.cs" />
     <Compile Include="Data\Holders\BoolHolder.cs" />
+    <Compile Include="Data\Holders\StringHolder.cs" />
+    <Compile Include="Event\BeforeChangeArgs.cs" />
     <Compile Include="Event\EnableMenuEventArgs.cs" />
     <Compile Include="Service\IAsyncOperationService.cs" />
     <Compile Include="Service\IConvertService.cs" />

@@ -22,6 +22,7 @@ namespace Catalog.View
         #region Members
 
         private double lastWindth;
+        private bool enabledSaveSplitPosition;
 
         #endregion
 
@@ -30,6 +31,7 @@ namespace Catalog.View
         public CatalogControl()
         {
             InitializeComponent();
+            enabledSaveSplitPosition = false;
         }
 
         #endregion
@@ -122,6 +124,7 @@ namespace Catalog.View
 
         private void ShowAdvanceSearchControl(DoubleAnimationEventArgs args)
         {
+            enabledSaveSplitPosition = args.To > 0;
             int commonTime = (LeftColumn.ActualWidth - args.To) > 0 ? 300 : 200;
             int time = Math.Abs((int)((LeftColumn.ActualWidth - args.To) * commonTime / 110));
 
@@ -164,11 +167,15 @@ namespace Catalog.View
 
         private void SaveSplitterPosition()
         {
-            CatalogViewModel viewModel = ViewModel as CatalogViewModel;
-
-            if (viewModel != null)
+            if (enabledSaveSplitPosition)
             {
-                viewModel.SplitterPosition = LeftColumn.ActualWidth;
+                CatalogViewModel viewModel = ViewModel as CatalogViewModel;
+
+                if (viewModel != null && viewModel.SearchCriteria != null &&
+                    viewModel.SearchCriteria.EnabledAdvancedSearch)
+                {
+                    viewModel.SplitterPosition = LeftColumn.ActualWidth;
+                }
             }
         }
 

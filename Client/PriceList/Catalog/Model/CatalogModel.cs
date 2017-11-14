@@ -324,11 +324,13 @@ namespace Catalog.Model
                     if (StartRowIndex < Count)
                     {
                         GetItems(StartRowIndex, MaximumRows).ForEach(x => Entities.Add(x));
+                        CatalogItem catalogItem = Entities.FirstOrDefault(x => x != null && x.Id == catalogId) ?? Entities.FirstOrDefault();
+
                         Application.Current.Dispatcher.Invoke(
                             () =>
                             {
                                 OnPropertyChanged(nameof(Entities));
-                                SelectedItem = Entities.FirstOrDefault(x => x.Id == catalogId) ?? Entities.FirstOrDefault();
+                                SelectedItem = catalogItem;
                                 SearchCriteria.SearchComplited();
                             });
                         

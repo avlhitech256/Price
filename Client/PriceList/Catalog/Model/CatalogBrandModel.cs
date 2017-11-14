@@ -100,18 +100,14 @@ namespace Catalog.Model
                         Entities.Where(x => x.Selected).ToList().ForEach(x => SearchCriteria.SelectedBrandItems.Add(x));
                     }
 
+                    BrandItem brandItem = loadedEntities.FirstOrDefault(x => x != null && x.Id == brandId) ?? Entities.FirstOrDefault();
+
                     Application.Current.Dispatcher.Invoke(
                         () =>
                         {
                             Entities.AddRange(loadedEntities);
                             OnPropertyChanged(nameof(Entities));
-                            BrandItem brandItem = Entities.FirstOrDefault(x => x.Id == brandId) ?? Entities.FirstOrDefault();
-
-                            if (brandItem != null)
-                            {
-                                SelectedItem = brandItem;
-                            }
-
+                            SelectedItem = brandItem;
                             SearchCriteria.BrandComplited();
                         });
                 }

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 using Catalog.SearchCriteria;
 using Common.Data.Enum;
 using Common.Data.Notifier;
@@ -86,7 +85,7 @@ namespace Catalog.Model
                     long directoryId = SelectedItem?.Id ?? -1L;
 
                     Entities.Clear();
-                    List<DirectoryItem> loadedEntities = GetItems();//CreateDirectoryItems();
+                    List<DirectoryItem> loadedEntities = GetItems();
 
                     if (SearchCriteria != null)
                     {
@@ -100,12 +99,14 @@ namespace Catalog.Model
                         }
                     }
 
+                    DirectoryItem directoryItem = loadedEntities?.FirstOrDefault(x => x != null && x.Id == directoryId) ?? Entities?.FirstOrDefault();
+
                     Application.Current.Dispatcher.Invoke(
                         () =>
                         {
                             Entities.AddRange(loadedEntities);
                             OnPropertyChanged(nameof(Entities));
-                            SelectedItem = Entities?.FirstOrDefault(x => x.Id == directoryId) ?? Entities?.FirstOrDefault();
+                            SelectedItem = directoryItem;
                             SearchCriteria?.DirectoryComplited();
                         });
                 }
