@@ -138,9 +138,19 @@ namespace Common.Service.Implementation
             return stringValue.ConvertToDecimal(out value);
         }
 
-        public decimal? ConvertTuNullableDecimal(string stringValue)
+        public decimal? ConvertToNullableDecimal(string stringValue)
         {
             return stringValue.ConvertToNullableDecimal();
+        }
+
+        public bool ConvertToDouble(string stringValue, out double value)
+        {
+            return stringValue.ConvertToDouble(out value);
+        }
+
+        public double? ConvertToNullableDouble(string stringValue)
+        {
+            return stringValue.ConvertToNullableDouble();
         }
     }
 }

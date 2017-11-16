@@ -31,13 +31,13 @@ namespace Common.Service.Implementation
         {
             string[] separator = {" ", ",", "."};
             string valueToConvert =
-                stringValue.Trim().Replace(CultureInfo.InvariantCulture.NumberFormat.NumberGroupSeparator, string.Empty);
+                stringValue.Trim().Replace(CultureInfo.CurrentCulture.NumberFormat.NumberGroupSeparator, string.Empty);
 
             separator.ToList()
                 .ForEach(
                     x =>
                         valueToConvert =
-                            valueToConvert.Replace(x, CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator));
+                            valueToConvert.Replace(x, CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator));
 
             value = 0;
             bool result = !string.IsNullOrWhiteSpace(valueToConvert) && decimal.TryParse(valueToConvert, out value);
@@ -82,5 +82,37 @@ namespace Common.Service.Implementation
             ConvertToDateTimeOffset(stringValue, out dateTimeOffset);
             return dateTimeOffset;
         }
+        public static bool ConvertToDouble(this string stringValue, out double value)
+        {
+            string[] separator = { " ", ",", "." };
+            string valueToConvert =
+                stringValue.Trim().Replace(CultureInfo.CurrentCulture.NumberFormat.NumberGroupSeparator, string.Empty);
+
+            separator.ToList()
+                .ForEach(
+                    x =>
+                        valueToConvert =
+                            valueToConvert.Replace(x, CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator));
+
+            value = 0;
+            bool result = !string.IsNullOrWhiteSpace(valueToConvert) && double.TryParse(valueToConvert, out value);
+
+            return result;
+        }
+
+        public static double? ConvertToNullableDouble(this string stringValue)
+        {
+            double value;
+            double? result = stringValue.ConvertToDouble(out value) ? value : (double?)null;
+            return result;
+        }
+
+        public static double ConvertToDouble(this string stringValue)
+        {
+            double value;
+            stringValue.ConvertToDouble(out value);
+            return value;
+        }
+
     }
 }

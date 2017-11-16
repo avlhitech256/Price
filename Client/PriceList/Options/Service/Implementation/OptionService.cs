@@ -4,6 +4,8 @@ using System.Globalization;
 using System.Linq;
 using Common.Data.Constant;
 using Common.Data.Holders;
+using Common.Service;
+using Common.Service.Implementation;
 using DatabaseService.DataBaseContext.Entities;
 using DatabaseService.DataService;
 using DatabaseService.DataService.Implementation;
@@ -17,6 +19,7 @@ namespace Options.Service.Implementation
         private readonly IDataService dataService;
         private readonly Dictionary<string, StringHolder> optionCache;
         private readonly List<string> existOptionCache;
+        private readonly IConvertService convertService;
 
         #endregion
 
@@ -27,6 +30,7 @@ namespace Options.Service.Implementation
             dataService = new DataService();
             optionCache = new Dictionary<string, StringHolder>();
             existOptionCache = new List<string>();
+            convertService = new ConvertService();
         }
 
         #endregion
@@ -254,7 +258,7 @@ namespace Options.Service.Implementation
         {
             double value;
 
-            if (!double.TryParse(GetOption(optionCode), out value))
+            if (!convertService.ConvertToDouble(GetOption(optionCode), out value))
             {
                 value = 0;
                 SetDoubleOption(optionCode, value);
@@ -272,7 +276,7 @@ namespace Options.Service.Implementation
 
         public void SetDoubleOption(string optionCode, double value)
         {
-            SetOption(optionCode, value.ToString(CultureInfo.InvariantCulture));
+            SetOption(optionCode, value.ToString(CultureInfo.CurrentCulture));
         }
 
         public void SetDoubleOptions(Dictionary<string, double> options)

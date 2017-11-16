@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{998FC234-28AD-40A0-941B-DB90287711B1}</ProjectGuid>
+    <ProjectGuid>{273286BE-3FC0-4C0F-87C0-302A587C2904}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PricelistService</RootNamespace>
-    <AssemblyName>PricelistService</AssemblyName>
+    <RootNamespace>DataBase</RootNamespace>
+    <AssemblyName>DataBase</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <WcfConfigValidationEnabled>True</WcfConfigValidationEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -23,7 +22,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>none</DebugType>
+    <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
@@ -31,16 +30,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework">
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="EntityFramework.SqlServer">
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -49,19 +51,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Context\DataBaseContext.cs" />
+    <Compile Include="Context\Entities\BasketItemEntity.cs" />
+    <Compile Include="Context\Entities\BrandItemEntity.cs" />
+    <Compile Include="Context\Entities\CatalogItemEntity.cs" />
+    <Compile Include="Context\Entities\CommodityDirectionEntity.cs" />
+    <Compile Include="Context\Entities\DirectoryEntity.cs" />
+    <Compile Include="Context\Entities\NomenclatureGroupEntity.cs" />
+    <Compile Include="Context\Entities\OptionItemEntity.cs" />
+    <Compile Include="Context\Entities\OrderEntity.cs" />
+    <Compile Include="Context\Entities\PhotoItemEntity.cs" />
+    <Compile Include="Context\Entities\ProductDirectionEntity.cs" />
+    <Compile Include="Context\Object\CatalogItemStatus.cs" />
+    <Compile Include="Context\Object\CommodityDirection.cs" />
+    <Compile Include="Context\Object\OrderStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service\Contract\CompanyInfo.cs" />
-    <Compile Include="Service\IPricelistService.cs" />
-    <Compile Include="Service\Implementation\PricelistService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DataBase\DataBase.csproj">
-      <Project>{273286be-3fc0-4c0f-87c0-302a587c2904}</Project>
-      <Name>DataBase</Name>
-    </ProjectReference>
+    <Folder Include="Context\Initializer\" />
+    <Folder Include="Service\Implementation\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

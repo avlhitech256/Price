@@ -32,6 +32,7 @@ namespace Catalog.View
         {
             InitializeComponent();
             enabledSaveSplitPosition = false;
+            Unloaded += CatalogControl_Unloaded;
         }
 
         #endregion
@@ -71,7 +72,8 @@ namespace Catalog.View
 
             if (viewModel != null)
             {
-                double width = viewModel.SearchCriteria.EnabledAdvancedSearch ? viewModel.SplitterPosition : 0;
+                lastWindth = viewModel.SplitterPosition;
+                double width = viewModel.SearchCriteria.EnabledAdvancedSearch ? lastWindth : 0;
                 LeftColumn.Width = new GridLength(width, GridUnitType.Pixel);
                 SetSplitter(width);
             }
@@ -165,9 +167,9 @@ namespace Catalog.View
             LeftColumn.BeginAnimation(ColumnDefinition.WidthProperty, animation);
         }
 
-        private void SaveSplitterPosition()
+        private void SaveSplitterPosition(bool force = false)
         {
-            if (enabledSaveSplitPosition)
+            if (enabledSaveSplitPosition || force)
             {
                 CatalogViewModel viewModel = ViewModel as CatalogViewModel;
 
@@ -176,6 +178,8 @@ namespace Catalog.View
                 {
                     viewModel.SplitterPosition = LeftColumn.ActualWidth;
                 }
+
+                enabledSaveSplitPosition = false;
             }
         }
 
@@ -198,11 +202,18 @@ namespace Catalog.View
             return item != null;
         }
 
-        #endregion
-
         private void Splitter_OnDragCompleted(object sender, DragCompletedEventArgs e)
         {
             SaveSplitterPosition();
         }
+
+        private void CatalogControl_Unloaded(object sender, RoutedEventArgs e)
+        {
+            SaveSplitterPosition(true);
+        }
+
+        #endregion
+
     }
+
 }

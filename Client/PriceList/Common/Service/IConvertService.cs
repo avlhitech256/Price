@@ -19,6 +19,10 @@ namespace Common.Service
 
         bool ConvertToDecimal(string stringValue, out decimal value);
 
-        decimal? ConvertTuNullableDecimal(string stringValue);
+        decimal? ConvertToNullableDecimal(string stringValue);
+
+        bool ConvertToDouble(string stringValue, out double value);
+
+        double? ConvertToNullableDouble(string stringValue);
     }
 }

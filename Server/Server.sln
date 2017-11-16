@@ -10,7 +10,7 @@ EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "WebService", "WebService\", "{00793656-8DEC-4972-B41B-03049262DCF4}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5.2"
-		ProjectReferences = "{998fc234-28ad-40a0-941b-db90287711b1}|PricelistService.dll;"
+		ProjectReferences = "{998fc234-28ad-40a0-941b-db90287711b1}|PricelistService.dll;{273286BE-3FC0-4C0F-87C0-302A587C2904}|DataBase.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_44432"
 		Debug.AspNetCompiler.PhysicalPath = "WebService\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_44432\"
@@ -30,6 +30,8 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "WebService", "WebService\",
 		DefaultWebSiteLanguage = "Visual C#"
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataBase", "DataBase\DataBase.csproj", "{273286BE-3FC0-4C0F-87C0-302A587C2904}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,6 +50,10 @@ Global
 		{00793656-8DEC-4972-B41B-03049262DCF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{00793656-8DEC-4972-B41B-03049262DCF4}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{00793656-8DEC-4972-B41B-03049262DCF4}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{273286BE-3FC0-4C0F-87C0-302A587C2904}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{273286BE-3FC0-4C0F-87C0-302A587C2904}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{273286BE-3FC0-4C0F-87C0-302A587C2904}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{273286BE-3FC0-4C0F-87C0-302A587C2904}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
