@@ -4,26 +4,24 @@ using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Threading;
-using Common.Annotations;
 using Common.Data.Constant;
-using Common.Data.Enum;
 using Common.Service.Implementation;
-using DatabaseService.DataBaseContext.Entities;
-using DatabaseService.Objects;
-using DatabaseService.Properties;
+using DataBase.Context.Entities;
+using DataBase.Context.Object;
+using DataBase.Objects;
 using File.Service;
 using File.Service.Implementation;
 using Json.Contract;
 using Json.Service;
 using Json.Service.Implementation;
-using Media.Image;
-using Media.Image.Implementation;
-using CommodityDirection = Common.Data.Enum.CommodityDirection;
+using Media.Service;
+using Media.Service.Implementation;
+using CommodityDirection = DataBase.Context.Object.CommodityDirection;
 using Directory = Json.Contract.Directory;
 
-namespace DatabaseService.DataBaseContext.Initializer
+namespace DataBase.Context.Initializer
 {
-    public class DataBaseInitializer : DropCreateDatabaseIfModelChanges<DataBaseContext>
+    public class DataBaseInitializer : DropCreateDatabaseIfModelChanges<DataBase.Context.DataBaseContext>
     {
         private readonly IImageService imageService;
         private readonly IJsonService jsonService;
@@ -35,7 +33,7 @@ namespace DatabaseService.DataBaseContext.Initializer
             jsonService = new JsonService();
             fileService = new FileService(jsonService);
         }
-        protected override void Seed(DataBaseContext dataBaseContext)
+        protected override void Seed(DataBase.Context.DataBaseContext dataBaseContext)
         {
             bool loadFakeData = false;
 
@@ -56,25 +54,25 @@ namespace DatabaseService.DataBaseContext.Initializer
                 string clientsFileName = "Clients.json";
                 string priceFileName = "PriceList.json";
 
-                MetaData metaData = fileService.ReadMetaData(dataPath + metaDataFileName);
-                PriceList pricelist = fileService.ReadPriceList(dataPath + priceFileName);
+                //MetaData metaData = fileService.ReadMetaData(dataPath + metaDataFileName);
+                //PriceList pricelist = fileService.ReadPriceList(dataPath + priceFileName);
                 Clients clients = fileService.ReadClients(dataPath + clientsFileName);
-                Pause10();
+                //Pause10();
 
                 // Отключаем отслеживание и проверку изменений для оптимизации вставки множества полей
                 dataBaseContext.Configuration.AutoDetectChangesEnabled = false;
                 dataBaseContext.Configuration.ValidateOnSaveEnabled = false;
 
-                CreateBrandItems(dataBaseContext, metaData);
-                CreateDirectoryItems(dataBaseContext, metaData);
-                CreateProductDirection(dataBaseContext);
-                CreateNomenclatureGroupItems(dataBaseContext, metaData);
-                CreateCommodityDirectionsItems(dataBaseContext, metaData);
+                //CreateBrandItems(dataBaseContext, metaData);
+                //CreateDirectoryItems(dataBaseContext, metaData);
+                //CreateProductDirection(dataBaseContext);
+                //CreateNomenclatureGroupItems(dataBaseContext, metaData);
+                //CreateCommodityDirectionsItems(dataBaseContext, metaData);
                 PopulateOptionItemEntities(dataBaseContext, clients);
 
-                LoadPictures(dataBaseContext, photoPath, photoSearchPattern);
+                //LoadPictures(dataBaseContext, photoPath, photoSearchPattern);
 
-                CreateCatalogItems(dataBaseContext, pricelist);
+                //CreateCatalogItems(dataBaseContext, pricelist);
 
                 dataBaseContext.Configuration.AutoDetectChangesEnabled = true;
                 dataBaseContext.Configuration.ValidateOnSaveEnabled = true;
@@ -333,7 +331,7 @@ namespace DatabaseService.DataBaseContext.Initializer
             return nomenclatureGroupItem;
         }
 
-        private void CreateCommodityDirectionsItems(DataBaseContext dataBaseContext, MetaData metaData)
+        private void CreateCommodityDirectionsItems(DataBase.Context.DataBaseContext dataBaseContext, MetaData metaData)
         {
             if (dataBaseContext != null && metaData?.CommodityDirections != null && metaData.CommodityDirections.Any())
             {
@@ -398,7 +396,6 @@ namespace DatabaseService.DataBaseContext.Initializer
             }
         }
 
-        [NotNull]
         private CatalogItemEntity Assemble(DataBaseContext dataBaseContext, 
                                            Nomenclature nomenclature)
         {
@@ -593,7 +590,7 @@ namespace DatabaseService.DataBaseContext.Initializer
             return nomenclatureGroupItem;
         }
 
-        private List<CommodityDirectionEntity> GetCommodityDirection(DataBaseContext dataBaseContext,
+        private List<CommodityDirectionEntity> GetCommodityDirection(DataBase.Context.DataBaseContext dataBaseContext,
                                                                      Nomenclature nomenclature)
         {
             List<CommodityDirectionEntity> commodityDirectionItems = new List<CommodityDirectionEntity>();
@@ -634,7 +631,7 @@ namespace DatabaseService.DataBaseContext.Initializer
             return result;
         }
 
-        private List<PhotoItemEntity> GetPhotoItems(DataBaseContext dataBaseContext,
+        private List<PhotoItemEntity> GetPhotoItems(DataBase.Context.DataBaseContext dataBaseContext,
                                                     Nomenclature nomenclature)
         {
             List<PhotoItemEntity> photoItems = new List<PhotoItemEntity>();
@@ -661,7 +658,7 @@ namespace DatabaseService.DataBaseContext.Initializer
             }
             return needToCreatePhotos;
         }
-        private IEnumerable<PhotoItemEntity> CreateEmptyPhotos(DataBaseContext dataBaseContext, 
+        private IEnumerable<PhotoItemEntity> CreateEmptyPhotos(DataBase.Context.DataBaseContext dataBaseContext, 
                                                                List<string> photos)
         {
             var emptyPhotos = new List<PhotoItemEntity>();
@@ -842,19 +839,19 @@ namespace DatabaseService.DataBaseContext.Initializer
         {
             List<PhotoItemEntity> photoItems = new List<PhotoItemEntity>
             {
-                new PhotoItemEntity {Photo = imageService.ConvertToByteArray(Resources.Photo1), Name = "Photo1"},
-                new PhotoItemEntity {Photo = imageService.ConvertToByteArray(Resources.Photo2), Name = "Photo2"},
-                new PhotoItemEntity {Photo = imageService.ConvertToByteArray(Resources.Photo3), Name = "Photo3"},
-                new PhotoItemEntity {Photo = imageService.ConvertToByteArray(Resources.Photo2), Name = "Photo2"},
-                new PhotoItemEntity {Photo = imageService.ConvertToByteArray(Resources.Photo3), Name = "Photo3"},
-                new PhotoItemEntity {Photo = imageService.ConvertToByteArray(Resources.Photo4), Name = "Photo4"},
-                new PhotoItemEntity {Photo = imageService.ConvertToByteArray(Resources.Photo3), Name = "Photo3"},
-                new PhotoItemEntity {Photo = imageService.ConvertToByteArray(Resources.Photo2), Name = "Photo2"},
-                new PhotoItemEntity {Photo = imageService.ConvertToByteArray(Resources.Photo4), Name = "Photo4"},
-                new PhotoItemEntity {Photo = imageService.ConvertToByteArray(Resources.Photo5), Name = "Photo5"},
-                new PhotoItemEntity {Photo = imageService.ConvertToByteArray(Resources.Photo5), Name = "Photo5"},
-                new PhotoItemEntity {Photo = imageService.ConvertToByteArray(Resources.Photo6), Name = "Photo6"},
-                new PhotoItemEntity {Photo = imageService.ConvertToByteArray(Resources.Photo3), Name = "Photo3"}
+                //new PhotoItemEntity {Photo = imageService.ConvertToByteArray(Resources.Photo1), Name = "Photo1"},
+                //new PhotoItemEntity {Photo = imageService.ConvertToByteArray(Resources.Photo2), Name = "Photo2"},
+                //new PhotoItemEntity {Photo = imageService.ConvertToByteArray(Resources.Photo3), Name = "Photo3"},
+                //new PhotoItemEntity {Photo = imageService.ConvertToByteArray(Resources.Photo2), Name = "Photo2"},
+                //new PhotoItemEntity {Photo = imageService.ConvertToByteArray(Resources.Photo3), Name = "Photo3"},
+                //new PhotoItemEntity {Photo = imageService.ConvertToByteArray(Resources.Photo4), Name = "Photo4"},
+                //new PhotoItemEntity {Photo = imageService.ConvertToByteArray(Resources.Photo3), Name = "Photo3"},
+                //new PhotoItemEntity {Photo = imageService.ConvertToByteArray(Resources.Photo2), Name = "Photo2"},
+                //new PhotoItemEntity {Photo = imageService.ConvertToByteArray(Resources.Photo4), Name = "Photo4"},
+                //new PhotoItemEntity {Photo = imageService.ConvertToByteArray(Resources.Photo5), Name = "Photo5"},
+                //new PhotoItemEntity {Photo = imageService.ConvertToByteArray(Resources.Photo5), Name = "Photo5"},
+                //new PhotoItemEntity {Photo = imageService.ConvertToByteArray(Resources.Photo6), Name = "Photo6"},
+                //new PhotoItemEntity {Photo = imageService.ConvertToByteArray(Resources.Photo3), Name = "Photo3"}
             };
 
             dataBaseContext.PhotoItemEntities.AddRange(photoItems);

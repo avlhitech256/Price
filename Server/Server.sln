@@ -10,7 +10,7 @@ EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "WebService", "WebService\", "{00793656-8DEC-4972-B41B-03049262DCF4}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5.2"
-		ProjectReferences = "{998fc234-28ad-40a0-941b-db90287711b1}|PricelistService.dll;{273286BE-3FC0-4C0F-87C0-302A587C2904}|DataBase.dll;"
+		ProjectReferences = "{998fc234-28ad-40a0-941b-db90287711b1}|PricelistService.dll;{273286BE-3FC0-4C0F-87C0-302A587C2904}|DataBase.dll;{9798781F-3852-4A2D-9294-8D8D8C6D7401}|Common.dll;{E0E9D4DF-E346-4F0A-9121-13C52B550F33}|File.dll;{6EAD33C5-A8AA-4CE3-BF25-1A07B9A4928C}|Json.dll;{10916E8F-3122-48A2-89AD-E88EFD13E55D}|Media.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_44432"
 		Debug.AspNetCompiler.PhysicalPath = "WebService\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_44432\"
@@ -31,6 +31,16 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "WebService", "WebService\",
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataBase", "DataBase\DataBase.csproj", "{273286BE-3FC0-4C0F-87C0-302A587C2904}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "File", "File\File.csproj", "{E0E9D4DF-E346-4F0A-9121-13C52B550F33}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Json", "Json\Json.csproj", "{6EAD33C5-A8AA-4CE3-BF25-1A07B9A4928C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Load", "Load\Load.csproj", "{A37C9416-BC06-4B61-ACFD-73FBF91B643F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Media", "Media\Media.csproj", "{10916E8F-3122-48A2-89AD-E88EFD13E55D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{9798781F-3852-4A2D-9294-8D8D8C6D7401}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -54,6 +64,26 @@ Global
 		{273286BE-3FC0-4C0F-87C0-302A587C2904}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{273286BE-3FC0-4C0F-87C0-302A587C2904}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{273286BE-3FC0-4C0F-87C0-302A587C2904}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0E9D4DF-E346-4F0A-9121-13C52B550F33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0E9D4DF-E346-4F0A-9121-13C52B550F33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0E9D4DF-E346-4F0A-9121-13C52B550F33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0E9D4DF-E346-4F0A-9121-13C52B550F33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6EAD33C5-A8AA-4CE3-BF25-1A07B9A4928C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EAD33C5-A8AA-4CE3-BF25-1A07B9A4928C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EAD33C5-A8AA-4CE3-BF25-1A07B9A4928C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EAD33C5-A8AA-4CE3-BF25-1A07B9A4928C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A37C9416-BC06-4B61-ACFD-73FBF91B643F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A37C9416-BC06-4B61-ACFD-73FBF91B643F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A37C9416-BC06-4B61-ACFD-73FBF91B643F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A37C9416-BC06-4B61-ACFD-73FBF91B643F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10916E8F-3122-48A2-89AD-E88EFD13E55D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10916E8F-3122-48A2-89AD-E88EFD13E55D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10916E8F-3122-48A2-89AD-E88EFD13E55D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10916E8F-3122-48A2-89AD-E88EFD13E55D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9798781F-3852-4A2D-9294-8D8D8C6D7401}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9798781F-3852-4A2D-9294-8D8D8C6D7401}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9798781F-3852-4A2D-9294-8D8D8C6D7401}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9798781F-3852-4A2D-9294-8D8D8C6D7401}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

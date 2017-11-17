@@ -18,6 +18,7 @@ using Domain.ViewModel;
 using Media.Color;
 using Media.Color.Implementation;
 using Media.Image;
+using Media.Image.Implementation;
 using Options.Service;
 using Options.Service.Implementation;
 using Photo.Service;

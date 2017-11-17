@@ -5,8 +5,8 @@ using System.Linq;
 using Json.Contract;
 using Json.Service;
 using Json.Service.Implementation;
-using Media.Image;
-using Media.Image.Implementation;
+using Media.Service;
+using Media.Service.Implementation;
 
 namespace File.Service.Implementation
 {
@@ -19,7 +19,7 @@ namespace File.Service.Implementation
 
         #endregion
 
-        #region#
+        #region Constructors
 
         public FileService(IJsonService jsonService = null, IImageService imageService = null)
         {
@@ -29,7 +29,7 @@ namespace File.Service.Implementation
 
         #endregion
 
-        #region#
+        #region Methods
 
         public MemoryStream ReadFile(string fileName)
         {

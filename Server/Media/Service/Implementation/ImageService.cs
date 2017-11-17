@@ -7,7 +7,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Media.Imaging;
 
-namespace Media.Image.Implementation
+namespace Media.Service.Implementation
 {
     public class ImageService : IImageService
     {
@@ -55,7 +55,7 @@ namespace Media.Image.Implementation
             return memStream.ToArray();
         }
 
-        public byte[] ConvertToByteArray(System.Drawing.Image image)
+        public byte[] ConvertToByteArray(Image image)
         {
             ImageConverter converter = new ImageConverter();
             return (byte[])converter.ConvertTo(image, typeof(byte[]));
@@ -63,10 +63,10 @@ namespace Media.Image.Implementation
 
         public byte[] ConvertToByteArray(Bitmap image)
         {
-            return ConvertToByteArray((System.Drawing.Image) image);
+            return ConvertToByteArray((Image) image);
         }
 
-        public byte[] ConvertToByteArrayConvert2(System.Drawing.Image image)
+        public byte[] ConvertToByteArrayConvert2(Image image)
         {
             using (var stream = new MemoryStream())
             {
