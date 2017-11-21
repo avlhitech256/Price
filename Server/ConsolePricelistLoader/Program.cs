@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using File.Service.Implementation;
 using Load.Service;
 using Load.Service.Implementation;
+using Option.Service;
+using Options.Service.Implementation;
 
 namespace ConsolePricelistLoader
 {
@@ -16,6 +16,7 @@ namespace ConsolePricelistLoader
         private static string sourcePath;
         private static string destinationPath;
         private static string[] searchPatterns;
+        private static List<MovingQueueItem> movingQueue;
 
         #endregion
 
@@ -23,10 +24,15 @@ namespace ConsolePricelistLoader
 
         static void Main(string[] args)
         {
-            sourcePath = "In\\";
-            destinationPath = "Out\\";
-            searchPatterns = new[] { "Clients*.json", "MetaData*.json", "PriceList*.json", "RTiU*.json" };
-            downLoadService = new DownLoadService(600000, 1000, 1000, sourcePath, destinationPath, searchPatterns);
+            IOptionService optionService = new OptionService();
+
+            movingQueue = new List<MovingQueueItem>
+            {
+                new MovingQueueItem(optionService.SourcePath, optionService.DestinationPath, new[] { "Clients*.json", "MetaData*.json", "PriceList*.json", "RTiU*.json"}),
+                new MovingQueueItem("In\\Photo\\", "Out\\Photo\\", new[] { "*.jpeg"})
+            };
+
+            downLoadService = new DownLoadService(600000, 1000, 1000, movingQueue);
             downLoadService.Start();
             while (Console.ReadKey().Key != ConsoleKey.Escape) { }
         }

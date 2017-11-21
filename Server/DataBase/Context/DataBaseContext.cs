@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using DataBase.Context.Entities;
+using DataBase.Context.Initializer;
 
 namespace DataBase.Context
 {
@@ -17,7 +18,7 @@ namespace DataBase.Context
             : base("name=DataBaseContext")
         {
             Database.Log = (s => Debug.WriteLine(s));
-            //Database.SetInitializer(new DataBaseInitializer());
+            Database.SetInitializer(new DataBaseInitializer());
         }
 
         // Добавьте DbSet для каждого типа сущности, который требуется включить в модель. Дополнительные сведения 

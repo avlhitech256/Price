@@ -21,7 +21,7 @@ using Directory = Json.Contract.Directory;
 
 namespace DataBase.Context.Initializer
 {
-    public class DataBaseInitializer : DropCreateDatabaseIfModelChanges<DataBase.Context.DataBaseContext>
+    public class DataBaseInitializer : DropCreateDatabaseIfModelChanges<DataBaseContext>
     {
         private readonly IImageService imageService;
         private readonly IJsonService jsonService;
@@ -33,7 +33,7 @@ namespace DataBase.Context.Initializer
             jsonService = new JsonService();
             fileService = new FileService(jsonService);
         }
-        protected override void Seed(DataBase.Context.DataBaseContext dataBaseContext)
+        protected override void Seed(DataBaseContext dataBaseContext)
         {
             bool loadFakeData = false;
 
@@ -331,7 +331,7 @@ namespace DataBase.Context.Initializer
             return nomenclatureGroupItem;
         }
 
-        private void CreateCommodityDirectionsItems(DataBase.Context.DataBaseContext dataBaseContext, MetaData metaData)
+        private void CreateCommodityDirectionsItems(DataBaseContext dataBaseContext, MetaData metaData)
         {
             if (dataBaseContext != null && metaData?.CommodityDirections != null && metaData.CommodityDirections.Any())
             {
@@ -590,7 +590,7 @@ namespace DataBase.Context.Initializer
             return nomenclatureGroupItem;
         }
 
-        private List<CommodityDirectionEntity> GetCommodityDirection(DataBase.Context.DataBaseContext dataBaseContext,
+        private List<CommodityDirectionEntity> GetCommodityDirection(DataBaseContext dataBaseContext,
                                                                      Nomenclature nomenclature)
         {
             List<CommodityDirectionEntity> commodityDirectionItems = new List<CommodityDirectionEntity>();
@@ -631,7 +631,7 @@ namespace DataBase.Context.Initializer
             return result;
         }
 
-        private List<PhotoItemEntity> GetPhotoItems(DataBase.Context.DataBaseContext dataBaseContext,
+        private List<PhotoItemEntity> GetPhotoItems(DataBaseContext dataBaseContext,
                                                     Nomenclature nomenclature)
         {
             List<PhotoItemEntity> photoItems = new List<PhotoItemEntity>();
@@ -658,7 +658,7 @@ namespace DataBase.Context.Initializer
             }
             return needToCreatePhotos;
         }
-        private IEnumerable<PhotoItemEntity> CreateEmptyPhotos(DataBase.Context.DataBaseContext dataBaseContext, 
+        private IEnumerable<PhotoItemEntity> CreateEmptyPhotos(DataBaseContext dataBaseContext, 
                                                                List<string> photos)
         {
             var emptyPhotos = new List<PhotoItemEntity>();
@@ -956,207 +956,45 @@ namespace DataBase.Context.Initializer
         }
         private void PopulateOptionItemEntities(DataBaseContext dataBaseContext, Clients clients = null)
         {
-            Client client = clients != null && clients.Contragent.Any() ? clients.Contragent.FirstOrDefault() : null;
+            //Client client = clients != null && clients.Contragent.Any() ? clients.Contragent.FirstOrDefault() : null;
 
             List<OptionItemEntity> optionItems = new List<OptionItemEntity>
             {
                 new OptionItemEntity
                 {
-                    Code = OptionName.Login,
-                    Name = "User Login",
-                    Value = client != null ? client.Login : "autotrend"
+                    Code = OptionName.SourcePath,
+                    Name = "Input download path from 1C to Application Server",
+                    Value = "C:\\1C\\In\\"
                 },
                 new OptionItemEntity
                 {
-                    Code = OptionName.Password,
-                    Name = "User Password",
-                    Value = ""
+                    Code = OptionName.WorkingSourcePath,
+                    Name = "Input working path for Application Server",
+                    Value = "In\\"
                 },
                 new OptionItemEntity
                 {
-                    Code = OptionName.Debt,
-                    Name = "Mutual Settlements",
-                    Value = client?.MutualSettlements
+                    Code = OptionName.ArcSourcePath,
+                    Name = "Archive path for input data files",
+                    Value = "Arc\\In\\"
                 },
                 new OptionItemEntity
                 {
-                    Code = OptionName.OverdueAccountsReceivable,
-                    Name = "Overdue accounts receivable",
-                    Value = client?.PDZ
+                    Code = OptionName.DestinationPath,
+                    Name = "Output download path from 1C to Application Server",
+                    Value = "C:\\1C\\Out\\"
                 },
                 new OptionItemEntity
                 {
-                    Code = OptionName.LastOrderNumber,
-                    Name = "Last Order Number",
-                    Value = "0"
+                    Code = OptionName.WorkingDestinationPath,
+                    Name = "Output working path for Application Server",
+                    Value = "Out\\"
                 },
                 new OptionItemEntity
                 {
-                    Code = OptionName.CatalogMaximumRows,
-                    Name = "Maximum Rows Displayed in Catalog Entry",
-                    Value = "13"
-                },
-                new OptionItemEntity
-                {
-                    Code = OptionName.SplitterPosition,
-                    Name = "Start Splitter position in Catalog Entry",
-                    Value = "150"
-                },
-                new OptionItemEntity
-                {
-                    Code = CatalogColumnNames.NumberColumnName + PrefixOptions.Width,
-                    Name = PrefixOptions.Width + " of " + CatalogColumnNames.NumberColumnName + "column",
-                    Value = "55"
-                },
-                new OptionItemEntity
-                {
-                    Code = CatalogColumnNames.PhotoColumnName + PrefixOptions.Width,
-                    Name = PrefixOptions.Width + " of " + CatalogColumnNames.PhotoColumnName + "column",
-                    Value = "40"
-                },
-                new OptionItemEntity
-                {
-                    Code = CatalogColumnNames.CodeColumnName + PrefixOptions.Width,
-                    Name = PrefixOptions.Width + " of " + CatalogColumnNames.CodeColumnName + "column",
-                    Value = "75"
-                },
-                new OptionItemEntity
-                {
-                    Code = CatalogColumnNames.ArticleColumn + PrefixOptions.Width,
-                    Name = PrefixOptions.Width + " of " + CatalogColumnNames.ArticleColumn + "column",
-                    Value = "112"
-                },
-                new OptionItemEntity
-                {
-                    Code = CatalogColumnNames.NameColumn + PrefixOptions.Width,
-                    Name = PrefixOptions.Width + " of " + CatalogColumnNames.NameColumn + "column",
-                    Value = "330"
-                },
-                new OptionItemEntity
-                {
-                    Code = CatalogColumnNames.BrandColumn + PrefixOptions.Width,
-                    Name = PrefixOptions.Width + " of " + CatalogColumnNames.BrandColumn + "column",
-                    Value = "110"
-                },
-                new OptionItemEntity
-                {
-                    Code = CatalogColumnNames.UnitColumn + PrefixOptions.Width,
-                    Name = PrefixOptions.Width + " of " + CatalogColumnNames.UnitColumn + "column",
-                    Value = "50"
-                },
-                new OptionItemEntity
-                {
-                    Code = CatalogColumnNames.EnterpriceNormPackColumn + PrefixOptions.Width,
-                    Name = PrefixOptions.Width + " of " + CatalogColumnNames.EnterpriceNormPackColumn + "column",
-                    Value = "90"
-                },
-                new OptionItemEntity
-                {
-                    Code = CatalogColumnNames.BatchOfSalesColumn + PrefixOptions.Width,
-                    Name = PrefixOptions.Width + " of " + CatalogColumnNames.BatchOfSalesColumn + "column",
-                    Value = "90"
-                },
-                new OptionItemEntity
-                {
-                    Code = CatalogColumnNames.BalanceColumn + PrefixOptions.Width,
-                    Name = PrefixOptions.Width + " of " + CatalogColumnNames.BalanceColumn + "column",
-                    Value = "95"
-                },
-                new OptionItemEntity
-                {
-                    Code = CatalogColumnNames.PriceColumn + PrefixOptions.Width,
-                    Name = PrefixOptions.Width + " of " + CatalogColumnNames.PriceColumn + "column",
-                    Value = "90"
-                },
-                new OptionItemEntity
-                {
-                    Code = CatalogColumnNames.CountColumn + PrefixOptions.Width,
-                    Name = PrefixOptions.Width + " of " + CatalogColumnNames.CountColumn + "column",
-                    Value = "110"
-                },
-                new OptionItemEntity
-                {
-                    Code = PrefixOptions.Advance + CatalogColumnNames.NumberColumnName + PrefixOptions.Width,
-                    Name = PrefixOptions.Width + " of " + CatalogColumnNames.NumberColumnName + "column during " + 
-                           PrefixOptions.Advance + " search",
-                    Value = "55"
-                },
-                new OptionItemEntity
-                {
-                    Code = PrefixOptions.Advance + CatalogColumnNames.PhotoColumnName + PrefixOptions.Width,
-                    Name = PrefixOptions.Width + " of " + CatalogColumnNames.PhotoColumnName + "column during " + 
-                           PrefixOptions.Advance + " search",
-                    Value = "40"
-                },
-                new OptionItemEntity
-                {
-                    Code = PrefixOptions.Advance + CatalogColumnNames.CodeColumnName + PrefixOptions.Width,
-                    Name = PrefixOptions.Width + " of " + CatalogColumnNames.CodeColumnName + "column during " + 
-                           PrefixOptions.Advance + " search",
-                    Value = "75"
-                },
-                new OptionItemEntity
-                {
-                    Code = PrefixOptions.Advance + CatalogColumnNames.ArticleColumn + PrefixOptions.Width,
-                    Name = PrefixOptions.Width + " of " + CatalogColumnNames.ArticleColumn + "column during " +
-                           PrefixOptions.Advance + " search",
-                    Value = "112"
-                },
-                new OptionItemEntity
-                {
-                    Code = PrefixOptions.Advance + CatalogColumnNames.NameColumn + PrefixOptions.Width,
-                    Name = PrefixOptions.Width + " of " + CatalogColumnNames.NameColumn + "column during " +
-                           PrefixOptions.Advance + " search",
-                    Value = "330"
-                },
-                new OptionItemEntity
-                {
-                    Code = PrefixOptions.Advance + CatalogColumnNames.BrandColumn + PrefixOptions.Width,
-                    Name = PrefixOptions.Width + " of " + CatalogColumnNames.BrandColumn + "column during " +
-                           PrefixOptions.Advance + " search",
-                    Value = "110"
-                },
-                new OptionItemEntity
-                {
-                    Code = PrefixOptions.Advance + CatalogColumnNames.UnitColumn + PrefixOptions.Width,
-                    Name = PrefixOptions.Width + " of " + CatalogColumnNames.UnitColumn + "column during " +
-                           PrefixOptions.Advance + " search",
-                    Value = "50"
-                },
-                new OptionItemEntity
-                {
-                    Code = PrefixOptions.Advance + CatalogColumnNames.EnterpriceNormPackColumn + PrefixOptions.Width,
-                    Name = PrefixOptions.Width + " of " + CatalogColumnNames.EnterpriceNormPackColumn + "column during " +
-                           PrefixOptions.Advance + " search",
-                    Value = "90"
-                },
-                new OptionItemEntity
-                {
-                    Code = PrefixOptions.Advance + CatalogColumnNames.BatchOfSalesColumn + PrefixOptions.Width,
-                    Name = PrefixOptions.Width + " of " + CatalogColumnNames.BatchOfSalesColumn + "column during " +
-                           PrefixOptions.Advance + " search",
-                    Value = "90"
-                },
-                new OptionItemEntity
-                {
-                    Code = PrefixOptions.Advance + CatalogColumnNames.BalanceColumn + PrefixOptions.Width,
-                    Name = PrefixOptions.Width + " of " + CatalogColumnNames.BalanceColumn + "column during " +
-                           PrefixOptions.Advance + " search",
-                    Value = "95"
-                },
-                new OptionItemEntity
-                {
-                    Code = PrefixOptions.Advance + CatalogColumnNames.PriceColumn + PrefixOptions.Width,
-                    Name = PrefixOptions.Width + " of " + CatalogColumnNames.PriceColumn + "column during " +
-                           PrefixOptions.Advance + " search",
-                    Value = "90"
-                },
-                new OptionItemEntity
-                {
-                    Code = PrefixOptions.Advance + CatalogColumnNames.CountColumn + PrefixOptions.Width,
-                    Name = PrefixOptions.Width + " of " + CatalogColumnNames.CountColumn + "column during " +
-                           PrefixOptions.Advance + " search",
-                    Value = "110"
+                    Code = OptionName.ArcDestinationPath,
+                    Name = "Archive path for output data files",
+                    Value = "Arc\\Out\\"
                 }
             };
 

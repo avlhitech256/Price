@@ -20,12 +20,10 @@ namespace Load.Service.Implementation
 
         #region Constructors
 
-        public DownLoadService(uint timeOut, uint dueTime, uint period,
-                               string sourcePath, string destinationPath,
-                               IEnumerable<string> searchPatterns = null)
+        public DownLoadService(uint timeOut, uint dueTime, uint period, List<MovingQueueItem> movingQueue)
         {
             isLoading = false;
-            movingThreadInfo = new MovingThreadInfo(timeOut, dueTime, period, sourcePath, destinationPath, searchPatterns);
+            movingThreadInfo = new MovingThreadInfo(timeOut, dueTime, period, movingQueue);
             movingThreadInfo.StartMoving += StartMovingFiles;
             movingThreadInfo.Completed += MovingCompleted;
             movingThreadInfo.TimeOutIsOver += MovingTimeOutIsOver;
@@ -34,7 +32,6 @@ namespace Load.Service.Implementation
             loadingThreadInfo.End += (sender, args) => Start();
             timer = new Timer(LoadData, loadingThreadInfo, Timeout.Infinite, Timeout.Infinite);
             fileService = new FileService();
-            //Start();
         }
 
         #endregion

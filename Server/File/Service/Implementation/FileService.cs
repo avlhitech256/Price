@@ -161,9 +161,9 @@ namespace File.Service.Implementation
             return fileInfos;
         }
 
-        private string[] GetFileNames(MovingThreadInfo movingThreadInfo)
+        private string[] GetFileNames(MovingQueueItem movingQueueItem)
         {
-            return GetFileNames(movingThreadInfo.SourcePath, movingThreadInfo.SearchPatterns);
+            return GetFileNames(movingQueueItem.SourcePath, movingQueueItem.SearchPatterns);
         }
 
         public string[] GetFileNames(string dirPath, IEnumerable<string> searchPatterns = null)
@@ -305,7 +305,7 @@ namespace File.Service.Implementation
         {
             string result = !string.IsNullOrWhiteSpace(dirPath) ? dirPath.Trim() : String.Empty;
 
-            if (result.EndsWith("\\"))
+            if (!result.EndsWith("\\"))
             {
                 result = result + "\\";
             }
@@ -343,7 +343,8 @@ namespace File.Service.Implementation
 
         public void AsyncMoveFiles(MovingThreadInfo movingThreadInfo)
         {
-            if (timer == null && movingThreadInfo != null && movingThreadInfo.TimeOut >= movingThreadInfo.DueTime && GetFileNames(movingThreadInfo).Any())
+            if (timer == null && movingThreadInfo != null && movingThreadInfo.TimeOut >= movingThreadInfo.DueTime &&
+                movingThreadInfo.MovingQueue.Any(x => GetFileNames(x).Any()))
             {
                 timer = new Timer(MoveFiles, movingThreadInfo, Timeout.Infinite, Timeout.Infinite);
 
@@ -383,26 +384,39 @@ namespace File.Service.Implementation
 
         private void MoveFiles(MovingThreadInfo movingThreadInfo)
         {
-            if (!string.IsNullOrWhiteSpace(movingThreadInfo.SourcePath) &&
-                !string.IsNullOrWhiteSpace(movingThreadInfo.DestinationPath))
+            if (movingThreadInfo?.MovingQueue != null &&
+                movingThreadInfo.MovingQueue.All(x => !string.IsNullOrWhiteSpace(x.SourcePath)) &&
+                movingThreadInfo.MovingQueue.All(x => !string.IsNullOrWhiteSpace(x.DestinationPath)))
             {
-                string inPath = ValidatePath(movingThreadInfo.SourcePath);
-                string outPath = ValidatePath(movingThreadInfo.DestinationPath);
-
-                if (PrepareDirectory(inPath) && PrepareDirectory(outPath))
+                movingThreadInfo.MovingQueue.ForEach(x =>
                 {
-                    if (GetFileNames(inPath, movingThreadInfo.SearchPatterns).Length > 0)
-                    {
-                        Stop();
+                    x.SourcePath = ValidatePath(x.SourcePath);
+                    x.DestinationPath = ValidatePath(x.DestinationPath);
+                });
 
-                        if (!movingThreadInfo.Start.HasValue)
+                if (movingThreadInfo.MovingQueue.All(x => PrepareDirectory(x.SourcePath)) && 
+                    movingThreadInfo.MovingQueue.All(x => PrepareDirectory(x.DestinationPath)))
+                {
+                    movingThreadInfo.MovingQueue.ForEach(
+                        x =>
                         {
-                            movingThreadInfo.Start = DateTimeOffset.Now;
-                        }
+                            if (GetFileNames(x.SourcePath, x.SearchPatterns).Length > 0)
+                            {
+                                Stop();
 
-                        movingThreadInfo.MovingInfo = MoveFiles(inPath, outPath, movingThreadInfo.SearchPatterns);
-                        Start(movingThreadInfo);
-                    }
+                                if (!movingThreadInfo.Start.HasValue)
+                                {
+                                    movingThreadInfo.Start = DateTimeOffset.Now;
+                                }
+
+                                movingThreadInfo.LastMovingInfo = movingThreadInfo.MovingQueue.Last() == x;
+                                movingThreadInfo.MovingInfo = MoveFiles(x.SourcePath, 
+                                                                        x.DestinationPath, 
+                                                                        x.SearchPatterns);
+                            }
+                        });
+
+                    Start(movingThreadInfo);
                 }
             }
         }

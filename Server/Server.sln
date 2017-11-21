@@ -46,6 +46,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PricelistLoadService", "Pri
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsolePricelistLoader", "ConsolePricelistLoader\ConsolePricelistLoader.csproj", "{C6D8BA90-D513-4404-8788-102DC6BD19CC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Option", "Option\Option.csproj", "{665427C4-E971-4EA6-BA22-6F9AB17F5AF1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -96,6 +98,10 @@ Global
 		{C6D8BA90-D513-4404-8788-102DC6BD19CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C6D8BA90-D513-4404-8788-102DC6BD19CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C6D8BA90-D513-4404-8788-102DC6BD19CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{665427C4-E971-4EA6-BA22-6F9AB17F5AF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{665427C4-E971-4EA6-BA22-6F9AB17F5AF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{665427C4-E971-4EA6-BA22-6F9AB17F5AF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{665427C4-E971-4EA6-BA22-6F9AB17F5AF1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

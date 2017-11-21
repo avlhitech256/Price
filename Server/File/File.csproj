@@ -48,6 +48,7 @@
     <Compile Include="Service\Implementation\FileOperationInfo.cs" />
     <Compile Include="Service\Implementation\FileService.cs" />
     <Compile Include="Service\Implementation\MovingInfo.cs" />
+    <Compile Include="Service\Implementation\MovingQueueItem.cs" />
     <Compile Include="Service\Implementation\MovingThreadInfo.cs" />
   </ItemGroup>
   <ItemGroup>

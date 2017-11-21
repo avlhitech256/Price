@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 // Управление общими сведениями о сборке осуществляется с помощью 
 // набора атрибутов. Измените значения этих атрибутов, чтобы изменить сведения,
 // связанные со сборкой.
-[assembly: AssemblyTitle("ConsolePricelistLoader")]
+[assembly: AssemblyTitle("Option")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ConsolePricelistLoader")]
+[assembly: AssemblyProduct("Option")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -19,7 +19,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // Следующий GUID служит для идентификации библиотеки типов, если этот проект будет видимым для COM
-[assembly: Guid("c6d8ba90-d513-4404-8788-102dc6bd19cc")]
+[assembly: Guid("665427c4-e971-4ea6-ba22-6f9ab17f5af1")]
 
 // Сведения о версии сборки состоят из следующих четырех значений:
 //

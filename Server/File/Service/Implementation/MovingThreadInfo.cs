@@ -14,18 +14,15 @@ namespace File.Service.Implementation
         #endregion
 
         #region Constructors
-        public MovingThreadInfo(uint timeOut, uint dueTime, uint period, 
-                                string sourcePath, string destinationPath, 
-                                IEnumerable<string> searchPatterns = null)
+        public MovingThreadInfo(uint timeOut, uint dueTime, uint period, List<MovingQueueItem> movingQueue)
         {
             TimeOut = timeOut;
             DueTime = dueTime;
             Period = period;
-            SourcePath = sourcePath;
-            DestinationPath = destinationPath;
-            SearchPatterns = searchPatterns;
+            MovingQueue = movingQueue;
             Start = null;
             End = null;
+            LastMovingInfo = false;
             movingInfo = new MovingInfo();
         }
 
@@ -44,10 +41,16 @@ namespace File.Service.Implementation
                 if (null != value)
                 {
                     Merge(movingInfo, value);
-                    EndOfProcess();
+
+                    if (LastMovingInfo)
+                    {
+                        EndOfProcess();
+                    }
                 }
             }
         }
+
+        public bool LastMovingInfo { get; set; }
 
         public uint TimeOut { get; }
 
@@ -55,11 +58,7 @@ namespace File.Service.Implementation
 
         public uint Period { get; }
 
-        public string SourcePath { get; }
-
-        public string DestinationPath { get; }
-
-        public IEnumerable<string> SearchPatterns { get; }
+        public List<MovingQueueItem> MovingQueue { get; }
 
         public DateTimeOffset? Start
         {

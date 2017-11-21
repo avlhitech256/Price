@@ -49,7 +49,7 @@ namespace Media.Service.Implementation
             return result > 0xFF ? (byte) 0xFF : (byte) result;
         }
 
-        private GradientStop CreateGradientStop(System.Windows.Media.Color color, double? offset = null)
+        private GradientStop CreateGradientStop(Color color, double? offset = null)
         {
             GradientStop gradientStop = offset.HasValue
                 ? new GradientStop(color, offset.Value)
@@ -59,7 +59,7 @@ namespace Media.Service.Implementation
 
         private GradientStop CreateGradientStop(byte r, byte g, byte b, double? offset = null)
         {
-            var color = System.Windows.Media.Color.FromArgb(0xFF, r, g, b);
+            var color = Color.FromArgb(0xFF, r, g, b);
             GradientStop gradientStop = CreateGradientStop(color, offset);
 
             return gradientStop;

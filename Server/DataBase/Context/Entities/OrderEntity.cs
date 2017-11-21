@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Common.Data.Enum;
 using DataBase.Context.Object;
 
 namespace DataBase.Context.Entities
