@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using Json.Contract;
 using Json.Service;
 using Json.Service.Implementation;
@@ -16,6 +18,8 @@ namespace File.Service.Implementation
 
         private readonly IJsonService jsonService;
         private readonly IImageService imageService;
+        private Timer timer;
+        private MovingThreadInfo oldMovingThreadInfo;
 
         #endregion
 
@@ -25,6 +29,8 @@ namespace File.Service.Implementation
         {
             this.jsonService = jsonService ?? new JsonService();
             this.imageService = imageService ?? new ImageService();
+            timer = null;
+            oldMovingThreadInfo = null;
         }
 
         #endregion
@@ -54,7 +60,7 @@ namespace File.Service.Implementation
             return memoryStream;
         }
 
-        public T ReadJsonFile<T>(string fileName) where T : class, new ()
+        public T ReadJsonFile<T>(string fileName) where T : class, new()
         {
             T result;
 
@@ -117,10 +123,10 @@ namespace File.Service.Implementation
         public string[] GetFileNames(string dirPath, string searchPattern = null)
         {
             string[] fileNames =
-            GetFileInfos(dirPath, searchPattern)
-                .Where(f => f.Exists)
-                .Select(x => x.Name)
-                .ToArray();
+                GetFileInfos(dirPath, searchPattern)
+                    .Where(f => f.Exists)
+                    .Select(x => x.Name)
+                    .ToArray();
 
             return fileNames;
         }
@@ -131,6 +137,16 @@ namespace File.Service.Implementation
 
             try
             {
+                if (!System.IO.Directory.Exists(dirPath))
+                {
+                    System.IO.Directory.CreateDirectory(dirPath);
+                    //************************************
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.WriteLine("[{0:yyyy'.'MM'.'dd HH':'mm':'ss fffffff}]  Create directory " + dirPath, DateTime.Now);
+                    Console.WriteLine("-------------------------------------------------------------------------");
+                    //************************************
+                }
+
                 DirectoryInfo dirInfo = new DirectoryInfo(dirPath);
                 fileInfos = string.IsNullOrWhiteSpace(searchPattern)
                     ? dirInfo.GetFiles()
@@ -143,6 +159,60 @@ namespace File.Service.Implementation
             }
 
             return fileInfos;
+        }
+
+        private string[] GetFileNames(MovingThreadInfo movingThreadInfo)
+        {
+            return GetFileNames(movingThreadInfo.SourcePath, movingThreadInfo.SearchPatterns);
+        }
+
+        public string[] GetFileNames(string dirPath, IEnumerable<string> searchPatterns = null)
+        {
+            string[] fileNames =
+                GetFileInfos(dirPath, searchPatterns)
+                    .Where(f => f.Exists)
+                    .Select(x => x.Name)
+                    .Distinct()
+                    .ToArray();
+
+            return fileNames;
+        }
+
+        public FileInfo[] GetFileInfos(string dirPath, IEnumerable<string> searchPatterns = null)
+        {
+            FileInfo[] result;
+
+            List<string> searchPatternsArray = searchPatterns != null
+                ? new List<string>(searchPatterns)
+                : new List<string>();
+
+            if (searchPatternsArray.Any())
+            {
+
+                List<FileInfo> resultList = new List<FileInfo>();
+
+                searchPatternsArray.ForEach(
+                    searchPattern =>
+                    {
+                        FileInfo[] filesInfo = GetFileInfos(dirPath, searchPattern);
+
+                        foreach (FileInfo fileInfo in filesInfo)
+                        {
+                            if (resultList.All(x => x.Name != fileInfo.Name))
+                            {
+                                resultList.Add(fileInfo);
+                            }
+                        }
+                    });
+
+                result = resultList.ToArray();
+            }
+            else
+            {
+                result = GetFileInfos(dirPath, (string) null);
+            }
+
+            return result;
         }
 
         public string GetFileName(string fileNameWithExtention)
@@ -160,6 +230,191 @@ namespace File.Service.Implementation
             }
 
             return fileName;
+        }
+
+        public MovingInfo MoveFiles(string sourcePath, string destinationPath, IEnumerable<string> searchPatterns = null)
+        {
+            MovingInfo result = new MovingInfo();
+
+            if (!string.IsNullOrWhiteSpace(sourcePath) && !string.IsNullOrWhiteSpace(destinationPath))
+            {
+                string inPath = ValidatePath(sourcePath);
+                string outPath = ValidatePath(destinationPath);
+
+                if (PrepareDirectory(inPath) && PrepareDirectory(outPath))
+                {
+                    string[] fileNames = GetFileNames(inPath, searchPatterns);
+
+                    foreach (string fileName in fileNames)
+                    {
+                        try
+                        {
+                            if (!System.IO.Directory.Exists(outPath))
+                            {
+                                System.IO.Directory.CreateDirectory(outPath);
+                                //************************************
+                                Console.ForegroundColor = ConsoleColor.Gray;
+                                Console.WriteLine("[{0:yyyy'.'MM'.'dd HH':'mm':'ss fffffff}]  Create directory " + outPath, DateTime.Now);
+                                Console.WriteLine("-------------------------------------------------------------------------");
+                                //************************************
+                            }
+
+                            System.IO.File.Move(inPath + fileName, outPath + fileName);
+                            result.MovedFiles.Add(new FileOperationInfo(FileOperation.Move, fileName, DateTimeOffset.Now));
+                            //************************************
+                            Console.ForegroundColor = ConsoleColor.Gray;
+                            Console.WriteLine("[{0:yyyy'.'MM'.'dd HH':'mm':'ss fffffff}]  Moved file " + fileName, DateTime.Now);
+                            Console.WriteLine("-------------------------------------------------------------------------");
+                            //************************************
+                        }
+                        catch (Exception e)
+                        {
+                            FileOperationInfo operationInfo =
+                                new FileOperationInfo(FileOperation.Move, fileName, DateTimeOffset.Now, e);
+
+                            if (e is IOException && e.HResult == -2147024864) // Файл захвачен другим процессом
+                            {
+                                result.WaitingFiles.Add(operationInfo);
+                                ; // TODO Write Exception to LOG
+                            }
+                            else
+                            {
+                                result.ExceptionFiles.Add(operationInfo);
+                                ; // TODO Write Exception to LOG
+                            }
+
+                            //************************************
+                            DateTime now = DateTime.Now;
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            Console.WriteLine("[{0:yyyy'.'MM'.'dd HH':'mm':'ss fffffff}]  File Name: " + fileName, now);
+                            Console.WriteLine("[{0:yyyy'.'MM'.'dd HH':'mm':'ss fffffff}]  Exception Type: " + e.GetType().FullName, now);
+                            Console.WriteLine("[{0:yyyy'.'MM'.'dd HH':'mm':'ss fffffff}]  HResult:" + e.HResult, now);
+                            Console.WriteLine("[{0:yyyy'.'MM'.'dd HH':'mm':'ss fffffff}]  Message: " + e.Message, now);
+                            Console.ForegroundColor = ConsoleColor.Gray;
+                            Console.WriteLine("-------------------------------------------------------------------------");
+                            //************************************
+                        }
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        private string ValidatePath(string dirPath)
+        {
+            string result = !string.IsNullOrWhiteSpace(dirPath) ? dirPath.Trim() : String.Empty;
+
+            if (result.EndsWith("\\"))
+            {
+                result = result + "\\";
+            }
+
+            return result;
+        }
+
+        private bool PrepareDirectory(string dirPath)
+        {
+            bool result = false;
+
+            if (!string.IsNullOrWhiteSpace(dirPath))
+            {
+                if (System.IO.Directory.Exists(dirPath))
+                {
+                    result = true;
+                }
+                else
+                {
+                    try
+                    {
+                        DirectoryInfo dirInfo = System.IO.Directory.CreateDirectory(dirPath);
+                        result = dirInfo.Exists;
+                    }
+                    catch (Exception)
+                    {
+                        ; //TODO Write to LOG
+                        //throw;
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        public void AsyncMoveFiles(MovingThreadInfo movingThreadInfo)
+        {
+            if (timer == null && movingThreadInfo != null && movingThreadInfo.TimeOut >= movingThreadInfo.DueTime && GetFileNames(movingThreadInfo).Any())
+            {
+                timer = new Timer(MoveFiles, movingThreadInfo, Timeout.Infinite, Timeout.Infinite);
+
+                if (oldMovingThreadInfo != movingThreadInfo)
+                {
+                    if (oldMovingThreadInfo != null)
+                    {
+                        oldMovingThreadInfo.Completed -= DisposeTimer;
+                        oldMovingThreadInfo.TimeOutIsOver -= DisposeTimer;
+                    }
+
+                    oldMovingThreadInfo = movingThreadInfo;
+
+                    movingThreadInfo.Completed += DisposeTimer;
+                    movingThreadInfo.TimeOutIsOver += DisposeTimer;
+                }
+
+                timer.Change(movingThreadInfo.DueTime, movingThreadInfo.Period);
+            }
+        }
+
+        private void DisposeTimer(object sender, EventArgs args)
+        {
+            timer?.Dispose();
+            timer = null;
+        }
+
+        private void MoveFiles(object info)
+        {
+            var movingThreadInfo = info as MovingThreadInfo;
+
+            if (movingThreadInfo != null)
+            {
+                MoveFiles(movingThreadInfo);
+            }
+        }
+
+        private void MoveFiles(MovingThreadInfo movingThreadInfo)
+        {
+            if (!string.IsNullOrWhiteSpace(movingThreadInfo.SourcePath) &&
+                !string.IsNullOrWhiteSpace(movingThreadInfo.DestinationPath))
+            {
+                string inPath = ValidatePath(movingThreadInfo.SourcePath);
+                string outPath = ValidatePath(movingThreadInfo.DestinationPath);
+
+                if (PrepareDirectory(inPath) && PrepareDirectory(outPath))
+                {
+                    if (GetFileNames(inPath, movingThreadInfo.SearchPatterns).Length > 0)
+                    {
+                        Stop();
+
+                        if (!movingThreadInfo.Start.HasValue)
+                        {
+                            movingThreadInfo.Start = DateTimeOffset.Now;
+                        }
+
+                        movingThreadInfo.MovingInfo = MoveFiles(inPath, outPath, movingThreadInfo.SearchPatterns);
+                        Start(movingThreadInfo);
+                    }
+                }
+            }
+        }
+
+        private void Start(MovingThreadInfo movingThreadInfo)
+        {
+            timer?.Change(movingThreadInfo.DueTime, movingThreadInfo.Period);
+        }
+
+        private void Stop()
+        {
+            timer.Change(Timeout.Infinite, Timeout.Infinite);
         }
 
         #endregion

@@ -62,6 +62,10 @@
       <Project>{273286be-3fc0-4c0f-87c0-302a587c2904}</Project>
       <Name>DataBase</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Load\Load.csproj">
+      <Project>{a37c9416-bc06-4b61-acfd-73fbf91b643f}</Project>
+      <Name>Load</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

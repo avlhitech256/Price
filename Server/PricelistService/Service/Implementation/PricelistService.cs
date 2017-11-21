@@ -3,6 +3,8 @@ using System.Linq;
 using DataBase.Context;
 using DataBase.Context.Entities;
 using DataBase.Context.Object;
+using Load.Service;
+using Load.Service.Implementation;
 using PricelistService.Service.Contract;
 
 namespace PricelistService.Service.Implementation
@@ -10,6 +12,30 @@ namespace PricelistService.Service.Implementation
     // ПРИМЕЧАНИЕ. Команду "Переименовать" в меню "Рефакторинг" можно использовать для одновременного изменения имени класса "PricelistService" в коде и файле конфигурации.
     public class PricelistService : IPricelistService
     {
+        #region Members
+
+        private IDownLoadService downLoadService;
+        private readonly string sourcePath;
+        private readonly string destinationPath;
+        private readonly string[] searchPatterns;
+
+        #endregion
+
+        #region Constructors
+
+        public PricelistService()
+        {
+            sourcePath = "In\\";
+            destinationPath = "Out\\";
+            searchPatterns = new[] {"Clients*.json", "MetaData*.json", "PriceList*.json", "RTiU*.json"};
+            downLoadService = new DownLoadService(600000, 1000, 1000, sourcePath, destinationPath, searchPatterns);
+            downLoadService.Start();
+        }
+
+        #endregion
+
+        #region Methods
+
         public CompanyInfo Hello(string login, DateTimeOffset timeRequest)
         {
             DataBaseContext dataBaseContext = new DataBaseContext();
@@ -88,6 +114,6 @@ namespace PricelistService.Service.Implementation
             }
         }
 
-
+        #endregion
     }
 }

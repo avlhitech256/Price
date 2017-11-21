@@ -44,7 +44,11 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\IFileService.cs" />
+    <Compile Include="Service\Implementation\FileOperation.cs" />
+    <Compile Include="Service\Implementation\FileOperationInfo.cs" />
     <Compile Include="Service\Implementation\FileService.cs" />
+    <Compile Include="Service\Implementation\MovingInfo.cs" />
+    <Compile Include="Service\Implementation\MovingThreadInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Json\Json.csproj">

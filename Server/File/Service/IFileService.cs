@@ -1,5 +1,7 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
+using File.Service.Implementation;
 using Json.Contract;
 
 namespace File.Service
@@ -24,6 +26,14 @@ namespace File.Service
 
         FileInfo[] GetFileInfos(string dirPath, string searchPattern = null);
 
+        string[] GetFileNames(string dirPath, IEnumerable<string> searchPatterns = null);
+
+        FileInfo[] GetFileInfos(string dirPath, IEnumerable<string> searchPatterns = null);
+
         string GetFileName(string fileNameWithExtention);
+
+        MovingInfo MoveFiles(string sourcePath, string destinationPath, IEnumerable<string> searchPatterns = null);
+
+        void AsyncMoveFiles(MovingThreadInfo movingThreadInfo);
     }
 }

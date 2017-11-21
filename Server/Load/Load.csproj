@@ -43,8 +43,23 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\IDownLoadService.cs" />
     <Compile Include="Service\Implementation\DownLoadService.cs" />
+    <Compile Include="Service\Implementation\LoadingThreadInfo.cs" />
     <Compile Include="Service\Implementation\UpLoadService.cs" />
     <Compile Include="Service\IUpLoadService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\File\File.csproj">
+      <Project>{E0E9D4DF-E346-4F0A-9121-13C52B550F33}</Project>
+      <Name>File</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Json\Json.csproj">
+      <Project>{6EAD33C5-A8AA-4CE3-BF25-1A07B9A4928C}</Project>
+      <Name>Json</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Media\Media.csproj">
+      <Project>{10916E8F-3122-48A2-89AD-E88EFD13E55D}</Project>
+      <Name>Media</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
