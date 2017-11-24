@@ -79,6 +79,8 @@ namespace File.Service.Implementation
 
         public DateTimeOffset? End { get; private set; }
 
+        public bool HasOutOfTime => Start.HasValue && (DateTimeOffset.Now - Start.Value).Milliseconds > TimeOut;
+
         #endregion
 
         #region Methods
@@ -141,7 +143,7 @@ namespace File.Service.Implementation
             source2.ForEach(x => source1.RemoveAll(s => s.FileName == x.FileName && s.DateTime < x.DateTime));
         }
 
-        private void EndOfProcess()
+        public void EndOfProcess()
         {
             if (!movingInfo.ExceptionFiles.Any() && !movingInfo.WaitingFiles.Any())
             {

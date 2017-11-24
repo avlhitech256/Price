@@ -10,12 +10,17 @@ namespace Option.Service
 
         string ArcSourcePath { get; set; }
 
+        string[] SourcePatterns { get; set; }
+
         string DestinationPath { get; set; }
 
         string WorkingDestinationPath { get; set; }
 
         string ArcDestinationPath { get; set; }
 
+        string SubDirForPhoto { get; set; }
+
+        string[] PhotoPatterns { get; set; }
 
         bool ExistOption(string optionCode);
 

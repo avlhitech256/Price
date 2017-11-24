@@ -397,28 +397,49 @@ namespace File.Service.Implementation
                 if (movingThreadInfo.MovingQueue.All(x => PrepareDirectory(x.SourcePath)) && 
                     movingThreadInfo.MovingQueue.All(x => PrepareDirectory(x.DestinationPath)))
                 {
-                    movingThreadInfo.MovingQueue.ForEach(
-                        x =>
-                        {
-                            if (GetFileNames(x.SourcePath, x.SearchPatterns).Length > 0)
+                    do
+                    {
+                        movingThreadInfo.MovingQueue.ForEach(
+                            x =>
                             {
-                                Stop();
-
-                                if (!movingThreadInfo.Start.HasValue)
+                                if (GetFileNames(x.SourcePath, x.SearchPatterns).Length > 0)
                                 {
-                                    movingThreadInfo.Start = DateTimeOffset.Now;
-                                }
+                                    Stop();
 
-                                movingThreadInfo.LastMovingInfo = movingThreadInfo.MovingQueue.Last() == x;
-                                movingThreadInfo.MovingInfo = MoveFiles(x.SourcePath, 
-                                                                        x.DestinationPath, 
-                                                                        x.SearchPatterns);
-                            }
-                        });
+                                    if (!movingThreadInfo.Start.HasValue)
+                                    {
+                                        movingThreadInfo.Start = DateTimeOffset.Now;
+                                    }
+
+                                    //movingThreadInfo.LastMovingInfo = movingThreadInfo.MovingQueue.Last() == x;
+                                    movingThreadInfo.MovingInfo = MoveFiles(x.SourcePath,
+                                                                            x.DestinationPath,
+                                                                            x.SearchPatterns);
+                                }
+                            });
+                    } while (!Validate(movingThreadInfo));
 
                     Start(movingThreadInfo);
                 }
             }
+        }
+
+        private bool Validate(MovingThreadInfo movingThreadInfo)
+        {
+            bool isValid = movingThreadInfo.HasOutOfTime || SourceIsEmpty(movingThreadInfo);
+
+            if (isValid)
+            {
+                movingThreadInfo.EndOfProcess();
+            }
+
+            return isValid;
+        }
+
+        private bool SourceIsEmpty(MovingThreadInfo movingThreadInfo)
+        {
+            bool isEmpty = movingThreadInfo.MovingQueue.All(x => !GetFileNames(x.SourcePath, x.SearchPatterns).Any());
+            return isEmpty;
         }
 
         private void Start(MovingThreadInfo movingThreadInfo)

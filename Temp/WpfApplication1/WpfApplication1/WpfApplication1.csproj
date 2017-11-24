@@ -74,7 +74,19 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DataBase\Clients.cs" />
+    <Compile Include="DataBase\C__MigrationHistory.cs" />
     <Compile Include="DataBase\DataBaseContext.cs" />
+    <Compile Include="DataBase\Discounts.cs" />
+    <Compile Include="DataBase\NomenclatureGroupSetups.cs" />
+    <Compile Include="DataBase\Nomenclatures.cs" />
+    <Compile Include="DataBase\PictureItems.cs" />
+    <Compile Include="DataBase\PriceGroupSetups.cs" />
+    <Compile Include="DataBase\PriceItems.cs" />
+    <Compile Include="DataBase\PriceLists.cs" />
+    <Compile Include="DataBase\PriceTypes.cs" />
+    <Compile Include="DataBase\PriceTypeSetups.cs" />
+    <Compile Include="DataBase\Updates.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

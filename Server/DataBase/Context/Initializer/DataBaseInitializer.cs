@@ -980,6 +980,12 @@ namespace DataBase.Context.Initializer
                 },
                 new OptionItemEntity
                 {
+                    Code = OptionName.SourcePatterns,
+                    Name = "Patterns for input data files",
+                    Value = "Clients*.json,MetaData*.json,PriceList*.json,RTiU*.json"
+                },
+                new OptionItemEntity
+                {
                     Code = OptionName.DestinationPath,
                     Name = "Output download path from 1C to Application Server",
                     Value = "C:\\1C\\Out\\"
@@ -995,6 +1001,18 @@ namespace DataBase.Context.Initializer
                     Code = OptionName.ArcDestinationPath,
                     Name = "Archive path for output data files",
                     Value = "Arc\\Out\\"
+                },
+                new OptionItemEntity
+                {
+                    Code = OptionName.SubDirForPhoto,
+                    Name = "Photo sub directory path for Application Server",
+                    Value = "Photo\\"
+                },
+                new OptionItemEntity
+                {
+                    Code = OptionName.PhotoPatterns,
+                    Name = "Patterns for input photo files",
+                    Value = "*.jpeg"
                 }
             };
 

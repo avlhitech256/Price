@@ -4,7 +4,7 @@ using File.Service.Implementation;
 using Load.Service;
 using Load.Service.Implementation;
 using Option.Service;
-using Options.Service.Implementation;
+using Option.Service.Implementation;
 
 namespace ConsolePricelistLoader
 {
@@ -28,11 +28,15 @@ namespace ConsolePricelistLoader
 
             movingQueue = new List<MovingQueueItem>
             {
-                new MovingQueueItem(optionService.SourcePath, optionService.DestinationPath, new[] { "Clients*.json", "MetaData*.json", "PriceList*.json", "RTiU*.json"}),
-                new MovingQueueItem("In\\Photo\\", "Out\\Photo\\", new[] { "*.jpeg"})
+                new MovingQueueItem(optionService.SourcePath, 
+                                    optionService.WorkingSourcePath, 
+                                    optionService.SourcePatterns),
+                new MovingQueueItem(optionService.SourcePath + optionService.SubDirForPhoto,
+                                    optionService.WorkingSourcePath + optionService.SubDirForPhoto, 
+                                    optionService.PhotoPatterns)
             };
 
-            downLoadService = new DownLoadService(600000, 1000, 1000, movingQueue);
+            downLoadService = new DownLoadService(600000, 1000, 1000, movingQueue, optionService);
             downLoadService.Start();
             while (Console.ReadKey().Key != ConsoleKey.Escape) { }
         }

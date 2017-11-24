@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Threading;
 using File.Service;
 using File.Service.Implementation;
+using Option.Service;
 
 namespace Load.Service.Implementation
 {
@@ -15,14 +17,16 @@ namespace Load.Service.Implementation
         private readonly MovingThreadInfo movingThreadInfo;
         private readonly IFileService fileService;
         private bool isLoading;
+        private readonly IOptionService optionService;
 
         #endregion
 
         #region Constructors
 
-        public DownLoadService(uint timeOut, uint dueTime, uint period, List<MovingQueueItem> movingQueue)
+        public DownLoadService(uint timeOut, uint dueTime, uint period, List<MovingQueueItem> movingQueue, IOptionService optionService)
         {
             isLoading = false;
+            this.optionService = optionService;
             movingThreadInfo = new MovingThreadInfo(timeOut, dueTime, period, movingQueue);
             movingThreadInfo.StartMoving += StartMovingFiles;
             movingThreadInfo.Completed += MovingCompleted;
@@ -87,12 +91,32 @@ namespace Load.Service.Implementation
         private void MovingCompleted(object sender, EventArgs e)
         {
             LoadData();
+            BackupToArchive(sender);
             loadingThreadInfo.IsLoading = false;
             //************************************
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.WriteLine("[{0:yyyy'.'MM'.'dd HH':'mm':'ss fffffff}]  End moving files", DateTime.Now);
             Console.WriteLine("-------------------------------------------------------------------------");
             //************************************
+        }
+
+        private void BackupToArchive(object sender)
+        {
+            var movingThreadInfo = sender as MovingThreadInfo;
+
+            if (movingThreadInfo != null)
+            {
+                string subArcPath = movingThreadInfo.Start.HasValue
+                    ? movingThreadInfo.Start.Value.ToString("yyyyMMddTHHmmss") + "\\"
+                    : string.Empty;
+                string archivePath = optionService.ArcSourcePath + subArcPath;
+                fileService.MoveFiles(optionService.WorkingSourcePath,
+                    archivePath,
+                    optionService.SourcePatterns);
+                fileService.MoveFiles(optionService.WorkingSourcePath + optionService.SubDirForPhoto,
+                    archivePath + optionService.SubDirForPhoto,
+                    optionService.PhotoPatterns);
+            }
         }
 
         private void MovingTimeOutIsOver(object sender, EventArgs e)

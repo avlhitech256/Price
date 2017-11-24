@@ -60,6 +60,10 @@
       <Project>{10916E8F-3122-48A2-89AD-E88EFD13E55D}</Project>
       <Name>Media</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Option\Option.csproj">
+      <Project>{665427c4-e971-4ea6-ba22-6f9ab17f5af1}</Project>
+      <Name>Option</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

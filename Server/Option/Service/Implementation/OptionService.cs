@@ -9,9 +9,8 @@ using Common.Service.Implementation;
 using DataBase.Context.Entities;
 using DataBase.Service;
 using DataBase.Service.Implementation;
-using Option.Service;
 
-namespace Options.Service.Implementation
+namespace Option.Service.Implementation
 {
     public class OptionService : IOptionService
     {
@@ -21,6 +20,8 @@ namespace Options.Service.Implementation
         private readonly Dictionary<string, StringHolder> optionCache;
         private readonly List<string> existOptionCache;
         private readonly IConvertService convertService;
+        private string subDirForPhoto;
+        private string[] photoPatterns;
 
         #endregion
 
@@ -74,6 +75,18 @@ namespace Options.Service.Implementation
             }
         }
 
+        public string[] SourcePatterns
+        {
+            get
+            {
+                return GetOption(OptionName.SourcePatterns).Split(',');
+            }
+            set
+            {
+                SetOption(OptionName.SourcePatterns, string.Join(",", value));
+            }
+        }
+
         public string DestinationPath
         {
             get
@@ -107,6 +120,30 @@ namespace Options.Service.Implementation
             set
             {
                 SetOption(OptionName.ArcDestinationPath, value);
+            }
+        }
+
+        public string SubDirForPhoto
+        {
+            get
+            {
+                return GetOption(OptionName.SubDirForPhoto);
+            }
+            set
+            {
+                SetOption(OptionName.SubDirForPhoto, value);
+            }
+        }
+
+        public string[] PhotoPatterns
+        {
+            get
+            {
+                return GetOption(OptionName.PhotoPatterns).Split(',');
+            }
+            set
+            {
+                SetOption(OptionName.PhotoPatterns, string.Join(",", value));
             }
         }
 
