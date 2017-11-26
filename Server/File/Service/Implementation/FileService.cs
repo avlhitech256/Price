@@ -9,6 +9,7 @@ using Json.Service;
 using Json.Service.Implementation;
 using Media.Service;
 using Media.Service.Implementation;
+using File = System.IO.File;
 
 namespace File.Service.Implementation
 {
@@ -397,7 +398,11 @@ namespace File.Service.Implementation
                 if (movingThreadInfo.MovingQueue.All(x => PrepareDirectory(x.SourcePath)) && 
                     movingThreadInfo.MovingQueue.All(x => PrepareDirectory(x.DestinationPath)))
                 {
-                    do
+                    if (Validate(movingThreadInfo))
+                    {
+                        movingThreadInfo.EndOfProcess();
+                    }
+                    else
                     {
                         movingThreadInfo.MovingQueue.ForEach(
                             x =>
@@ -417,7 +422,7 @@ namespace File.Service.Implementation
                                                                             x.SearchPatterns);
                                 }
                             });
-                    } while (!Validate(movingThreadInfo));
+                    }
 
                     Start(movingThreadInfo);
                 }
@@ -426,14 +431,139 @@ namespace File.Service.Implementation
 
         private bool Validate(MovingThreadInfo movingThreadInfo)
         {
-            bool isValid = movingThreadInfo.HasOutOfTime || SourceIsEmpty(movingThreadInfo);
-
-            if (isValid)
-            {
-                movingThreadInfo.EndOfProcess();
-            }
+            bool isValid = movingThreadInfo.HasOutOfTime || 
+                           (SourceIsEmpty(movingThreadInfo) && ValidateDestination(movingThreadInfo));
 
             return isValid;
+        }
+
+        private bool ValidateDestination(MovingThreadInfo movingThreadInfo)
+        {
+            bool valid = movingThreadInfo.MovingQueue.All(ValidateInputFiles);
+            return valid;
+        }
+
+        private bool ValidateInputFiles(MovingQueueItem item)
+        {
+            bool valid = item.SearchPatterns.All(x => ValidateInputFile(item.DestinationPath, x));
+            return valid;
+        }
+
+        private bool ValidateInputFile(string dirPath, string searchPattern)
+        {
+            bool valid = false;
+            string[] files = GetFileNames(dirPath, new[] {searchPattern});
+
+            if (files.Length > 0)
+            {
+                string firstFileName = FileName(files[0]);
+                string startPattern = StartPattern(searchPattern);
+
+                if (files.Length == 1 && firstFileName == startPattern)
+                {
+                    valid = true;
+                }
+                else if (files.Length > 1 && firstFileName != startPattern)
+                {
+                    int length = NemericPathLength(files[0], startPattern);
+
+                    if (files.All(x => NemericPathLength(x, startPattern) == length))
+                    {
+                        valid = true;
+                        int fileNember = 0;
+                        int count = 0;
+
+                        foreach (string fileName in files.OrderBy(x => x))
+                        {
+                            int? number = GetFileNumber(fileName, startPattern);
+
+                            if (number.HasValue && fileNember == number)
+                            {
+                                fileNember++;
+                                count++;
+                            }
+                            else
+                            {
+                                valid = false;
+                                break;
+                            }
+                        }
+
+                        if (valid && count != GetCountFiles(files[0], startPattern))
+                        {
+                            valid = false;
+                        }
+                    }
+                }
+            }
+
+            return valid;
+        }
+
+        private int NemericPathLength(string fileName, string startPattern)
+        {
+            int length = GetNemericPathFileName(fileName, startPattern).Length;
+            return length;
+        }
+
+        private int? GetFileNumber(string fileName, string startPattern)
+        {
+            int? fileNumber = null;
+            string numericPath = GetNemericPathFileName(fileName, startPattern);
+
+            if (numericPath.Length % 2 == 0)
+            {
+                string stringFileNumber = numericPath.Substring(0, numericPath.Length / 2);
+                int number;
+
+                if (int.TryParse(stringFileNumber, out number))
+                {
+                    fileNumber = number;
+                }
+            }
+
+            return fileNumber;
+        }
+
+        private int? GetCountFiles(string fileName, string startPattern)
+        {
+            int? count = null;
+            string numericPath = GetNemericPathFileName(fileName, startPattern);
+
+            if (numericPath.Length % 2 == 0)
+            {
+                string stringFilesCount = numericPath.Substring(numericPath.Length / 2);
+                int number;
+
+                if (int.TryParse(stringFilesCount, out number))
+                {
+                    count = number;
+                }
+            }
+
+            return count;
+        }
+
+        private string GetNemericPathFileName(string fileName, string startPattern)
+        {
+            string numericPath = fileName.StartsWith(startPattern)
+                ? fileName.Substring(startPattern.Length)
+                : String.Empty;
+            return numericPath;
+        }
+
+        private string FileName(string fileNameWithExrantion)
+        {
+            int separateIndex = fileNameWithExrantion.LastIndexOf(".", StringComparison.CurrentCulture);
+            string fileName = fileNameWithExrantion.Substring(0, separateIndex);
+            return fileName;
+        }
+
+        private string StartPattern(string searchPattern)
+        {
+            string startPattern = FileName(searchPattern);
+            startPattern = startPattern.TrimEnd('*');
+            return startPattern;
         }
 
         private bool SourceIsEmpty(MovingThreadInfo movingThreadInfo)
