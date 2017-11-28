@@ -22,6 +22,8 @@ namespace Option.Service.Implementation
         private readonly IConvertService convertService;
         private string subDirForPhoto;
         private string[] photoPatterns;
+        private int countSendItems;
+        private int countSendPhotos;
 
         #endregion
 
@@ -144,6 +146,30 @@ namespace Option.Service.Implementation
             set
             {
                 SetOption(OptionName.PhotoPatterns, string.Join(",", value));
+            }
+        }
+
+        public int CountSendItems
+        {
+            get
+            {
+                return GetIntOption(OptionName.CountSendItems);
+            }
+            set
+            {
+                SetIntOption(OptionName.CountSendItems, value);
+            }
+        }
+
+        public int CountSendPhotos
+        {
+            get
+            {
+                return GetIntOption(OptionName.CountSendPhopos);
+            }
+            set
+            {
+                SetIntOption(OptionName.CountSendPhopos, value);
             }
         }
 

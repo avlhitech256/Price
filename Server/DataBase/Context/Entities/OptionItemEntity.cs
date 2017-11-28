@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataBase.Context.Entities
 {
@@ -6,6 +7,7 @@ namespace DataBase.Context.Entities
     {
         public long Id { get; set; }
 
+        [Index("IX_Code", 1, IsUnique = true)]
         [MaxLength(50)]
         public string Code { get; set; }
 

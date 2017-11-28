@@ -34,6 +34,6 @@ namespace File.Service
 
         MovingInfo MoveFiles(string sourcePath, string destinationPath, IEnumerable<string> searchPatterns = null);
 
-        void AsyncMoveFiles(MovingThreadInfo movingThreadInfo);
+        void AsyncLoadFiles(MovingThreadInfo movingThreadInfo);
     }
 }

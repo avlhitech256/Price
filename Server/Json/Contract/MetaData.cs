@@ -6,7 +6,7 @@ namespace Json.Contract
     public class MetaData
     {
         [DataMember]
-        public Directory[] Catalog;
+        public Directory[] Catalog; 
 
         [DataMember]
         public PriceGroup[] PriceGroups;

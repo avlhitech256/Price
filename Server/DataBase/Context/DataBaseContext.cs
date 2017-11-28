@@ -45,5 +45,7 @@ namespace DataBase.Context
         public virtual DbSet<PhotoItemEntity> PhotoItemEntities { get; set; }
 
         public virtual DbSet<ProductDirectionEntity> ProductDirectionEntities { get; set; }
+
+        public virtual DbSet<SendItemsEntity> SendItemsEntities { get; set; }
     }
 }

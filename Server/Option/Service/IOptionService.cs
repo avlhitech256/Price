@@ -63,5 +63,9 @@ namespace Option.Service
         void SetDoubleOption(string optionCode, double value);
 
         void SetDoubleOptions(Dictionary<string, double> options);
+
+        int CountSendItems { get; set; }
+
+        int CountSendPhotos { get; set; }
     }
 }

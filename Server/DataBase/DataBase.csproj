@@ -22,7 +22,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
+    <DebugType>none</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
@@ -64,9 +64,11 @@
     <Compile Include="Context\Entities\OrderEntity.cs" />
     <Compile Include="Context\Entities\PhotoItemEntity.cs" />
     <Compile Include="Context\Entities\ProductDirectionEntity.cs" />
+    <Compile Include="Context\Entities\SendItemsEntity.cs" />
     <Compile Include="Context\Initializer\DataBaseInitializer.cs" />
     <Compile Include="Context\Object\CatalogItemStatus.cs" />
     <Compile Include="Context\Object\CommodityDirection.cs" />
+    <Compile Include="Context\Object\EntityName.cs" />
     <Compile Include="Objects\PriceInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\IDataService.cs" />

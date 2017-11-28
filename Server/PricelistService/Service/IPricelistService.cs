@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ServiceModel;
 using PricelistService.Service.Contract;
 
@@ -10,5 +11,11 @@ namespace PricelistService.Service
     {
         [OperationContract]
         CompanyInfo Hello(string login, DateTimeOffset timeRequest);
+
+        [OperationContract]
+        Brands GetBrands(string login, DateTimeOffset lastUpdate);
+
+        [OperationContract]
+        void ConfirmUpdateBrands(string login, DateTimeOffset lastUpdate, List<long> itemIds);
     }
 }

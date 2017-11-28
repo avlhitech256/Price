@@ -1,73 +1,77 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.Serialization;
 using DataBase.Context.Object;
 
-namespace DataBase.Context.Entities
+namespace PricelistService.Service.Contract
 {
-    public class CatalogItemEntity
+    [DataContract]
+    public class CatalogInfo
     {
+        [DataMember]
         public long Id { get; set; }
 
-        [Index("IX_UID", 1, IsUnique = true)]
+        [DataMember]
         public Guid UID { get; set; }
 
-        [MaxLength(30)]
+        [DataMember]
         public string Code { get; set; }
 
-        [MaxLength(30)]
+        [DataMember]
         public string Article { get; set; }
 
-        [MaxLength(255)]
+        [DataMember]
         public string Name { get; set; }
 
-        public virtual BrandItemEntity Brand { get; set; }
+        [DataMember]
+        public long BrandId { get; set; }
 
-        [MaxLength(255)]
+        [DataMember]
         public string BrandName { get; set; }
 
-        [MaxLength(10)]
+        [DataMember]
         public string Unit { get; set; }
 
-        [MaxLength(30)]
+        [DataMember]
         public string EnterpriceNormPack { get; set; }
 
+        [DataMember]
         public decimal BatchOfSales { get; set; }
 
-        [MaxLength(30)]
+        [DataMember]
         public string Balance { get; set; }
 
+        [DataMember]
         public decimal Price { get; set; }
 
-        [MaxLength(5)]
+        [DataMember]
         public string Currency { get; set; }
 
+        [DataMember]
         public decimal Multiplicity { get; set; }
 
+        [DataMember]
         public bool HasPhotos { get; set; }
 
-        public virtual List<PhotoItemEntity> Photos { get; set; }
+        [DataMember]
+        public List<long> Photos { get; set; }
 
-        [Index("IX_DateOfCreation", 1, IsUnique = false)]
+        [DataMember]
         public DateTimeOffset DateOfCreation { get; set; }
 
-        [Index("IX_LastUpdated", 1, IsUnique = false)]
+        [DataMember]
         public DateTimeOffset LastUpdated { get; set; }
 
-        [Index("IX_ForceUpdated", 1, IsUnique = false)]
+        [DataMember]
         public DateTimeOffset ForceUpdated { get; set; }
 
+        [DataMember]
         public CatalogItemStatus Status { get; set; }
 
+        [DataMember]
         public DateTimeOffset LastUpdatedStatus { get; set; }
 
-        public virtual List<BasketItemEntity> BasketItems { get; set; }
-
-        public virtual DirectoryEntity Directory { get; set; }
-
-        public virtual NomenclatureGroupEntity NomenclatureGroup { get; set; }
-
-        public virtual List<CommodityDirectionEntity> CommodityDirection { get; set; }
+        [DataMember]
+        public long DirectoryId { get; set; }
     }
 }

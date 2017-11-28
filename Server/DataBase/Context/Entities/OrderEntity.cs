@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Common.Data.Enum;
-using DataBase.Context.Object;
 
 namespace DataBase.Context.Entities
 {
@@ -10,10 +10,9 @@ namespace DataBase.Context.Entities
     {
         public long Id { get; set; }
 
+        [Index("IX_OrderNumber", 1, IsUnique = true)]
         [MaxLength(30)]
         public string OrderNumber { get; set; }
-
-        public DateTimeOffset DateOfCreation { get; set; }
 
         public decimal Sum { get; set; }
 
@@ -23,5 +22,15 @@ namespace DataBase.Context.Entities
 
         [MaxLength(1024)]
         public string Comment { get; set; }
+
+        [Index("IX_DateOfCreation", 1, IsUnique = false)]
+        public DateTimeOffset DateOfCreation { get; set; }
+
+        [Index("IX_LastUpdated", 1, IsUnique = false)]
+        public DateTimeOffset LastUpdated { get; set; }
+
+        [Index("IX_ForceUpdated", 1, IsUnique = false)]
+        public DateTimeOffset ForceUpdated { get; set; }
+
     }
 }

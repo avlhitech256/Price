@@ -1,4 +1,6 @@
-﻿using DataBase.Context.Object;
+﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
+using DataBase.Context.Object;
 
 namespace DataBase.Context.Entities
 {
@@ -9,5 +11,15 @@ namespace DataBase.Context.Entities
         public CommodityDirection Direction { get; set; }
 
         public virtual DirectoryEntity Directory { get; set; }
+
+        [Index("IX_DateOfCreation", 1, IsUnique = false)]
+        public DateTimeOffset DateOfCreation { get; set; }
+
+        [Index("IX_LastUpdated", 1, IsUnique = false)]
+        public DateTimeOffset LastUpdated { get; set; }
+
+        [Index("IX_ForceUpdated", 1, IsUnique = false)]
+        public DateTimeOffset ForceUpdated { get; set; }
+
     }
 }

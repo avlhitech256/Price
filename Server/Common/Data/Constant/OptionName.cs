@@ -11,5 +11,7 @@
         public const string ArcDestinationPath = "ARCDESTINATIONPATH";
         public const string SubDirForPhoto = "SUBDIRFORPHOTO";
         public const string PhotoPatterns = "PHOTOPATTERNS";
+        public const string CountSendItems = "COUNTSENDITEMS";
+        public const string CountSendPhopos = "COUNTSENDPHOTOS";
     }
 }

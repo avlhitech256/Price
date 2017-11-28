@@ -1013,6 +1013,18 @@ namespace DataBase.Context.Initializer
                     Code = OptionName.PhotoPatterns,
                     Name = "Patterns for input photo files",
                     Value = "*.jpeg"
+                },
+                new OptionItemEntity
+                {
+                    Code = OptionName.CountSendItems,
+                    Name = "Count of items to send in some packedge",
+                    Value = "50"
+                },
+                new OptionItemEntity
+                {
+                    Code = OptionName.CountSendPhopos,
+                    Name = "Count of photos to send in some packedge",
+                    Value = "5"
                 }
             };
 
