@@ -214,6 +214,7 @@ namespace Load.Service.Implementation
             List<PhotoItemEntity> photoItems = GetPhotoItems(dataBaseContext, nomenclature);
             List<string> needToCreatePhotos = GetNeedToCreatePhotos(photoItems, nomenclature);
             photoItems.AddRange(CreateEmptyPhotos(dataBaseContext, needToCreatePhotos));
+            var now = DateTimeOffset.Now;
 
             var catalogItem = new CatalogItemEntity
             {
@@ -234,13 +235,14 @@ namespace Load.Service.Implementation
                 HasPhotos = photoItems.Any(x => x.IsLoad),
                 Photos = photoItems,
                 DateOfCreation = nomenclature.DateOfCreation.ConvertToDateTimeOffset(),
-                LastUpdated = DateTimeOffset.Now,
+                LastUpdated = now,
+                ForceUpdated = now,
                 Status = GenerateStatus(),
                 LastUpdatedStatus = DateTimeOffset.Now,
                 BasketItems = null,
                 Directory = directoryItem,
                 NomenclatureGroup = nomenclatureGroupItem,
-                CommodityDirection = commodityDirectionItemsForCatalogItem
+                CommodityDirection = commodityDirectionItemsForCatalogItem,
             };
 
             if (brandItem != null)
@@ -328,11 +330,16 @@ namespace Load.Service.Implementation
                         {
                             byte[] picture = fileService.ReadByteArrayPicture(x.FullName);
 
+                            var now = DateTimeOffset.Now;
+
                             var photoItem = new PhotoItemEntity
                             {
                                 Name = fileService.GetFileName(x.Name),
                                 IsLoad = true,
-                                Photo = picture
+                                Photo = picture,
+                                DateOfCreation = now,
+                                LastUpdated = now,
+                                ForceUpdated = now
                             };
 
                             dataBaseContext.PhotoItemEntities.Add(photoItem);
@@ -621,11 +628,16 @@ namespace Load.Service.Implementation
 
             if (commodityDirection != null)
             {
+                var now = DateTimeOffset.Now;
+
                 commodityDirectionItem = new CommodityDirectionEntity
                 {
 
                     Code = commodityDirection.UID.ConvertToGuid(),
-                    Name = commodityDirection.Name
+                    Name = commodityDirection.Name,
+                    DateOfCreation = now,
+                    LastUpdated = now,
+                    ForceUpdated = now
                 };
             }
 
@@ -678,10 +690,15 @@ namespace Load.Service.Implementation
 
             if (nomenclatureGroup != null)
             {
+                var now = DateTimeOffset.Now;
+
                 nomenclatureGroupItem = new NomenclatureGroupEntity
                 {
                     Code = nomenclatureGroup.UID.ConvertToGuid(),
-                    Name = nomenclatureGroup.Name
+                    Name = nomenclatureGroup.Name,
+                    DateOfCreation = now,
+                    LastUpdated = now,
+                    ForceUpdated = now
                 };
             }
 
