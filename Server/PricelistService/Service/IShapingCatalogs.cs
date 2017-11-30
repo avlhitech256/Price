@@ -4,13 +4,13 @@ using PricelistService.Service.Contract;
 
 namespace PricelistService.Service
 {
-    public interface IShapingBrands
+    public interface IShapingCatalogs
     {
         long PrepareToUpdate(string login, DateTimeOffset lastUpdate);
 
-        BrandInfo GetItem(long id);
+        CatalogInfo GetItem(long id);
 
-        Brands GetItems(string login, DateTimeOffset lastUpdate);
+        Catalogs GetItems(string login, DateTimeOffset lastUpdate);
 
         void ConfirmUpdate(string login, List<long> itemIds);
     }

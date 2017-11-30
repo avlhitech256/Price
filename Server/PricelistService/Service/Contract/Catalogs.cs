@@ -7,9 +7,6 @@ namespace PricelistService.Service.Contract
     public class Catalogs
     {
         [DataMember]
-        public long StartNumber { get; set; }
-
-        [DataMember]
         public long Count { get; set; }
 
         [DataMember]

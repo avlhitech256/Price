@@ -9,7 +9,7 @@ using PricelistService.Service.Contract;
 
 namespace PricelistService.Service.Implementation
 {
-    public class ShapingBrands : IShapingBrands
+    public class ShapingCatalogs : IShapingCatalogs
     {
         #region Members
 
@@ -20,7 +20,7 @@ namespace PricelistService.Service.Implementation
 
         #region Constructors
 
-        public ShapingBrands(IDataService dataService, IOptionService optionService)
+        public ShapingCatalogs(IDataService dataService, IOptionService optionService)
         {
             this.dataService = dataService;
             this.optionService = optionService;
@@ -30,12 +30,12 @@ namespace PricelistService.Service.Implementation
 
         #region Methods
 
-        public BrandInfo GetItem(long id)
+        public CatalogInfo GetItem(long id)
         {
-            return Assemble(dataService.DataBaseContext.BrandItemEntities.Find(id));
+            return Assemble(dataService.DataBaseContext.CatalogItemEntities.Find(id));
         }
 
-        public Brands GetItems(string login, DateTimeOffset lastUpdate)
+        public Catalogs GetItems(string login, DateTimeOffset lastUpdate)
         {
             long count = RemainderToUpdate(login);
 
@@ -44,7 +44,7 @@ namespace PricelistService.Service.Implementation
                 count = PrepareToUpdate(login, lastUpdate);
             }
 
-            Brands result = new Brands
+            Catalogs result = new Catalogs
             {
                 Count = count,
                 Items = GetBrandInfos(login)
@@ -57,42 +57,60 @@ namespace PricelistService.Service.Implementation
         {
             IEnumerable<SendItemsEntity> brandsToDelete = dataService.Select<SendItemsEntity>()
                 .Where(x => x.Login == login)
-                .Where(x => x.EntityName == EntityName.BrandItemEntity)
+                .Where(x => x.EntityName == EntityName.CatalogItemEntity)
                 .Where(x => itemIds.Contains(x.Id))
                 .AsEnumerable();
             dataService.DeleteEntities(brandsToDelete);
         }
 
-        private List<BrandInfo> GetBrandInfos(string login)
+        private List<CatalogInfo> GetBrandInfos(string login)
         {
-            List<long> brandIds = dataService.Select<SendItemsEntity>()
+            List<long> catalogIds = dataService.Select<SendItemsEntity>()
                 .Where(x => x.Login == login)
-                .Where(x => x.EntityName == EntityName.BrandItemEntity)
+                .Where(x => x.EntityName == EntityName.CatalogItemEntity)
                 .Take(optionService.CountSendItems)
                 .Select(x => x.EntityId)
                 .ToList();
 
-            List<BrandInfo> result =
-                dataService.Select<BrandItemEntity>()
-                    .Where(x => brandIds.Contains(x.Id))
+            List<CatalogInfo> result =
+                dataService.Select<CatalogItemEntity>()
+                    .Where(x => catalogIds.Contains(x.Id))
                     .Select(Assemble)
                     .ToList();
 
             return result;
         }
 
-        private BrandInfo Assemble(BrandItemEntity item)
+        private CatalogInfo Assemble(CatalogItemEntity item)
         {
-            BrandInfo result = null;
+            CatalogInfo result = null;
 
             if (item != null)
             {
-                result = new BrandInfo
+                result = new CatalogInfo
                 {
                     Id = item.Id,
+                    UID = item.UID,
                     Code = item.Code,
+                    Article = item.Article,
                     Name = item.Name,
-                    CatalogId = item.CatalogItems.Select(x => x.Id).ToList()
+                    BrandId = item.Brand.Id,
+                    BrandName = item.BrandName,
+                    Unit = item.Unit,
+                    EnterpriceNormPack = item.EnterpriceNormPack,
+                    BatchOfSales = item.BatchOfSales,
+                    Balance = item.Balance,
+                    Price = item.Price,
+                    Currency = item.Currency,
+                    Multiplicity = item.Multiplicity,
+                    HasPhotos = item.HasPhotos,
+                    Photos = item.Photos != null ? item.Photos.Select(x => x.Id).ToList() : new List<long>(),
+                    DateOfCreation = item.DateOfCreation,
+                    LastUpdated = item.LastUpdated,
+                    ForceUpdated = item.ForceUpdated,
+                    Status = item.Status,
+                    LastUpdatedStatus = item.LastUpdatedStatus,
+                    DirectoryId = item.Directory.Id
                 };
             }
 
@@ -104,15 +122,15 @@ namespace PricelistService.Service.Implementation
             if (dataService.Select<SendItemsEntity>().All(x => x.RequestDate != lastUpdate))
             {
                 int count = 0;
-                List<long> brandIds = dataService.Select<SendItemsEntity>()
+                List<long> catalogIds = dataService.Select<SendItemsEntity>()
                     .Where(x => x.Login == login)
-                    .Where(x => x.EntityName == EntityName.BrandItemEntity)
+                    .Where(x => x.EntityName == EntityName.CatalogItemEntity)
                     .Select(x => x.Id)
                     .ToList();
 
-                dataService.Select<BrandItemEntity>()
+                dataService.Select<CatalogItemEntity>()
                     .Where(x => x.LastUpdated > lastUpdate)
-                    .Where(x => !brandIds.Contains(x.Id))
+                    .Where(x => !catalogIds.Contains(x.Id))
                     .ToList()
                     .ForEach(
                         x =>
@@ -120,7 +138,7 @@ namespace PricelistService.Service.Implementation
                             SendItemsEntity item = new SendItemsEntity
                             {
                                 Login = login,
-                                EntityName = EntityName.BrandItemEntity,
+                                EntityName = EntityName.CatalogItemEntity,
                                 EntityId = x.Id,
                                 RequestDate = lastUpdate
                             };
@@ -148,7 +166,7 @@ namespace PricelistService.Service.Implementation
         private long RemainderToUpdate(string login)
         {
             return dataService.Select<SendItemsEntity>()
-                .Count(x => x.Login == login && x.EntityName == EntityName.BrandItemEntity);
+                .Count(x => x.Login == login && x.EntityName == EntityName.CatalogItemEntity);
         }
 
         #endregion

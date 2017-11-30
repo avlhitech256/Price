@@ -45,6 +45,29 @@ namespace PricelistService.Service.Implementation
             return result;
         }
 
+        public CountInfo PrepareToUpdate(string login, DateTimeOffset lastUpdate, bool needLoadPhotos)
+        {
+            IShapingBrands shapingBrands = new ShapingBrands(dataService, optionService);
+            IShapingCatalogs shapingCatalogs = new ShapingCatalogs(dataService, optionService);
+
+            CountInfo result = new CountInfo
+            {
+                CountBrands = shapingBrands.PrepareToUpdate(login, lastUpdate),
+                CountCatalog = shapingCatalogs.PrepareToUpdate(login, lastUpdate),
+                CountDirectory = 0,
+                CountPhoto = needLoadPhotos ? 1 : 0
+            };
+
+            return result;
+        }
+
+        public BrandInfo GetBrand(long id)
+        {
+            IShapingBrands shaping = new ShapingBrands(dataService, optionService);
+            BrandInfo brands = shaping.GetItem(id);
+            return brands;
+        }
+
         public Brands GetBrands(string login, DateTimeOffset lastUpdate)
         {
             IShapingBrands shaping = new ShapingBrands(dataService, optionService);
@@ -55,7 +78,27 @@ namespace PricelistService.Service.Implementation
         public void ConfirmUpdateBrands(string login, DateTimeOffset lastUpdate, List<long> itemIds)
         {
             IShapingBrands shaping = new ShapingBrands(dataService, optionService);
-            shaping.ConfirmUpdateBrands(login, lastUpdate, itemIds);
+            shaping.ConfirmUpdate(login, itemIds);
+        }
+
+        public CatalogInfo GetCatalog(long id)
+        {
+            IShapingCatalogs shaping = new ShapingCatalogs(dataService, optionService);
+            CatalogInfo brands = shaping.GetItem(id);
+            return brands;
+        }
+
+        public Catalogs GetCatalogs(string login, DateTimeOffset lastUpdate)
+        {
+            IShapingCatalogs shaping = new ShapingCatalogs(dataService, optionService);
+            Catalogs brands = shaping.GetItems(login, lastUpdate);
+            return brands;
+        }
+
+        public void ConfirmUpdateCatalogs(string login, List<long> itemIds)
+        {
+            IShapingCatalogs shaping = new ShapingCatalogs(dataService, optionService);
+            shaping.ConfirmUpdate(login, itemIds);
         }
 
         #endregion

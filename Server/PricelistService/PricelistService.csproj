@@ -55,8 +55,11 @@
     <Compile Include="Service\Contract\CatalogInfo.cs" />
     <Compile Include="Service\Contract\Catalogs.cs" />
     <Compile Include="Service\Contract\CompanyInfo.cs" />
+    <Compile Include="Service\Contract\CountInfo.cs" />
     <Compile Include="Service\Contract\Directories.cs" />
     <Compile Include="Service\Contract\DirectoryInfo.cs" />
+    <Compile Include="Service\Implementation\ShapingCatalogs.cs" />
+    <Compile Include="Service\IShapingCatalogs.cs" />
     <Compile Include="Service\Contract\PhotoInfo.cs" />
     <Compile Include="Service\Contract\Photos.cs" />
     <Compile Include="Service\Implementation\ShapingBrands.cs" />
