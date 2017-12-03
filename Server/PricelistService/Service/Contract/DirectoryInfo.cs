@@ -8,6 +8,9 @@ namespace PricelistService.Service.Contract
     public class DirectoryInfo
     {
         [DataMember]
+        public bool IsAuthorized { get; set; }
+
+        [DataMember]
         public long Id { get; set; }
 
         [DataMember]
@@ -24,5 +27,14 @@ namespace PricelistService.Service.Contract
 
         [DataMember]
         public virtual List<long> CatalogId { get; set; }
+
+        [DataMember]
+        public DateTimeOffset DateOfCreation { get; set; }
+
+        [DataMember]
+        public DateTimeOffset LastUpdated { get; set; }
+
+        [DataMember]
+        public DateTimeOffset ForceUpdated { get; set; }
     }
 }

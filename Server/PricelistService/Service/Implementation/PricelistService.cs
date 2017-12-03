@@ -30,75 +30,245 @@ namespace PricelistService.Service.Implementation
 
         #region Methods
 
-        public CompanyInfo Hello(string login, DateTimeOffset timeRequest)
+        public CompanyInfo Hello(SecurityInfo securityInfo)
         {
-            CompanyInfo result = new CompanyInfo();
+            CompanyInfo result = null;
 
-            result.Title = "Hello " + login;
-            result.CompanyName = "Autotrend";
-            result.Phone = "+380 (57) 784-18-81";
-            result.WebSite = "http://autotrend.ua/";
-            result.EMail = "office@autotrend.ua";
-            result.TimeRequest = timeRequest;
-            result.TimeResponce = DateTimeOffset.Now;
-
-            return result;
-        }
-
-        public CountInfo PrepareToUpdate(string login, DateTimeOffset lastUpdate, bool needLoadPhotos)
-        {
-            IShapingBrands shapingBrands = new ShapingBrands(dataService, optionService);
-            IShapingCatalogs shapingCatalogs = new ShapingCatalogs(dataService, optionService);
-
-            CountInfo result = new CountInfo
+            if (securityInfo == null || ValidatePassword(securityInfo))
             {
-                CountBrands = shapingBrands.PrepareToUpdate(login, lastUpdate),
-                CountCatalog = shapingCatalogs.PrepareToUpdate(login, lastUpdate),
-                CountDirectory = 0,
-                CountPhoto = needLoadPhotos ? 1 : 0
-            };
+                result = new CompanyInfo
+                {
+                    Title = "Hello " + securityInfo?.Login,
+                    CompanyName = "Autotrend",
+                    Phone = "+380 (57) 784-18-81",
+                    WebSite = "http://autotrend.ua/",
+                    EMail = "office@autotrend.ua",
+                    TimeRequest = securityInfo?.TimeRequest ?? DateTimeOffset.Now,
+                    TimeResponce = DateTimeOffset.Now
+                };
+            }
 
             return result;
         }
 
-        public BrandInfo GetBrand(long id)
+        public bool ChangePasswodr(SecurityInfo securityInfo, string newPassword)
         {
-            IShapingBrands shaping = new ShapingBrands(dataService, optionService);
-            BrandInfo brands = shaping.GetItem(id);
+            bool result = false;
+
+            if (ValidatePassword(securityInfo))
+            {
+                ISecurityService securityService = new SecurityService(dataService, optionService);
+                result = securityService.ChangePasswodr(securityInfo, newPassword);
+            }
+
+            return result;
+        }
+
+        public CountInfo PrepareToUpdate(SecurityInfo securityInfo, DateTimeOffset lastUpdate, bool needLoadPhotos)
+        {
+            CountInfo result = null;
+
+            if (ValidatePassword(securityInfo))
+            {
+                IShapingBrands shapingBrands = new ShapingBrands(dataService, optionService);
+                IShapingCatalogs shapingCatalogs = new ShapingCatalogs(dataService, optionService);
+                IShapingDirectories shapingDirectories = new ShapingDirectories(dataService, optionService);
+                IShapingProductDirections shapingProductDirections = new ShapingProductDirections(dataService,
+                    optionService);
+                IShapingPhotos shapingPhotos = new ShapingPhotos(dataService, optionService);
+
+                result = new CountInfo
+                {
+                    CountBrands = shapingBrands.PrepareToUpdate(securityInfo.Login, lastUpdate),
+                    CountCatalogs = shapingCatalogs.PrepareToUpdate(securityInfo.Login, lastUpdate),
+                    CountDirectories = shapingDirectories.PrepareToUpdate(securityInfo.Login, lastUpdate),
+                    CountProductDirections = shapingProductDirections.PrepareToUpdate(securityInfo.Login, lastUpdate),
+                    CountPhotos = needLoadPhotos ? shapingPhotos.PrepareToUpdate(securityInfo.Login, lastUpdate) : 0
+                };
+            }
+
+            return result;
+        }
+
+        public BrandInfo GetBrand(SecurityInfo securityInfo, long id)
+        {
+            BrandInfo brands = null;
+
+            if (ValidatePassword(securityInfo))
+            {
+                IShapingBrands shaping = new ShapingBrands(dataService, optionService);
+                brands = shaping.GetItem(id);
+            }
+
             return brands;
         }
 
-        public Brands GetBrands(string login, DateTimeOffset lastUpdate)
+        public Brands GetBrands(SecurityInfo securityInfo, DateTimeOffset lastUpdate)
         {
-            IShapingBrands shaping = new ShapingBrands(dataService, optionService);
-            Brands brands = shaping.GetItems(login, lastUpdate);
+            Brands brands = null;
+
+            if (ValidatePassword(securityInfo))
+            {
+                IShapingBrands shaping = new ShapingBrands(dataService, optionService);
+                brands = shaping.GetItems(securityInfo.Login, lastUpdate);
+            }
+
             return brands;
         }
 
-        public void ConfirmUpdateBrands(string login, DateTimeOffset lastUpdate, List<long> itemIds)
+        public void ConfirmUpdateBrands(SecurityInfo securityInfo, DateTimeOffset lastUpdate, List<long> itemIds)
         {
-            IShapingBrands shaping = new ShapingBrands(dataService, optionService);
-            shaping.ConfirmUpdate(login, itemIds);
+            if (ValidatePassword(securityInfo))
+            {
+                IShapingBrands shaping = new ShapingBrands(dataService, optionService);
+                shaping.ConfirmUpdate(securityInfo.Login, itemIds);
+            }
         }
 
-        public CatalogInfo GetCatalog(long id)
+        public CatalogInfo GetCatalog(SecurityInfo securityInfo, long id)
         {
-            IShapingCatalogs shaping = new ShapingCatalogs(dataService, optionService);
-            CatalogInfo brands = shaping.GetItem(id);
-            return brands;
+            CatalogInfo catalogInfo = null;
+
+            if (ValidatePassword(securityInfo))
+            {
+                IShapingCatalogs shaping = new ShapingCatalogs(dataService, optionService);
+                catalogInfo = shaping.GetItem(id);
+            }
+
+            return catalogInfo;
         }
 
-        public Catalogs GetCatalogs(string login, DateTimeOffset lastUpdate)
+        public Catalogs GetCatalogs(SecurityInfo securityInfo, DateTimeOffset lastUpdate)
         {
-            IShapingCatalogs shaping = new ShapingCatalogs(dataService, optionService);
-            Catalogs brands = shaping.GetItems(login, lastUpdate);
-            return brands;
+            Catalogs catalogs = null;
+
+            if (ValidatePassword(securityInfo))
+            {
+                IShapingCatalogs shaping = new ShapingCatalogs(dataService, optionService);
+                catalogs = shaping.GetItems(securityInfo.Login, lastUpdate);
+            }
+
+            return catalogs;
         }
 
-        public void ConfirmUpdateCatalogs(string login, List<long> itemIds)
+        public void ConfirmUpdateCatalogs(SecurityInfo securityInfo, List<long> itemIds)
         {
-            IShapingCatalogs shaping = new ShapingCatalogs(dataService, optionService);
-            shaping.ConfirmUpdate(login, itemIds);
+            if (ValidatePassword(securityInfo))
+            {
+                IShapingCatalogs shaping = new ShapingCatalogs(dataService, optionService);
+                shaping.ConfirmUpdate(securityInfo.Login, itemIds);
+            }
+        }
+
+        public DirectoryInfo GetDirectory(SecurityInfo securityInfo, long id)
+        {
+            DirectoryInfo directory = null;
+
+            if (ValidatePassword(securityInfo))
+            {
+                IShapingDirectories shaping = new ShapingDirectories(dataService, optionService);
+                directory = shaping.GetItem(id);
+            }
+
+            return directory;
+        }
+
+        public Directories GetDirectories(SecurityInfo securityInfo, DateTimeOffset lastUpdate)
+        {
+            Directories directories = null;
+
+            if (ValidatePassword(securityInfo))
+            {
+                IShapingDirectories shaping = new ShapingDirectories(dataService, optionService);
+                directories = shaping.GetItems(securityInfo.Login, lastUpdate);
+            }
+
+            return directories;
+        }
+
+        public void ConfirmUpdateDirectories(SecurityInfo securityInfo, List<long> itemIds)
+        {
+            if (ValidatePassword(securityInfo))
+            {
+                IShapingDirectories shaping = new ShapingDirectories(dataService, optionService);
+                shaping.ConfirmUpdate(securityInfo.Login, itemIds);
+            }
+        }
+
+        public PhotoInfo GetPhoto(SecurityInfo securityInfo, long id)
+        {
+            PhotoInfo photoInfo = null;
+
+            if (ValidatePassword(securityInfo))
+            {
+                IShapingPhotos shaping = new ShapingPhotos(dataService, optionService);
+                photoInfo = shaping.GetItem(id);
+            }
+
+            return photoInfo;
+        }
+
+        public Photos GetPhotos(SecurityInfo securityInfo, DateTimeOffset lastUpdate)
+        {
+            Photos photos = null;
+
+            if (ValidatePassword(securityInfo))
+            {
+                IShapingPhotos shaping = new ShapingPhotos(dataService, optionService);
+                photos = shaping.GetItems(securityInfo.Login, lastUpdate);
+            }
+
+            return photos;
+        }
+
+        public void ConfirmUpdatePhotos(SecurityInfo securityInfo, List<long> itemIds)
+        {
+            if (ValidatePassword(securityInfo))
+            {
+                IShapingPhotos shaping = new ShapingPhotos(dataService, optionService);
+                shaping.ConfirmUpdate(securityInfo.Login, itemIds);
+            }
+        }
+
+        public ProductDirectionInfo GetProductDirection(SecurityInfo securityInfo, long id)
+        {
+            ProductDirectionInfo productDirectionInfo = null;
+
+            if (ValidatePassword(securityInfo))
+            {
+                IShapingProductDirections shaping = new ShapingProductDirections(dataService, optionService);
+                productDirectionInfo = shaping.GetItem(id);
+            }
+
+            return productDirectionInfo;
+        }
+
+        public ProductDirections GetProductDirections(SecurityInfo securityInfo, DateTimeOffset lastUpdate)
+        {
+            ProductDirections productDirections = null;
+
+            if (ValidatePassword(securityInfo))
+            {
+                IShapingProductDirections shaping = new ShapingProductDirections(dataService, optionService);
+                productDirections = shaping.GetItems(securityInfo.Login, lastUpdate);
+            }
+
+            return productDirections;
+        }
+
+        public void ConfirmUpdateProductDirections(SecurityInfo securityInfo, List<long> itemIds)
+        {
+            if (ValidatePassword(securityInfo))
+            {
+                IShapingProductDirections shaping = new ShapingProductDirections(dataService, optionService);
+                shaping.ConfirmUpdate(securityInfo.Login, itemIds);
+            }
+        }
+
+        private bool ValidatePassword(SecurityInfo securityInfo)
+        {
+            ISecurityService securityService = new SecurityService(dataService, optionService);
+            return securityService.ValidatePassword(securityInfo);
         }
 
         #endregion

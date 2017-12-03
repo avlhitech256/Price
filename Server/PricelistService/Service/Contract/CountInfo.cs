@@ -6,15 +6,21 @@ namespace PricelistService.Service.Contract
     public class CountInfo
     {
         [DataMember]
+        public bool IsAuthorized { get; set; }
+
+        [DataMember]
         public long CountBrands { get; set; }
 
         [DataMember]
-        public long CountCatalog { get; set; }
+        public long CountCatalogs { get; set; }
 
         [DataMember]
-        public long CountDirectory { get; set; }
+        public long CountDirectories { get; set; }
 
         [DataMember]
-        public long CountPhoto { get; set; }
+        public long CountProductDirections { get; set; }
+
+        [DataMember]
+        public long CountPhotos { get; set; }
     }
 }

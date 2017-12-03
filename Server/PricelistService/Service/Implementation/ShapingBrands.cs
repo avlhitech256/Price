@@ -32,7 +32,25 @@ namespace PricelistService.Service.Implementation
 
         public BrandInfo GetItem(long id)
         {
-            return Assemble(dataService.DataBaseContext.BrandItemEntities.Find(id));
+            BrandInfo result = null;
+            BrandItemEntity entity = null;
+
+            try
+            {
+                entity = dataService.DataBaseContext.BrandItemEntities.Find(id);
+            }
+            catch (Exception)
+            {
+                result = new BrandInfo();
+                //throw;
+            }
+
+            if (entity != null)
+            {
+                result = Assemble(entity);
+            }
+
+            return result;
         }
 
         public Brands GetItems(string login, DateTimeOffset lastUpdate)
@@ -92,7 +110,10 @@ namespace PricelistService.Service.Implementation
                     Id = item.Id,
                     Code = item.Code,
                     Name = item.Name,
-                    CatalogId = item.CatalogItems.Select(x => x.Id).ToList()
+                    CatalogId = item.CatalogItems.Select(x => x.Id).ToList(),
+                    DateOfCreation = item.DateOfCreation,
+                    ForceUpdated = item.ForceUpdated,
+                    LastUpdated = item.LastUpdated
                 };
             }
 
@@ -101,7 +122,10 @@ namespace PricelistService.Service.Implementation
 
         private void ShapingBrandsList(string login, DateTimeOffset lastUpdate)
         {
-            if (dataService.Select<SendItemsEntity>().All(x => x.RequestDate != lastUpdate))
+            if (!dataService.Select<SendItemsEntity>()
+                    .Any(x => x.RequestDate >= lastUpdate &&
+                              x.Login == login &&
+                              x.EntityName == EntityName.BrandItemEntity))
             {
                 int count = 0;
                 List<long> brandIds = dataService.Select<SendItemsEntity>()

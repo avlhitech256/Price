@@ -1,6 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
-using DataBase.Context.Object;
+using Common.Data.Enum;
 
 namespace DataBase.Context.Entities
 {
@@ -20,6 +20,5 @@ namespace DataBase.Context.Entities
 
         [Index("IX_ForceUpdated", 1, IsUnique = false)]
         public DateTimeOffset ForceUpdated { get; set; }
-
     }
 }

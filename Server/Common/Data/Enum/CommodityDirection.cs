@@ -1,4 +1,4 @@
-﻿namespace DataBase.Context.Object
+﻿namespace Common.Data.Enum
 {
     public enum CommodityDirection
     {

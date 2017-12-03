@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Enum\CatalogItemStatus.cs" />
+    <Compile Include="Data\Enum\CommodityDirection.cs" />
     <Compile Include="Data\Enum\OrderStatus.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Data\Constant\CatalogColumnNames.cs" />

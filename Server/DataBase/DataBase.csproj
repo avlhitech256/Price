@@ -66,8 +66,6 @@
     <Compile Include="Context\Entities\ProductDirectionEntity.cs" />
     <Compile Include="Context\Entities\SendItemsEntity.cs" />
     <Compile Include="Context\Initializer\DataBaseInitializer.cs" />
-    <Compile Include="Context\Object\CatalogItemStatus.cs" />
-    <Compile Include="Context\Object\CommodityDirection.cs" />
     <Compile Include="Context\Object\EntityName.cs" />
     <Compile Include="Objects\PriceInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

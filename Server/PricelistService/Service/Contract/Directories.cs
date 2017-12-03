@@ -7,7 +7,7 @@ namespace PricelistService.Service.Contract
     public class Directories
     {
         [DataMember]
-        public long StartNumber { get; set; }
+        public bool IsAuthorized { get; set; }
 
         [DataMember]
         public long Count { get; set; }

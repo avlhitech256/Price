@@ -10,27 +10,54 @@ namespace PricelistService.Service
     public interface IPricelistService
     {
         [OperationContract]
-        CompanyInfo Hello(string login, DateTimeOffset timeRequest);
+        CompanyInfo Hello(SecurityInfo securityInfo);
 
         [OperationContract]
-        CountInfo PrepareToUpdate(string login, DateTimeOffset lastUpdate, bool needLoadPhotos);
+        CountInfo PrepareToUpdate(SecurityInfo securityInfo, DateTimeOffset lastUpdate, bool needLoadPhotos);
 
         [OperationContract]
-        BrandInfo GetBrand(long id);
+        BrandInfo GetBrand(SecurityInfo securityInfo, long id);
 
         [OperationContract]
-        Brands GetBrands(string login, DateTimeOffset lastUpdate);
+        Brands GetBrands(SecurityInfo securityInfo, DateTimeOffset lastUpdate);
 
         [OperationContract]
-        void ConfirmUpdateBrands(string login, DateTimeOffset lastUpdate, List<long> itemIds);
+        void ConfirmUpdateBrands(SecurityInfo securityInfo, DateTimeOffset lastUpdate, List<long> itemIds);
 
         [OperationContract]
-        CatalogInfo GetCatalog(long id);
+        CatalogInfo GetCatalog(SecurityInfo securityInfo, long id);
 
         [OperationContract]
-        Catalogs GetCatalogs(string login, DateTimeOffset lastUpdate);
+        Catalogs GetCatalogs(SecurityInfo securityInfo, DateTimeOffset lastUpdate);
 
         [OperationContract]
-        void ConfirmUpdateCatalogs(string login, List<long> itemIds);
+        void ConfirmUpdateCatalogs(SecurityInfo securityInfo, List<long> itemIds);
+
+        [OperationContract]
+        DirectoryInfo GetDirectory(SecurityInfo securityInfo, long id);
+
+        [OperationContract]
+        Directories GetDirectories(SecurityInfo securityInfo, DateTimeOffset lastUpdate);
+
+        [OperationContract]
+        void ConfirmUpdateDirectories(SecurityInfo securityInfo, List<long> itemIds);
+
+        [OperationContract]
+        PhotoInfo GetPhoto(SecurityInfo securityInfo, long id);
+
+        [OperationContract]
+        Photos GetPhotos(SecurityInfo securityInfo, DateTimeOffset lastUpdate);
+
+        [OperationContract]
+        void ConfirmUpdatePhotos(SecurityInfo securityInfo, List<long> itemIds);
+
+        [OperationContract]
+        ProductDirectionInfo GetProductDirection(SecurityInfo securityInfo, long id);
+
+        [OperationContract]
+        ProductDirections GetProductDirections(SecurityInfo securityInfo, DateTimeOffset lastUpdate);
+
+        [OperationContract]
+        void ConfirmUpdateProductDirections(SecurityInfo securityInfo, List<long> itemIds);
     }
 }

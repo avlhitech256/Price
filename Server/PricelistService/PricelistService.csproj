@@ -58,7 +58,15 @@
     <Compile Include="Service\Contract\CountInfo.cs" />
     <Compile Include="Service\Contract\Directories.cs" />
     <Compile Include="Service\Contract\DirectoryInfo.cs" />
+    <Compile Include="Service\Contract\ProductDirectionInfo.cs" />
+    <Compile Include="Service\Contract\ProductDirections.cs" />
+    <Compile Include="Service\Contract\SecurityInfo.cs" />
+    <Compile Include="Service\Implementation\SecurityService.cs" />
     <Compile Include="Service\Implementation\ShapingCatalogs.cs" />
+    <Compile Include="Service\Implementation\ShapingDirectories.cs" />
+    <Compile Include="Service\Implementation\ShapingPhotos.cs" />
+    <Compile Include="Service\Implementation\ShapingProductDirections.cs" />
+    <Compile Include="Service\ISecurityService.cs" />
     <Compile Include="Service\IShapingCatalogs.cs" />
     <Compile Include="Service\Contract\PhotoInfo.cs" />
     <Compile Include="Service\Contract\Photos.cs" />
@@ -66,11 +74,18 @@
     <Compile Include="Service\IShapingBrands.cs" />
     <Compile Include="Service\IPricelistService.cs" />
     <Compile Include="Service\Implementation\PricelistService.cs" />
+    <Compile Include="Service\IShapingDirectories.cs" />
+    <Compile Include="Service\IShapingPhotos.cs" />
+    <Compile Include="Service\IShapingProductDirections.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{9798781f-3852-4a2d-9294-8d8d8c6d7401}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DataBase\DataBase.csproj">
       <Project>{273286be-3fc0-4c0f-87c0-302a587c2904}</Project>
       <Name>DataBase</Name>

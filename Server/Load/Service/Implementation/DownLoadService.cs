@@ -4,10 +4,10 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using Common.Annotations;
+using Common.Data.Enum;
 using Common.Service.Implementation;
 using DataBase.Context;
 using DataBase.Context.Entities;
-using DataBase.Context.Object;
 using DataBase.Objects;
 using DataBase.Service;
 using DataBase.Service.Implementation;
@@ -15,6 +15,7 @@ using File.Service;
 using File.Service.Implementation;
 using Json.Contract;
 using Option.Service;
+using CommodityDirection = Common.Data.Enum.CommodityDirection;
 using Directory = Json.Contract.Directory;
 
 namespace Load.Service.Implementation
@@ -711,7 +712,7 @@ namespace Load.Service.Implementation
             {
                 var now = DateTimeOffset.Now;
                 ProductDirectionEntity item = dataBaseContext.ProductDirectionEntities.Create();
-                item.Direction = DataBase.Context.Object.CommodityDirection.Vaz;
+                item.Direction = CommodityDirection.Vaz;
                 item.DateOfCreation = now;
                 item.ForceUpdated = now;
                 item.LastUpdated = now;
@@ -720,7 +721,7 @@ namespace Load.Service.Implementation
                 dataBaseContext.ProductDirectionEntities.Add(item);
 
                 item = dataBaseContext.ProductDirectionEntities.Create();
-                item.Direction = DataBase.Context.Object.CommodityDirection.Gaz;
+                item.Direction = CommodityDirection.Gaz;
                 item.DateOfCreation = now;
                 item.ForceUpdated = now;
                 item.LastUpdated = now;
@@ -729,7 +730,7 @@ namespace Load.Service.Implementation
                 dataBaseContext.ProductDirectionEntities.Add(item);
 
                 item = dataBaseContext.ProductDirectionEntities.Create();
-                item.Direction = DataBase.Context.Object.CommodityDirection.Zaz;
+                item.Direction = CommodityDirection.Zaz;
                 item.DateOfCreation = now;
                 item.ForceUpdated = now;
                 item.LastUpdated = now;
@@ -738,7 +739,7 @@ namespace Load.Service.Implementation
                 dataBaseContext.ProductDirectionEntities.Add(item);
 
                 item = dataBaseContext.ProductDirectionEntities.Create();
-                item.Direction = DataBase.Context.Object.CommodityDirection.Chemistry;
+                item.Direction = CommodityDirection.Chemistry;
                 item.DateOfCreation = now;
                 item.ForceUpdated = now;
                 item.LastUpdated = now;
@@ -747,7 +748,7 @@ namespace Load.Service.Implementation
                 dataBaseContext.ProductDirectionEntities.Add(item);
 
                 item = dataBaseContext.ProductDirectionEntities.Create();
-                item.Direction = DataBase.Context.Object.CommodityDirection.Battery;
+                item.Direction = CommodityDirection.Battery;
                 item.DateOfCreation = now;
                 item.ForceUpdated = now;
                 item.LastUpdated = now;
@@ -756,7 +757,7 @@ namespace Load.Service.Implementation
                 dataBaseContext.ProductDirectionEntities.Add(item);
 
                 item = dataBaseContext.ProductDirectionEntities.Create();
-                item.Direction = DataBase.Context.Object.CommodityDirection.Gas;
+                item.Direction = CommodityDirection.Gas;
                 item.DateOfCreation = now;
                 item.ForceUpdated = now;
                 item.LastUpdated = now;
@@ -765,7 +766,7 @@ namespace Load.Service.Implementation
                 dataBaseContext.ProductDirectionEntities.Add(item);
 
                 item = dataBaseContext.ProductDirectionEntities.Create();
-                item.Direction = DataBase.Context.Object.CommodityDirection.Instrument;
+                item.Direction = CommodityDirection.Instrument;
                 item.DateOfCreation = now;
                 item.ForceUpdated = now;
                 item.LastUpdated = now;
@@ -774,7 +775,7 @@ namespace Load.Service.Implementation
                 dataBaseContext.ProductDirectionEntities.Add(item);
 
                 item = dataBaseContext.ProductDirectionEntities.Create();
-                item.Direction = DataBase.Context.Object.CommodityDirection.Common;
+                item.Direction = CommodityDirection.Common;
                 item.DateOfCreation = now;
                 item.ForceUpdated = now;
                 item.LastUpdated = now;

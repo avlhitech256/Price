@@ -7,6 +7,9 @@ namespace PricelistService.Service.Contract
     public class Brands
     {
         [DataMember]
+        public bool IsAuthorized { get; set; }
+
+        [DataMember]
         public long Count { get; set; }
 
         [DataMember]

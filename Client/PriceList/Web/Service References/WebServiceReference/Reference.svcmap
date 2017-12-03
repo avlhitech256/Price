@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="30225461-0ad0-48c8-8079-64202e82e997" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://zakazdev.autotrend.ua:5778/Pricelist/PricelistService.svc?wsdl" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="PricelistService.wsdl" MetadataType="Wsdl" ID="a44e5583-03ee-4584-8cd0-6e6a1d5ba0ae" SourceId="1" SourceUrl="http://zakazdev.autotrend.ua:5778/Pricelist/PricelistService.svc?wsdl" />
+    <MetadataFile FileName="PricelistService.xsd" MetadataType="Schema" ID="91e7de94-2a7c-4acd-be68-89bd2a046101" SourceId="1" SourceUrl="http://zakazdev.autotrend.ua:5778/Pricelist/PricelistService.svc?xsd=xsd2" />
+    <MetadataFile FileName="PricelistService1.xsd" MetadataType="Schema" ID="596888b0-d1d6-4f6b-8cd4-c087b3b930a6" SourceId="1" SourceUrl="http://zakazdev.autotrend.ua:5778/Pricelist/PricelistService.svc?xsd=xsd3" />
+    <MetadataFile FileName="PricelistService2.xsd" MetadataType="Schema" ID="02d6330b-a482-439a-a3c8-7c1a7aefcc36" SourceId="1" SourceUrl="http://zakazdev.autotrend.ua:5778/Pricelist/PricelistService.svc?xsd=xsd0" />
+    <MetadataFile FileName="PricelistService3.xsd" MetadataType="Schema" ID="60f02601-89f2-4154-bb8f-d6b4d6649c7f" SourceId="1" SourceUrl="http://zakazdev.autotrend.ua:5778/Pricelist/PricelistService.svc?xsd=xsd1" />
+    <MetadataFile FileName="PricelistService4.xsd" MetadataType="Schema" ID="af949616-cf53-458b-94d5-7e8a5d3b3024" SourceId="1" SourceUrl="http://zakazdev.autotrend.ua:5778/Pricelist/PricelistService.svc?xsd=xsd4" />
+    <MetadataFile FileName="PricelistService5.xsd" MetadataType="Schema" ID="14e44c1d-bb0f-4760-887d-0b9c3d25dda8" SourceId="1" SourceUrl="http://zakazdev.autotrend.ua:5778/Pricelist/PricelistService.svc?xsd=xsd5" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

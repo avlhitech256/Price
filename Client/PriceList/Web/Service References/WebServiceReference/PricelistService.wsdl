@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="PricelistService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://zakazdev.autotrend.ua:5778/Pricelist/PricelistService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://zakazdev.autotrend.ua:5778/Pricelist/PricelistService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://zakazdev.autotrend.ua:5778/Pricelist/PricelistService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract" />
+      <xsd:import schemaLocation="http://zakazdev.autotrend.ua:5778/Pricelist/PricelistService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/System" />
+      <xsd:import schemaLocation="http://zakazdev.autotrend.ua:5778/Pricelist/PricelistService.svc?xsd=xsd4" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import schemaLocation="http://zakazdev.autotrend.ua:5778/Pricelist/PricelistService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/Common.Data.Enum" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IPricelistService_Hello_InputMessage">
+    <wsdl:part name="parameters" element="tns:Hello" />
+  </wsdl:message>
+  <wsdl:message name="IPricelistService_Hello_OutputMessage">
+    <wsdl:part name="parameters" element="tns:HelloResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPricelistService_PrepareToUpdate_InputMessage">
+    <wsdl:part name="parameters" element="tns:PrepareToUpdate" />
+  </wsdl:message>
+  <wsdl:message name="IPricelistService_PrepareToUpdate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PrepareToUpdateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPricelistService_GetBrand_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetBrand" />
+  </wsdl:message>
+  <wsdl:message name="IPricelistService_GetBrand_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetBrandResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPricelistService_GetBrands_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetBrands" />
+  </wsdl:message>
+  <wsdl:message name="IPricelistService_GetBrands_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetBrandsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPricelistService_ConfirmUpdateBrands_InputMessage">
+    <wsdl:part name="parameters" element="tns:ConfirmUpdateBrands" />
+  </wsdl:message>
+  <wsdl:message name="IPricelistService_ConfirmUpdateBrands_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ConfirmUpdateBrandsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPricelistService_GetCatalog_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCatalog" />
+  </wsdl:message>
+  <wsdl:message name="IPricelistService_GetCatalog_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCatalogResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPricelistService_GetCatalogs_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCatalogs" />
+  </wsdl:message>
+  <wsdl:message name="IPricelistService_GetCatalogs_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCatalogsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPricelistService_ConfirmUpdateCatalogs_InputMessage">
+    <wsdl:part name="parameters" element="tns:ConfirmUpdateCatalogs" />
+  </wsdl:message>
+  <wsdl:message name="IPricelistService_ConfirmUpdateCatalogs_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ConfirmUpdateCatalogsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPricelistService_GetDirectory_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDirectory" />
+  </wsdl:message>
+  <wsdl:message name="IPricelistService_GetDirectory_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDirectoryResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPricelistService_GetDirectories_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDirectories" />
+  </wsdl:message>
+  <wsdl:message name="IPricelistService_GetDirectories_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDirectoriesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPricelistService_ConfirmUpdateDirectories_InputMessage">
+    <wsdl:part name="parameters" element="tns:ConfirmUpdateDirectories" />
+  </wsdl:message>
+  <wsdl:message name="IPricelistService_ConfirmUpdateDirectories_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ConfirmUpdateDirectoriesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPricelistService_GetPhoto_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPhoto" />
+  </wsdl:message>
+  <wsdl:message name="IPricelistService_GetPhoto_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPhotoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPricelistService_GetPhotos_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPhotos" />
+  </wsdl:message>
+  <wsdl:message name="IPricelistService_GetPhotos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPhotosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPricelistService_ConfirmUpdatePhotos_InputMessage">
+    <wsdl:part name="parameters" element="tns:ConfirmUpdatePhotos" />
+  </wsdl:message>
+  <wsdl:message name="IPricelistService_ConfirmUpdatePhotos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ConfirmUpdatePhotosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPricelistService_GetProductDirection_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetProductDirection" />
+  </wsdl:message>
+  <wsdl:message name="IPricelistService_GetProductDirection_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetProductDirectionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPricelistService_GetProductDirections_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetProductDirections" />
+  </wsdl:message>
+  <wsdl:message name="IPricelistService_GetProductDirections_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetProductDirectionsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPricelistService_ConfirmUpdateProductDirections_InputMessage">
+    <wsdl:part name="parameters" element="tns:ConfirmUpdateProductDirections" />
+  </wsdl:message>
+  <wsdl:message name="IPricelistService_ConfirmUpdateProductDirections_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ConfirmUpdateProductDirectionsResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IPricelistService">
+    <wsdl:operation name="Hello">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPricelistService/Hello" message="tns:IPricelistService_Hello_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPricelistService/HelloResponse" message="tns:IPricelistService_Hello_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="PrepareToUpdate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPricelistService/PrepareToUpdate" message="tns:IPricelistService_PrepareToUpdate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPricelistService/PrepareToUpdateResponse" message="tns:IPricelistService_PrepareToUpdate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBrand">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPricelistService/GetBrand" message="tns:IPricelistService_GetBrand_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPricelistService/GetBrandResponse" message="tns:IPricelistService_GetBrand_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBrands">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPricelistService/GetBrands" message="tns:IPricelistService_GetBrands_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPricelistService/GetBrandsResponse" message="tns:IPricelistService_GetBrands_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ConfirmUpdateBrands">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPricelistService/ConfirmUpdateBrands" message="tns:IPricelistService_ConfirmUpdateBrands_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPricelistService/ConfirmUpdateBrandsResponse" message="tns:IPricelistService_ConfirmUpdateBrands_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCatalog">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPricelistService/GetCatalog" message="tns:IPricelistService_GetCatalog_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPricelistService/GetCatalogResponse" message="tns:IPricelistService_GetCatalog_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCatalogs">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPricelistService/GetCatalogs" message="tns:IPricelistService_GetCatalogs_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPricelistService/GetCatalogsResponse" message="tns:IPricelistService_GetCatalogs_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ConfirmUpdateCatalogs">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPricelistService/ConfirmUpdateCatalogs" message="tns:IPricelistService_ConfirmUpdateCatalogs_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPricelistService/ConfirmUpdateCatalogsResponse" message="tns:IPricelistService_ConfirmUpdateCatalogs_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDirectory">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPricelistService/GetDirectory" message="tns:IPricelistService_GetDirectory_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPricelistService/GetDirectoryResponse" message="tns:IPricelistService_GetDirectory_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDirectories">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPricelistService/GetDirectories" message="tns:IPricelistService_GetDirectories_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPricelistService/GetDirectoriesResponse" message="tns:IPricelistService_GetDirectories_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ConfirmUpdateDirectories">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPricelistService/ConfirmUpdateDirectories" message="tns:IPricelistService_ConfirmUpdateDirectories_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPricelistService/ConfirmUpdateDirectoriesResponse" message="tns:IPricelistService_ConfirmUpdateDirectories_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPhoto">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPricelistService/GetPhoto" message="tns:IPricelistService_GetPhoto_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPricelistService/GetPhotoResponse" message="tns:IPricelistService_GetPhoto_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPhotos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPricelistService/GetPhotos" message="tns:IPricelistService_GetPhotos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPricelistService/GetPhotosResponse" message="tns:IPricelistService_GetPhotos_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ConfirmUpdatePhotos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPricelistService/ConfirmUpdatePhotos" message="tns:IPricelistService_ConfirmUpdatePhotos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPricelistService/ConfirmUpdatePhotosResponse" message="tns:IPricelistService_ConfirmUpdatePhotos_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProductDirection">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPricelistService/GetProductDirection" message="tns:IPricelistService_GetProductDirection_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPricelistService/GetProductDirectionResponse" message="tns:IPricelistService_GetProductDirection_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProductDirections">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPricelistService/GetProductDirections" message="tns:IPricelistService_GetProductDirections_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPricelistService/GetProductDirectionsResponse" message="tns:IPricelistService_GetProductDirections_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ConfirmUpdateProductDirections">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPricelistService/ConfirmUpdateProductDirections" message="tns:IPricelistService_ConfirmUpdateProductDirections_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPricelistService/ConfirmUpdateProductDirectionsResponse" message="tns:IPricelistService_ConfirmUpdateProductDirections_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IPricelistService" type="tns:IPricelistService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Hello">
+      <soap:operation soapAction="http://tempuri.org/IPricelistService/Hello" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PrepareToUpdate">
+      <soap:operation soapAction="http://tempuri.org/IPricelistService/PrepareToUpdate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBrand">
+      <soap:operation soapAction="http://tempuri.org/IPricelistService/GetBrand" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBrands">
+      <soap:operation soapAction="http://tempuri.org/IPricelistService/GetBrands" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConfirmUpdateBrands">
+      <soap:operation soapAction="http://tempuri.org/IPricelistService/ConfirmUpdateBrands" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCatalog">
+      <soap:operation soapAction="http://tempuri.org/IPricelistService/GetCatalog" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCatalogs">
+      <soap:operation soapAction="http://tempuri.org/IPricelistService/GetCatalogs" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConfirmUpdateCatalogs">
+      <soap:operation soapAction="http://tempuri.org/IPricelistService/ConfirmUpdateCatalogs" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDirectory">
+      <soap:operation soapAction="http://tempuri.org/IPricelistService/GetDirectory" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDirectories">
+      <soap:operation soapAction="http://tempuri.org/IPricelistService/GetDirectories" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConfirmUpdateDirectories">
+      <soap:operation soapAction="http://tempuri.org/IPricelistService/ConfirmUpdateDirectories" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPhoto">
+      <soap:operation soapAction="http://tempuri.org/IPricelistService/GetPhoto" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPhotos">
+      <soap:operation soapAction="http://tempuri.org/IPricelistService/GetPhotos" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConfirmUpdatePhotos">
+      <soap:operation soapAction="http://tempuri.org/IPricelistService/ConfirmUpdatePhotos" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProductDirection">
+      <soap:operation soapAction="http://tempuri.org/IPricelistService/GetProductDirection" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProductDirections">
+      <soap:operation soapAction="http://tempuri.org/IPricelistService/GetProductDirections" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConfirmUpdateProductDirections">
+      <soap:operation soapAction="http://tempuri.org/IPricelistService/ConfirmUpdateProductDirections" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="PricelistService">
+    <wsdl:port name="BasicHttpBinding_IPricelistService" binding="tns:BasicHttpBinding_IPricelistService">
+      <soap:address location="http://zakazdev.autotrend.ua:5778/Pricelist/PricelistService.svc/Pricelist" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

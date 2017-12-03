@@ -5,9 +5,9 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using Common.Data.Constant;
+using Common.Data.Enum;
 using Common.Service.Implementation;
 using DataBase.Context.Entities;
-using DataBase.Context.Object;
 using DataBase.Objects;
 using File.Service;
 using File.Service.Implementation;
@@ -16,7 +16,7 @@ using Json.Service;
 using Json.Service.Implementation;
 using Media.Service;
 using Media.Service.Implementation;
-using CommodityDirection = DataBase.Context.Object.CommodityDirection;
+using CommodityDirection = Common.Data.Enum.CommodityDirection;
 using Directory = Json.Contract.Directory;
 
 namespace DataBase.Context.Initializer

@@ -7,6 +7,9 @@ namespace PricelistService.Service.Contract
     public class CompanyInfo
     {
         [DataMember]
+        public bool IsAuthorized { get; set; }
+
+        [DataMember]
         public string Title { get; set; }
 
         [DataMember]

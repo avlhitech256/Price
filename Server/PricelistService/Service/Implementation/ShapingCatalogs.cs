@@ -119,7 +119,10 @@ namespace PricelistService.Service.Implementation
 
         private void ShapingBrandsList(string login, DateTimeOffset lastUpdate)
         {
-            if (dataService.Select<SendItemsEntity>().All(x => x.RequestDate != lastUpdate))
+            if (!dataService.Select<SendItemsEntity>()
+                    .Any(x => x.RequestDate >= lastUpdate &&
+                              x.Login == login &&
+                              x.EntityName == EntityName.CatalogItemEntity))
             {
                 int count = 0;
                 List<long> catalogIds = dataService.Select<SendItemsEntity>()

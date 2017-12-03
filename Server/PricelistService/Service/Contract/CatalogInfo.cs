@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
-using DataBase.Context.Object;
+using Common.Data.Enum;
 
 namespace PricelistService.Service.Contract
 {
     [DataContract]
     public class CatalogInfo
     {
+        [DataMember]
+        public bool IsAuthorized { get; set; }
+
         [DataMember]
         public long Id { get; set; }
 
