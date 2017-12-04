@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{273286BE-3FC0-4C0F-87C0-302A587C2904}</ProjectGuid>
+    <ProjectGuid>{109960B3-B5A7-4648-8227-B8F713BBE009}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DataBase</RootNamespace>
-    <AssemblyName>DataBase</AssemblyName>
+    <RootNamespace>Synchronize</RootNamespace>
+    <AssemblyName>Synchronize</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -22,7 +22,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>none</DebugType>
+    <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
@@ -30,68 +30,60 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Security" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Context\DataBaseContext.cs" />
-    <Compile Include="Context\Entities\BrandItemEntity.cs" />
-    <Compile Include="Context\Entities\CatalogItemEntity.cs" />
-    <Compile Include="Context\Entities\CommodityDirectionEntity.cs" />
-    <Compile Include="Context\Entities\DirectoryEntity.cs" />
-    <Compile Include="Context\Entities\NomenclatureGroupEntity.cs" />
-    <Compile Include="Context\Entities\OptionItemEntity.cs" />
-    <Compile Include="Context\Entities\OrderEntity.cs" />
-    <Compile Include="Context\Entities\PhotoItemEntity.cs" />
-    <Compile Include="Context\Entities\ProductDirectionEntity.cs" />
-    <Compile Include="Context\Entities\SendItemsEntity.cs" />
-    <Compile Include="Context\Initializer\DataBaseInitializer.cs" />
-    <Compile Include="Context\Object\EntityName.cs" />
-    <Compile Include="Objects\PriceInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service\IDataService.cs" />
-    <Compile Include="Service\Implementation\DataService.cs" />
+    <Compile Include="ViewModel\SynchronizeViewModel.cs" />
+    <Compile Include="View\SynchronizeControl.xaml.cs">
+      <DependentUpon>SynchronizeControl.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
+    <Page Include="View\SynchronizeControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
+    <Folder Include="Model\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CommonControl\CommonControl.csproj">
+      <Project>{9c178753-f272-451b-8cc3-8b78a275bc48}</Project>
+      <Name>CommonControl</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Common\Common.csproj">
-      <Project>{9798781f-3852-4a2d-9294-8d8d8c6d7401}</Project>
+      <Project>{fc5aa2b4-3b40-468f-b13e-f16b2ee8fdea}</Project>
       <Name>Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\File\File.csproj">
-      <Project>{e0e9d4df-e346-4f0a-9121-13c52b550f33}</Project>
-      <Name>File</Name>
+    <ProjectReference Include="..\DatabaseService\DatabaseService.csproj">
+      <Project>{E3AAB1A2-9D4B-4C71-915E-7020B77F2875}</Project>
+      <Name>DatabaseService</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Json\Json.csproj">
-      <Project>{6ead33c5-a8aa-4ce3-bf25-1a07b9a4928c}</Project>
-      <Name>Json</Name>
+    <ProjectReference Include="..\Domain\Domain.csproj">
+      <Project>{65b9a8c3-c1c1-4195-8eb6-cba4c7345c76}</Project>
+      <Name>Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Media\Media.csproj">
-      <Project>{10916e8f-3122-48a2-89ad-e88efd13e55d}</Project>
-      <Name>Media</Name>
+    <ProjectReference Include="..\Options\Options.csproj">
+      <Project>{4959BB8A-7823-4ACA-9883-117EDDE207B2}</Project>
+      <Name>Options</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Web\Web.csproj">
+      <Project>{082c068d-df77-4266-9a27-c4e45ad6fa16}</Project>
+      <Name>Web</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

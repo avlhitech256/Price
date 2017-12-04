@@ -32,24 +32,8 @@ namespace PricelistService.Service.Implementation
 
         public BrandInfo GetItem(long id)
         {
-            BrandInfo result = null;
-            BrandItemEntity entity = null;
-
-            try
-            {
-                entity = dataService.DataBaseContext.BrandItemEntities.Find(id);
-            }
-            catch (Exception)
-            {
-                result = new BrandInfo();
-                //throw;
-            }
-
-            if (entity != null)
-            {
-                result = Assemble(entity);
-            }
-
+            BrandItemEntity entity = dataService.DataBaseContext.BrandItemEntities.Find(id);
+            BrandInfo result = Assemble(entity);
             return result;
         }
 

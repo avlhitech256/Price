@@ -1,5 +1,4 @@
-﻿using System;
-using PricelistService.Service.Contract;
+﻿using PricelistService.Service.Contract;
 
 namespace PricelistService.Service
 {

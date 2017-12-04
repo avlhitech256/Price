@@ -32,23 +32,31 @@ namespace PricelistService.Service.Implementation
 
         public CompanyInfo Hello(SecurityInfo securityInfo)
         {
-            CompanyInfo result = null;
-
-            if (securityInfo == null || ValidatePassword(securityInfo))
+            var result = new CompanyInfo
             {
-                result = new CompanyInfo
-                {
-                    Title = "Hello " + securityInfo?.Login,
-                    CompanyName = "Autotrend",
-                    Phone = "+380 (57) 784-18-81",
-                    WebSite = "http://autotrend.ua/",
-                    EMail = "office@autotrend.ua",
-                    TimeRequest = securityInfo?.TimeRequest ?? DateTimeOffset.Now,
-                    TimeResponce = DateTimeOffset.Now
-                };
-            }
+                Title = "Hello " + securityInfo?.Login,
+                CompanyName = "Autotrend",
+                Phone = "+380 (57) 784-18-81",
+                WebSite = "http://autotrend.ua/",
+                EMail = "office@autotrend.ua",
+                TimeRequest = securityInfo?.TimeRequest ?? DateTimeOffset.Now,
+                TimeResponce = DateTimeOffset.Now,
+                IsAuthorized = ValidatePassword(securityInfo)
+            };
 
             return result;
+        }
+
+        public ShortcutInfo Shortcut(long id, DateTimeOffset requestTime)
+        {
+            var shortcutInfo = new ShortcutInfo
+            {
+                Id = id,
+                RequestTime = requestTime,
+                ResponceTime =  DateTimeOffset.Now
+            };
+
+            return shortcutInfo;
         }
 
         public bool ChangePasswodr(SecurityInfo securityInfo, string newPassword)

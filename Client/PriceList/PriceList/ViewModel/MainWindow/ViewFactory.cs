@@ -8,6 +8,7 @@ using CommonControl.SearchControl;
 using Domain.DomainContext;
 using Domain.ViewModel;
 using Order.View;
+using Synchronize.View;
 using CatalogControl = Catalog.View.CatalogControl;
 
 namespace PriceList.ViewModel.MainWindow
@@ -37,7 +38,7 @@ namespace PriceList.ViewModel.MainWindow
                     {MenuItemName.Basket,    () => new BasketControl()},
                     {MenuItemName.Orders,    () => new OrderControl()},
                     {MenuItemName.Documents, () => null /*new SpecialtySearchControl()*/},
-                    {MenuItemName.Sync,      () => null /*new ChairSearchControl()*/},
+                    {MenuItemName.Sync,      () => new SynchronizeControl()},
                     {MenuItemName.Settings,  () => null /*new SpecializationSearchControl()*/}
                 };
 

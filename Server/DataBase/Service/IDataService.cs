@@ -22,20 +22,10 @@ namespace DataBase.Service
 
         void LoadPhotos(CatalogItemEntity entity);
 
-        void LoadPhotos(BasketItemEntity entity);
-
         void LoadParent(DirectoryEntity entity);
 
         void AddPhoto(CatalogItemEntity entity, byte[] photo);
 
-        decimal GetCount(CatalogItemEntity entity);
-
-        void SetCount(CatalogItemEntity entity, decimal count);
-
         void SetOrderStatus(OrderEntity order, OrderStatus status);
-
-        decimal GetSumBasket();
-
-        void CalculateOrderSum(BasketItemEntity basketItem);
     }
 }

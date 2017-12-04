@@ -31,6 +31,14 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="CompanyInfo" nillable="true" type="tns:CompanyInfo" />
+  <xs:complexType name="ShortcutInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" type="xs:long" />
+      <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="RequestTime" type="q4:DateTimeOffset" />
+      <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="ResponceTime" type="q5:DateTimeOffset" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ShortcutInfo" nillable="true" type="tns:ShortcutInfo" />
   <xs:complexType name="CountInfo">
     <xs:sequence>
       <xs:element minOccurs="0" name="CountBrands" type="xs:long" />
@@ -44,13 +52,13 @@
   <xs:element name="CountInfo" nillable="true" type="tns:CountInfo" />
   <xs:complexType name="BrandInfo">
     <xs:sequence>
-      <xs:element xmlns:q4="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="CatalogId" nillable="true" type="q4:ArrayOflong" />
+      <xs:element xmlns:q6="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="CatalogId" nillable="true" type="q6:ArrayOflong" />
       <xs:element minOccurs="0" name="Code" type="ser:guid" />
-      <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="DateOfCreation" type="q5:DateTimeOffset" />
-      <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="ForceUpdated" type="q6:DateTimeOffset" />
+      <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="DateOfCreation" type="q7:DateTimeOffset" />
+      <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="ForceUpdated" type="q8:DateTimeOffset" />
       <xs:element minOccurs="0" name="Id" type="xs:long" />
       <xs:element minOccurs="0" name="IsAuthorized" type="xs:boolean" />
-      <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="LastUpdated" type="q7:DateTimeOffset" />
+      <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="LastUpdated" type="q9:DateTimeOffset" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
@@ -78,20 +86,20 @@
       <xs:element minOccurs="0" name="BrandName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Code" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Currency" nillable="true" type="xs:string" />
-      <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="DateOfCreation" type="q8:DateTimeOffset" />
+      <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="DateOfCreation" type="q10:DateTimeOffset" />
       <xs:element minOccurs="0" name="DirectoryId" type="xs:long" />
       <xs:element minOccurs="0" name="EnterpriceNormPack" nillable="true" type="xs:string" />
-      <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="ForceUpdated" type="q9:DateTimeOffset" />
+      <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="ForceUpdated" type="q11:DateTimeOffset" />
       <xs:element minOccurs="0" name="HasPhotos" type="xs:boolean" />
       <xs:element minOccurs="0" name="Id" type="xs:long" />
       <xs:element minOccurs="0" name="IsAuthorized" type="xs:boolean" />
-      <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="LastUpdated" type="q10:DateTimeOffset" />
-      <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="LastUpdatedStatus" type="q11:DateTimeOffset" />
+      <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="LastUpdated" type="q12:DateTimeOffset" />
+      <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="LastUpdatedStatus" type="q13:DateTimeOffset" />
       <xs:element minOccurs="0" name="Multiplicity" type="xs:decimal" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
-      <xs:element xmlns:q12="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Photos" nillable="true" type="q12:ArrayOflong" />
+      <xs:element xmlns:q14="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Photos" nillable="true" type="q14:ArrayOflong" />
       <xs:element minOccurs="0" name="Price" type="xs:decimal" />
-      <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/Common.Data.Enum" minOccurs="0" name="Status" type="q13:CatalogItemStatus" />
+      <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/Common.Data.Enum" minOccurs="0" name="Status" type="q15:CatalogItemStatus" />
       <xs:element minOccurs="0" name="UID" type="ser:guid" />
       <xs:element minOccurs="0" name="Unit" nillable="true" type="xs:string" />
     </xs:sequence>
@@ -113,16 +121,16 @@
   <xs:element name="ArrayOfCatalogInfo" nillable="true" type="tns:ArrayOfCatalogInfo" />
   <xs:complexType name="DirectoryInfo">
     <xs:sequence>
-      <xs:element xmlns:q14="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="CatalogId" nillable="true" type="q14:ArrayOflong" />
+      <xs:element xmlns:q16="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="CatalogId" nillable="true" type="q16:ArrayOflong" />
       <xs:element minOccurs="0" name="Code" type="ser:guid" />
-      <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="DateOfCreation" type="q15:DateTimeOffset" />
-      <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="ForceUpdated" type="q16:DateTimeOffset" />
+      <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="DateOfCreation" type="q17:DateTimeOffset" />
+      <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="ForceUpdated" type="q18:DateTimeOffset" />
       <xs:element minOccurs="0" name="Id" type="xs:long" />
       <xs:element minOccurs="0" name="IsAuthorized" type="xs:boolean" />
-      <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="LastUpdated" type="q17:DateTimeOffset" />
+      <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="LastUpdated" type="q19:DateTimeOffset" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Parent" type="xs:long" />
-      <xs:element xmlns:q18="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="SubDirectoryId" nillable="true" type="q18:ArrayOflong" />
+      <xs:element xmlns:q20="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="SubDirectoryId" nillable="true" type="q20:ArrayOflong" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="DirectoryInfo" nillable="true" type="tns:DirectoryInfo" />
@@ -143,12 +151,12 @@
   <xs:complexType name="PhotoInfo">
     <xs:sequence>
       <xs:element minOccurs="0" name="CatalogId" type="xs:long" />
-      <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="DateOfCreation" type="q19:DateTimeOffset" />
-      <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="ForceUpdated" type="q20:DateTimeOffset" />
+      <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="DateOfCreation" type="q21:DateTimeOffset" />
+      <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="ForceUpdated" type="q22:DateTimeOffset" />
       <xs:element minOccurs="0" name="Id" type="xs:long" />
       <xs:element minOccurs="0" name="IsAuthorized" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsLoad" type="xs:boolean" />
-      <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="LastUpdated" type="q21:DateTimeOffset" />
+      <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="LastUpdated" type="q23:DateTimeOffset" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Photo" nillable="true" type="xs:base64Binary" />
     </xs:sequence>
@@ -170,13 +178,13 @@
   <xs:element name="ArrayOfPhotoInfo" nillable="true" type="tns:ArrayOfPhotoInfo" />
   <xs:complexType name="ProductDirectionInfo">
     <xs:sequence>
-      <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="DateOfCreation" type="q22:DateTimeOffset" />
-      <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/Common.Data.Enum" minOccurs="0" name="Direction" type="q23:CommodityDirection" />
+      <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="DateOfCreation" type="q24:DateTimeOffset" />
+      <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/Common.Data.Enum" minOccurs="0" name="Direction" type="q25:CommodityDirection" />
       <xs:element minOccurs="0" name="DirectoryId" type="xs:long" />
-      <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="ForceUpdated" type="q24:DateTimeOffset" />
+      <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="ForceUpdated" type="q26:DateTimeOffset" />
       <xs:element minOccurs="0" name="Id" type="xs:long" />
       <xs:element minOccurs="0" name="IsAuthorized" type="xs:boolean" />
-      <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="LastUpdated" type="q25:DateTimeOffset" />
+      <xs:element xmlns:q27="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="LastUpdated" type="q27:DateTimeOffset" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ProductDirectionInfo" nillable="true" type="tns:ProductDirectionInfo" />

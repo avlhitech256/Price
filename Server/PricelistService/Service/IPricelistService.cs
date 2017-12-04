@@ -13,6 +13,12 @@ namespace PricelistService.Service
         CompanyInfo Hello(SecurityInfo securityInfo);
 
         [OperationContract]
+        ShortcutInfo Shortcut(long id, DateTimeOffset requestTime);
+
+        [OperationContract]
+        bool ChangePasswodr(SecurityInfo securityInfo, string newPassword);
+        
+        [OperationContract]
         CountInfo PrepareToUpdate(SecurityInfo securityInfo, DateTimeOffset lastUpdate, bool needLoadPhotos);
 
         [OperationContract]

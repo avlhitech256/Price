@@ -8,6 +8,7 @@ namespace DataBase.Context.Entities
     {
         public long Id { get; set; }
 
+        [Index("IX_Direction", 1, IsUnique = true)]
         public CommodityDirection Direction { get; set; }
 
         public virtual DirectoryEntity Directory { get; set; }

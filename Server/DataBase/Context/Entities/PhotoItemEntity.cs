@@ -27,6 +27,5 @@ namespace DataBase.Context.Entities
 
         [Index("IX_ForceUpdated", 1, IsUnique = false)]
         public DateTimeOffset ForceUpdated { get; set; }
-
     }
 }

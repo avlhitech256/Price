@@ -1,0 +1,18 @@
+﻿<searchControl:SearchControl x:Class="Synchronize.View.SynchronizeControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Synchronize.View"
+             xmlns:searchControl="clr-namespace:CommonControl.SearchControl;assembly=CommonControl"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <TextBox x:Name="TextBox" Text="{Binding Path=Message, UpdateSourceTrigger=PropertyChanged}"/>
+        <Button Grid.Column="1" Content="OK" Width="60" Height="20" Margin="10" Command="{Binding Path=SynchronizeCommand}"/>
+    </Grid>
+</searchControl:SearchControl>

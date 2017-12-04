@@ -4,6 +4,7 @@ using Basket.ViewModel;
 using Catalog.ViewModel;
 using Common.Data.Enum;
 using Domain.DomainContext;
+using Synchronize.ViewModel;
 
 namespace PriceList.ViewModel.MainWindow
 {
@@ -27,7 +28,7 @@ namespace PriceList.ViewModel.MainWindow
                     {MenuItemName.Basket,    (x) => new BasketViewModel(x)},
                     {MenuItemName.Orders,    (x) => new Order.ViewModel.OrderViewModel(x)},
                     {MenuItemName.Documents, (x) => null /*new SpecialtyViewModel(x)*/},
-                    {MenuItemName.Sync,      (x) => null /*new ChairViewModel(x)*/},
+                    {MenuItemName.Sync,      (x) => new SynchronizeViewModel(x)},
                     {MenuItemName.Settings,  (x) => null /*new SpecializationViewModel(x)*/}
                 };
             this.context = context;

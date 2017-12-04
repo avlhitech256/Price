@@ -345,6 +345,83 @@ namespace Web.WebServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ShortcutInfo", Namespace="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract")]
+    [System.SerializableAttribute()]
+    public partial class ShortcutInfo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private long IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTimeOffset RequestTimeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTimeOffset ResponceTimeField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((this.IdField.Equals(value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTimeOffset RequestTime {
+            get {
+                return this.RequestTimeField;
+            }
+            set {
+                if ((this.RequestTimeField.Equals(value) != true)) {
+                    this.RequestTimeField = value;
+                    this.RaisePropertyChanged("RequestTime");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTimeOffset ResponceTime {
+            get {
+                return this.ResponceTimeField;
+            }
+            set {
+                if ((this.ResponceTimeField.Equals(value) != true)) {
+                    this.ResponceTimeField = value;
+                    this.RaisePropertyChanged("ResponceTime");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CountInfo", Namespace="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract")]
     [System.SerializableAttribute()]
     public partial class CountInfo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -1966,6 +2043,18 @@ namespace Web.WebServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPricelistService/Hello", ReplyAction="http://tempuri.org/IPricelistService/HelloResponse")]
         System.Threading.Tasks.Task<Web.WebServiceReference.CompanyInfo> HelloAsync(Web.WebServiceReference.SecurityInfo securityInfo);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPricelistService/Shortcut", ReplyAction="http://tempuri.org/IPricelistService/ShortcutResponse")]
+        Web.WebServiceReference.ShortcutInfo Shortcut(long id, System.DateTimeOffset requestTime);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPricelistService/Shortcut", ReplyAction="http://tempuri.org/IPricelistService/ShortcutResponse")]
+        System.Threading.Tasks.Task<Web.WebServiceReference.ShortcutInfo> ShortcutAsync(long id, System.DateTimeOffset requestTime);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPricelistService/ChangePasswodr", ReplyAction="http://tempuri.org/IPricelistService/ChangePasswodrResponse")]
+        bool ChangePasswodr(Web.WebServiceReference.SecurityInfo securityInfo, string newPassword);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPricelistService/ChangePasswodr", ReplyAction="http://tempuri.org/IPricelistService/ChangePasswodrResponse")]
+        System.Threading.Tasks.Task<bool> ChangePasswodrAsync(Web.WebServiceReference.SecurityInfo securityInfo, string newPassword);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPricelistService/PrepareToUpdate", ReplyAction="http://tempuri.org/IPricelistService/PrepareToUpdateResponse")]
         Web.WebServiceReference.CountInfo PrepareToUpdate(Web.WebServiceReference.SecurityInfo securityInfo, System.DateTimeOffset lastUpdate, bool needLoadPhotos);
         
@@ -2096,6 +2185,22 @@ namespace Web.WebServiceReference {
         
         public System.Threading.Tasks.Task<Web.WebServiceReference.CompanyInfo> HelloAsync(Web.WebServiceReference.SecurityInfo securityInfo) {
             return base.Channel.HelloAsync(securityInfo);
+        }
+        
+        public Web.WebServiceReference.ShortcutInfo Shortcut(long id, System.DateTimeOffset requestTime) {
+            return base.Channel.Shortcut(id, requestTime);
+        }
+        
+        public System.Threading.Tasks.Task<Web.WebServiceReference.ShortcutInfo> ShortcutAsync(long id, System.DateTimeOffset requestTime) {
+            return base.Channel.ShortcutAsync(id, requestTime);
+        }
+        
+        public bool ChangePasswodr(Web.WebServiceReference.SecurityInfo securityInfo, string newPassword) {
+            return base.Channel.ChangePasswodr(securityInfo, newPassword);
+        }
+        
+        public System.Threading.Tasks.Task<bool> ChangePasswodrAsync(Web.WebServiceReference.SecurityInfo securityInfo, string newPassword) {
+            return base.Channel.ChangePasswodrAsync(securityInfo, newPassword);
         }
         
         public Web.WebServiceReference.CountInfo PrepareToUpdate(Web.WebServiceReference.SecurityInfo securityInfo, System.DateTimeOffset lastUpdate, bool needLoadPhotos) {

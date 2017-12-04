@@ -227,12 +227,8 @@ namespace File.Service.Implementation
 
             if (!string.IsNullOrWhiteSpace(fileNameWithExtention))
             {
-                string[] fileFilds = fileNameWithExtention.Split('.');
-
-                if (fileFilds.Any())
-                {
-                    fileName = fileFilds[0];
-                }
+                int lastIndex = fileNameWithExtention.LastIndexOf(".", StringComparison.CurrentCulture);
+                fileName = lastIndex != -1 ? fileNameWithExtention.Substring(0, lastIndex) : fileNameWithExtention;
             }
 
             return fileName;

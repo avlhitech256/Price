@@ -108,6 +108,9 @@
     <None Include="Service References\WebServiceReference\Web.WebServiceReference.ProductDirections.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\WebServiceReference\Web.WebServiceReference.ShortcutInfo.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DatabaseService\DatabaseService.csproj">

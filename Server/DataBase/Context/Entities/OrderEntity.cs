@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Common.Data.Enum;
@@ -18,8 +17,6 @@ namespace DataBase.Context.Entities
 
         public virtual OrderStatus OrderStatus { get; set; }
 
-        public virtual List<BasketItemEntity> BasketItems { get; set; }
-
         [MaxLength(1024)]
         public string Comment { get; set; }
 
@@ -31,6 +28,5 @@ namespace DataBase.Context.Entities
 
         [Index("IX_ForceUpdated", 1, IsUnique = false)]
         public DateTimeOffset ForceUpdated { get; set; }
-
     }
 }

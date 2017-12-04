@@ -62,8 +62,6 @@ namespace DataBase.Context.Entities
 
         public DateTimeOffset LastUpdatedStatus { get; set; }
 
-        public virtual List<BasketItemEntity> BasketItems { get; set; }
-
         public virtual DirectoryEntity Directory { get; set; }
 
         public virtual NomenclatureGroupEntity NomenclatureGroup { get; set; }

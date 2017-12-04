@@ -104,7 +104,7 @@ namespace Load.Service.Implementation
 
         private void MovingCompleted(object sender, EventArgs e)
         {
-            LoadData();
+            LoadDataToDatabase(sender);
             BackupToArchive(sender);
             loadingThreadInfo.IsLoading = false;
             //************************************
@@ -139,26 +139,30 @@ namespace Load.Service.Implementation
             MovingCompleted(sender, e);
         }
 
-        private void LoadData()
+        private void LoadDataToDatabase(object sender)
         {
             JsonLoadData jsonLoadData = JsonLoadData();
-            LoadToDatabase(jsonLoadData);
+            var threadInfo = sender as MovingThreadInfo;
+            DateTimeOffset startMoving = threadInfo != null && threadInfo.Start.HasValue
+                ? threadInfo.Start.Value
+                : DateTimeOffset.Now;
+            LoadToDatabase(jsonLoadData, startMoving);
         }
 
-        private void LoadToDatabase(JsonLoadData jsonLoadData)
+        private void LoadToDatabase(JsonLoadData jsonLoadData, DateTimeOffset loadUpdateTime)
         {
             // Отключаем отслеживание и проверку изменений для оптимизации вставки множества полей
             dataService.DataBaseContext.Configuration.AutoDetectChangesEnabled = false;
             dataService.DataBaseContext.Configuration.ValidateOnSaveEnabled = false;
 
-            CreateBrandItems(dataService.DataBaseContext, jsonLoadData);
-            CreateDirectoryItems(dataService.DataBaseContext, jsonLoadData);
-            CreateProductDirection(dataService.DataBaseContext);
-            CreateNomenclatureGroupItems(dataService.DataBaseContext, jsonLoadData);
-            CreateCommodityDirectionsItems(dataService.DataBaseContext, jsonLoadData);
+            CreateBrandItems(dataService.DataBaseContext, jsonLoadData, loadUpdateTime);
+            CreateDirectoryItems(dataService.DataBaseContext, jsonLoadData, loadUpdateTime);
+            CreateProductDirection(dataService.DataBaseContext, loadUpdateTime);
+            CreateNomenclatureGroupItems(dataService.DataBaseContext, jsonLoadData, loadUpdateTime);
+            CreateCommodityDirectionsItems(dataService.DataBaseContext, jsonLoadData, loadUpdateTime);
             LoadPictures(dataService.DataBaseContext, 
                          optionService.WorkingSourcePath + optionService.SubDirForPhoto,
-                         optionService.PhotoPatterns);
+                         optionService.PhotoPatterns, loadUpdateTime);
             CreateCatalogItems(dataService.DataBaseContext, jsonLoadData);
 
             dataService.DataBaseContext.Configuration.AutoDetectChangesEnabled = true;
@@ -240,7 +244,6 @@ namespace Load.Service.Implementation
                 ForceUpdated = now,
                 Status = GenerateStatus(),
                 LastUpdatedStatus = DateTimeOffset.Now,
-                BasketItems = null,
                 Directory = directoryItem,
                 NomenclatureGroup = nomenclatureGroupItem,
                 CommodityDirection = commodityDirectionItemsForCatalogItem,
@@ -316,7 +319,8 @@ namespace Load.Service.Implementation
             return catalogItem;
         }
 
-        private void LoadPictures(DataBaseContext dataBaseContext, string photoPath, string[] photoSearchPattern = null)
+        private void LoadPictures(DataBaseContext dataBaseContext, string photoPath, 
+                                  string[] photoSearchPattern, DateTimeOffset loadUpdateTime)
         {
             FileInfo[] fileInfos = fileService.GetFileInfos(photoPath, photoSearchPattern);
 
@@ -324,38 +328,34 @@ namespace Load.Service.Implementation
             {
                 int countOfFiles = 0;
 
-                fileInfos.ToList().ForEach(
+                fileInfos.Where(x => !string.IsNullOrWhiteSpace(x.FullName)).ToList().ForEach(
                     x =>
                     {
-                        if (!string.IsNullOrWhiteSpace(x.FullName))
+                        string fileName = fileService.GetFileName(x.Name);
+                        byte[] picture = fileService.ReadByteArrayPicture(x.FullName);
+                        PhotoItemEntity oldPhotoItem = GetPhotoItem(dataBaseContext, fileName);
+
+                        if (oldPhotoItem != null)
                         {
-                            byte[] picture = fileService.ReadByteArrayPicture(x.FullName);
-
-                            var now = DateTimeOffset.Now;
-
-                            var photoItem = new PhotoItemEntity
-                            {
-                                Name = fileService.GetFileName(x.Name),
-                                IsLoad = true,
-                                Photo = picture,
-                                DateOfCreation = now,
-                                LastUpdated = now,
-                                ForceUpdated = now
-                            };
-
+                            Update(oldPhotoItem, fileName, picture, loadUpdateTime);
+                            countOfFiles++;
+                        }
+                        else
+                        {
+                            PhotoItemEntity photoItem = Assemble(fileName, picture, loadUpdateTime);
                             dataBaseContext.PhotoItemEntities.Add(photoItem);
                             countOfFiles++;
+                        }
 
-                            if (countOfFiles % 10 == 0)
+                        if (countOfFiles % 10 == 0)
+                        {
+                            try
                             {
-                                try
-                                {
-                                    dataBaseContext.SaveChanges();
-                                }
-                                catch (Exception)
-                                {
-                                    ;
-                                }
+                                dataBaseContext.SaveChanges();
+                            }
+                            catch (Exception)
+                            {
+                                ;
                             }
                         }
                     });
@@ -369,6 +369,50 @@ namespace Load.Service.Implementation
                     ;
                 }
             }
+        }
+
+        private PhotoItemEntity Assemble(string fileName, byte[] picture, DateTimeOffset loadUpdateTime)
+        {
+            PhotoItemEntity item = new PhotoItemEntity
+            {
+                Name = fileName,
+                IsLoad = picture != null && picture.Length > 0,
+                Photo = picture,
+                DateOfCreation = loadUpdateTime,
+                LastUpdated = loadUpdateTime,
+                ForceUpdated = loadUpdateTime
+            };
+
+            return item;
+        }
+
+        private void Update(PhotoItemEntity entity, string fileName, byte[] picture, DateTimeOffset loadUpdateTime)
+        {
+            if (entity != null)
+            {
+                if (Equals(entity, fileName, picture))
+                {
+                    entity.ForceUpdated = loadUpdateTime;
+                }
+                else
+                {
+                    entity.Photo = picture;
+                    entity.LastUpdated = loadUpdateTime;
+                }
+            }
+        }
+
+        private bool Equals(PhotoItemEntity entity, string fileName, byte[] picture)
+        {
+            return entity != null && !string.IsNullOrWhiteSpace(fileName) && entity.Name == fileName &&
+                   ((entity.IsLoad && picture != null && entity.Photo != null && picture.Length == entity.Photo.Length) ||
+                    (!entity.IsLoad && (entity.Photo == null || entity.Photo != null && entity.Photo.Length == 0)));
+        }
+
+        private PhotoItemEntity GetPhotoItem(DataBaseContext dataBaseContext, string fileName)
+        {
+            PhotoItemEntity photoItem = dataBaseContext.PhotoItemEntities.FirstOrDefault(x => x.Name == fileName);
+            return photoItem;
         }
 
         private CatalogItemStatus GenerateStatus()
@@ -498,17 +542,48 @@ namespace Load.Service.Implementation
 
             if (dataBaseContext != null && nomenclature != null)
             {
-                Guid brandGuid;
-
-                if (nomenclature.BrandUID.ConvertToGuid(out brandGuid))
-                {
-                    brandItem = dataBaseContext
-                        .BrandItemEntities
-                        .FirstOrDefault(x => x.Code == brandGuid);
-                }
+                brandItem = GetBrandItem(dataBaseContext, nomenclature.BrandUID);
             }
 
             return brandItem;
+        }
+
+        private BrandItemEntity GetBrandItem(DataBaseContext dataBaseContext, string code)
+        {
+            BrandItemEntity brandItem = null;
+            Guid guidCode;
+
+            if (code.ConvertToGuid(out guidCode))
+            {
+                brandItem = GetBrandItem(dataBaseContext, guidCode);
+            }
+            
+            return brandItem;
+        }
+
+        private BrandItemEntity GetBrandItem(DataBaseContext dataBaseContext, Guid code)
+        {
+            BrandItemEntity brandItem = dataBaseContext.BrandItemEntities.FirstOrDefault(x => x.Code == code);
+            return brandItem;
+        }
+
+        private DirectoryEntity GetDirectoryItem(DataBaseContext dataBaseContext, string code)
+        {
+            DirectoryEntity directory = null;
+            Guid guidCode;
+
+            if (code.ConvertToGuid(out guidCode))
+            {
+                directory = GetDirectoryItem(dataBaseContext, guidCode);
+            }
+
+            return directory;
+        }
+
+        private DirectoryEntity GetDirectoryItem(DataBaseContext dataBaseContext, Guid code)
+        {
+            DirectoryEntity directory = dataBaseContext.DirectoryEntities.FirstOrDefault(x => x.Code == code);
+            return directory;
         }
 
         private DirectoryEntity GetDirectoryItem(DataBaseContext dataBaseContext,
@@ -518,14 +593,7 @@ namespace Load.Service.Implementation
 
             if (dataBaseContext != null && nomenclature != null)
             {
-                Guid directoryGuid;
-
-                if (nomenclature.CatalogUID.ConvertToGuid(out directoryGuid))
-                {
-                    directoryItem = dataBaseContext
-                        .DirectoryEntities
-                        .FirstOrDefault(x => x.Code == directoryGuid);
-                }
+                directoryItem = GetDirectoryItem(dataBaseContext, nomenclature.CatalogUID);
             }
 
             return directoryItem;
@@ -583,31 +651,44 @@ namespace Load.Service.Implementation
             return code.ConvertToGuid(out guid);
         }
 
-        private void CreateCommodityDirectionsItems(DataBaseContext dataBaseContext, JsonLoadData jsonLoadData)
+        private void CreateCommodityDirectionsItems(DataBaseContext dataBaseContext, 
+                                                    JsonLoadData jsonLoadData, 
+                                                    DateTimeOffset loadUpdateTime)
         {
             if (dataBaseContext != null && jsonLoadData?.CommodityDirections != null && jsonLoadData.CommodityDirections.Any())
             {
-                int countInsertedItems = 0;
+                int countItems = 0;
 
                 jsonLoadData.CommodityDirections.ForEach(
                     x =>
                     {
-                        CommodityDirectionEntity commodityDirection = Assemble(x);
+                        CommodityDirectionEntity oldCommodityDirection = GetCommodityDirection(dataBaseContext, x.UID);
 
-                        if (commodityDirection != null)
+                        if (oldCommodityDirection != null)
                         {
-                            dataBaseContext.CommodityDirectionEntities.Add(commodityDirection);
+                            Update(oldCommodityDirection, x, loadUpdateTime);
+                            countItems++;
+                        }
+                        else
+                        {
+                            CommodityDirectionEntity newCommodityDirection = Assemble(x);
 
-                            if (countInsertedItems % 100 == 0)
+                            if (newCommodityDirection != null)
                             {
-                                try
-                                {
-                                    dataBaseContext.SaveChanges();
-                                }
-                                catch (Exception)
-                                {
-                                    ;
-                                }
+                                dataBaseContext.CommodityDirectionEntities.Add(newCommodityDirection);
+                                countItems++;
+                            }
+                        }
+
+                        if (countItems % 100 == 0)
+                        {
+                            try
+                            {
+                                dataBaseContext.SaveChanges();
+                            }
+                            catch (Exception)
+                            {
+                                ;
                             }
                         }
                     });
@@ -622,6 +703,51 @@ namespace Load.Service.Implementation
                 }
             }
         }
+
+        private void Update(CommodityDirectionEntity entity, Json.Contract.CommodityDirection item, DateTimeOffset loadUpdateTime)
+        {
+            if (entity != null && item != null)
+            {
+                if (Equals(entity, item))
+                {
+                    entity.ForceUpdated = loadUpdateTime;
+                }
+                else
+                {
+                    entity.Name = item.Name;
+                    entity.LastUpdated = loadUpdateTime;
+                }
+            }
+        }
+
+        private bool Equals(CommodityDirectionEntity entity, Json.Contract.CommodityDirection item)
+        {
+            Guid code;
+            return entity != null && item != null &&
+                   item.UID.ConvertToGuid(out code) && entity.Code == code &&
+                   entity.Name == item.Name;
+        }
+
+        private CommodityDirectionEntity GetCommodityDirection(DataBaseContext dataBaseContext, string code)
+        {
+            CommodityDirectionEntity commodityDirection = null;
+            Guid guidCode;
+
+            if (code.ConvertToGuid(out guidCode))
+            {
+                commodityDirection = GetCommodityDirection(dataBaseContext, guidCode);
+            }
+
+            return commodityDirection;
+        }
+
+        private CommodityDirectionEntity GetCommodityDirection(DataBaseContext dataBaseContext, Guid code)
+        {
+            CommodityDirectionEntity commodityDirection =
+                dataBaseContext.CommodityDirectionEntities.FirstOrDefault(x => x.Code == code);
+            return commodityDirection;
+        }
+
 
         private CommodityDirectionEntity Assemble(Json.Contract.CommodityDirection commodityDirection)
         {
@@ -645,31 +771,42 @@ namespace Load.Service.Implementation
             return commodityDirectionItem;
         }
 
-        private void CreateNomenclatureGroupItems(DataBaseContext dataBaseContext, JsonLoadData jsonLoadData)
+        private void CreateNomenclatureGroupItems(DataBaseContext dataBaseContext, JsonLoadData jsonLoadData, DateTimeOffset loadUpdateTime)
         {
             if (dataBaseContext != null && jsonLoadData?.NomenclatureGroups != null && jsonLoadData.NomenclatureGroups.Any())
             {
-                int countInsertedItems = 0;
+                int countItems = 0;
 
                 jsonLoadData.NomenclatureGroups.ForEach(
                     x =>
                     {
-                        NomenclatureGroupEntity nomenclatureGroup = Assemble(x);
+                        NomenclatureGroupEntity oldNomenclatureGroup = GetNomenclatureGroup(dataBaseContext, x.UID);
 
-                        if (nomenclatureGroup != null)
+                        if (oldNomenclatureGroup != null)
                         {
-                            dataBaseContext.NomenclatureGroupEntities.Add(nomenclatureGroup);
+                            Update(oldNomenclatureGroup, x, loadUpdateTime);
+                            countItems++;
+                        }
+                        else
+                        {
+                            NomenclatureGroupEntity newNomenclatureGroup = Assemble(x, loadUpdateTime);
 
-                            if (countInsertedItems % 100 == 0)
+                            if (newNomenclatureGroup != null)
                             {
-                                try
-                                {
-                                    dataBaseContext.SaveChanges();
-                                }
-                                catch (Exception)
-                                {
-                                    ;
-                                }
+                                dataBaseContext.NomenclatureGroupEntities.Add(newNomenclatureGroup);
+                                countItems++;
+                            }
+                        }
+
+                        if (countItems % 100 == 0)
+                        {
+                            try
+                            {
+                                dataBaseContext.SaveChanges();
+                            }
+                            catch (Exception)
+                            {
+                                ;
                             }
                         }
                     });
@@ -685,112 +822,91 @@ namespace Load.Service.Implementation
             }
         }
 
-        private NomenclatureGroupEntity Assemble(NomenclatureGroup nomenclatureGroup)
+        private void Update(NomenclatureGroupEntity entity, NomenclatureGroup item, DateTimeOffset loadUpdateTime)
+        {
+            if (entity != null && item != null)
+            {
+                if (Equals(entity, item))
+                {
+                    entity.ForceUpdated = loadUpdateTime;
+                }
+                else
+                {
+                    entity.Name = item.Name;
+                    entity.LastUpdated = loadUpdateTime;
+                }
+            }
+        }
+
+        private bool Equals(NomenclatureGroupEntity entity, NomenclatureGroup item)
+        {
+            Guid code;
+            return entity != null && item != null && 
+                   item.UID.ConvertToGuid(out code) && entity.Code == code &&
+                   entity.Name == item.Name;
+        }
+
+        private NomenclatureGroupEntity GetNomenclatureGroup(DataBaseContext dataBaseContext, string code)
+        {
+            NomenclatureGroupEntity nomenclatureGroup = null;
+            Guid guidCode;
+
+            if (code.ConvertToGuid(out guidCode))
+            {
+                nomenclatureGroup = GetNomenclatureGroup(dataBaseContext, guidCode);
+            }
+
+            return nomenclatureGroup;
+        }
+
+        private NomenclatureGroupEntity GetNomenclatureGroup(DataBaseContext dataBaseContext, Guid code)
+        {
+            NomenclatureGroupEntity nomenclatureGroup =
+                dataBaseContext.NomenclatureGroupEntities.FirstOrDefault(x => x.Code == code);
+            return nomenclatureGroup;
+        }
+
+        private NomenclatureGroupEntity Assemble(NomenclatureGroup nomenclatureGroup, DateTimeOffset loadUpdateTime)
         {
             NomenclatureGroupEntity nomenclatureGroupItem = null;
 
             if (nomenclatureGroup != null)
             {
-                var now = DateTimeOffset.Now;
-
                 nomenclatureGroupItem = new NomenclatureGroupEntity
                 {
                     Code = nomenclatureGroup.UID.ConvertToGuid(),
                     Name = nomenclatureGroup.Name,
-                    DateOfCreation = now,
-                    LastUpdated = now,
-                    ForceUpdated = now
+                    DateOfCreation = loadUpdateTime,
+                    LastUpdated = loadUpdateTime,
+                    ForceUpdated = loadUpdateTime
                 };
             }
 
             return nomenclatureGroupItem;
         }
 
-        private void CreateProductDirection(DataBaseContext dataBaseContext)
+        private void CreateProductDirection(DataBaseContext dataBaseContext, DateTimeOffset loadUpdateTime)
         {
+            Dictionary< CommodityDirection, Guid> directionList = new Dictionary<CommodityDirection, Guid>
+            {
+                { CommodityDirection.Vaz,        Guid.Parse("1FF0EBCD-1507-40E9-A409-2AF3B8F77D49") },
+                { CommodityDirection.Gaz,        Guid.Parse("9B6B4325-B435-4D65-925E-4921F09D461F") },
+                { CommodityDirection.Zaz,        Guid.Parse("264D3368-ECA8-4F2F-9C3B-7B7CC582C7FD") },
+                { CommodityDirection.Chemistry,  Guid.Parse("78DC5231-C9D8-49A1-9FC5-AD18BF71DC13") },
+                { CommodityDirection.Battery,    Guid.Parse("C7667731-5CFE-4BB6-90DC-8520C87F4FA0") },
+                { CommodityDirection.Gas,        Guid.Parse("A4151BE4-3D3F-4A18-A3D1-4BF48F03AB6C") },
+                { CommodityDirection.Instrument, Guid.Parse("AFEDE7C9-85E0-4C60-A5FB-0D81B0771D3D") },
+                { CommodityDirection.Common,     Guid.Parse("80135062-F8F6-4C5A-AFD2-48A0117EB2B6") }
+            };
+
             try
             {
-                var now = DateTimeOffset.Now;
-                ProductDirectionEntity item = dataBaseContext.ProductDirectionEntities.Create();
-                item.Direction = CommodityDirection.Vaz;
-                item.DateOfCreation = now;
-                item.ForceUpdated = now;
-                item.LastUpdated = now;
-                Guid code = Guid.Parse("1FF0EBCD-1507-40E9-A409-2AF3B8F77D49");
-                item.Directory = dataBaseContext.DirectoryEntities.FirstOrDefault(x => x.Code == code);
-                dataBaseContext.ProductDirectionEntities.Add(item);
-
-                item = dataBaseContext.ProductDirectionEntities.Create();
-                item.Direction = CommodityDirection.Gaz;
-                item.DateOfCreation = now;
-                item.ForceUpdated = now;
-                item.LastUpdated = now;
-                code = Guid.Parse("9B6B4325-B435-4D65-925E-4921F09D461F");
-                item.Directory = dataBaseContext.DirectoryEntities.FirstOrDefault(x => x.Code == code);
-                dataBaseContext.ProductDirectionEntities.Add(item);
-
-                item = dataBaseContext.ProductDirectionEntities.Create();
-                item.Direction = CommodityDirection.Zaz;
-                item.DateOfCreation = now;
-                item.ForceUpdated = now;
-                item.LastUpdated = now;
-                code = Guid.Parse("264D3368-ECA8-4F2F-9C3B-7B7CC582C7FD");
-                item.Directory = dataBaseContext.DirectoryEntities.FirstOrDefault(x => x.Code == code);
-                dataBaseContext.ProductDirectionEntities.Add(item);
-
-                item = dataBaseContext.ProductDirectionEntities.Create();
-                item.Direction = CommodityDirection.Chemistry;
-                item.DateOfCreation = now;
-                item.ForceUpdated = now;
-                item.LastUpdated = now;
-                code = Guid.Parse("78DC5231-C9D8-49A1-9FC5-AD18BF71DC13");
-                item.Directory = dataBaseContext.DirectoryEntities.FirstOrDefault(x => x.Code == code);
-                dataBaseContext.ProductDirectionEntities.Add(item);
-
-                item = dataBaseContext.ProductDirectionEntities.Create();
-                item.Direction = CommodityDirection.Battery;
-                item.DateOfCreation = now;
-                item.ForceUpdated = now;
-                item.LastUpdated = now;
-                code = Guid.Parse("C7667731-5CFE-4BB6-90DC-8520C87F4FA0");
-                item.Directory = dataBaseContext.DirectoryEntities.FirstOrDefault(x => x.Code == code);
-                dataBaseContext.ProductDirectionEntities.Add(item);
-
-                item = dataBaseContext.ProductDirectionEntities.Create();
-                item.Direction = CommodityDirection.Gas;
-                item.DateOfCreation = now;
-                item.ForceUpdated = now;
-                item.LastUpdated = now;
-                code = Guid.Parse("A4151BE4-3D3F-4A18-A3D1-4BF48F03AB6C");
-                item.Directory = dataBaseContext.DirectoryEntities.FirstOrDefault(x => x.Code == code);
-                dataBaseContext.ProductDirectionEntities.Add(item);
-
-                item = dataBaseContext.ProductDirectionEntities.Create();
-                item.Direction = CommodityDirection.Instrument;
-                item.DateOfCreation = now;
-                item.ForceUpdated = now;
-                item.LastUpdated = now;
-                code = Guid.Parse("AFEDE7C9-85E0-4C60-A5FB-0D81B0771D3D");
-                item.Directory = dataBaseContext.DirectoryEntities.FirstOrDefault(x => x.Code == code);
-                dataBaseContext.ProductDirectionEntities.Add(item);
-
-                item = dataBaseContext.ProductDirectionEntities.Create();
-                item.Direction = CommodityDirection.Common;
-                item.DateOfCreation = now;
-                item.ForceUpdated = now;
-                item.LastUpdated = now;
-                code = Guid.Parse("80135062-F8F6-4C5A-AFD2-48A0117EB2B6");
-                item.Directory = dataBaseContext.DirectoryEntities.FirstOrDefault(x => x.Code == code);
-                dataBaseContext.ProductDirectionEntities.Add(item);
-
-                try
+                foreach (KeyValuePair<CommodityDirection, Guid> item in directionList)
                 {
-                    dataBaseContext.SaveChanges();
+                    ProcessingProductDirection(dataBaseContext, item.Key, item.Value, loadUpdateTime);
                 }
-                catch (Exception)
-                {
-                    ;
-                }
+
+                dataBaseContext.SaveChanges();
             }
             catch (Exception e)
             {
@@ -798,31 +914,82 @@ namespace Load.Service.Implementation
             }
         }
 
-        private void CreateDirectoryItems(DataBaseContext dataBaseContext, JsonLoadData jsonLoadData)
+        private void ProcessingProductDirection(DataBaseContext dataBaseContext, CommodityDirection commodityDirection,
+                                                Guid directoryGuid, DateTimeOffset loadUpdateTime)
+        {
+            ProductDirectionEntity item = GetProductDirection(dataBaseContext, commodityDirection);
+
+            if (item != null)
+            {
+                DirectoryEntity directory = GetDirectoryItem(dataBaseContext, directoryGuid);
+
+                if (item.Directory != directory)
+                {
+                    item.Directory = directory;
+                    item.LastUpdated = loadUpdateTime;
+                }
+            }
+            else
+            {
+                CreateProductDirection(dataBaseContext, commodityDirection, directoryGuid, loadUpdateTime);
+            }
+        }
+
+        private void CreateProductDirection(DataBaseContext dataBaseContext, CommodityDirection commodityDirection, 
+                                            Guid directoryGuid, DateTimeOffset loadUpdateTime)
+        {
+            ProductDirectionEntity item = dataBaseContext.ProductDirectionEntities.Create();
+            item.Direction = commodityDirection;
+            item.DateOfCreation = loadUpdateTime;
+            item.ForceUpdated = loadUpdateTime;
+            item.LastUpdated = loadUpdateTime;
+            item.Directory = dataBaseContext.DirectoryEntities.FirstOrDefault(x => x.Code == directoryGuid);
+            dataBaseContext.ProductDirectionEntities.Add(item);
+        }
+
+        private ProductDirectionEntity GetProductDirection(DataBaseContext dataBaseContext, CommodityDirection commodityDirection)
+        {
+            ProductDirectionEntity productDirection =
+                dataBaseContext.ProductDirectionEntities.FirstOrDefault(x => x.Direction == commodityDirection);
+            return productDirection;
+        }
+
+        private void CreateDirectoryItems(DataBaseContext dataBaseContext, JsonLoadData jsonLoadData, DateTimeOffset loadUpdateTime)
         {
             if (dataBaseContext != null && jsonLoadData?.Catalogs != null && jsonLoadData.Catalogs.Any())
             {
-                int countInsertedItems = 0;
+                int countItems = 0;
 
                 jsonLoadData.Catalogs.ForEach(
                     x =>
                     {
-                        DirectoryEntity directory = Assemble(x);
+                        DirectoryEntity oldDirectory = GetDirectoryItem(dataBaseContext, x.UID);
 
-                        if (directory != null)
+                        if (oldDirectory != null)
                         {
-                            dataBaseContext.DirectoryEntities.Add(directory);
+                            Update(dataBaseContext, oldDirectory, x, loadUpdateTime);
+                            countItems++;
+                        }
+                        else
+                        {
+                            DirectoryEntity newDirectory = Assemble(dataBaseContext, x, loadUpdateTime);
 
-                            if (countInsertedItems % 10 == 0)
+                            if (newDirectory != null)
                             {
-                                try
-                                {
-                                    dataBaseContext.SaveChanges();
-                                }
-                                catch (Exception)
-                                {
-                                    ;
-                                }
+                                dataBaseContext.DirectoryEntities.Add(newDirectory);
+                                countItems++;
+                            }
+                        }
+
+                        if (countItems % 10 == 0)
+                        {
+                            try
+                            {
+                                dataBaseContext.SaveChanges();
+                            }
+                            catch (Exception)
+                            {
+                                ;
                             }
                         }
                     });
@@ -838,7 +1005,89 @@ namespace Load.Service.Implementation
             }
         }
 
-        private DirectoryEntity Assemble(Directory directory)
+        private void Update(DataBaseContext dataBaseContext, DirectoryEntity entity, Directory jsonItem, DateTimeOffset loadUpdateTime)
+        {
+            if (entity != null && jsonItem != null)
+            {
+                if (Equals(entity, jsonItem))
+                {
+                    entity.ForceUpdated = loadUpdateTime;
+                }
+                else
+                {
+                    entity.Name = jsonItem.Name;
+                    entity.SubDirectory
+                        .RemoveAll(x => jsonItem.Subdirectory.All(i =>
+                        {
+                            bool result = true;
+                            Guid code;
+
+                            if (i.UID.ConvertToGuid(out code))
+                            {
+                                result = x.Code != code;
+                            }
+
+                            return result;
+                        }));
+
+                    jsonItem.Subdirectory
+                        .Where(x =>
+                        {
+                            bool result = false;
+                            Guid code;
+
+                            if (x.UID.ConvertToGuid(out code))
+                            {
+                                result = entity.SubDirectory.All(i => i.Code != code);
+                            }
+
+                            return result;
+                        })
+                        .ToList()
+                        .ForEach(x =>
+                        {
+                            DirectoryEntity subDirectory = Assemble(dataBaseContext, x, loadUpdateTime);
+                            entity.SubDirectory.Add(subDirectory);
+                        });
+
+                    entity.LastUpdated = loadUpdateTime;
+                }
+            }
+        }
+
+
+        private bool Equals(DirectoryEntity entity, Directory jsonItem)
+        {
+            Guid code;
+            return jsonItem.UID.ConvertToGuid(out code) && entity.Code == code && 
+                entity.Name == jsonItem.Name &&
+                entity.SubDirectory.All(x => jsonItem.Subdirectory.Any(i =>
+                {
+                    bool result = false;
+                    Guid codeSubdirectory;
+
+                    if (i.UID.ConvertToGuid(out codeSubdirectory))
+                    {
+                        result = x.Code == code;
+                    }
+
+                    return result;
+                })) &&
+                jsonItem.Subdirectory.All(x => entity.SubDirectory.Any(i =>
+                {
+                    bool result = false;
+                    Guid codeSubdirectory;
+
+                    if (x.UID.ConvertToGuid(out codeSubdirectory))
+                    {
+                        result = i.Code == code;
+                    }
+
+                    return result;
+                }));
+        }
+
+        private DirectoryEntity Assemble(DataBaseContext dataBaseContext, Directory directory, DateTimeOffset loadUpdateTime)
         {
             DirectoryEntity directoryItem = null;
 
@@ -849,57 +1098,75 @@ namespace Load.Service.Implementation
                 if (directory.Subdirectory != null && directory.Subdirectory.Any())
                 {
                     subDirectories = new List<DirectoryEntity>();
-                    directory.Subdirectory.ToList().ForEach(
+                    directory.Subdirectory.Where(x => x != null).ToList().ForEach(
                         x =>
                         {
-                            if (x != null)
+                            DirectoryEntity subDir = GetDirectoryItem(dataBaseContext, x.UID);
+
+                            if (subDir != null)
                             {
-                                subDirectories.Add(Assemble(x));
+                                subDirectories.Add(subDir);
+                                Update(dataBaseContext, subDir, x, loadUpdateTime);
+                            }
+                            else
+                            {
+                                subDirectories.Add(Assemble(dataBaseContext, x, loadUpdateTime));
                             }
                         });
                 }
 
-                var now = DateTimeOffset.Now;
                 directoryItem = new DirectoryEntity
                 {
                     Code = directory.UID.ConvertToGuid(),
                     Name = directory.Name,
                     SubDirectory = subDirectories,
-                    DateOfCreation = now,
-                    LastUpdated = now,
-                    ForceUpdated = now
+                    DateOfCreation = loadUpdateTime,
+                    LastUpdated = loadUpdateTime,
+                    ForceUpdated = loadUpdateTime
                 };
             }
 
             return directoryItem;
         }
 
-        private void CreateBrandItems(DataBaseContext dataBaseContext, JsonLoadData jsonLoadData)
+        private void CreateBrandItems(DataBaseContext dataBaseContext, 
+                                      JsonLoadData jsonLoadData, 
+                                      DateTimeOffset loadUpdateTime)
         {
             if (dataBaseContext != null && jsonLoadData?.Brands != null && jsonLoadData.Brands.Any())
             {
-                int countInsertedItems = 0;
+                int countItems = 0;
 
                 jsonLoadData.Brands.ForEach(
                     x =>
                     {
-                        BrandItemEntity brandItem = Assemble(x);
+                        BrandItemEntity oldBrandItem = GetBrandItem(dataBaseContext, x.UID);
 
-                        if (brandItem != null)
+                        if (oldBrandItem != null)
                         {
-                            dataBaseContext.BrandItemEntities.Add(brandItem);
-                            countInsertedItems++;
+                            Update(oldBrandItem, x, loadUpdateTime);
+                            countItems++;
+                        }
+                        else
+                        {
+                            BrandItemEntity newBrandItem = Assemble(x, loadUpdateTime);
 
-                            if (countInsertedItems % 100 == 0)
+                            if (newBrandItem != null)
                             {
-                                try
-                                {
-                                    dataBaseContext.SaveChanges();
-                                }
-                                catch (Exception)
-                                {
-                                    ;
-                                }
+                                dataBaseContext.BrandItemEntities.Add(newBrandItem);
+                                countItems++;
+                            }
+                        }
+
+                        if (countItems % 100 == 0)
+                        {
+                            try
+                            {
+                                dataBaseContext.SaveChanges();
+                            }
+                            catch (Exception)
+                            {
+                                ;
                             }
                         }
                     });
@@ -915,20 +1182,41 @@ namespace Load.Service.Implementation
             }
         }
 
-        private BrandItemEntity Assemble(Brand brand)
+        private void Update(BrandItemEntity entity, Brand jsonItem, DateTimeOffset loadUpdateTime)
+        {
+            if (entity != null && jsonItem != null)
+            {
+                if (Equals(entity, jsonItem))
+                {
+                    entity.ForceUpdated = loadUpdateTime;
+                }
+                else
+                {
+                    entity.Name = jsonItem.Name;
+                    entity.LastUpdated = loadUpdateTime;
+                }
+            }
+        }
+
+        private bool Equals(BrandItemEntity entity, Brand jsonItem)
+        {
+            Guid code;
+            return jsonItem.UID.ConvertToGuid(out code) && entity.Code == code && entity.Name == jsonItem.Name;
+        }
+
+        private BrandItemEntity Assemble(Brand brand, DateTimeOffset loadUpdateTime)
         {
             BrandItemEntity brandItem = null;
 
             if (brand != null)
             {
-                var now = DateTimeOffset.Now;
                 brandItem = new BrandItemEntity
                 {
                     Code = brand.UID.ConvertToGuid(),
                     Name = brand.Name,
-                    DateOfCreation = now,
-                    ForceUpdated = now,
-                    LastUpdated = now
+                    DateOfCreation = loadUpdateTime,
+                    ForceUpdated = loadUpdateTime,
+                    LastUpdated = loadUpdateTime
                 };
             }
 

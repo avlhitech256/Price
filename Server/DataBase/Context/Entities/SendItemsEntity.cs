@@ -20,5 +20,8 @@ namespace DataBase.Context.Entities
 
         [Index("IX_RequestDate", 1, IsUnique = false)]
         public DateTimeOffset RequestDate { get; set; }
+
+        [Index("IX_DateOfCreation", 1, IsUnique = false)]
+        public DateTimeOffset DateOfCreation { get; set; }
     }
 }

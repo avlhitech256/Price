@@ -1,0 +1,117 @@
+System.ServiceModel.ActionNotSupportedException не обработано
+  HResult=-2146233087
+  Message=Сообщение с Action "http://tempuri.org/IPricelistService/Shortcut" не может быть обработано на стороне получателя из-за несоответствия ContractFilter на EndpointDispatcher. Возможно, это связано с несоответствием контрактов (несогласованность действий на стороне отправителя и получателя) или несоответствием привязка/защита на стороне отправителя и получателя.  Убедитесь, что отправитель и получатель имеют один и тот же контракт и одинаковые привязки (включая требования к защите, например, Message, Transport или None).
+  Source=mscorlib
+  StackTrace:
+    Server stack trace: 
+       в System.ServiceModel.Channels.ServiceChannel.ThrowIfFaultUnderstood(Message reply, MessageFault fault, String action, MessageVersion version, FaultConverter faultConverter)
+       в System.ServiceModel.Channels.ServiceChannel.HandleReply(ProxyOperationRuntime operation, ProxyRpc& rpc)
+       в System.ServiceModel.Channels.ServiceChannel.Call(String action, Boolean oneway, ProxyOperationRuntime operation, Object[] ins, Object[] outs, TimeSpan timeout)
+       в System.ServiceModel.Channels.ServiceChannelProxy.InvokeService(IMethodCallMessage methodCall, ProxyOperationRuntime operation)
+       в System.ServiceModel.Channels.ServiceChannelProxy.Invoke(IMessage message)
+    Exception rethrown at [0]: 
+       в System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+       в System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+       в Web.WebServiceReference.IPricelistService.Shortcut(Int64 id, DateTimeOffset requestTime)
+       в Web.WebServiceReference.PricelistServiceClient.Shortcut(Int64 id, DateTimeOffset requestTime) в D:\Projects\C#\Price\Client\PriceList\Web\Service References\WebServiceReference\Reference.cs:строка 2191
+       в Web.Service.Implementation.WebService.Shortcut() в D:\Projects\C#\Price\Client\PriceList\Web\Service\Implementation\WebService.cs:строка 67
+       в Synchronize.ViewModel.SynchronizeViewModel.DoSynchronize(Object obj) в D:\Projects\C#\Price\Client\PriceList\Synchronize\ViewModel\SynchronizeViewModel.cs:строка 72
+       в Common.ViewModel.Command.DelegateCommand.Execute(Object parameter) в D:\Projects\C#\Price\Client\PriceList\Common\ViewModel\Command\DelegateCommand.cs:строка 107
+       в MS.Internal.Commands.CommandHelpers.CriticalExecuteCommandSource(ICommandSource commandSource, Boolean userInitiated)
+       в System.Windows.Controls.Primitives.ButtonBase.OnClick()
+       в System.Windows.Controls.Button.OnClick()
+       в System.Windows.Controls.Primitives.ButtonBase.OnMouseLeftButtonUp(MouseButtonEventArgs e)
+       в System.Windows.UIElement.OnMouseLeftButtonUpThunk(Object sender, MouseButtonEventArgs e)
+       в System.Windows.Input.MouseButtonEventArgs.InvokeEventHandler(Delegate genericHandler, Object genericTarget)
+       в System.Windows.RoutedEventArgs.InvokeHandler(Delegate handler, Object target)
+       в System.Windows.RoutedEventHandlerInfo.InvokeHandler(Object target, RoutedEventArgs routedEventArgs)
+       в System.Windows.EventRoute.InvokeHandlersImpl(Object source, RoutedEventArgs args, Boolean reRaised)
+       в System.Windows.UIElement.ReRaiseEventAs(DependencyObject sender, RoutedEventArgs args, RoutedEvent newEvent)
+       в System.Windows.UIElement.OnMouseUpThunk(Object sender, MouseButtonEventArgs e)
+       в System.Windows.Input.MouseButtonEventArgs.InvokeEventHandler(Delegate genericHandler, Object genericTarget)
+       в System.Windows.RoutedEventArgs.InvokeHandler(Delegate handler, Object target)
+       в System.Windows.RoutedEventHandlerInfo.InvokeHandler(Object target, RoutedEventArgs routedEventArgs)
+       в System.Windows.EventRoute.InvokeHandlersImpl(Object source, RoutedEventArgs args, Boolean reRaised)
+       в System.Windows.UIElement.RaiseEventImpl(DependencyObject sender, RoutedEventArgs args)
+       в System.Windows.UIElement.RaiseTrustedEvent(RoutedEventArgs args)
+       в System.Windows.UIElement.RaiseEvent(RoutedEventArgs args, Boolean trusted)
+       в System.Windows.Input.InputManager.ProcessStagingArea()
+       в System.Windows.Input.InputManager.ProcessInput(InputEventArgs input)
+       в System.Windows.Input.InputProviderSite.ReportInput(InputReport inputReport)
+       в System.Windows.Interop.HwndMouseInputProvider.ReportInput(IntPtr hwnd, InputMode mode, Int32 timestamp, RawMouseActions actions, Int32 x, Int32 y, Int32 wheel)
+       в System.Windows.Interop.HwndMouseInputProvider.FilterMessage(IntPtr hwnd, WindowMessage msg, IntPtr wParam, IntPtr lParam, Boolean& handled)
+       в System.Windows.Interop.HwndSource.InputFilterMessage(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam, Boolean& handled)
+       в MS.Win32.HwndWrapper.WndProc(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam, Boolean& handled)
+       в MS.Win32.HwndSubclass.DispatcherCallbackOperation(Object o)
+       в System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+       в System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+       в System.Windows.Threading.Dispatcher.LegacyInvokeImpl(DispatcherPriority priority, TimeSpan timeout, Delegate method, Object args, Int32 numArgs)
+       в MS.Win32.HwndSubclass.SubclassWndProc(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam)
+       в MS.Win32.UnsafeNativeMethods.DispatchMessage(MSG& msg)
+       в System.Windows.Threading.Dispatcher.PushFrameImpl(DispatcherFrame frame)
+       в System.Windows.Threading.Dispatcher.PushFrame(DispatcherFrame frame)
+       в System.Windows.Application.RunDispatcher(Object ignore)
+       в System.Windows.Application.RunInternal(Window window)
+       в System.Windows.Application.Run(Window window)
+       в System.Windows.Application.Run()
+       в PriceList.App.Main()
+       в System.AppDomain._nExecuteAssembly(RuntimeAssembly assembly, String[] args)
+       в System.AppDomain.ExecuteAssembly(String assemblyFile, Evidence assemblySecurity, String[] args)
+       в Microsoft.VisualStudio.HostingProcess.HostProc.RunUsersAssembly()
+       в System.Threading.ThreadHelper.ThreadStart_Context(Object state)
+       в System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+       в System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+       в System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state)
+       в System.Threading.ThreadHelper.ThreadStart()
+  InnerException: 
+
+
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+   <s:Body>
+      <s:Fault>
+         <faultcode xmlns:a="http://schemas.microsoft.com/net/2005/12/windowscommunicationfoundation/dispatcher">a:InternalServiceFault</faultcode>
+         <faultstring xml:lang="ru-RU">Невозможно удалить базу данных "ServerPriceList", так как она используется в данный момент.</faultstring>
+         <detail>
+            <ExceptionDetail xmlns="http://schemas.datacontract.org/2004/07/System.ServiceModel" xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+               <HelpLink i:nil="true"/>
+               <InnerException i:nil="true"/>
+               <Message>Невозможно удалить базу данных "ServerPriceList", так как она используется в данный момент.</Message>
+               <StackTrace><![CDATA[в System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   в System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   в System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   в System.Data.SqlClient.SqlCommand.RunExecuteNonQueryTds(String methodName, Boolean async, Int32 timeout, Boolean asyncWrite)
+   в System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   в System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   в System.Data.Entity.Infrastructure.Interception.InternalDispatcher`1.Dispatch[TTarget,TInterceptionContext,TResult](TTarget target, Func`3 operation, TInterceptionContext interceptionContext, Action`3 executing, Action`3 executed)
+   в System.Data.Entity.Infrastructure.Interception.DbCommandDispatcher.NonQuery(DbCommand command, DbCommandInterceptionContext interceptionContext)
+   в System.Data.Entity.SqlServer.SqlProviderServices.<>c__DisplayClass30.<DropDatabase>b__2e(DbConnection conn)
+   в System.Data.Entity.SqlServer.SqlProviderServices.<>c__DisplayClass33.<UsingConnection>b__32()
+   в System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.<>c__DisplayClass1.<Execute>b__0()
+   в System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   в System.Data.Entity.SqlServer.SqlProviderServices.UsingMasterConnection(DbConnection sqlConnection, Action`1 act)
+   в System.Data.Entity.SqlServer.SqlProviderServices.DropDatabase(SqlConnection sqlConnection, Nullable`1 commandTimeout, String databaseName)
+   в System.Data.Entity.SqlServer.SqlProviderServices.DbDeleteDatabase(DbConnection connection, Nullable`1 commandTimeout, StoreItemCollection storeItemCollection)
+   в System.Data.Entity.Database.Delete()
+   в System.Data.Entity.DropCreateDatabaseIfModelChanges`1.InitializeDatabase(TContext context)
+   в System.Data.Entity.Internal.InternalContext.PerformInitializationAction(Action action)
+   в System.Data.Entity.Internal.InternalContext.PerformDatabaseInitialization()
+   в System.Data.Entity.Internal.RetryAction`1.PerformAction(TInput input)
+   в System.Data.Entity.Internal.LazyInternalContext.InitializeDatabaseAction(Action`1 action)
+   в System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   в System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   в System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   в System.Data.Entity.Internal.Linq.InternalSet`1.Find(Object[] keyValues)
+   в PricelistService.Service.Implementation.ShapingCatalogs.GetItem(Int64 id) в D:\Projects\C#\Price\Server\PricelistService\Service\Implementation\ShapingCatalogs.cs:строка 35
+   в PricelistService.Service.Implementation.PricelistService.GetCatalog(SecurityInfo securityInfo, Int64 id) в D:\Projects\C#\Price\Server\PricelistService\Service\Implementation\PricelistService.cs:строка 143
+   в SyncInvokeGetCatalog(Object , Object[] , Object[] )
+   в System.ServiceModel.Dispatcher.SyncMethodInvoker.Invoke(Object instance, Object[] inputs, Object[]& outputs)
+   в System.ServiceModel.Dispatcher.DispatchOperationRuntime.InvokeBegin(MessageRpc& rpc)
+   в System.ServiceModel.Dispatcher.ImmutableDispatchRuntime.ProcessMessage5(MessageRpc& rpc)
+   в System.ServiceModel.Dispatcher.ImmutableDispatchRuntime.ProcessMessage11(MessageRpc& rpc)
+   в System.ServiceModel.Dispatcher.MessageRpc.Process(Boolean isOperationContextSet)]]></StackTrace>
+               <Type>System.Data.SqlClient.SqlException</Type>
+            </ExceptionDetail>
+         </detail>
+      </s:Fault>
+   </s:Body>
+</s:Envelope>

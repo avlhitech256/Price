@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataBase.Context.Entities
@@ -16,5 +17,10 @@ namespace DataBase.Context.Entities
 
         [MaxLength(255)]
         public string Value { get; set; }
+        [Index("IX_DateOfCreation", 1, IsUnique = false)]
+        public DateTimeOffset DateOfCreation { get; set; }
+
+        [Index("IX_LastUpdated", 1, IsUnique = false)]
+        public DateTimeOffset LastUpdated { get; set; }
     }
 }

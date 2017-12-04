@@ -16,6 +16,18 @@
   <wsdl:message name="IPricelistService_Hello_OutputMessage">
     <wsdl:part name="parameters" element="tns:HelloResponse" />
   </wsdl:message>
+  <wsdl:message name="IPricelistService_Shortcut_InputMessage">
+    <wsdl:part name="parameters" element="tns:Shortcut" />
+  </wsdl:message>
+  <wsdl:message name="IPricelistService_Shortcut_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ShortcutResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPricelistService_ChangePasswodr_InputMessage">
+    <wsdl:part name="parameters" element="tns:ChangePasswodr" />
+  </wsdl:message>
+  <wsdl:message name="IPricelistService_ChangePasswodr_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ChangePasswodrResponse" />
+  </wsdl:message>
   <wsdl:message name="IPricelistService_PrepareToUpdate_InputMessage">
     <wsdl:part name="parameters" element="tns:PrepareToUpdate" />
   </wsdl:message>
@@ -117,6 +129,14 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IPricelistService/Hello" message="tns:IPricelistService_Hello_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPricelistService/HelloResponse" message="tns:IPricelistService_Hello_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="Shortcut">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPricelistService/Shortcut" message="tns:IPricelistService_Shortcut_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPricelistService/ShortcutResponse" message="tns:IPricelistService_Shortcut_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangePasswodr">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPricelistService/ChangePasswodr" message="tns:IPricelistService_ChangePasswodr_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPricelistService/ChangePasswodrResponse" message="tns:IPricelistService_ChangePasswodr_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="PrepareToUpdate">
       <wsdl:input wsaw:Action="http://tempuri.org/IPricelistService/PrepareToUpdate" message="tns:IPricelistService_PrepareToUpdate_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPricelistService/PrepareToUpdateResponse" message="tns:IPricelistService_PrepareToUpdate_OutputMessage" />
@@ -186,6 +206,24 @@
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="Hello">
       <soap:operation soapAction="http://tempuri.org/IPricelistService/Hello" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Shortcut">
+      <soap:operation soapAction="http://tempuri.org/IPricelistService/Shortcut" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangePasswodr">
+      <soap:operation soapAction="http://tempuri.org/IPricelistService/ChangePasswodr" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
