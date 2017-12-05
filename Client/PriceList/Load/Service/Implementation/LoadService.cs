@@ -88,33 +88,9 @@ namespace Load.Service.Implementation
 
         private void Update(CatalogItemEntity entity, CatalogInfo catalogInfo)
         {
-            BrandItemEntity brandItem = GetBrand(catalogInfo.BrandId);
-
-            if (brandItem == null)
-            {
-                BrandInfo brandInfo = webService.GetBrandInfo(catalogInfo.BrandId);
-
-                if (brandInfo != null)
-                {
-                    DownLoadBrandItem(brandInfo);
-                    brandItem = GetBrand(catalogInfo.BrandId);
-                }
-            }
-
-            DirectoryEntity directory = GetDirectory(catalogInfo.DirectoryId);
-
-            if (directory == null)
-            {
-                DirectoryInfo directoryInfo = webService.GetDirectoryInfo(catalogInfo.DirectoryId);
-
-                if (directoryInfo != null)
-                {
-                    DownLoadDirectoryItem(directoryInfo);
-                    directory = GetDirectory(catalogInfo.DirectoryId);
-                }
-            }
-
-            List<PhotoItemEntity> photos = GetPhotos(catalogInfo.Photos);
+            BrandItemEntity brandItem = GetBrandWithLoad(catalogInfo.BrandId);
+            DirectoryEntity directory = GetDirectoryWithLoad(catalogInfo.DirectoryId);
+            List<PhotoItemEntity> photos = GetPhotosWithLoad(catalogInfo.Photos);
 
             entity.Id = catalogInfo.Id;
             entity.UID = catalogInfo.UID;
@@ -150,33 +126,9 @@ namespace Load.Service.Implementation
 
         private CatalogItemEntity Create(CatalogInfo catalogInfo)
         {
-            BrandItemEntity brandItem = GetBrand(catalogInfo.BrandId);
-
-            if (brandItem == null)
-            {
-                BrandInfo brandInfo = webService.GetBrandInfo(catalogInfo.BrandId);
-
-                if (brandInfo != null)
-                {
-                    DownLoadBrandItem(brandInfo);
-                    brandItem = GetBrand(catalogInfo.BrandId);
-                }
-            }
-
-            DirectoryEntity directory = GetDirectory(catalogInfo.DirectoryId);
-
-            if (directory == null)
-            {
-                DirectoryInfo directoryInfo = webService.GetDirectoryInfo(catalogInfo.DirectoryId);
-
-                if (directoryInfo != null)
-                {
-                    DownLoadDirectoryItem(directoryInfo);
-                    directory = GetDirectory(catalogInfo.DirectoryId);
-                }
-            }
-
-            List<PhotoItemEntity> photos = GetPhotos(catalogInfo.Photos);
+            BrandItemEntity brandItem = GetBrandWithLoad(catalogInfo.BrandId);
+            DirectoryEntity directory = GetDirectoryWithLoad(catalogInfo.DirectoryId);
+            List<PhotoItemEntity> photos = GetPhotosWithLoad(catalogInfo.Photos);
             CatalogItemEntity entity = LoadAssembler.Assemble(catalogInfo, brandItem, photos, directory);
             return entity;
         }
@@ -187,16 +139,65 @@ namespace Load.Service.Implementation
             return brand;
         }
 
+        private BrandItemEntity GetBrandWithLoad(long id)
+        {
+            BrandItemEntity brandItem = GetBrand(id);
+
+            if (brandItem == null)
+            {
+                BrandInfo brandInfo = webService.GetBrandInfo(id);
+
+                if (brandInfo != null)
+                {
+                    DownLoadBrandItem(brandInfo);
+                    brandItem = GetBrand(id);
+                }
+            }
+
+            return brandItem;
+        }
+
         private DirectoryEntity GetDirectory(long id)
         {
             DirectoryEntity directory = dataService.DataBaseContext.DirectoryEntities.Find(id);
             return directory;
         }
 
+        private DirectoryEntity GetDirectoryWithLoad(long id)
+        {
+            DirectoryEntity directory = GetDirectory(id);
+
+            if (directory == null)
+            {
+                DirectoryInfo directoryInfo = webService.GetDirectoryInfo(id);
+
+                if (directoryInfo != null)
+                {
+                    DownLoadDirectoryItem(directoryInfo);
+                    directory = GetDirectory(id);
+                }
+            }
+
+            return directory;
+        }
+
+        private PhotoItemEntity GetPhoto(long id)
+        {
+            PhotoItemEntity photo = dataService.DataBaseContext.PhotoItemEntities.Find(id);
+            return photo;
+        }
+
         private List<PhotoItemEntity> GetPhotos(long[] ids)
         {
             List<PhotoItemEntity> photos =
-                            dataService.DataBaseContext.PhotoItemEntities.Where(x => ids.Contains(x.Id)).ToList();
+                dataService.DataBaseContext.PhotoItemEntities.Where(x => ids.Contains(x.Id)).ToList();
+            return photos;
+        }
+
+        private List<PhotoItemEntity> GetPhotosWithLoad(long[] ids)
+        {
+            List<PhotoItemEntity> photos = GetPhotos(ids);
+
             if (photos.Count != ids.Length)
             {
                 List<long> needToLoadPhotos = ids.Where(x => photos.All(p => p.Id != x)).ToList();
