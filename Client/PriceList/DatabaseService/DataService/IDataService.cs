@@ -13,7 +13,7 @@ namespace DatabaseService.DataService
 
         void Insert<TEntity>(TEntity entity) where TEntity : class;
 
-        void Insert<TEntity>(IEnumerable<TEntity> entities) where TEntity : class;
+        void InsertMany<TEntity>(IEnumerable<TEntity> entities) where TEntity : class;
 
         void Delete<TEntity>(TEntity entity) where TEntity : class;
 

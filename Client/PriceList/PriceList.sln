@@ -39,6 +39,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Security", "Security\Securi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Synchronize", "Synchronize\Synchronize.csproj", "{109960B3-B5A7-4648-8227-B8F713BBE009}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Load", "Load\Load.csproj", "{FB146D35-FA82-4F05-9732-FA64E05EA1EE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -117,6 +119,10 @@ Global
 		{109960B3-B5A7-4648-8227-B8F713BBE009}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{109960B3-B5A7-4648-8227-B8F713BBE009}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{109960B3-B5A7-4648-8227-B8F713BBE009}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB146D35-FA82-4F05-9732-FA64E05EA1EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB146D35-FA82-4F05-9732-FA64E05EA1EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB146D35-FA82-4F05-9732-FA64E05EA1EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB146D35-FA82-4F05-9732-FA64E05EA1EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

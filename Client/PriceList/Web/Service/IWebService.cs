@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Web.WebServiceReference;
 
 namespace Web.Service
@@ -32,5 +33,7 @@ namespace Web.Service
         ProductDirectionInfo GetProductDirectionInfo(long id);
 
         ProductDirections GetProductDirections(DateTimeOffset lastUpdate);
+
+        void ConfirmUpdateBrandsr(DateTimeOffset lastUpdate, IEnumerable<long> itemIds);
     }
 }

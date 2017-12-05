@@ -1,5 +1,6 @@
 ﻿using System;
-using DatabaseService.DataService;
+using System.Collections.Generic;
+using System.Linq;
 using Options.Service;
 using Security.Service;
 using Security.Service.Implementation;
@@ -244,6 +245,16 @@ namespace Web.Service.Implementation
             }
 
             return productDirections;
+        }
+
+        public void ConfirmUpdateBrandsr(DateTimeOffset lastUpdate, IEnumerable<long> itemIds)
+        {
+            using (PricelistServiceClient webService = GetWebService())
+            {
+                SecurityInfo securityInfo = CreateSecurityInfo();
+                webService.ConfirmUpdateBrands(securityInfo, lastUpdate, itemIds.ToArray());
+                webService.Close();
+            }
         }
 
         #endregion

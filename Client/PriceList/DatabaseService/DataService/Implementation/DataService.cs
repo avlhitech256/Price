@@ -40,7 +40,7 @@ namespace DatabaseService.DataService.Implementation
             DataBaseContext.SaveChanges();
         }
 
-        public void Insert<TEntity>(IEnumerable<TEntity> entities) where TEntity : class
+        public void InsertMany<TEntity>(IEnumerable<TEntity> entities) where TEntity : class
         {
             // Отключаем отслеживание и проверку изменений для оптимизации вставки множества полей
             DataBaseContext.Configuration.AutoDetectChangesEnabled = false;

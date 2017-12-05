@@ -91,7 +91,8 @@ namespace PricelistService.Service.Implementation
                     CountCatalogs = shapingCatalogs.PrepareToUpdate(securityInfo.Login, lastUpdate),
                     CountDirectories = shapingDirectories.PrepareToUpdate(securityInfo.Login, lastUpdate),
                     CountProductDirections = shapingProductDirections.PrepareToUpdate(securityInfo.Login, lastUpdate),
-                    CountPhotos = needLoadPhotos ? shapingPhotos.PrepareToUpdate(securityInfo.Login, lastUpdate) : 0
+                    CountPhotos = needLoadPhotos ? shapingPhotos.PrepareToUpdate(securityInfo.Login, lastUpdate) : 0,
+                    IsAuthorized = true
                 };
             }
 

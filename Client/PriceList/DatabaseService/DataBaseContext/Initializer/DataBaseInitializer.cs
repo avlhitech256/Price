@@ -1,25 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
-using System.IO;
-using System.Linq;
-using System.Threading;
-using Common.Annotations;
 using Common.Data.Constant;
-using Common.Data.Enum;
-using Common.Service.Implementation;
 using DatabaseService.DataBaseContext.Entities;
-using DatabaseService.Objects;
-using DatabaseService.Properties;
-using File.Service;
-using File.Service.Implementation;
-using Json.Contract;
-using Json.Service;
-using Json.Service.Implementation;
-using Media.Image;
-using Media.Image.Implementation;
-using CommodityDirection = Common.Data.Enum.CommodityDirection;
-using Directory = Json.Contract.Directory;
 
 namespace DatabaseService.DataBaseContext.Initializer
 {

@@ -58,9 +58,7 @@
     <Compile Include="DataBaseContext\Entities\BasketItemEntity.cs" />
     <Compile Include="DataBaseContext\Entities\BrandItemEntity.cs" />
     <Compile Include="DataBaseContext\Entities\CatalogItemEntity.cs" />
-    <Compile Include="DataBaseContext\Entities\CommodityDirectionEntity.cs" />
     <Compile Include="DataBaseContext\Entities\DirectoryEntity.cs" />
-    <Compile Include="DataBaseContext\Entities\NomenclatureGroupEntity.cs" />
     <Compile Include="DataBaseContext\Entities\OptionItemEntity.cs" />
     <Compile Include="DataBaseContext\Entities\OrderEntity.cs" />
     <Compile Include="DataBaseContext\Entities\PhotoItemEntity.cs" />
