@@ -94,7 +94,7 @@ namespace PricelistService.Service.Implementation
                     Code = item.Code,
                     Name = item.Name,
                     Parent = item.Parent.Id,
-                    SubDirectoryId = item.SubDirectory.Select(x => x.Id).ToList(),
+                    SubDirectoryIds = item.SubDirectory.Select(x => x.Id).ToList(),
                     CatalogId = item.CatalogItems.Select(x => x.Id).ToList(),
                     DateOfCreation = item.DateOfCreation,
                     ForceUpdated = item.ForceUpdated,

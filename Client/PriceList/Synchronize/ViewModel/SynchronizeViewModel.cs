@@ -98,7 +98,7 @@ namespace Synchronize.ViewModel
                 brandInfo = webService.GetBrandInfo(i);
                 Message = Message + Environment.NewLine +
                           $"[{DateTimeOffset.Now:yyyy'.'MM'.'dd HH':'mm':'ss fffffff}] - Добавлен бренд: \"{brandInfo.Name}\"";
-                loadService.DownLoadBrandItem(brandInfo, now);
+                loadService.DownLoadBrandItem(brandInfo);
             }
 
             Message = Message + Environment.NewLine +

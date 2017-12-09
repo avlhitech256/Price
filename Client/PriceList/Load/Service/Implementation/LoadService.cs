@@ -40,7 +40,7 @@ namespace Load.Service.Implementation
             return brand;
         }
 
-        private BrandItemEntity GetBrandWithLoad(long id, DateTimeOffset lastUpdate)
+        private BrandItemEntity GetBrandWithLoad(long id)
         {
             BrandItemEntity brandItem = GetBrand(id);
 
@@ -50,12 +50,12 @@ namespace Load.Service.Implementation
 
                 if (brandInfo != null)
                 {
-                    DownLoadBrandItem(brandInfo, lastUpdate);
+                    DownLoadBrandItem(brandInfo);
                     brandItem = GetBrand(id);
 
                     if (brandItem != null)
                     {
-                        webService.ConfirmUpdateBrands(lastUpdate, new [] { brandItem.Id });
+                        webService.ConfirmUpdateBrands(new [] { brandItem.Id });
                     }
                 }
             }
@@ -78,7 +78,7 @@ namespace Load.Service.Implementation
             brandItem.LastUpdated = brandInfo.LastUpdated;
         }
 
-        public void DownLoadBrandItem(BrandInfo brandInfo, DateTimeOffset lastUpdate)
+        public void DownLoadBrandItem(BrandInfo brandInfo)
         {
             if (brandInfo != null)
             {
@@ -88,23 +88,23 @@ namespace Load.Service.Implementation
                 {
                     Update(oldBrandItem, brandInfo);
                     dataService.DataBaseContext.SaveChanges();
-                    webService.ConfirmUpdateBrands(lastUpdate, new[] {oldBrandItem.Id});
+                    webService.ConfirmUpdateBrands(new[] {oldBrandItem.Id});
                 }
                 else
                 {
                     BrandItemEntity brand = Create(brandInfo);
                     dataService.Insert(brand);
-                    brand = dataService.DataBaseContext.BrandItemEntities.Find(brandInfo.Id);
+                    brand = GetBrand(brandInfo.Id);
 
                     if (brand != null)
                     {
-                        webService.ConfirmUpdateBrands(lastUpdate, new[] { brand.Id });
+                        webService.ConfirmUpdateBrands(new[] { brand.Id });
                     }
                 }
             }
         }
 
-        public void DownLoadBrands(Brands brands, DateTimeOffset lastUpdate)
+        public void DownLoadBrands(Brands brands)
         {
             if (brands != null && brands.Items != null && brands.Items.Any())
             {
@@ -139,11 +139,11 @@ namespace Load.Service.Implementation
 
                 long[] ids =
                     brands.Items
-                        .Where(x => dataService.DataBaseContext.BrandItemEntities.Find(x.Id) != null)
+                        .Where(x => GetBrand(x.Id) != null)
                         .Select(x => x.Id)
                         .ToArray();
 
-                webService.ConfirmUpdateBrands(lastUpdate, ids);
+                webService.ConfirmUpdateBrands(ids);
             }
         }
 
@@ -157,18 +157,18 @@ namespace Load.Service.Implementation
             return entity;
         }
 
-        private CatalogItemEntity Create(CatalogInfo catalogInfo, DateTimeOffset lastUpdate)
+        private CatalogItemEntity Create(CatalogInfo catalogInfo)
         {
-            BrandItemEntity brandItem = GetBrandWithLoad(catalogInfo.BrandId, lastUpdate);
+            BrandItemEntity brandItem = GetBrandWithLoad(catalogInfo.BrandId);
             DirectoryEntity directory = GetDirectoryWithLoad(catalogInfo.DirectoryId);
             List<PhotoItemEntity> photos = GetPhotosWithLoad(catalogInfo.Photos);
             CatalogItemEntity entity = LoadAssembler.Assemble(catalogInfo, brandItem, photos, directory);
             return entity;
         }
 
-        private void Update(CatalogItemEntity entity, CatalogInfo catalogInfo, DateTimeOffset lastUpdate)
+        private void Update(CatalogItemEntity entity, CatalogInfo catalogInfo)
         {
-            BrandItemEntity brandItem = GetBrandWithLoad(catalogInfo.BrandId, lastUpdate);
+            BrandItemEntity brandItem = GetBrandWithLoad(catalogInfo.BrandId);
             DirectoryEntity directory = GetDirectoryWithLoad(catalogInfo.DirectoryId);
             List<PhotoItemEntity> photos = GetPhotosWithLoad(catalogInfo.Photos);
 
@@ -196,19 +196,19 @@ namespace Load.Service.Implementation
             entity.Directory = directory;
         }
 
-        public void DownLoadCatalogItem(CatalogInfo catalogInfo, DateTimeOffset lastUpdate)
+        public void DownLoadCatalogItem(CatalogInfo catalogInfo)
         {
             CatalogItemEntity oldEntity = GetCatalogItem(catalogInfo.Id);
 
             if (oldEntity != null)
             {
-                Update(oldEntity, catalogInfo, lastUpdate);
+                Update(oldEntity, catalogInfo);
                 dataService.DataBaseContext.SaveChanges();
                 webService.ConfirmUpdateCatalogs(new[] { oldEntity.Id });
             }
             else
             {
-                CatalogItemEntity entity = Create(catalogInfo, lastUpdate);
+                CatalogItemEntity entity = Create(catalogInfo);
                 dataService.Insert(entity);
                 entity = dataService.DataBaseContext.CatalogItemEntities.Find(catalogInfo.Id);
 
@@ -219,7 +219,7 @@ namespace Load.Service.Implementation
             }
         }
 
-        public void DownLoadCatalogs(Catalogs catalogs, DateTimeOffset lastUpdate)
+        public void DownLoadCatalogs(Catalogs catalogs)
         {
             if (catalogs != null && catalogs.Items != null && catalogs.Items.Any())
             {
@@ -233,11 +233,11 @@ namespace Load.Service.Implementation
 
                         if (oldCatalogItem != null)
                         {
-                            Update(oldCatalogItem, x, lastUpdate);
+                            Update(oldCatalogItem, x);
                         }
                         else
                         {
-                            entities.Add(Create(x, lastUpdate));
+                            entities.Add(Create(x));
                             needToSave = false;
                         }
 
@@ -254,15 +254,17 @@ namespace Load.Service.Implementation
 
                 long[] ids =
                     catalogs.Items
-                        .Where(x => dataService.DataBaseContext.BrandItemEntities.Find(x.Id) != null)
+                        .Where(x => GetCatalogItem(x.Id) != null)
                         .Select(x => x.Id)
                         .ToArray();
 
-                webService.ConfirmUpdateBrands(lastUpdate, ids);
+                webService.ConfirmUpdateBrands(ids);
             }
         }
 
         #endregion
+
+        #region Directory
 
         private DirectoryEntity GetDirectory(long id)
         {
@@ -282,11 +284,131 @@ namespace Load.Service.Implementation
                 {
                     DownLoadDirectoryItem(directoryInfo);
                     directory = GetDirectory(id);
+
+                    if (directory != null)
+                    {
+                        webService.ConfirmUpdateDirectories(new[] { directory.Id });
+                    }
                 }
             }
 
             return directory;
         }
+
+        private DirectoryEntity Create(DirectoryInfo directoryInfo)
+        {
+            DirectoryEntity parent = GetDirectoryWithLoad(directoryInfo.Parent);
+            List<DirectoryEntity> subDirectories = new List<DirectoryEntity>();
+
+            directoryInfo.SubDirectoryIds.ToList().ForEach(
+                x =>
+                {
+                    DirectoryEntity subDirectory = GetDirectoryWithLoad(x);
+
+                    if (subDirectory != null)
+                    {
+                        subDirectories.Add(subDirectory);
+                    }
+                });
+
+            DirectoryEntity directory = LoadAssembler.Assemble(directoryInfo, parent, subDirectories);
+            return directory;
+        }
+
+        private void Update(DirectoryEntity entity, DirectoryInfo directoryInfo)
+        {
+            DirectoryEntity parent = GetDirectoryWithLoad(directoryInfo.Parent);
+            List<DirectoryEntity> subDirectories = new List<DirectoryEntity>();
+
+            directoryInfo.SubDirectoryIds.ToList().ForEach(
+                x =>
+                {
+                    DirectoryEntity subDirectory = GetDirectoryWithLoad(x);
+
+                    if (subDirectory != null)
+                    {
+                        subDirectories.Add(subDirectory);
+                    }
+                });
+
+            entity.Code = directoryInfo.Code;
+            entity.Name = directoryInfo.Name;
+            entity.Parent = parent;
+            entity.SubDirectory = subDirectories;
+            entity.DateOfCreation = directoryInfo.DateOfCreation;
+            entity.LastUpdated = directoryInfo.LastUpdated;
+            entity.ForceUpdated = directoryInfo.ForceUpdated;
+        }
+
+        public void DownLoadDirectoryItem(DirectoryInfo directoryInfo)
+        {
+            DirectoryEntity oldDirectory = GetDirectory(directoryInfo.Id);
+
+            if (oldDirectory != null)
+            {
+                Update(oldDirectory, directoryInfo);
+                dataService.DataBaseContext.SaveChanges();
+                webService.ConfirmUpdateDirectories(new[] { oldDirectory.Id });
+            }
+            else
+            {
+                DirectoryEntity entity = Create(directoryInfo);
+                dataService.Insert(entity);
+                entity = GetDirectory(directoryInfo.Id);
+
+                if (entity != null)
+                {
+                    webService.ConfirmUpdateDirectories(new[] { entity.Id });
+                }
+            }
+        }
+
+        public void DownLoadDirectories(Directories directories)
+        {
+            if (directories != null && directories.Items != null && directories.Items.Any())
+            {
+                var entities = new List<DirectoryEntity>();
+                bool needToSave = true;
+
+                directories.Items.Where(x => x != null).ToList().ForEach(
+                    x =>
+                    {
+                        DirectoryEntity oldDirectoryItem = GetDirectory(x.Id);
+
+                        if (oldDirectoryItem != null)
+                        {
+                            Update(oldDirectoryItem, x);
+                        }
+                        else
+                        {
+                            entities.Add(Create(x));
+                            needToSave = false;
+                        }
+
+                    });
+
+                if (needToSave)
+                {
+                    dataService.DataBaseContext.SaveChanges();
+                }
+                else
+                {
+                    dataService.InsertMany(entities);
+                }
+
+                long[] ids =
+                    directories.Items
+                        .Where(x => GetDirectory(x.Id) != null)
+                        .Select(x => x.Id)
+                        .ToArray();
+
+                webService.ConfirmUpdateDirectories(ids);
+            }
+        }
+
+        #endregion
+
+        #region Photos
 
         private PhotoItemEntity GetPhoto(long id)
         {
@@ -296,7 +418,7 @@ namespace Load.Service.Implementation
 
         private List<PhotoItemEntity> GetPhotos(long[] ids)
         {
-            List<PhotoItemEntity> photos =
+            List<PhotoItemEntity> photos = 
                 dataService.DataBaseContext.PhotoItemEntities.Where(x => ids.Contains(x.Id)).ToList();
             return photos;
         }
@@ -308,6 +430,7 @@ namespace Load.Service.Implementation
             if (photos.Count != ids.Length)
             {
                 List<long> needToLoadPhotos = ids.Where(x => photos.All(p => p.Id != x)).ToList();
+                List<long> loadedPhotoIds = new List<long>();
 
                 foreach (long id in needToLoadPhotos)
                 {
@@ -318,74 +441,103 @@ namespace Load.Service.Implementation
                     if (photo != null)
                     {
                         photos.Add(photo);
+                        loadedPhotoIds.Add(photo.Id);
                     }
+                }
+
+                if (loadedPhotoIds.Any())
+                {
+                    webService.ConfirmUpdatePhotos(loadedPhotoIds);
                 }
             }
 
             return photos;
         }
 
-        public void DownLoadDirectoryItem(DirectoryInfo directoryInfo)
+        private PhotoItemEntity Create(PhotoInfo photoInfo)
         {
-            DirectoryEntity oldDirectory = GetDirectory(directoryInfo.Id);
-
-            if (oldDirectory != null)
-            {
-                Update(oldDirectory, directoryInfo);
-            }
-            else
-            {
-                DirectoryEntity parent = GetDirectoryWithLoad(directoryInfo.Parent);
-                List<DirectoryEntity> subDirectories = new List<DirectoryEntity>();
-
-                directoryInfo.SubDirectoryId.ToList().ForEach(
-                    x =>
-                    {
-                        subDirectories.Add(GetDirectoryWithLoad(x));
-                    });
-
-                DirectoryEntity entity = LoadAssembler.Assemble(directoryInfo, parent, subDirectories);
-                dataService.Insert(entity);
-            }
+            PhotoItemEntity entity = LoadAssembler.Assemble(photoInfo);
+            return entity;
         }
 
-        private void Update(DirectoryEntity entity, DirectoryInfo directoryInfo)
+        private void Update(PhotoItemEntity photoItem, PhotoInfo photoInfo)
         {
-            DirectoryEntity parent = GetDirectoryWithLoad(directoryInfo.Parent);
-            List<DirectoryEntity> subDirectories = new List<DirectoryEntity>();
-
-            directoryInfo.SubDirectoryId.ToList().ForEach(
-                x =>
-                {
-                    subDirectories.Add(GetDirectoryWithLoad(x));
-                });
-
-            entity.Code = directoryInfo.Code;
-            entity.Name = directoryInfo.Name;
-            entity.Parent = parent;
-            entity.SubDirectory = subDirectories;
-            entity.DateOfCreation = directoryInfo.DateOfCreation;
-            entity.LastUpdated = directoryInfo.LastUpdated;
-            entity.ForceUpdated = directoryInfo.ForceUpdated;
-
-            dataService.DataBaseContext.SaveChanges();
-        }
-
-        public void DownLoadDirectories(Directories directories)
-        {
-            throw new System.NotImplementedException();
+            photoItem.Name = photoInfo.Name;
+            photoItem.IsLoad = photoInfo.IsLoad;
+            photoItem.Photo = photoInfo.Photo;
+            photoItem.DateOfCreation = photoInfo.DateOfCreation;
+            photoItem.ForceUpdated = photoInfo.ForceUpdated;
+            photoItem.LastUpdated = photoInfo.LastUpdated;
         }
 
         public void DownLoadPhotoItem(PhotoInfo photoInfo)
         {
-            PhotoItemEntity entity = LoadAssembler.Assemble(photoInfo);
-            dataService.Insert(entity);
+            PhotoItemEntity oldPhoto = GetPhoto(photoInfo.Id);
+
+            if (oldPhoto != null)
+            {
+                Update(oldPhoto, photoInfo);
+                dataService.DataBaseContext.SaveChanges();
+                webService.ConfirmUpdatePhotos(new[] { oldPhoto.Id });
+
+            }
+            else
+            {
+                PhotoItemEntity entity = Create(photoInfo);
+                dataService.Insert(entity);
+                entity = GetPhoto(photoInfo.Id);
+
+                if (entity != null)
+                {
+                    webService.ConfirmUpdatePhotos(new[] { entity.Id });
+                }
+            }
         }
 
         public void DownLoadPhotos(Photos photos)
         {
-            throw new System.NotImplementedException();
+            if (photos != null && photos.Items != null && photos.Items.Any())
+            {
+                var entities = new List<PhotoItemEntity>();
+                bool needToSave = true;
+
+                photos.Items.Where(x => x != null).ToList().ForEach(
+                    x =>
+                    {
+                        PhotoItemEntity oldPhotoItem = GetPhoto(x.Id);
+
+                        if (oldPhotoItem != null)
+                        {
+                            Update(oldPhotoItem, x);
+                        }
+                        else
+                        {
+                            entities.Add(Create(x));
+                            needToSave = false;
+                        }
+
+                    });
+
+                if (needToSave)
+                {
+                    dataService.DataBaseContext.SaveChanges();
+                }
+                else
+                {
+                    dataService.InsertMany(entities);
+                }
+
+                long[] ids =
+                    photos.Items
+                        .Where(x => GetPhoto(x.Id) != null)
+                        .Select(x => x.Id)
+                        .ToArray();
+
+                webService.ConfirmUpdateBrands(ids);
+            }
         }
+
+        #endregion
 
         public void DownLoadProductDirectionItem(ProductDirectionInfo productDirectionInfo)
         {

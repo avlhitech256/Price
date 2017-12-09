@@ -23,7 +23,7 @@ namespace PricelistService.Service.Contract
         public long Parent { get; set; }
 
         [DataMember]
-        public virtual List<long> SubDirectoryId { get; set; }
+        public virtual List<long> SubDirectoryIds { get; set; }
 
         [DataMember]
         public virtual List<long> CatalogId { get; set; }

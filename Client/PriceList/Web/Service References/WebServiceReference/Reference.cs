@@ -1307,7 +1307,7 @@ namespace Web.WebServiceReference {
         private long ParentField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private long[] SubDirectoryIdField;
+        private long[] SubDirectoryIdsField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -1437,14 +1437,14 @@ namespace Web.WebServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public long[] SubDirectoryId {
+        public long[] SubDirectoryIds {
             get {
-                return this.SubDirectoryIdField;
+                return this.SubDirectoryIdsField;
             }
             set {
-                if ((object.ReferenceEquals(this.SubDirectoryIdField, value) != true)) {
-                    this.SubDirectoryIdField = value;
-                    this.RaisePropertyChanged("SubDirectoryId");
+                if ((object.ReferenceEquals(this.SubDirectoryIdsField, value) != true)) {
+                    this.SubDirectoryIdsField = value;
+                    this.RaisePropertyChanged("SubDirectoryIds");
                 }
             }
         }
@@ -2074,10 +2074,10 @@ namespace Web.WebServiceReference {
         System.Threading.Tasks.Task<Web.WebServiceReference.Brands> GetBrandsAsync(Web.WebServiceReference.SecurityInfo securityInfo, System.DateTimeOffset lastUpdate);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPricelistService/ConfirmUpdateBrands", ReplyAction="http://tempuri.org/IPricelistService/ConfirmUpdateBrandsResponse")]
-        void ConfirmUpdateBrands(Web.WebServiceReference.SecurityInfo securityInfo, System.DateTimeOffset lastUpdate, long[] itemIds);
+        void ConfirmUpdateBrands(Web.WebServiceReference.SecurityInfo securityInfo, long[] itemIds);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPricelistService/ConfirmUpdateBrands", ReplyAction="http://tempuri.org/IPricelistService/ConfirmUpdateBrandsResponse")]
-        System.Threading.Tasks.Task ConfirmUpdateBrandsAsync(Web.WebServiceReference.SecurityInfo securityInfo, System.DateTimeOffset lastUpdate, long[] itemIds);
+        System.Threading.Tasks.Task ConfirmUpdateBrandsAsync(Web.WebServiceReference.SecurityInfo securityInfo, long[] itemIds);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPricelistService/GetCatalog", ReplyAction="http://tempuri.org/IPricelistService/GetCatalogResponse")]
         Web.WebServiceReference.CatalogInfo GetCatalog(Web.WebServiceReference.SecurityInfo securityInfo, long id);
@@ -2227,12 +2227,12 @@ namespace Web.WebServiceReference {
             return base.Channel.GetBrandsAsync(securityInfo, lastUpdate);
         }
         
-        public void ConfirmUpdateBrands(Web.WebServiceReference.SecurityInfo securityInfo, System.DateTimeOffset lastUpdate, long[] itemIds) {
-            base.Channel.ConfirmUpdateBrands(securityInfo, lastUpdate, itemIds);
+        public void ConfirmUpdateBrands(Web.WebServiceReference.SecurityInfo securityInfo, long[] itemIds) {
+            base.Channel.ConfirmUpdateBrands(securityInfo, itemIds);
         }
         
-        public System.Threading.Tasks.Task ConfirmUpdateBrandsAsync(Web.WebServiceReference.SecurityInfo securityInfo, System.DateTimeOffset lastUpdate, long[] itemIds) {
-            return base.Channel.ConfirmUpdateBrandsAsync(securityInfo, lastUpdate, itemIds);
+        public System.Threading.Tasks.Task ConfirmUpdateBrandsAsync(Web.WebServiceReference.SecurityInfo securityInfo, long[] itemIds) {
+            return base.Channel.ConfirmUpdateBrandsAsync(securityInfo, itemIds);
         }
         
         public Web.WebServiceReference.CatalogInfo GetCatalog(Web.WebServiceReference.SecurityInfo securityInfo, long id) {

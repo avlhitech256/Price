@@ -28,7 +28,7 @@ namespace PricelistService.Service
         Brands GetBrands(SecurityInfo securityInfo, DateTimeOffset lastUpdate);
 
         [OperationContract]
-        void ConfirmUpdateBrands(SecurityInfo securityInfo, DateTimeOffset lastUpdate, List<long> itemIds);
+        void ConfirmUpdateBrands(SecurityInfo securityInfo, List<long> itemIds);
 
         [OperationContract]
         CatalogInfo GetCatalog(SecurityInfo securityInfo, long id);

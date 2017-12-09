@@ -125,7 +125,7 @@ namespace PricelistService.Service.Implementation
             return brands;
         }
 
-        public void ConfirmUpdateBrands(SecurityInfo securityInfo, DateTimeOffset lastUpdate, List<long> itemIds)
+        public void ConfirmUpdateBrands(SecurityInfo securityInfo, List<long> itemIds)
         {
             if (ValidatePassword(securityInfo))
             {

@@ -247,12 +247,12 @@ namespace Web.Service.Implementation
             return productDirections;
         }
 
-        public void ConfirmUpdateBrands(DateTimeOffset lastUpdate, IEnumerable<long> itemIds)
+        public void ConfirmUpdateBrands(IEnumerable<long> itemIds)
         {
             using (PricelistServiceClient webService = GetWebService())
             {
                 SecurityInfo securityInfo = CreateSecurityInfo();
-                webService.ConfirmUpdateBrands(securityInfo, lastUpdate, itemIds.ToArray());
+                webService.ConfirmUpdateBrands(securityInfo, itemIds.ToArray());
                 webService.Close();
             }
         }

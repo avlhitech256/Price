@@ -5,13 +5,13 @@ namespace Load.Service
 {
     public interface ILoadService
     {
-        void DownLoadBrandItem(BrandInfo brandInfo, DateTimeOffset lastUpdate);
+        void DownLoadBrandItem(BrandInfo brandInfo);
 
-        void DownLoadBrands(Brands brands, DateTimeOffset lastUpdate);
+        void DownLoadBrands(Brands brands);
 
-        void DownLoadCatalogItem(CatalogInfo catalogInfo, DateTimeOffset lastUpdate);
+        void DownLoadCatalogItem(CatalogInfo catalogInfo);
 
-        void DownLoadCatalogs(Catalogs catalogs, DateTimeOffset lastUpdate);
+        void DownLoadCatalogs(Catalogs catalogs);
 
         void DownLoadDirectoryItem(DirectoryInfo directoryInfo);
 
