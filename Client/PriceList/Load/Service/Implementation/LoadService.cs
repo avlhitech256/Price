@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using DatabaseService.DataBaseContext.Entities;
 using DatabaseService.DataService;
@@ -31,19 +32,41 @@ namespace Load.Service.Implementation
 
         #region Methods
 
-        public void DownLoadBrandItem(BrandInfo brandInfo)
-        {
-            BrandItemEntity oldBrandItem = GetBrand(brandInfo.Id);
+        #region Brends
 
-            if (oldBrandItem != null)
+        private BrandItemEntity GetBrand(long id)
+        {
+            BrandItemEntity brand = dataService.DataBaseContext.BrandItemEntities.Find(id);
+            return brand;
+        }
+
+        private BrandItemEntity GetBrandWithLoad(long id, DateTimeOffset lastUpdate)
+        {
+            BrandItemEntity brandItem = GetBrand(id);
+
+            if (brandItem == null)
             {
-                Update(oldBrandItem, brandInfo);
+                BrandInfo brandInfo = webService.GetBrandInfo(id);
+
+                if (brandInfo != null)
+                {
+                    DownLoadBrandItem(brandInfo, lastUpdate);
+                    brandItem = GetBrand(id);
+
+                    if (brandItem != null)
+                    {
+                        webService.ConfirmUpdateBrands(lastUpdate, new [] { brandItem.Id });
+                    }
+                }
             }
-            else
-            {
-                BrandItemEntity brand = Create(brandInfo);
-                dataService.Insert(brand);
-            }
+
+            return brandItem;
+        }
+
+        private BrandItemEntity Create(BrandInfo brandInfo)
+        {
+            BrandItemEntity brand = LoadAssembler.Assemble(brandInfo);
+            return brand;
         }
 
         private void Update(BrandItemEntity brandItem, BrandInfo brandInfo)
@@ -53,42 +76,99 @@ namespace Load.Service.Implementation
             brandItem.DateOfCreation = brandInfo.DateOfCreation;
             brandItem.ForceUpdated = brandInfo.ForceUpdated;
             brandItem.LastUpdated = brandInfo.LastUpdated;
-
-            dataService.DataBaseContext.SaveChanges();
         }
 
-        private BrandItemEntity Create(BrandInfo brandInfo)
+        public void DownLoadBrandItem(BrandInfo brandInfo, DateTimeOffset lastUpdate)
         {
-            BrandItemEntity brand = LoadAssembler.Assemble(brandInfo);
-            return brand;
-        }
-
-        public void DownLoadBrands(Brands brands)
-        {
-            var entities = new List<BrandItemEntity>();
-            brands.Items.ToList().ForEach(x => entities.Add(Create(x)));
-            dataService.InsertMany(entities);
-        }
-
-        public void DownLoadCatalogItem(CatalogInfo catalogInfo)
-        {
-            CatalogItemEntity oldEntity = GetCatalogItem(catalogInfo.Id);
-
-            if (oldEntity != null)
+            if (brandInfo != null)
             {
-                Update(oldEntity, catalogInfo);
-            }
-            else
-            {
-                CatalogItemEntity entity = Create(catalogInfo);
-                dataService.DataBaseContext.CatalogItemEntities.Add(entity);
-                dataService.Insert(entity);
+                BrandItemEntity oldBrandItem = GetBrand(brandInfo.Id);
+
+                if (oldBrandItem != null)
+                {
+                    Update(oldBrandItem, brandInfo);
+                    dataService.DataBaseContext.SaveChanges();
+                    webService.ConfirmUpdateBrands(lastUpdate, new[] {oldBrandItem.Id});
+                }
+                else
+                {
+                    BrandItemEntity brand = Create(brandInfo);
+                    dataService.Insert(brand);
+                    brand = dataService.DataBaseContext.BrandItemEntities.Find(brandInfo.Id);
+
+                    if (brand != null)
+                    {
+                        webService.ConfirmUpdateBrands(lastUpdate, new[] { brand.Id });
+                    }
+                }
             }
         }
 
-        private void Update(CatalogItemEntity entity, CatalogInfo catalogInfo)
+        public void DownLoadBrands(Brands brands, DateTimeOffset lastUpdate)
         {
-            BrandItemEntity brandItem = GetBrandWithLoad(catalogInfo.BrandId);
+            if (brands != null && brands.Items != null && brands.Items.Any())
+            {
+                var entities = new List<BrandItemEntity>();
+                bool needToSave = true;
+
+                brands.Items.Where(x => x != null).ToList().ForEach(
+                    x =>
+                    {
+                        BrandItemEntity oldBrandItem = GetBrand(x.Id);
+
+                        if (oldBrandItem != null)
+                        {
+                            Update(oldBrandItem, x);
+                        }
+                        else
+                        {
+                            entities.Add(Create(x));
+                            needToSave = false;
+                        }
+
+                    });
+
+                if (needToSave)
+                {
+                    dataService.DataBaseContext.SaveChanges();
+                }
+                else
+                {
+                    dataService.InsertMany(entities);
+                }
+
+                long[] ids =
+                    brands.Items
+                        .Where(x => dataService.DataBaseContext.BrandItemEntities.Find(x.Id) != null)
+                        .Select(x => x.Id)
+                        .ToArray();
+
+                webService.ConfirmUpdateBrands(lastUpdate, ids);
+            }
+        }
+
+        #endregion
+
+        #region Catalogs
+
+        private CatalogItemEntity GetCatalogItem(long id)
+        {
+            CatalogItemEntity entity = dataService.DataBaseContext.CatalogItemEntities.Find(id);
+            return entity;
+        }
+
+        private CatalogItemEntity Create(CatalogInfo catalogInfo, DateTimeOffset lastUpdate)
+        {
+            BrandItemEntity brandItem = GetBrandWithLoad(catalogInfo.BrandId, lastUpdate);
+            DirectoryEntity directory = GetDirectoryWithLoad(catalogInfo.DirectoryId);
+            List<PhotoItemEntity> photos = GetPhotosWithLoad(catalogInfo.Photos);
+            CatalogItemEntity entity = LoadAssembler.Assemble(catalogInfo, brandItem, photos, directory);
+            return entity;
+        }
+
+        private void Update(CatalogItemEntity entity, CatalogInfo catalogInfo, DateTimeOffset lastUpdate)
+        {
+            BrandItemEntity brandItem = GetBrandWithLoad(catalogInfo.BrandId, lastUpdate);
             DirectoryEntity directory = GetDirectoryWithLoad(catalogInfo.DirectoryId);
             List<PhotoItemEntity> photos = GetPhotosWithLoad(catalogInfo.Photos);
 
@@ -114,48 +194,75 @@ namespace Load.Service.Implementation
             entity.Status = LoadAssembler.Convert(catalogInfo.Status);
             entity.LastUpdatedStatus = catalogInfo.LastUpdatedStatus;
             entity.Directory = directory;
-
-            dataService.DataBaseContext.SaveChanges();
         }
 
-        private CatalogItemEntity GetCatalogItem(long id)
+        public void DownLoadCatalogItem(CatalogInfo catalogInfo, DateTimeOffset lastUpdate)
         {
-            CatalogItemEntity entity = dataService.DataBaseContext.CatalogItemEntities.Find(id);
-            return entity;
-        }
+            CatalogItemEntity oldEntity = GetCatalogItem(catalogInfo.Id);
 
-        private CatalogItemEntity Create(CatalogInfo catalogInfo)
-        {
-            BrandItemEntity brandItem = GetBrandWithLoad(catalogInfo.BrandId);
-            DirectoryEntity directory = GetDirectoryWithLoad(catalogInfo.DirectoryId);
-            List<PhotoItemEntity> photos = GetPhotosWithLoad(catalogInfo.Photos);
-            CatalogItemEntity entity = LoadAssembler.Assemble(catalogInfo, brandItem, photos, directory);
-            return entity;
-        }
-
-        private BrandItemEntity GetBrand(long id)
-        {
-            BrandItemEntity brand = dataService.DataBaseContext.BrandItemEntities.Find(id);
-            return brand;
-        }
-
-        private BrandItemEntity GetBrandWithLoad(long id)
-        {
-            BrandItemEntity brandItem = GetBrand(id);
-
-            if (brandItem == null)
+            if (oldEntity != null)
             {
-                BrandInfo brandInfo = webService.GetBrandInfo(id);
+                Update(oldEntity, catalogInfo, lastUpdate);
+                dataService.DataBaseContext.SaveChanges();
+                webService.ConfirmUpdateCatalogs(new[] { oldEntity.Id });
+            }
+            else
+            {
+                CatalogItemEntity entity = Create(catalogInfo, lastUpdate);
+                dataService.Insert(entity);
+                entity = dataService.DataBaseContext.CatalogItemEntities.Find(catalogInfo.Id);
 
-                if (brandInfo != null)
+                if (entity != null)
                 {
-                    DownLoadBrandItem(brandInfo);
-                    brandItem = GetBrand(id);
+                    webService.ConfirmUpdateCatalogs(new[] { catalogInfo.Id });
                 }
             }
-
-            return brandItem;
         }
+
+        public void DownLoadCatalogs(Catalogs catalogs, DateTimeOffset lastUpdate)
+        {
+            if (catalogs != null && catalogs.Items != null && catalogs.Items.Any())
+            {
+                var entities = new List<CatalogItemEntity>();
+                bool needToSave = true;
+
+                catalogs.Items.Where(x => x != null).ToList().ForEach(
+                    x =>
+                    {
+                        CatalogItemEntity oldCatalogItem = GetCatalogItem(x.Id);
+
+                        if (oldCatalogItem != null)
+                        {
+                            Update(oldCatalogItem, x, lastUpdate);
+                        }
+                        else
+                        {
+                            entities.Add(Create(x, lastUpdate));
+                            needToSave = false;
+                        }
+
+                    });
+
+                if (needToSave)
+                {
+                    dataService.DataBaseContext.SaveChanges();
+                }
+                else
+                {
+                    dataService.InsertMany(entities);
+                }
+
+                long[] ids =
+                    catalogs.Items
+                        .Where(x => dataService.DataBaseContext.BrandItemEntities.Find(x.Id) != null)
+                        .Select(x => x.Id)
+                        .ToArray();
+
+                webService.ConfirmUpdateBrands(lastUpdate, ids);
+            }
+        }
+
+        #endregion
 
         private DirectoryEntity GetDirectory(long id)
         {
@@ -218,19 +325,51 @@ namespace Load.Service.Implementation
             return photos;
         }
 
-        public void DownLoadCatalogs(Catalogs catalogs)
-        {
-            var entities = new List<CatalogItemEntity>();
-            catalogs.Items.ToList().ForEach(x => entities.Add(Create(x)));
-            dataService.DataBaseContext.CatalogItemEntities.AddRange(entities);
-            dataService.InsertMany(entities);
-        }
-
         public void DownLoadDirectoryItem(DirectoryInfo directoryInfo)
         {
-            throw new System.NotImplementedException();
+            DirectoryEntity oldDirectory = GetDirectory(directoryInfo.Id);
+
+            if (oldDirectory != null)
+            {
+                Update(oldDirectory, directoryInfo);
+            }
+            else
+            {
+                DirectoryEntity parent = GetDirectoryWithLoad(directoryInfo.Parent);
+                List<DirectoryEntity> subDirectories = new List<DirectoryEntity>();
+
+                directoryInfo.SubDirectoryId.ToList().ForEach(
+                    x =>
+                    {
+                        subDirectories.Add(GetDirectoryWithLoad(x));
+                    });
+
+                DirectoryEntity entity = LoadAssembler.Assemble(directoryInfo, parent, subDirectories);
+                dataService.Insert(entity);
+            }
         }
 
+        private void Update(DirectoryEntity entity, DirectoryInfo directoryInfo)
+        {
+            DirectoryEntity parent = GetDirectoryWithLoad(directoryInfo.Parent);
+            List<DirectoryEntity> subDirectories = new List<DirectoryEntity>();
+
+            directoryInfo.SubDirectoryId.ToList().ForEach(
+                x =>
+                {
+                    subDirectories.Add(GetDirectoryWithLoad(x));
+                });
+
+            entity.Code = directoryInfo.Code;
+            entity.Name = directoryInfo.Name;
+            entity.Parent = parent;
+            entity.SubDirectory = subDirectories;
+            entity.DateOfCreation = directoryInfo.DateOfCreation;
+            entity.LastUpdated = directoryInfo.LastUpdated;
+            entity.ForceUpdated = directoryInfo.ForceUpdated;
+
+            dataService.DataBaseContext.SaveChanges();
+        }
 
         public void DownLoadDirectories(Directories directories)
         {
@@ -240,7 +379,6 @@ namespace Load.Service.Implementation
         public void DownLoadPhotoItem(PhotoInfo photoInfo)
         {
             PhotoItemEntity entity = LoadAssembler.Assemble(photoInfo);
-            dataService.DataBaseContext.PhotoItemEntities.Add(entity);
             dataService.Insert(entity);
         }
 

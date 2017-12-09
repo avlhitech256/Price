@@ -247,12 +247,52 @@ namespace Web.Service.Implementation
             return productDirections;
         }
 
-        public void ConfirmUpdateBrandsr(DateTimeOffset lastUpdate, IEnumerable<long> itemIds)
+        public void ConfirmUpdateBrands(DateTimeOffset lastUpdate, IEnumerable<long> itemIds)
         {
             using (PricelistServiceClient webService = GetWebService())
             {
                 SecurityInfo securityInfo = CreateSecurityInfo();
                 webService.ConfirmUpdateBrands(securityInfo, lastUpdate, itemIds.ToArray());
+                webService.Close();
+            }
+        }
+
+        public void ConfirmUpdateCatalogs(IEnumerable<long> itemIds)
+        {
+            using (PricelistServiceClient webService = GetWebService())
+            {
+                SecurityInfo securityInfo = CreateSecurityInfo();
+                webService.ConfirmUpdateCatalogs(securityInfo, itemIds.ToArray());
+                webService.Close();
+            }
+        }
+
+        public void ConfirmUpdateDirectories(IEnumerable<long> itemIds)
+        {
+            using (PricelistServiceClient webService = GetWebService())
+            {
+                SecurityInfo securityInfo = CreateSecurityInfo();
+                webService.ConfirmUpdateDirectories(securityInfo, itemIds.ToArray());
+                webService.Close();
+            }
+        }
+
+        public void ConfirmUpdatePhotos(IEnumerable<long> itemIds)
+        {
+            using (PricelistServiceClient webService = GetWebService())
+            {
+                SecurityInfo securityInfo = CreateSecurityInfo();
+                webService.ConfirmUpdatePhotos(securityInfo, itemIds.ToArray());
+                webService.Close();
+            }
+        }
+
+        public void ConfirmUpdateProductDirections(IEnumerable<long> itemIds)
+        {
+            using (PricelistServiceClient webService = GetWebService())
+            {
+                SecurityInfo securityInfo = CreateSecurityInfo();
+                webService.ConfirmUpdateProductDirections(securityInfo, itemIds.ToArray());
                 webService.Close();
             }
         }

@@ -34,6 +34,14 @@ namespace Web.Service
 
         ProductDirections GetProductDirections(DateTimeOffset lastUpdate);
 
-        void ConfirmUpdateBrandsr(DateTimeOffset lastUpdate, IEnumerable<long> itemIds);
+        void ConfirmUpdateBrands(DateTimeOffset lastUpdate, IEnumerable<long> itemIds);
+
+        void ConfirmUpdateCatalogs(IEnumerable<long> itemIds);
+
+        void ConfirmUpdateDirectories(IEnumerable<long> itemIds);
+
+        void ConfirmUpdatePhotos(IEnumerable<long> itemIds);
+
+        void ConfirmUpdateProductDirections(IEnumerable<long> itemIds);
     }
 }

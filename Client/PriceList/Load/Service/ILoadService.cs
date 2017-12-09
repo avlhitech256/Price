@@ -1,16 +1,17 @@
-﻿using Web.WebServiceReference;
+﻿using System;
+using Web.WebServiceReference;
 
 namespace Load.Service
 {
     public interface ILoadService
     {
-        void DownLoadBrandItem(BrandInfo brandInfo);
+        void DownLoadBrandItem(BrandInfo brandInfo, DateTimeOffset lastUpdate);
 
-        void DownLoadBrands(Brands brands);
+        void DownLoadBrands(Brands brands, DateTimeOffset lastUpdate);
 
-        void DownLoadCatalogItem(CatalogInfo catalogInfo);
+        void DownLoadCatalogItem(CatalogInfo catalogInfo, DateTimeOffset lastUpdate);
 
-        void DownLoadCatalogs(Catalogs catalogs);
+        void DownLoadCatalogs(Catalogs catalogs, DateTimeOffset lastUpdate);
 
         void DownLoadDirectoryItem(DirectoryInfo directoryInfo);
 
