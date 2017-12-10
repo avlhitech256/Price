@@ -127,7 +127,7 @@ namespace Load.Service.Implementation
             return result;
         }
 
-        private static Common.Data.Enum.CommodityDirection Convert(CommodityDirection direction)
+        public static Common.Data.Enum.CommodityDirection Convert(CommodityDirection direction)
         {
             Common.Data.Enum.CommodityDirection result;
 

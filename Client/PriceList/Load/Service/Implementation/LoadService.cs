@@ -539,15 +539,124 @@ namespace Load.Service.Implementation
 
         #endregion
 
+        #region ProductDirection
+
+        private ProductDirectionEntity GetProductDirection(long id)
+        {
+            ProductDirectionEntity productDirection = dataService.DataBaseContext.ProductDirectionEntities.Find(id);
+            return productDirection;
+        }
+
+        private ProductDirectionEntity GetProductDirectionWithLoad(long id)
+        {
+            ProductDirectionEntity productDirectionItem = GetProductDirection(id);
+
+            if (productDirectionItem == null)
+            {
+                ProductDirectionInfo productDirectionInfo = webService.GetProductDirectionInfo(id);
+
+                if (productDirectionInfo != null)
+                {
+                    DownLoadProductDirectionItem(productDirectionInfo);
+                    productDirectionItem = GetProductDirection(id);
+
+                    if (productDirectionItem != null)
+                    {
+                        webService.ConfirmUpdateProductDirections(new[] { productDirectionItem.Id });
+                    }
+                }
+            }
+
+            return productDirectionItem;
+        }
+
+        private ProductDirectionEntity Create(ProductDirectionInfo brandInfo)
+        {
+            DirectoryEntity directory = GetDirectoryWithLoad(brandInfo.Id);
+            ProductDirectionEntity brand = LoadAssembler.Assemble(brandInfo, directory);
+            return brand;
+        }
+
+        private void Update(ProductDirectionEntity brandItem, ProductDirectionInfo brandInfo)
+        {
+            brandItem.Direction = LoadAssembler.Convert(brandInfo.Direction);
+            brandItem.Directory = GetDirectoryWithLoad(brandInfo.Id);
+            brandItem.DateOfCreation = brandInfo.DateOfCreation;
+            brandItem.ForceUpdated = brandInfo.ForceUpdated;
+            brandItem.LastUpdated = brandInfo.LastUpdated;
+        }
+
+
         public void DownLoadProductDirectionItem(ProductDirectionInfo productDirectionInfo)
         {
-            throw new System.NotImplementedException();
+            if (productDirectionInfo != null)
+            {
+                ProductDirectionEntity oldProductDirectionItem = GetProductDirection(productDirectionInfo.Id);
+
+                if (oldProductDirectionItem != null)
+                {
+                    Update(oldProductDirectionItem, productDirectionInfo);
+                    dataService.DataBaseContext.SaveChanges();
+                    webService.ConfirmUpdateBrands(new[] { oldProductDirectionItem.Id });
+                }
+                else
+                {
+                    ProductDirectionEntity productDirectionItem = Create(productDirectionInfo);
+                    dataService.Insert(productDirectionItem);
+                    productDirectionItem = GetProductDirection(productDirectionInfo.Id);
+
+                    if (productDirectionItem != null)
+                    {
+                        webService.ConfirmUpdateBrands(new[] { productDirectionItem.Id });
+                    }
+                }
+            }
         }
 
         public void DownLoadProductDirections(ProductDirections productDirections)
         {
-            throw new System.NotImplementedException();
+            if (productDirections != null && productDirections.Items != null && productDirections.Items.Any())
+            {
+                var entities = new List<ProductDirectionEntity>();
+                bool needToSave = true;
+
+                productDirections.Items.Where(x => x != null).ToList().ForEach(
+                    x =>
+                    {
+                        ProductDirectionEntity oldProductDirectionItem = GetProductDirection(x.Id);
+
+                        if (oldProductDirectionItem != null)
+                        {
+                            Update(oldProductDirectionItem, x);
+                        }
+                        else
+                        {
+                            entities.Add(Create(x));
+                            needToSave = false;
+                        }
+
+                    });
+
+                if (needToSave)
+                {
+                    dataService.DataBaseContext.SaveChanges();
+                }
+                else
+                {
+                    dataService.InsertMany(entities);
+                }
+
+                long[] ids =
+                    productDirections.Items
+                        .Where(x => GetProductDirection(x.Id) != null)
+                        .Select(x => x.Id)
+                        .ToArray();
+
+                webService.ConfirmUpdateProductDirections(ids);
+            }
         }
+
+        #endregion
 
         #endregion
     }
