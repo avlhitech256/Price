@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Common.Data.Enum;
 using DatabaseService.DataBaseContext.Entities;
@@ -36,5 +37,7 @@ namespace DatabaseService.DataService
         decimal GetSumBasket();
 
         void CalculateOrderSum(BasketItemEntity basketItem);
+
+        DateTimeOffset GetLastUpdate();
     }
 }

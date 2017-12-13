@@ -117,7 +117,7 @@ namespace PricelistService.Service.Implementation
             return result;
         }
 
-        private void ShapingBrandsList(string login, DateTimeOffset lastUpdate)
+        private void ShapingCatalogsList(string login, DateTimeOffset lastUpdate)
         {
             if (!dataService.Select<SendItemsEntity>()
                     .Any(x => x.RequestDate >= lastUpdate &&
@@ -162,7 +162,7 @@ namespace PricelistService.Service.Implementation
 
         public long PrepareToUpdate(string login, DateTimeOffset lastUpdate)
         {
-            ShapingBrandsList(login, lastUpdate);
+            ShapingCatalogsList(login, lastUpdate);
             return RemainderToUpdate(login);
         }
 

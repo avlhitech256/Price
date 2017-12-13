@@ -188,5 +188,81 @@ namespace DatabaseService.DataService.Implementation
                 DataBaseContext.SaveChanges();
             }
         }
+
+        public DateTimeOffset GetLastUpdate()
+        {
+            DateTimeOffset lastUpdate = DateTimeOffset.MinValue;
+            List<DateTimeOffset> dates = new List<DateTimeOffset>
+            {
+                GetLastUpdateBrands(),
+                GetLastUpdateCatalogs(),
+                GetLastUpdateDirectories(),
+                GetLastUpdatePhotos(),
+                GetLastUpdateProductDirections()
+            };
+
+            lastUpdate = dates.Max();
+            return lastUpdate;
+        }
+
+        private DateTimeOffset GetLastUpdateBrands()
+        {
+            DateTimeOffset lastUpdate = DateTimeOffset.MinValue;
+
+            if (DataBaseContext.BrandItemEntities.Any())
+            {
+                lastUpdate = DataBaseContext.BrandItemEntities.Select(x => x.LastUpdated).Max();
+            }
+
+            return lastUpdate;
+        }
+
+        private DateTimeOffset GetLastUpdateCatalogs()
+        {
+            DateTimeOffset lastUpdate = DateTimeOffset.MinValue;
+
+            if (DataBaseContext.CatalogItemEntities.Any())
+            {
+                lastUpdate = DataBaseContext.CatalogItemEntities.Select(x => x.LastUpdated).Max();
+            }
+
+            return lastUpdate;
+        }
+
+        private DateTimeOffset GetLastUpdateDirectories()
+        {
+            DateTimeOffset lastUpdate = DateTimeOffset.MinValue;
+
+            if (DataBaseContext.DirectoryEntities.Any())
+            {
+                lastUpdate = DataBaseContext.DirectoryEntities.Select(x => x.LastUpdated).Max();
+            }
+
+            return lastUpdate;
+        }
+
+        private DateTimeOffset GetLastUpdatePhotos()
+        {
+            DateTimeOffset lastUpdate = DateTimeOffset.MinValue;
+
+            if (DataBaseContext.PhotoItemEntities.Any())
+            {
+                lastUpdate = DataBaseContext.PhotoItemEntities.Select(x => x.LastUpdated).Max();
+            }
+
+            return lastUpdate;
+        }
+
+        private DateTimeOffset GetLastUpdateProductDirections()
+        {
+            DateTimeOffset lastUpdate = DateTimeOffset.MinValue;
+
+            if (DataBaseContext.ProductDirectionEntities.Any())
+            {
+                lastUpdate = DataBaseContext.ProductDirectionEntities.Select(x => x.LastUpdated).Max();
+            }
+
+            return lastUpdate;
+        }
     }
 }

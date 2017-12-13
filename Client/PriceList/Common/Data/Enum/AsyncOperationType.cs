@@ -6,6 +6,7 @@
         LoadCatalog,
         LoadBrands,
         LoadDirectories,
-        GetSumBasket
+        GetSumBasket,
+        LoadFromWeb
     }
 }

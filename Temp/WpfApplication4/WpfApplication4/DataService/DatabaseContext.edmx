@@ -1,0 +1,777 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище ServerPriceListModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BrandItemEntities">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" />
+          <Property Name="DateOfCreation" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="LastUpdated" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="ForceUpdated" Type="datetimeoffset" Precision="7" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CatalogItemEntities">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="30" />
+          <Property Name="Article" Type="nvarchar" MaxLength="30" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" />
+          <Property Name="BrandName" Type="nvarchar" MaxLength="255" />
+          <Property Name="Unit" Type="nvarchar" MaxLength="10" />
+          <Property Name="EnterpriceNormPack" Type="nvarchar" MaxLength="30" />
+          <Property Name="BatchOfSales" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Balance" Type="nvarchar" MaxLength="30" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Currency" Type="nvarchar" MaxLength="5" />
+          <Property Name="Multiplicity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="HasPhotos" Type="bit" Nullable="false" />
+          <Property Name="DateOfCreation" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="LastUpdated" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="ForceUpdated" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="LastUpdatedStatus" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="Brand_Id" Type="bigint" />
+          <Property Name="Directory_Id" Type="bigint" />
+          <Property Name="NomenclatureGroup_Id" Type="bigint" />
+        </EntityType>
+        <EntityType Name="CommodityDirectionEntities">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" />
+          <Property Name="DateOfCreation" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="LastUpdated" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="ForceUpdated" Type="datetimeoffset" Precision="7" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CommodityDirectionEntityCatalogItemEntities">
+          <Key>
+            <PropertyRef Name="CommodityDirectionEntity_Id" />
+            <PropertyRef Name="CatalogItemEntity_Id" />
+          </Key>
+          <Property Name="CommodityDirectionEntity_Id" Type="bigint" Nullable="false" />
+          <Property Name="CatalogItemEntity_Id" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DirectoryEntities">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" />
+          <Property Name="DateOfCreation" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="LastUpdated" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="ForceUpdated" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="Parent_Id" Type="bigint" />
+        </EntityType>
+        <EntityType Name="NomenclatureGroupEntities">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" />
+          <Property Name="DateOfCreation" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="LastUpdated" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="ForceUpdated" Type="datetimeoffset" Precision="7" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OptionItemEntities">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="50" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" />
+          <Property Name="Value" Type="nvarchar" MaxLength="255" />
+          <Property Name="DateOfCreation" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="LastUpdated" Type="datetimeoffset" Precision="7" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrderEntities">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderNumber" Type="nvarchar" MaxLength="30" />
+          <Property Name="Sum" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="OrderStatus" Type="int" Nullable="false" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="1024" />
+          <Property Name="DateOfCreation" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="LastUpdated" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="ForceUpdated" Type="datetimeoffset" Precision="7" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PhotoItemEntities">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="255" />
+          <Property Name="IsLoad" Type="bit" Nullable="false" />
+          <Property Name="Photo" Type="image" />
+          <Property Name="DateOfCreation" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="LastUpdated" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="ForceUpdated" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="CatalogItem_Id" Type="bigint" />
+        </EntityType>
+        <EntityType Name="ProductDirectionEntities">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Direction" Type="int" Nullable="false" />
+          <Property Name="DateOfCreation" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="LastUpdated" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="ForceUpdated" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="Directory_Id" Type="bigint" />
+        </EntityType>
+        <EntityType Name="SendItemsEntities">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Login" Type="nvarchar" MaxLength="30" />
+          <Property Name="EntityId" Type="bigint" Nullable="false" />
+          <Property Name="EntityName" Type="int" Nullable="false" />
+          <Property Name="RequestDate" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="DateOfCreation" Type="datetimeoffset" Precision="7" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_dbo_CatalogItemEntities_dbo_BrandItemEntities_Brand_Id">
+          <End Role="BrandItemEntities" Type="Self.BrandItemEntities" Multiplicity="0..1" />
+          <End Role="CatalogItemEntities" Type="Self.CatalogItemEntities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BrandItemEntities">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CatalogItemEntities">
+              <PropertyRef Name="Brand_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_CatalogItemEntities_dbo_DirectoryEntities_Directory_Id">
+          <End Role="DirectoryEntities" Type="Self.DirectoryEntities" Multiplicity="0..1" />
+          <End Role="CatalogItemEntities" Type="Self.CatalogItemEntities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DirectoryEntities">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CatalogItemEntities">
+              <PropertyRef Name="Directory_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_CatalogItemEntities_dbo_NomenclatureGroupEntities_NomenclatureGroup_Id">
+          <End Role="NomenclatureGroupEntities" Type="Self.NomenclatureGroupEntities" Multiplicity="0..1" />
+          <End Role="CatalogItemEntities" Type="Self.CatalogItemEntities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NomenclatureGroupEntities">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CatalogItemEntities">
+              <PropertyRef Name="NomenclatureGroup_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_CommodityDirectionEntityCatalogItemEntities_dbo_CatalogItemEntities_CatalogItemEntity_Id">
+          <End Role="CatalogItemEntities" Type="Self.CatalogItemEntities" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CommodityDirectionEntityCatalogItemEntities" Type="Self.CommodityDirectionEntityCatalogItemEntities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CatalogItemEntities">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CommodityDirectionEntityCatalogItemEntities">
+              <PropertyRef Name="CatalogItemEntity_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_CommodityDirectionEntityCatalogItemEntities_dbo_CommodityDirectionEntities_CommodityDirectionEntity_Id">
+          <End Role="CommodityDirectionEntities" Type="Self.CommodityDirectionEntities" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CommodityDirectionEntityCatalogItemEntities" Type="Self.CommodityDirectionEntityCatalogItemEntities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CommodityDirectionEntities">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CommodityDirectionEntityCatalogItemEntities">
+              <PropertyRef Name="CommodityDirectionEntity_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_DirectoryEntities_dbo_DirectoryEntities_Parent_Id">
+          <End Role="DirectoryEntities" Type="Self.DirectoryEntities" Multiplicity="0..1" />
+          <End Role="DirectoryEntities1" Type="Self.DirectoryEntities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DirectoryEntities">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DirectoryEntities1">
+              <PropertyRef Name="Parent_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_PhotoItemEntities_dbo_CatalogItemEntities_CatalogItem_Id">
+          <End Role="CatalogItemEntities" Type="Self.CatalogItemEntities" Multiplicity="0..1" />
+          <End Role="PhotoItemEntities" Type="Self.PhotoItemEntities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CatalogItemEntities">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PhotoItemEntities">
+              <PropertyRef Name="CatalogItem_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ProductDirectionEntities_dbo_DirectoryEntities_Directory_Id">
+          <End Role="DirectoryEntities" Type="Self.DirectoryEntities" Multiplicity="0..1" />
+          <End Role="ProductDirectionEntities" Type="Self.ProductDirectionEntities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DirectoryEntities">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductDirectionEntities">
+              <PropertyRef Name="Directory_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="sp_prepare_to_update_catalogs" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="login" Type="nvarchar" Mode="In" />
+          <Parameter Name="last_update" Type="datetimeoffset" Mode="In" />
+        </Function>
+        <EntityContainer Name="Хранилище ServerPriceListModelContainer">
+          <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BrandItemEntities" EntityType="Self.BrandItemEntities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CatalogItemEntities" EntityType="Self.CatalogItemEntities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CommodityDirectionEntities" EntityType="Self.CommodityDirectionEntities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CommodityDirectionEntityCatalogItemEntities" EntityType="Self.CommodityDirectionEntityCatalogItemEntities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DirectoryEntities" EntityType="Self.DirectoryEntities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NomenclatureGroupEntities" EntityType="Self.NomenclatureGroupEntities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OptionItemEntities" EntityType="Self.OptionItemEntities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderEntities" EntityType="Self.OrderEntities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PhotoItemEntities" EntityType="Self.PhotoItemEntities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductDirectionEntities" EntityType="Self.ProductDirectionEntities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SendItemsEntities" EntityType="Self.SendItemsEntities" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_dbo_CatalogItemEntities_dbo_BrandItemEntities_Brand_Id" Association="Self.FK_dbo_CatalogItemEntities_dbo_BrandItemEntities_Brand_Id">
+            <End Role="BrandItemEntities" EntitySet="BrandItemEntities" />
+            <End Role="CatalogItemEntities" EntitySet="CatalogItemEntities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_CatalogItemEntities_dbo_DirectoryEntities_Directory_Id" Association="Self.FK_dbo_CatalogItemEntities_dbo_DirectoryEntities_Directory_Id">
+            <End Role="DirectoryEntities" EntitySet="DirectoryEntities" />
+            <End Role="CatalogItemEntities" EntitySet="CatalogItemEntities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_CatalogItemEntities_dbo_NomenclatureGroupEntities_NomenclatureGroup_Id" Association="Self.FK_dbo_CatalogItemEntities_dbo_NomenclatureGroupEntities_NomenclatureGroup_Id">
+            <End Role="NomenclatureGroupEntities" EntitySet="NomenclatureGroupEntities" />
+            <End Role="CatalogItemEntities" EntitySet="CatalogItemEntities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_CommodityDirectionEntityCatalogItemEntities_dbo_CatalogItemEntities_CatalogItemEntity_Id" Association="Self.FK_dbo_CommodityDirectionEntityCatalogItemEntities_dbo_CatalogItemEntities_CatalogItemEntity_Id">
+            <End Role="CatalogItemEntities" EntitySet="CatalogItemEntities" />
+            <End Role="CommodityDirectionEntityCatalogItemEntities" EntitySet="CommodityDirectionEntityCatalogItemEntities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_CommodityDirectionEntityCatalogItemEntities_dbo_CommodityDirectionEntities_CommodityDirectionEntity_Id" Association="Self.FK_dbo_CommodityDirectionEntityCatalogItemEntities_dbo_CommodityDirectionEntities_CommodityDirectionEntity_Id">
+            <End Role="CommodityDirectionEntities" EntitySet="CommodityDirectionEntities" />
+            <End Role="CommodityDirectionEntityCatalogItemEntities" EntitySet="CommodityDirectionEntityCatalogItemEntities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_DirectoryEntities_dbo_DirectoryEntities_Parent_Id" Association="Self.FK_dbo_DirectoryEntities_dbo_DirectoryEntities_Parent_Id">
+            <End Role="DirectoryEntities" EntitySet="DirectoryEntities" />
+            <End Role="DirectoryEntities1" EntitySet="DirectoryEntities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_PhotoItemEntities_dbo_CatalogItemEntities_CatalogItem_Id" Association="Self.FK_dbo_PhotoItemEntities_dbo_CatalogItemEntities_CatalogItem_Id">
+            <End Role="CatalogItemEntities" EntitySet="CatalogItemEntities" />
+            <End Role="PhotoItemEntities" EntitySet="PhotoItemEntities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ProductDirectionEntities_dbo_DirectoryEntities_Directory_Id" Association="Self.FK_dbo_ProductDirectionEntities_dbo_DirectoryEntities_Directory_Id">
+            <End Role="DirectoryEntities" EntitySet="DirectoryEntities" />
+            <End Role="ProductDirectionEntities" EntitySet="ProductDirectionEntities" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ServerPriceListModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="C__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BrandItemEntities">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="DateOfCreation" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="LastUpdated" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="ForceUpdated" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <NavigationProperty Name="CatalogItemEntities" Relationship="Self.FK_dbo_CatalogItemEntities_dbo_BrandItemEntities_Brand_Id" FromRole="BrandItemEntities" ToRole="CatalogItemEntities" />
+        </EntityType>
+        <EntityType Name="CatalogItemEntities">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UID" Type="Guid" Nullable="false" />
+          <Property Name="Code" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Article" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="BrandName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Unit" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="EnterpriceNormPack" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="BatchOfSales" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Balance" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Currency" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="Multiplicity" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="HasPhotos" Type="Boolean" Nullable="false" />
+          <Property Name="DateOfCreation" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="LastUpdated" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="ForceUpdated" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="LastUpdatedStatus" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="Brand_Id" Type="Int64" />
+          <Property Name="Directory_Id" Type="Int64" />
+          <Property Name="NomenclatureGroup_Id" Type="Int64" />
+          <NavigationProperty Name="BrandItemEntities" Relationship="Self.FK_dbo_CatalogItemEntities_dbo_BrandItemEntities_Brand_Id" FromRole="CatalogItemEntities" ToRole="BrandItemEntities" />
+          <NavigationProperty Name="DirectoryEntities" Relationship="Self.FK_dbo_CatalogItemEntities_dbo_DirectoryEntities_Directory_Id" FromRole="CatalogItemEntities" ToRole="DirectoryEntities" />
+          <NavigationProperty Name="NomenclatureGroupEntities" Relationship="Self.FK_dbo_CatalogItemEntities_dbo_NomenclatureGroupEntities_NomenclatureGroup_Id" FromRole="CatalogItemEntities" ToRole="NomenclatureGroupEntities" />
+          <NavigationProperty Name="PhotoItemEntities" Relationship="Self.FK_dbo_PhotoItemEntities_dbo_CatalogItemEntities_CatalogItem_Id" FromRole="CatalogItemEntities" ToRole="PhotoItemEntities" />
+          <NavigationProperty Name="CommodityDirectionEntities" Relationship="Self.CommodityDirectionEntityCatalogItemEntities" FromRole="CatalogItemEntities" ToRole="CommodityDirectionEntities" />
+        </EntityType>
+        <EntityType Name="CommodityDirectionEntities">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="DateOfCreation" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="LastUpdated" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="ForceUpdated" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <NavigationProperty Name="CatalogItemEntities" Relationship="Self.CommodityDirectionEntityCatalogItemEntities" FromRole="CommodityDirectionEntities" ToRole="CatalogItemEntities" />
+        </EntityType>
+        <EntityType Name="DirectoryEntities">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="DateOfCreation" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="LastUpdated" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="ForceUpdated" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="Parent_Id" Type="Int64" />
+          <NavigationProperty Name="CatalogItemEntities" Relationship="Self.FK_dbo_CatalogItemEntities_dbo_DirectoryEntities_Directory_Id" FromRole="DirectoryEntities" ToRole="CatalogItemEntities" />
+          <NavigationProperty Name="DirectoryEntities1" Relationship="Self.FK_dbo_DirectoryEntities_dbo_DirectoryEntities_Parent_Id" FromRole="DirectoryEntities" ToRole="DirectoryEntities1" />
+          <NavigationProperty Name="DirectoryEntities2" Relationship="Self.FK_dbo_DirectoryEntities_dbo_DirectoryEntities_Parent_Id" FromRole="DirectoryEntities1" ToRole="DirectoryEntities" />
+          <NavigationProperty Name="ProductDirectionEntities" Relationship="Self.FK_dbo_ProductDirectionEntities_dbo_DirectoryEntities_Directory_Id" FromRole="DirectoryEntities" ToRole="ProductDirectionEntities" />
+        </EntityType>
+        <EntityType Name="NomenclatureGroupEntities">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="Guid" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="DateOfCreation" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="LastUpdated" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="ForceUpdated" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <NavigationProperty Name="CatalogItemEntities" Relationship="Self.FK_dbo_CatalogItemEntities_dbo_NomenclatureGroupEntities_NomenclatureGroup_Id" FromRole="NomenclatureGroupEntities" ToRole="CatalogItemEntities" />
+        </EntityType>
+        <EntityType Name="OptionItemEntities">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Value" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="DateOfCreation" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="LastUpdated" Type="DateTimeOffset" Nullable="false" Precision="7" />
+        </EntityType>
+        <EntityType Name="OrderEntities">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Sum" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="OrderStatus" Type="Int32" Nullable="false" />
+          <Property Name="Comment" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
+          <Property Name="DateOfCreation" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="LastUpdated" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="ForceUpdated" Type="DateTimeOffset" Nullable="false" Precision="7" />
+        </EntityType>
+        <EntityType Name="PhotoItemEntities">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="IsLoad" Type="Boolean" Nullable="false" />
+          <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="DateOfCreation" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="LastUpdated" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="ForceUpdated" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="CatalogItem_Id" Type="Int64" />
+          <NavigationProperty Name="CatalogItemEntities" Relationship="Self.FK_dbo_PhotoItemEntities_dbo_CatalogItemEntities_CatalogItem_Id" FromRole="PhotoItemEntities" ToRole="CatalogItemEntities" />
+        </EntityType>
+        <EntityType Name="ProductDirectionEntities">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Direction" Type="Int32" Nullable="false" />
+          <Property Name="DateOfCreation" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="LastUpdated" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="ForceUpdated" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="Directory_Id" Type="Int64" />
+          <NavigationProperty Name="DirectoryEntities" Relationship="Self.FK_dbo_ProductDirectionEntities_dbo_DirectoryEntities_Directory_Id" FromRole="ProductDirectionEntities" ToRole="DirectoryEntities" />
+        </EntityType>
+        <EntityType Name="SendItemsEntities">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="EntityId" Type="Int64" Nullable="false" />
+          <Property Name="EntityName" Type="Int32" Nullable="false" />
+          <Property Name="RequestDate" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="DateOfCreation" Type="DateTimeOffset" Nullable="false" Precision="7" />
+        </EntityType>
+        <Association Name="FK_dbo_CatalogItemEntities_dbo_BrandItemEntities_Brand_Id">
+          <End Role="BrandItemEntities" Type="Self.BrandItemEntities" Multiplicity="0..1" />
+          <End Role="CatalogItemEntities" Type="Self.CatalogItemEntities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BrandItemEntities">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CatalogItemEntities">
+              <PropertyRef Name="Brand_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_CatalogItemEntities_dbo_DirectoryEntities_Directory_Id">
+          <End Role="DirectoryEntities" Type="Self.DirectoryEntities" Multiplicity="0..1" />
+          <End Role="CatalogItemEntities" Type="Self.CatalogItemEntities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DirectoryEntities">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CatalogItemEntities">
+              <PropertyRef Name="Directory_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_CatalogItemEntities_dbo_NomenclatureGroupEntities_NomenclatureGroup_Id">
+          <End Role="NomenclatureGroupEntities" Type="Self.NomenclatureGroupEntities" Multiplicity="0..1" />
+          <End Role="CatalogItemEntities" Type="Self.CatalogItemEntities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NomenclatureGroupEntities">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CatalogItemEntities">
+              <PropertyRef Name="NomenclatureGroup_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_PhotoItemEntities_dbo_CatalogItemEntities_CatalogItem_Id">
+          <End Role="CatalogItemEntities" Type="Self.CatalogItemEntities" Multiplicity="0..1" />
+          <End Role="PhotoItemEntities" Type="Self.PhotoItemEntities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CatalogItemEntities">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PhotoItemEntities">
+              <PropertyRef Name="CatalogItem_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_DirectoryEntities_dbo_DirectoryEntities_Parent_Id">
+          <End Role="DirectoryEntities" Type="Self.DirectoryEntities" Multiplicity="0..1" />
+          <End Role="DirectoryEntities1" Type="Self.DirectoryEntities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DirectoryEntities">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DirectoryEntities1">
+              <PropertyRef Name="Parent_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ProductDirectionEntities_dbo_DirectoryEntities_Directory_Id">
+          <End Role="DirectoryEntities" Type="Self.DirectoryEntities" Multiplicity="0..1" />
+          <End Role="ProductDirectionEntities" Type="Self.ProductDirectionEntities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DirectoryEntities">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductDirectionEntities">
+              <PropertyRef Name="Directory_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CommodityDirectionEntityCatalogItemEntities">
+          <End Role="CatalogItemEntities" Type="Self.CatalogItemEntities" Multiplicity="*" />
+          <End Role="CommodityDirectionEntities" Type="Self.CommodityDirectionEntities" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="ServerPriceListEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
+          <EntitySet Name="BrandItemEntities" EntityType="Self.BrandItemEntities" />
+          <EntitySet Name="CatalogItemEntities" EntityType="Self.CatalogItemEntities" />
+          <EntitySet Name="CommodityDirectionEntities" EntityType="Self.CommodityDirectionEntities" />
+          <EntitySet Name="DirectoryEntities" EntityType="Self.DirectoryEntities" />
+          <EntitySet Name="NomenclatureGroupEntities" EntityType="Self.NomenclatureGroupEntities" />
+          <EntitySet Name="OptionItemEntities" EntityType="Self.OptionItemEntities" />
+          <EntitySet Name="OrderEntities" EntityType="Self.OrderEntities" />
+          <EntitySet Name="PhotoItemEntities" EntityType="Self.PhotoItemEntities" />
+          <EntitySet Name="ProductDirectionEntities" EntityType="Self.ProductDirectionEntities" />
+          <EntitySet Name="SendItemsEntities" EntityType="Self.SendItemsEntities" />
+          <AssociationSet Name="FK_dbo_CatalogItemEntities_dbo_BrandItemEntities_Brand_Id" Association="Self.FK_dbo_CatalogItemEntities_dbo_BrandItemEntities_Brand_Id">
+            <End Role="BrandItemEntities" EntitySet="BrandItemEntities" />
+            <End Role="CatalogItemEntities" EntitySet="CatalogItemEntities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_CatalogItemEntities_dbo_DirectoryEntities_Directory_Id" Association="Self.FK_dbo_CatalogItemEntities_dbo_DirectoryEntities_Directory_Id">
+            <End Role="DirectoryEntities" EntitySet="DirectoryEntities" />
+            <End Role="CatalogItemEntities" EntitySet="CatalogItemEntities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_CatalogItemEntities_dbo_NomenclatureGroupEntities_NomenclatureGroup_Id" Association="Self.FK_dbo_CatalogItemEntities_dbo_NomenclatureGroupEntities_NomenclatureGroup_Id">
+            <End Role="NomenclatureGroupEntities" EntitySet="NomenclatureGroupEntities" />
+            <End Role="CatalogItemEntities" EntitySet="CatalogItemEntities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_PhotoItemEntities_dbo_CatalogItemEntities_CatalogItem_Id" Association="Self.FK_dbo_PhotoItemEntities_dbo_CatalogItemEntities_CatalogItem_Id">
+            <End Role="CatalogItemEntities" EntitySet="CatalogItemEntities" />
+            <End Role="PhotoItemEntities" EntitySet="PhotoItemEntities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_DirectoryEntities_dbo_DirectoryEntities_Parent_Id" Association="Self.FK_dbo_DirectoryEntities_dbo_DirectoryEntities_Parent_Id">
+            <End Role="DirectoryEntities" EntitySet="DirectoryEntities" />
+            <End Role="DirectoryEntities1" EntitySet="DirectoryEntities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ProductDirectionEntities_dbo_DirectoryEntities_Directory_Id" Association="Self.FK_dbo_ProductDirectionEntities_dbo_DirectoryEntities_Directory_Id">
+            <End Role="DirectoryEntities" EntitySet="DirectoryEntities" />
+            <End Role="ProductDirectionEntities" EntitySet="ProductDirectionEntities" />
+          </AssociationSet>
+          <AssociationSet Name="CommodityDirectionEntityCatalogItemEntities" Association="Self.CommodityDirectionEntityCatalogItemEntities">
+            <End Role="CatalogItemEntities" EntitySet="CatalogItemEntities" />
+            <End Role="CommodityDirectionEntities" EntitySet="CommodityDirectionEntities" />
+          </AssociationSet>
+          <FunctionImport Name="sp_prepare_to_update_catalogs">
+            <Parameter Name="login" Mode="In" Type="String" />
+            <Parameter Name="last_update" Mode="In" Type="DateTimeOffset" />
+          </FunctionImport>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище ServerPriceListModelContainer" CdmEntityContainer="ServerPriceListEntities">
+          <EntitySetMapping Name="C__MigrationHistory">
+            <EntityTypeMapping TypeName="ServerPriceListModel.C__MigrationHistory">
+              <MappingFragment StoreEntitySet="__MigrationHistory">
+                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BrandItemEntities">
+            <EntityTypeMapping TypeName="ServerPriceListModel.BrandItemEntities">
+              <MappingFragment StoreEntitySet="BrandItemEntities">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DateOfCreation" ColumnName="DateOfCreation" />
+                <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+                <ScalarProperty Name="ForceUpdated" ColumnName="ForceUpdated" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CatalogItemEntities">
+            <EntityTypeMapping TypeName="ServerPriceListModel.CatalogItemEntities">
+              <MappingFragment StoreEntitySet="CatalogItemEntities">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Article" ColumnName="Article" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="BrandName" ColumnName="BrandName" />
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="EnterpriceNormPack" ColumnName="EnterpriceNormPack" />
+                <ScalarProperty Name="BatchOfSales" ColumnName="BatchOfSales" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Currency" ColumnName="Currency" />
+                <ScalarProperty Name="Multiplicity" ColumnName="Multiplicity" />
+                <ScalarProperty Name="HasPhotos" ColumnName="HasPhotos" />
+                <ScalarProperty Name="DateOfCreation" ColumnName="DateOfCreation" />
+                <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+                <ScalarProperty Name="ForceUpdated" ColumnName="ForceUpdated" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="LastUpdatedStatus" ColumnName="LastUpdatedStatus" />
+                <ScalarProperty Name="Brand_Id" ColumnName="Brand_Id" />
+                <ScalarProperty Name="Directory_Id" ColumnName="Directory_Id" />
+                <ScalarProperty Name="NomenclatureGroup_Id" ColumnName="NomenclatureGroup_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CommodityDirectionEntities">
+            <EntityTypeMapping TypeName="ServerPriceListModel.CommodityDirectionEntities">
+              <MappingFragment StoreEntitySet="CommodityDirectionEntities">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DateOfCreation" ColumnName="DateOfCreation" />
+                <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+                <ScalarProperty Name="ForceUpdated" ColumnName="ForceUpdated" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DirectoryEntities">
+            <EntityTypeMapping TypeName="ServerPriceListModel.DirectoryEntities">
+              <MappingFragment StoreEntitySet="DirectoryEntities">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DateOfCreation" ColumnName="DateOfCreation" />
+                <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+                <ScalarProperty Name="ForceUpdated" ColumnName="ForceUpdated" />
+                <ScalarProperty Name="Parent_Id" ColumnName="Parent_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NomenclatureGroupEntities">
+            <EntityTypeMapping TypeName="ServerPriceListModel.NomenclatureGroupEntities">
+              <MappingFragment StoreEntitySet="NomenclatureGroupEntities">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DateOfCreation" ColumnName="DateOfCreation" />
+                <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+                <ScalarProperty Name="ForceUpdated" ColumnName="ForceUpdated" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OptionItemEntities">
+            <EntityTypeMapping TypeName="ServerPriceListModel.OptionItemEntities">
+              <MappingFragment StoreEntitySet="OptionItemEntities">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="DateOfCreation" ColumnName="DateOfCreation" />
+                <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderEntities">
+            <EntityTypeMapping TypeName="ServerPriceListModel.OrderEntities">
+              <MappingFragment StoreEntitySet="OrderEntities">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="OrderNumber" ColumnName="OrderNumber" />
+                <ScalarProperty Name="Sum" ColumnName="Sum" />
+                <ScalarProperty Name="OrderStatus" ColumnName="OrderStatus" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="DateOfCreation" ColumnName="DateOfCreation" />
+                <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+                <ScalarProperty Name="ForceUpdated" ColumnName="ForceUpdated" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PhotoItemEntities">
+            <EntityTypeMapping TypeName="ServerPriceListModel.PhotoItemEntities">
+              <MappingFragment StoreEntitySet="PhotoItemEntities">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="IsLoad" ColumnName="IsLoad" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="DateOfCreation" ColumnName="DateOfCreation" />
+                <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+                <ScalarProperty Name="ForceUpdated" ColumnName="ForceUpdated" />
+                <ScalarProperty Name="CatalogItem_Id" ColumnName="CatalogItem_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductDirectionEntities">
+            <EntityTypeMapping TypeName="ServerPriceListModel.ProductDirectionEntities">
+              <MappingFragment StoreEntitySet="ProductDirectionEntities">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Direction" ColumnName="Direction" />
+                <ScalarProperty Name="DateOfCreation" ColumnName="DateOfCreation" />
+                <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+                <ScalarProperty Name="ForceUpdated" ColumnName="ForceUpdated" />
+                <ScalarProperty Name="Directory_Id" ColumnName="Directory_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SendItemsEntities">
+            <EntityTypeMapping TypeName="ServerPriceListModel.SendItemsEntities">
+              <MappingFragment StoreEntitySet="SendItemsEntities">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="EntityId" ColumnName="EntityId" />
+                <ScalarProperty Name="EntityName" ColumnName="EntityName" />
+                <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
+                <ScalarProperty Name="DateOfCreation" ColumnName="DateOfCreation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="CommodityDirectionEntityCatalogItemEntities" TypeName="ServerPriceListModel.CommodityDirectionEntityCatalogItemEntities" StoreEntitySet="CommodityDirectionEntityCatalogItemEntities">
+            <EndProperty Name="CatalogItemEntities">
+              <ScalarProperty Name="Id" ColumnName="CatalogItemEntity_Id" />
+            </EndProperty>
+            <EndProperty Name="CommodityDirectionEntities">
+              <ScalarProperty Name="Id" ColumnName="CommodityDirectionEntity_Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="sp_prepare_to_update_catalogs" FunctionName="Хранилище ServerPriceListModel.sp_prepare_to_update_catalogs" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

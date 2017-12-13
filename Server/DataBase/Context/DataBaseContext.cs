@@ -1,4 +1,8 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Data.Entity.Core.Objects;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Migrations.Model;
+using System.Diagnostics;
 using DataBase.Context.Entities;
 using DataBase.Context.Initializer;
 
@@ -43,5 +47,82 @@ namespace DataBase.Context
         public virtual DbSet<ProductDirectionEntity> ProductDirectionEntities { get; set; }
 
         public virtual DbSet<SendItemsEntity> SendItemsEntities { get; set; }
+
+        public virtual int PrepareToUpdateBrands(string login, DateTimeOffset? lastUpdate)
+        {
+            var loginParameter = login != null ?
+                new ObjectParameter("login", login) :
+                new ObjectParameter("login", typeof(string));
+
+            var lastUpdateParameter = lastUpdate.HasValue ?
+                new ObjectParameter("lastUpdate", lastUpdate) :
+                new ObjectParameter("lastUpdate", typeof(DateTimeOffset));
+
+            return ((IObjectContextAdapter)this).ObjectContext
+                .ExecuteFunction("PrepareToUpdateBrands", loginParameter, lastUpdateParameter);
+        }
+
+        public virtual int PrepareToUpdateCatalogs(string login, DateTimeOffset? lastUpdate)
+        {
+            var loginParameter = login != null ?
+                new ObjectParameter("login", login) :
+                new ObjectParameter("login", typeof(string));
+
+            var lastUpdateParameter = lastUpdate.HasValue ?
+                new ObjectParameter("lastUpdate", lastUpdate) :
+                new ObjectParameter("lastUpdate", typeof(DateTimeOffset));
+
+            return ((IObjectContextAdapter) this).ObjectContext
+                .ExecuteFunction("PrepareToUpdateCatalogs", loginParameter, lastUpdateParameter);
+        }
+
+        public virtual int PrepareToUpdateDirectories(string login, DateTimeOffset? lastUpdate)
+        {
+            var loginParameter = login != null ?
+                new ObjectParameter("login", login) :
+                new ObjectParameter("login", typeof(string));
+
+            var lastUpdateParameter = lastUpdate.HasValue ?
+                new ObjectParameter("lastUpdate", lastUpdate) :
+                new ObjectParameter("lastUpdate", typeof(DateTimeOffset));
+
+            return ((IObjectContextAdapter)this).ObjectContext
+                .ExecuteFunction("PrepareToUpdateCommodityDirections", loginParameter, lastUpdateParameter);
+        }
+
+        public virtual int PrepareToUpdatePhotoItems(string login, DateTimeOffset? lastUpdate)
+        {
+            var loginParameter = login != null ?
+                new ObjectParameter("login", login) :
+                new ObjectParameter("login", typeof(string));
+
+            var lastUpdateParameter = lastUpdate.HasValue ?
+                new ObjectParameter("lastUpdate", lastUpdate) :
+                new ObjectParameter("lastUpdate", typeof(DateTimeOffset));
+
+            return ((IObjectContextAdapter)this).ObjectContext
+                .ExecuteFunction("PrepareToUpdatePhotoItems", loginParameter, lastUpdateParameter);
+        }
+
+        public virtual int PrepareToUpdateProductDirections(string login, DateTimeOffset? lastUpdate)
+        {
+            var loginParameter = login != null ?
+                new ObjectParameter("login", login) :
+                new ObjectParameter("login", typeof(string));
+
+            var lastUpdateParameter = lastUpdate.HasValue ?
+                new ObjectParameter("lastUpdate", lastUpdate) :
+                new ObjectParameter("lastUpdate", typeof(DateTimeOffset));
+
+            return ((IObjectContextAdapter)this).ObjectContext
+                .ExecuteFunction("PrepareToUpdateProductDirections", loginParameter, lastUpdateParameter);
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            CreateProcedureOperation(modelBuilder)
+
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }
