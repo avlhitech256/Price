@@ -74,16 +74,28 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DataService\DatabaseContext.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DatabaseContext.Context.tt</DependentUpon>
+    <Compile Include="DataService\DatabaseContext.cs" />
+    <Compile Include="DataService\Entity\BrandItemEntity.cs" />
+    <Compile Include="DataService\Entity\CatalogItemEntity.cs" />
+    <Compile Include="DataService\Entity\CommodityDirectionEntity.cs" />
+    <Compile Include="DataService\Entity\DirectoryEntity.cs" />
+    <Compile Include="DataService\Entity\NomenclatureGroupEntity.cs" />
+    <Compile Include="DataService\Entity\OptionItemEntity.cs" />
+    <Compile Include="DataService\Entity\OrderEntity.cs" />
+    <Compile Include="DataService\Entity\PhotoItemEntity.cs" />
+    <Compile Include="DataService\Entity\ProductDirectionEntity.cs" />
+    <Compile Include="DataService\Entity\SendItemsEntity.cs" />
+    <Compile Include="DataService\Initializer\DataBaseInitializer.cs" />
+    <Compile Include="DataService\OptionName.cs" />
+    <Compile Include="EntitiesMigrations\201712132346115_InitialCreate.cs" />
+    <Compile Include="EntitiesMigrations\201712132346115_InitialCreate.Designer.cs">
+      <DependentUpon>201712132346115_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataService\DatabaseContext.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DatabaseContext.edmx</DependentUpon>
+    <Compile Include="EntitiesMigrations\201712140006186_InitialEntities.cs" />
+    <Compile Include="EntitiesMigrations\201712140006186_InitialEntities.Designer.cs">
+      <DependentUpon>201712140006186_InitialEntities.cs</DependentUpon>
     </Compile>
+    <Compile Include="EntitiesMigrations\Configuration.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -103,17 +115,16 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="EntitiesMigrations\201712132346115_InitialCreate.resx">
+      <DependentUpon>201712132346115_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EntitiesMigrations\201712140006186_InitialEntities.resx">
+      <DependentUpon>201712140006186_InitialEntities.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EntityDeploy Include="DataService\DatabaseContext.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>DatabaseContext.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="DataService\DatabaseContext.edmx.diagram">
-      <DependentUpon>DatabaseContext.edmx</DependentUpon>
-    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -125,14 +136,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DataService\DatabaseContext.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>DatabaseContext.Context.cs</LastGenOutput>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

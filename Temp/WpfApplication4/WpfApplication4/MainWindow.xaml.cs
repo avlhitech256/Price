@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfApplication4.DataService;
+using WpfApplication4.DataService.Entity;
 
 namespace WpfApplication4
 {
@@ -23,6 +25,8 @@ namespace WpfApplication4
         public MainWindow()
         {
             InitializeComponent();
+            DatabaseContext context = new DatabaseContext();
+            List<OptionItemEntity> list =  context.OptionItemEntities.ToList();
         }
     }
 }

@@ -31,11 +31,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="PresentationCore" />
@@ -66,6 +66,15 @@
     <Compile Include="Context\Entities\SendItemsEntity.cs" />
     <Compile Include="Context\Initializer\DataBaseInitializer.cs" />
     <Compile Include="Context\Object\EntityName.cs" />
+    <Compile Include="EntitiesMigrations\201712161748219_InitialCreate.cs" />
+    <Compile Include="EntitiesMigrations\201712161748219_InitialCreate.Designer.cs">
+      <DependentUpon>201712161748219_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EntitiesMigrations\201712161840322_InitialEntities.cs" />
+    <Compile Include="EntitiesMigrations\201712161840322_InitialEntities.Designer.cs">
+      <DependentUpon>201712161840322_InitialEntities.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EntitiesMigrations\Configuration.cs" />
     <Compile Include="Objects\PriceInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\IDataService.cs" />
@@ -75,7 +84,14 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="EntitiesMigrations\201712161748219_InitialCreate.resx">
+      <DependentUpon>201712161748219_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EntitiesMigrations\201712161840322_InitialEntities.resx">
+      <DependentUpon>201712161840322_InitialEntities.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{9798781f-3852-4a2d-9294-8d8d8c6d7401}</Project>

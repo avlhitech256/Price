@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Data;
 using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Migrations.Model;
+using System.Data.Entity.SqlServer;
+using System.Data.SqlClient;
 using System.Diagnostics;
 using DataBase.Context.Entities;
 using DataBase.Context.Initializer;
@@ -90,7 +93,7 @@ namespace DataBase.Context
                 .ExecuteFunction("PrepareToUpdateCommodityDirections", loginParameter, lastUpdateParameter);
         }
 
-        public virtual int PrepareToUpdatePhotoItems(string login, DateTimeOffset? lastUpdate)
+        public virtual int PrepareToUpdatePhotos(string login, DateTimeOffset? lastUpdate)
         {
             var loginParameter = login != null ?
                 new ObjectParameter("login", login) :
@@ -101,7 +104,7 @@ namespace DataBase.Context
                 new ObjectParameter("lastUpdate", typeof(DateTimeOffset));
 
             return ((IObjectContextAdapter)this).ObjectContext
-                .ExecuteFunction("PrepareToUpdatePhotoItems", loginParameter, lastUpdateParameter);
+                .ExecuteFunction("PrepareToUpdatePhotos", loginParameter, lastUpdateParameter);
         }
 
         public virtual int PrepareToUpdateProductDirections(string login, DateTimeOffset? lastUpdate)
@@ -120,7 +123,15 @@ namespace DataBase.Context
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            CreateProcedureOperation(modelBuilder)
+
+            //SqlServerMigrationSqlGenerator
+            //CreateProcedureOperation(modelBuilder)
+            
+            //SqlCommand cmd = new SqlCommand();
+            //cmd.CommandType =CommandType.StoredProcedure;
+            //cmd.Parameters.AddWithValue();
+            //cmd.b
+            //cmd.ExecuteNonQuery();
 
             base.OnModelCreating(modelBuilder);
         }
