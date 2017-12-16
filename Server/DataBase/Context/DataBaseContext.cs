@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Data;
 using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Infrastructure;
-using System.Data.Entity.Migrations.Model;
-using System.Data.Entity.SqlServer;
-using System.Data.SqlClient;
 using System.Diagnostics;
 using DataBase.Context.Entities;
 using DataBase.Context.Initializer;

@@ -2,6 +2,7 @@ using System.Text;
 
 namespace DataBase.EntitiesMigrations
 {
+    using System;
     using System.Data.Entity.Migrations;
     
     public partial class InitialEntities : DbMigration

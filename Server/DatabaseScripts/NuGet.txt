@@ -12,4 +12,230 @@ PM>
 PM> Add-Migration -configuration DataBase.EntitiesMigrations.Configuration InitialEntities -ProjectName "DataBase" -StartUpProjectName "ConsolePricelistLoader"
 Миграция на основе скаффолдинга "InitialEntities".
 Код конструктора для этого файла миграции содержит моментальный снимок текущей модели Code First. Этот моментальный снимок используется для вычисления изменений, вносимых в модель, при формировании на основе скаффолдинга следующей миграции. При внесении в модель дополнительных изменений, которые требуется включить в эту миграцию, можно сформировать на основе скаффолдинга повторно, снова выполнив команду "Add-Migration InitialEntities".
-PM>  
+PM>
+PM> Update-Database -configuration:DataBase.EntitiesMigrations.Configuration -ProjectName "DataBase" -StartUpProjectName "ConsolePricelistLoader" -Verbose
+Using StartUp project 'ConsolePricelistLoader'.
+Укажите флаг "-Verbose", чтобы отобразить инструкции SQL, применяемые к целевой базе данных.
+Целевая база данных: "ServerPriceList" (источник данных: APPSERVER, поставщик: System.Data.SqlClient, источник: Configuration).
+Применение явных миграций: [201712161840322_InitialEntities].
+Применение явной миграции: 201712161840322_InitialEntities.
+CREATE PROCEDURE [dbo].[PrepareToUpdateBrands]
+    @login [nvarchar](30),
+    @lastUpdate [datetimeoffset](7)
+AS
+BEGIN
+    -- +---------------------------------------------------+                                           
+    -- | © 2017-2018 OLEXANDR LIKHOSHVA ALL RIGHT RESERVED |                                           
+    -- | https://www.linkedin.com/in/olexandrlikhoshva/    |                                           
+    -- +---------------------------------------------------+                                           
+    -- SET NOCOUNT ON added to prevent extra result sets from                                          
+    -- interfering with SELECT statements.                                                             
+    
+    SET NOCOUNT ON;                                                                                    
+    
+    -- BrandItemEntity = 1                                                                             
+    -- CatalogItemEntity = 2                                                                           
+    -- DirectoryEntity = 3                                                                             
+    -- PhotoItemEntity = 5                                                                             
+    -- ProductDirectionEntity = 6                                                                      
+    
+    declare @entityName int = 1;                                                                       
+    declare @dateOfCreation datetimeoffset(7) = Sysdatetimeoffset();                                   
+    declare @countToUpdate bigint;                                                                     
+    
+    INSERT INTO [dbo].[SendItemsEntities]                                                              
+    ([Login], [EntityId], [Brands].[EntityName], [Brands].[RequestDate], [Brands].[DateOfCreation])    
+    SELECT @login, [Id], @entityName, @lastUpdate, @dateOfCreation                                     
+    FROM  [dbo].[BrandItemEntities] AS [Brands]                                                        
+    WHERE [Brands].[LastUpdated] > @lastUpdate AND                                                     
+    NOT EXISTS (SELECT *                                                                         
+    FROM  [dbo].[SendItemsEntities] AS [SendItem]                                    
+    WHERE [SendItem].[EntityId] = [Brands].[Id] AND                                  
+    [SendItem].[Login] = @login AND                                            
+    [SendItem].[EntityName] = @entityName);                                    
+    
+    SELECT @countToUpdate = (SELECT COUNT(*)                                                           
+    FROM  [dbo].[SendItemsEntities]                                           
+    WHERE [Login] = @login AND                                                
+    [EntityName] = @entityName);                              
+    
+    RETURN (@countToUpdate);                                                                           
+    
+END
+CREATE PROCEDURE [dbo].[PrepareToUpdateCatalogs]
+    @login [nvarchar](30),
+    @lastUpdate [datetimeoffset](7)
+AS
+BEGIN
+    -- +---------------------------------------------------+                                              
+    -- | © 2017-2018 OLEXANDR LIKHOSHVA ALL RIGHT RESERVED |                                              
+    -- | https://www.linkedin.com/in/olexandrlikhoshva/    |                                              
+    -- +---------------------------------------------------+                                              
+    -- SET NOCOUNT ON added to prevent extra result sets from                                             
+    -- interfering with SELECT statements.                                                                
+    
+    SET NOCOUNT ON;                                                                                       
+    
+    -- BrandItemEntity = 1                                                                                
+    -- CatalogItemEntity = 2                                                                              
+    -- DirectoryEntity = 3                                                                                
+    -- PhotoItemEntity = 5                                                                                
+    -- ProductDirectionEntity = 6                                                                         
+    
+    declare @entityName int = 2;                                                                          
+    declare @dateOfCreation datetimeoffset(7) = Sysdatetimeoffset();                                      
+    declare @countToUpdate bigint;                                                                        
+    
+    INSERT INTO [dbo].[SendItemsEntities]                                                                 
+    ([Login], [EntityId], [Catalogs].[EntityName], [Catalogs].[RequestDate], [Catalogs].[DateOfCreation]) 
+    SELECT @login, [Id], @entityName, @lastUpdate, @dateOfCreation                                        
+    FROM  [dbo].[CatalogItemEntities] AS [Catalogs]                                                       
+    WHERE [Catalogs].[LastUpdated] > @lastUpdate AND                                                      
+    NOT EXISTS (SELECT *                                                                            
+    FROM  [dbo].[SendItemsEntities] AS [SendItem]                                       
+    WHERE [SendItem].[EntityId] = [Catalogs].[Id] AND                                   
+    [SendItem].[Login] = @login AND                                               
+    [SendItem].[EntityName] = @entityName);                                       
+    
+    SELECT @countToUpdate = (SELECT COUNT(*)                                                              
+    FROM  [dbo].[SendItemsEntities]                                              
+    WHERE [Login] = @login AND                                                   
+    [EntityName] = @entityName);                                 
+    
+    RETURN (@countToUpdate);                                                                              
+    
+END
+CREATE PROCEDURE [dbo].[PrepareToUpdateDirectories]
+    @login [nvarchar](30),
+    @lastUpdate [datetimeoffset](7)
+AS
+BEGIN
+    -- +---------------------------------------------------+                                                       
+    -- | © 2017-2018 OLEXANDR LIKHOSHVA ALL RIGHT RESERVED |                                                       
+    -- | https://www.linkedin.com/in/olexandrlikhoshva/    |                                                       
+    -- +---------------------------------------------------+                                                       
+    -- SET NOCOUNT ON added to prevent extra result sets from                                                      
+    -- interfering with SELECT statements.                                                                         
+    
+    SET NOCOUNT ON;                                                                                                
+    
+    -- BrandItemEntity = 1                                                                                         
+    -- CatalogItemEntity = 2                                                                                       
+    -- DirectoryEntity = 3                                                                                         
+    -- PhotoItemEntity = 5                                                                                         
+    -- ProductDirectionEntity = 6                                                                                  
+    
+    declare @entityName int = 3;                                                                                   
+    declare @dateOfCreation datetimeoffset(7) = Sysdatetimeoffset();                                               
+    declare @countToUpdate bigint;                                                                                 
+    
+    INSERT INTO [dbo].[SendItemsEntities]                                                                          
+    ([Login], [EntityId], [Directories].[EntityName], [Directories].[RequestDate], [Directories].[DateOfCreation]) 
+    SELECT @login, [Id], @entityName, @lastUpdate, @dateOfCreation                                                 
+    FROM  [dbo].[DirectoryEntity] AS [Directories]                                                                 
+    WHERE [Directories].[LastUpdated] > @lastUpdate AND                                                            
+    NOT EXISTS (SELECT *                                                                                     
+    FROM  [dbo].[SendItemsEntities] AS [SendItem]                                                
+    WHERE [SendItem].[EntityId] = [Directories].[Id] AND                                         
+    [SendItem].[Login] = @login AND                                                        
+    [SendItem].[EntityName] = @entityName);                                                
+    
+    SELECT @countToUpdate = (SELECT COUNT(*)                                                                       
+    FROM  [dbo].[SendItemsEntities]                                                       
+    WHERE [Login] = @login AND                                                            
+    [EntityName] = @entityName);                                          
+    
+    RETURN (@countToUpdate);                                                                                       
+    
+END
+CREATE PROCEDURE [dbo].[PrepareToUpdatePhotos]
+    @login [nvarchar](30),
+    @lastUpdate [datetimeoffset](7)
+AS
+BEGIN
+    -- +---------------------------------------------------+                                              
+    -- | © 2017-2018 OLEXANDR LIKHOSHVA ALL RIGHT RESERVED |                                              
+    -- | https://www.linkedin.com/in/olexandrlikhoshva/    |                                              
+    -- +---------------------------------------------------+                                              
+    -- SET NOCOUNT ON added to prevent extra result sets from                                             
+    -- interfering with SELECT statements.                                                                
+    
+    SET NOCOUNT ON;                                                                                       
+    
+    -- BrandItemEntity = 1                                                                                
+    -- CatalogItemEntity = 2                                                                              
+    -- DirectoryEntity = 3                                                                                
+    -- PhotoItemEntity = 5                                                                                
+    -- ProductDirectionEntity = 6                                                                         
+    
+    declare @entityName int = 5;                                                                          
+    declare @dateOfCreation datetimeoffset(7) = Sysdatetimeoffset();                                      
+    declare @countToUpdate bigint;                                                                        
+    
+    INSERT INTO [dbo].[SendItemsEntities]                                                                 
+    ([Login], [EntityId], [Photos].[EntityName], [Photos].[RequestDate], [Photos].[DateOfCreation])       
+    SELECT @login, [Id], @entityName, @lastUpdate, @dateOfCreation                                        
+    FROM  [dbo].[PhotoItemEntity] AS [Photos]                                                             
+    WHERE [Photos].[LastUpdated] > @lastUpdate AND                                                        
+    NOT EXISTS (SELECT *                                                                            
+    FROM  [dbo].[SendItemsEntities] AS [SendItem]                                       
+    WHERE [SendItem].[EntityId] = [Photos].[Id] AND                                     
+    [SendItem].[Login] = @login AND                                               
+    [SendItem].[EntityName] = @entityName);                                       
+    
+    SELECT @countToUpdate = (SELECT COUNT(*)                                                              
+    FROM  [dbo].[SendItemsEntities]                                              
+    WHERE [Login] = @login AND                                                   
+    [EntityName] = @entityName);                                 
+    
+    RETURN (@countToUpdate);                                                                              
+    
+END
+CREATE PROCEDURE [dbo].[PrepareToUpdateProductDirections]
+    @login [nvarchar](30),
+    @lastUpdate [datetimeoffset](7)
+AS
+BEGIN
+    -- +---------------------------------------------------+                                                                                        
+    -- | © 2017-2018 OLEXANDR LIKHOSHVA ALL RIGHT RESERVED |                                                                                        
+    -- | https://www.linkedin.com/in/olexandrlikhoshva/    |                                                                                        
+    -- +---------------------------------------------------+                                                                                        
+    -- SET NOCOUNT ON added to prevent extra result sets from                                                                                       
+    -- interfering with SELECT statements.                                                                                                          
+    
+    SET NOCOUNT ON;                                                                                                                                 
+    
+    -- BrandItemEntity = 1                                                                                                                          
+    -- CatalogItemEntity = 2                                                                                                                        
+    -- DirectoryEntity = 3                                                                                                                          
+    -- PhotoItemEntity = 5                                                                                                                          
+    -- ProductDirectionEntity = 6                                                                                                                   
+    
+    declare @entityName int = 6;                                                                                                                    
+    declare @dateOfCreation datetimeoffset(7) = Sysdatetimeoffset();                                                                                
+    declare @countToUpdate bigint;                                                                                                                  
+    
+    INSERT INTO [dbo].[SendItemsEntities]                                                                                                           
+    ([Login], [EntityId], [ProductDirectionEntity].[EntityName], [ProductDirectionEntity].[RequestDate], [ProductDirectionEntity].[DateOfCreation]) 
+    SELECT @login, [Id], @entityName, @lastUpdate, @dateOfCreation                                                                                  
+    FROM  [dbo].[ProductDirectionEntity] AS [ProductDirectionEntity]                                                                                
+    WHERE [ProductDirectionEntity].[LastUpdated] > @lastUpdate AND                                                                                  
+    NOT EXISTS (SELECT *                                                                                                                      
+    FROM  [dbo].[SendItemsEntities] AS [SendItem]                                                                                 
+    WHERE [SendItem].[EntityId] = [ProductDirectionEntity].[Id] AND                                                               
+    [SendItem].[Login] = @login AND                                                                                         
+    [SendItem].[EntityName] = @entityName);                                                                                 
+    
+    SELECT @countToUpdate = (SELECT COUNT(*)                                                                                                        
+    FROM  [dbo].[SendItemsEntities]                                                                                        
+    WHERE [Login] = @login AND                                                                                             
+    [EntityName] = @entityName);                                                                           
+    
+    RETURN (@countToUpdate);                                                                                                                        
+    
+END
+INSERT [dbo].[__MigrationHistory]([MigrationId], [ContextKey], [Model], [ProductVersion])
+VALUES (N'201712161840322_InitialEntities', N'DataBase.Context.DataBaseContext',  0x1F8B0800000000000400ED1DD96E1CB9F13D40FEA1318F815723C9F61E82B40B5BB21C21B62478A44D9017839AA1469DED63DC87574A902FCB433E29BF10B2AFE1CD621FA391DC306068D864B1AA58552C92C5E2FFFEF3DFC35FEEC3C0FB8A93D48FA3A3C9DECEEEC4C3D13C5EF8D1F2689267B7DFFD38F9E5E73FFEE1F0DD22BCF77EADEBBDA4F548CB283D9ADC65D9EA603A4DE7773844E94EE8CF93388D6FB39D791C4ED1229EEEEFEEFE34DDDB9B620262426079DEE1A73CCAFC10173FC8CFE3389AE35596A3E063BCC0415A95932FB302AA778E429CAED01C1F4D4E5086DEA214EF904619BECF26DE9BC047048F190E6E271E8AA2384319C1F2E03AC5B32C89A3E56C450A5070F5B0C2A4DE2D0A525C617FB0AE0E2564779F12325D37AC41CDF3348B4347807B2F2BCE4CC5E6ADF83B69384778F78EF0387BA05417FC3B9ABC4D50B438CB70587E9978629F07C74142EBCB5CDE299AF838DD1180BCF0EAAA2F1AF1205244FFBDF08EF320CB137C14E13C4B50F0C2BBCC6F027FFE17FC7015FF86A3A3280F0216658234F9C61590A2CB245EE1247BF8846F2B42CE16136FCAB79B8A0D9B664C9B92B6B328FBFED5C43B279DA39B003712C1F06196C5097E8F239CA00C2F2E5196E124A23070C5B9A9B1AF6322C5756FEF737FA1E8CC0C80FE5F0320324C9471E27D44F71F70B4CCEE8E26FBAF5F4FBC53FF1E2FEA920AEA75E413DD258DB224B77642060E5FDC1E27B892B766E4F115D1CD8BDBDB1467CE987F406976BD5A50B6F504F1344EE6B823C873F4D55F16648A234584378897549ED389F7090745A5F4CE5F95066587A9500AFCE7420108FB9338FC14073C0CB6CAE72B942C297257B1B9DE2CCE09853CCE87D3B5F61A755A02DA4EAB2530A35E2BFABA3E3BE9A4D6AC5D50A8F5CBDD1EB4FA4D92F9F360F06E3662A10AFDD8484FA47266E864AF0F9611C5C2C92AF1E7F83C4EC24B34FF6DE8417A8BB2F9DDC5ED0C05386D4C279EFB210A26DE6542FEAADCBE1F27DE6C8EA81CEF3B0BF55B14A0683EB8C05D52C60D46C4719E24C4EF7D3050D187987D2486D35F115359189B8168F9334A2FEFE22C6E86FC6D4CE61F143903FA861C0401E48CCC1779C33FD111A8BFB6A79C87DF9B3753B926FDBA31B57B6273636A7707EC7AC56148D699D9C3894F04BF943015E652B5AA57DE7563E88034909D33502B95AB66A2B10416270F4AD29AAF168A4CF524428C955DF13F8F43621509E2C4DB7B9FC4F94A498754CB420FA4BE4417A8912B7DB59D5410557C62849CE987A5C5504D22C154B7DB224023BC2DD7021A68E39240D1D7B8D4DFB299BCC3527F9899469A3F9DE6A756F6409803DA990101C8A8FDA3F63F67EDEFC51913751DE4B9819D154496A81908F9BAAA1EEDB28615E1AA9A2BAAB3FCC6CDF505236C737705BA5A994F8DABD9CE8C6A808DE67434A7CFD99C0EB22614AD95D342B2952910966CED4C80006454FDC7D2DCB3F4438C1AA2DA6E8B16C3D900F12344E7380657F2A71AD7D1AC389895A13665441B02D9C069653A2E5614F9AEB64384321A0F455F9673D5D74FE6C0F35714E4DFA80303D7AB6481934E2AB506306A93A2AF823FE779788393A10F75677938D831684186E2208F2B770EE008C3629D6A8814D87FF55C5574006700EE8827F1229F67BD1C70A8618DB6402587EBB359F62C5C71743BC616387BBBE62D32B5947E661A310EAFA5AEECF5DA1A74727D67B80C114EBB68A90064544F95C0C74B3F1A7A922EF96F270B0285F3A2A994B3C58E103FE12F394E33AA8E3D697B0F4649AF2379A80EDBAD5D91B3F43440CBF50505BDCE14E637DAA1FAB043E1CAB14944238A3A6D5585080871928207224FCD98BFDC1734E823A62E62ED6D05443E8AE5CBD16457E23357F51CFFDE54DD33572D82FECED2EB55D3601FD4E024FE3D6A9ABC9447A81C0BC3F8704E62879161E06C7E4CDED056BD8F09B1CBD9459E4147E4CD225E1593A77A34A4EAAB55127F65EABF32D73FA6B1A76B325F9B6B9F457F8D93DF9ADADF5B282593F18A41E5071BF0AB0445A9BF66CD8FE606A77970EB0701D3C34F2D4455E58C75B12512B8CD0BEEAFE89F50697CCF54B548E2DF99AA16293CBEC3A19F66D4C98289E1DB62E67E80CAE17B944285F02C2278E4E5AA132687E568E984102453ECAC0C9725C997BBB8F9071121668EEFEEC4B90B9374EB0D26588A8B35303193826F6022279D34C12449B72E560B977AF0DFA4693CF78BC1D4115F850BF388BC8B161E30765819475DE3CA46C51F4DFE24116CEFA7890A58F7230D3BDFCBEECECE9EC81B860F16F68022C5B444B8858D9996DD2D38E8161DDD7EDC1CD8690CBDD111028BC359E32FA9A54D1EE0BD3D2EB7AAD01928E662E00F984326A9B205EB74180607CE80620E7424B80520AC09D2060B39C9975B48FC46E4CC74D6AA230374F0BAC65E9AF3E012078ABB77E05327C1B36ED569A900EFDB314CD3CCF80EBC836EFE0DA2B72500EA22223F5A7B4D955FD8647590DCCC6BF2B1F434D36ADF4AA48FC29DE14CE9F7F9F406E47A6B46E724483CE3618A62A486AA10361B5CF5ACAC01AF75032CBDF063A8062E8DB305A6DA70A9616B4DA5A50F5ED7D5B02553628129C455A881CA211C36A8CDD1B206207B766DA35AA5A51AE23526C1D203BFC3AE062D6DE50B301925D7AB4973DB90A96DB99828EECDC3D71A0D951A759DBA83AEED21035A615DC483029E3510B6C12EA02898E8BE1EE9B02261196CB05B263E3B2D42DC06B405DFCDA1FF32BBE1EB15F7150B43ACC25C1B780A5AA16C9C95755CBF9D89AA658CCB42A637C6096B1717B82D18068B9396D9E7BED669BFDA61586098EE0D2C765ADD0C2EA3C6205299D3E07590F34A88A154E1E218F80959FC0CCF466B7C8282974E0BA5764B2596AB5A17CAC45CE8EAA827CB509F18372BA2E6DBE1B44C7F57151C4E3579F20E3FA2D5CA8F964CDEBCAAC49B9549F38EBF9BB9E7930B4B18D379AA482BD760DBF444C8474B2C7C2D63734FFDA438A74737889E201C2F42A99AB8FED378AE756FBA259E3CACB53F5BB7A47FF34BCEE6B8425C0D0AC0D66C3D2594D213998268ACF50A15103C9AD210052851048D1CC7411E46BAC01353EB32FE996D5F96C02194473D2C84B2040E418C9D606189DFE050B9882E1624F7010E8F8FE76201F25F6488875361F045519B4AB226580051884122AEB2DD9D845CDE9C701773008C6104BD48C0C6362F0A36A9284D7A35164853B849856392A3B160986207BE16E9CF38C616257008EF14C9CD5878AAEF0EB47289CC3872B92F2E10ABAC653CB0AA100EA74A4BC642A98A1CA4B2493EC64966530A87C4E71763A1F15FE0109964622C38A6789C226C10EB383216565DD68A4E1540C5E7ED99C4F4DB44DDE632DD4E788B290D0C6A74E19EAA7E3E92F4CB8BC34E422F9ED0B8CBBA15C228E2A3883B89B87E5BB093A8EB0E0CDD451E0C6914FD51F49D445FDEB9ED24F2E239B6BBA85B210C23E2DD05B4CECEC1E15095392CC8CAEC1CDC82AC2C1A55A581F738AAA288B9E8A42B527886BBB2D8413CDF09A14A36C182A88A9EAAA63C965C73513FDD449A09106A21CDA6D6C30832972C8205C37D70D82BA11921B88D125AE0888F6A7F84FBE0A2A855C6075E57ABC2A7AA28CF664AD19EF07673C2D4F1742D7C3120A0617493B910C889DBBA7894DFB5FC3D8AFCCA21989D04578CD67497582B846144B54A64C0894059E47404E597790A8483A7AAD41592EC61B1E570685C9E02161CF76153AA38B4A0F3712EE6C3EC262ED8E5BCBA6EE37C284D637CF4F90659E075888FCC3C90E8973054224799D7E0D01EBD2AD4A9257ACE8891A158F8C57597B39426BF68AE02438816239FDC85061615DDE2984880003D126A25682E11D62DC755DB471F92E812B1DD167F49DADD10EF2C69E63870F8918C4DAE5AC80F2476BC25DBD7818D3DC809240A7DABCC9689FADE05AA8E867710A5BA89E3191E6068F838F796835201194072F8F0FEAD92192DD19D0506761BC0FDC46C008BE47283A0E5E8495DF421672E7711B64AEA20DCE82C80C6BB11F0632BBE9DE3099562D000171EBA3B1D7D4817E0DAC756099599FCEEE264BD23E2BC0BC7366EB7DDA61A36E09D8F6D70B1A01761B64ACEBAB959D21519B14AB3A9519534BF9B2B32D5F514EEDE4CC1127A0BA660455A5D9511EFAB9455685EEAF8ABBFA07755660F29D1973267DAEC4B701CF8858B5657F88822FF16A75999B56AB2BFBBB73FF1DE043E4ACB5B50D54D9C0331C301E86ACEDE4B7A35072FC2A9D8DCFD820F8592A60B2E33AA9CCCD578A7651369546FFCA5DFB8C0A65CA91D5E63CF23FF4B8EFD02D4AD4F8FACA4FC1367D102DF1F4DFE55B43EF0CEFEF6990278E115074B07DEDE0B22FFD7059803EF2AC9B1F7EF4ECF17455F5132BF43899CFF7F0DB47D2671BA0F9EF9218EAB9CA6006A79406ABA4F299594702689FB0F7DA4716E812F036548645519A25B60CB82E90F5DF80BB2E615C05356F3E28A50072D27ED7B5572D6EC28959C266D76D3F1E6FE51AF5087B046CCEDA47E0197F7950C30F79CE97FA7B8B2D42B83F9BB4B95E9E8FB198CE64E53AFA857779C06C2797DF5C980B4B388F057A006429DB918559BB5BEF2908F73F6373167CBE8F28FD8149364FBD1E181895477C2737D04C8CFE80056D64D1B36EEF2332BC8D3E5D698CE28B0CDBBA0A1DEA773464705068E16DCF103DD7B7BCAFEDFB8CC1BA78C673E6580B5DD786A382AF9A8E4A3926FAD922B1661EB736867F7A2693B804F01BA6C395A9BD1DA8CD6666BAD0DFC614ED361FE535672B54A41566E28B4287737BDE45FB16FB3BFC4BD60EF87688947DB30DA860EE88A6124CEEE080F60009FC47CD1F729DB29F579522F4E08BBDBBE15C747D5FDE4D1CFD95E5B06D748DD65E5A7AC8CDCADE7163AC9B407ABA6FBE95D71A77AA00330EE9E75FB138BE68AB5F14877FFD5A8ECA3E332C0A2061048FA94CD1473059C5151F0219956E05BEE5E8C4AF90D2BE5961CE4826D83F186FC53360AD585FB165E4BD1D222119D1C96F5257E9E058E14B2F7F7DDECDEBAA5854C478CB81400AD15938132A85E6EBB99EE1CF5D04B18ACDB3D6C457BC03D68BBBD3062E1BE3FA387A633B1AE1B479DD0538071C04B2737DD1FC6961E982C496BF742350759F1C82403BBC52BDB4400313D13F451701CD347E7912F2707B94CFC68EEAF50A0A14FA80F9CFDE8083490C52F277845665C8298967048A7A69C1C4D0F828AD938D2F78BE1CA9B5B8067F35A3D12BE275D8BBB884E708033ECBD9997D7918E513A477256C2E236982B8E167185B71A448C1D12C9F72FCF6DD38CF430F96C8FE8AB2E58F667ED46616785BD95606D97940353C56C40BCE18F81EADF9CECF6D2F616BA05F6370AB6C42DB0DDCC7E0401523D84BA11D1115A975795E1D09FAEE8A80887746B4C7EB301C9717F03D6FE262B37E2DA3A4FD024C1DF92D812D304CD7EB30141033F81DBDFA85B644A8C3A63614BDF9E8F17657F1DC2E82B3DA204393DFCBB91E94E73C6C74992A6CA7399F860F972B6C371AA960B75061826F8897F5D581CEE2A3910BB0DC4DA86F5C69F6E57AECCFF723459DCD090C9720F517E78589633BE6385C193BA56D451750E79CE5BEA5EBB2B2463A1ADAA4446FFB49F0D27497D2554A41A2A0CEC6F6F8B1D6BDD1A09016D4D1522FA47B06C08493396848854438580F51179A963292A52EE59AEA2EA5AF1B48BB56F26FE4BD12DFB55D923F7E88695C31A4B2E335A5351C96FE0F3F21236E211B28C865443D5BF9C3CBEAD19005927785B074321355791C1E707B31CC5784C6D9D61559DDA98CF6D1A4E2ABE49B39FD10B662029BE8ABB8F3CE910B6B89C34A878D5215335E8AC82A55F5BC9C4525719764CE6BDA921A876BC5B0F813A25617FB2F7C4986ECEC12D3319BE6F6B5E8F30E44ADFB6CA30E8324BDB59A3DA911C8429CA1D4838AC164C81E54B9659E4BEF506DB7C6388D5D6D92AA93226FE95F906DE491ACC92697C6D6562E21ED863CD61ABE091D35EC9208A6876974DB976E12C9392BA36DF0EA7A5035915909F52F2D6C3E9A73CA25167E5AF139CFACB35089A93362AD15A03ADEB9C45B771BD9F21605457111387E10C2D8890D1347BB7689E91CF739CA67EB49C78C58DA4A3C9BBF0062FCEA28B3C5BE5192119873701C70CBA2362EAFF702AE17C582EAAD23E482068FA3450EF227A9BFBC1A2C1FB54110CA50141B75AAA68533A96198D3A5D3E3490CEE30808A8625FB3437485C315317338BD8866E82B6E83DB758A3FE0259A3F5C563978F540EC03C1B3FDF0C447CB0485690563DD9EFC2432BC08EF7FFE3F491658D249DB0000 , N'6.1.3-40302')
+
+Метод Running Seed.
+PM>   
