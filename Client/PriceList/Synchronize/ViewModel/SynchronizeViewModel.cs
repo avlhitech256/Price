@@ -34,6 +34,18 @@ namespace Synchronize.ViewModel
         private DateTimeOffset lastUpdateDirectories;
         private DateTimeOffset lastUpdateProductDirections;
         private DateTimeOffset lastUpdatePhotos;
+        private string directoryLabel;
+        private string productDirectionLabel;
+        private string photoLabel;
+        private string catalogLabel;
+        private double maxCatalogs;
+        private double maxDirectories;
+        private double maxPhotos;
+        private double maxProductDirections;
+        private double valueCatalogs;
+        private double valueDirectories;
+        private double valuePhotos;
+        private double valueProductDirection;
 
         public SynchronizeViewModel(IDomainContext domainContext)
         {
@@ -132,43 +144,68 @@ namespace Synchronize.ViewModel
             }
         }
 
-        private void StepLoadBrandInfo()
+        public double MaxCatalogs
         {
-            if (MaxBrands > ValueBrands)
+            get
             {
-                canDoSynchronize = false;
-                SynchronizeCommand.RiseCanExecute();
+                return maxCatalogs;
             }
-
-            SetBrandsLabel();
-            AsyncOperationService.PerformAsyncOperation(AsyncOperationType.LoadFromWeb, 
-                                                        LoadBrandInfo, 
-                                                        ValueBrands,
-                                                        SaveBrandToDatabase);
-        }
-
-        private BrandInfo LoadBrandInfo(double id)
-        {
-            long brandId = (long) id;
-            return webService.GetBrandInfo(brandId);
-        }
-
-        private void SaveBrandToDatabase(Exception e, BrandInfo brandInfo)
-        {
-            Application.Current.Dispatcher.Invoke(() =>
+            set
             {
-                loadService.DownLoadBrandItem(brandInfo);
-                //Message = Message + Environment.NewLine +
-                //    $"[{DateTimeOffset.Now:yyyy'.'MM'.'dd HH':'mm':'ss fffffff}] - Добавлен бренд: \"{brandInfo.Name}\"";
-                ValueBrands++;
-                SetBrandsLabel();
-                
-                if (Math.Abs(MaxBrands - ValueBrands) < double.Epsilon)
+                if (Math.Abs(maxCatalogs - value) > double.Epsilon)
                 {
-                    canDoSynchronize = true;
-                    SynchronizeCommand.RiseCanExecute();
+                    maxCatalogs = value;
+                    OnPropertyChanged();
                 }
-            });
+            }
+        }
+
+        public double MaxDirectories
+        {
+            get
+            {
+                return maxDirectories;
+            }
+            set
+            {
+                if (Math.Abs(maxDirectories - value) > double.Epsilon)
+                {
+                    maxDirectories = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public double MaxPhotos
+        {
+            get
+            {
+                return maxPhotos;
+            }
+            set
+            {
+                if (Math.Abs(maxPhotos - value) > double.Epsilon)
+                {
+                    maxPhotos = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public double MaxProductDirections
+        {
+            get
+            {
+                return maxProductDirections;
+            }
+            set
+            {
+                if (Math.Abs(maxProductDirections - value) > double.Epsilon)
+                {
+                    maxProductDirections = value;
+                    OnPropertyChanged();
+                }
+            }
         }
 
         public double ValueBrands
@@ -187,6 +224,70 @@ namespace Synchronize.ViewModel
             }
         }
 
+        public double ValueCatalogs
+        {
+            get
+            {
+                return valueCatalogs;
+            }
+            set
+            {
+                if (Math.Abs(valueCatalogs - value) > double.Epsilon)
+                {
+                    valueCatalogs = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public double ValueDirectories
+        {
+            get
+            {
+                return valueDirectories;
+            }
+            set
+            {
+                if (Math.Abs(valueDirectories - value) > double.Epsilon)
+                {
+                    valueDirectories = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public double ValuePhotos
+        {
+            get
+            {
+                return valuePhotos;
+            }
+            set
+            {
+                if (Math.Abs(valuePhotos - value) > double.Epsilon)
+                {
+                    valuePhotos = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public double ValueProductDirection
+        {
+            get
+            {
+                return valueProductDirection;
+            }
+            set
+            {
+                if (Math.Abs(valueProductDirection - value) > double.Epsilon)
+                {
+                    valueProductDirection = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public string BrandLabel
         {
             get
@@ -198,6 +299,70 @@ namespace Synchronize.ViewModel
                 if (brandLabel != value)
                 {
                     brandLabel = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public string DirectoryLabel
+        {
+            get
+            {
+                return directoryLabel;
+            }
+            set
+            {
+                if (directoryLabel != value)
+                {
+                    directoryLabel = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public string ProductDirectionLabel
+        {
+            get
+            {
+                return productDirectionLabel;
+            }
+            set
+            {
+                if (productDirectionLabel != value)
+                {
+                    productDirectionLabel = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public string PhotoLabel
+        {
+            get
+            {
+                return photoLabel;
+            }
+            set
+            {
+                if (photoLabel != value)
+                {
+                    photoLabel = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public string CatalogLabel
+        {
+            get
+            {
+                return catalogLabel;
+            }
+            set
+            {
+                if (catalogLabel != value)
+                {
+                    catalogLabel = value;
                     OnPropertyChanged();
                 }
             }
@@ -238,7 +403,15 @@ namespace Synchronize.ViewModel
                                                              lastUpdatePhotos, false);
 
             ValueBrands = 0;
+            ValueDirectories = 0;
+            ValueProductDirection = 0;
+            ValueCatalogs = 0;
+            ValuePhotos = 0;
             MaxBrands = countInfo.CountBrands;
+            MaxDirectories = countInfo.CountDirectories;
+            MaxProductDirections = countInfo.CountProductDirections;
+            MaxCatalogs = countInfo.CountCatalogs;
+            MaxPhotos = countInfo.CountPhotos;
             Updates();
         }
 
@@ -247,6 +420,18 @@ namespace Synchronize.ViewModel
             if (Math.Abs(ValueBrands - MaxBrands) > double.Epsilon)
             {
                 UpdateBrands(lastUpdateBrands);
+            }
+            else if (Math.Abs(ValueDirectories - MaxDirectories) > double.Epsilon)
+            {
+                UpdateDirectories(lastUpdateDirectories);
+            }
+            else if (Math.Abs(ValueProductDirection - MaxProductDirections) > double.Epsilon)
+            {
+                UpdateProductDirection(lastUpdateProductDirections);
+            }
+            else if (Math.Abs(ValueCatalogs - MaxCatalogs) > double.Epsilon)
+            {
+                UpdateCatalogs(lastUpdateCatalogs);
             }
             else
             {
@@ -263,6 +448,114 @@ namespace Synchronize.ViewModel
                                                         lastUpdate,
                                                         SaveBrandsToDatabase);
 
+        }
+
+
+        private void UpdateCatalogs(DateTimeOffset lastUpdate)
+        {
+            SetBrandsLabel();
+            AsyncOperationService.PerformAsyncOperation(AsyncOperationType.LoadFromWeb,
+                                                        LoadCatalogs,
+                                                        lastUpdate,
+                                                        SaveCatalogsToDatabase);
+
+        }
+
+        private void UpdateDirectories(DateTimeOffset lastUpdate)
+        {
+            SetDirectoriesLabel();
+            AsyncOperationService.PerformAsyncOperation(AsyncOperationType.LoadFromWeb,
+                                                        LoadDirectories,
+                                                        lastUpdate,
+                                                        SaveDirectoriesToDatabase);
+
+        }
+
+        private void UpdateProductDirection(DateTimeOffset lastUpdate)
+        {
+            SetProductDirectionLabel();
+            AsyncOperationService.PerformAsyncOperation(AsyncOperationType.LoadFromWeb,
+                                                        LoadProductDirections,
+                                                        lastUpdate,
+                                                        SaveProductDirectionsToDatabase);
+
+        }
+
+        private void SaveProductDirectionsToDatabase(Exception e, int countUpdated)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                ValueProductDirection += countUpdated;
+                SetProductDirectionLabel();
+                Updates();
+            });
+        }
+
+        private int LoadProductDirections(DateTimeOffset lastUpdate)
+        {
+            SetProductDirectionLabel();
+            ProductDirections productDirections = webService.GetProductDirections(lastUpdate);
+            loadService.DownLoadProductDirections(productDirections);
+            webService.ConfirmUpdateCatalogs(productDirections.Items.Select(x => x.Id));
+            return productDirections.Items.Count();
+        }
+
+        private void SetProductDirectionLabel()
+        {
+            Application.Current.Dispatcher.Invoke(() => ProductDirectionLabel = $"Каталоги {ValueProductDirection} из {MaxProductDirections}");
+        }
+
+        private void SetPhotoLabel()
+        {
+            Application.Current.Dispatcher.Invoke(() => PhotoLabel = $"Фотографии {ValuePhotos} из {MaxPhotos}");
+        }
+
+        private void SaveDirectoriesToDatabase(Exception e, int countUpdated)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                ValueDirectories += countUpdated;
+                SetDirectoriesLabel();
+                Updates();
+            });
+        }
+
+        private int LoadDirectories(DateTimeOffset lastUpdate)
+        {
+            SetDirectoriesLabel();
+            Directories directories = webService.GetDirectories(lastUpdate);
+            loadService.DownLoadDirectories(directories);
+            webService.ConfirmUpdateCatalogs(directories.Items.Select(x => x.Id));
+            return directories.Items.Count();
+        }
+
+        private void SetDirectoriesLabel()
+        {
+            Application.Current.Dispatcher.Invoke(() => DirectoryLabel = $"Каталоги {ValueDirectories} из {MaxDirectories}");
+        }
+
+        private int LoadCatalogs(DateTimeOffset lastUpdate)
+        {
+            SetCatalogsLabel();
+            Catalogs catalogs = webService.GetCatalogs(lastUpdate);
+            loadService.DownLoadCatalogs(catalogs);
+            webService.ConfirmUpdateCatalogs(catalogs.Items.Select(x => x.Id));
+            return catalogs.Items.Count();
+        }
+
+        private void SaveCatalogsToDatabase(Exception e, int countUpdated)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                ValueCatalogs += countUpdated;
+                SetCatalogsLabel();
+                Updates();
+            });
+        }
+
+        private void SetCatalogsLabel()
+        {
+            Application.Current.Dispatcher.Invoke(() => CatalogLabel = $"Товары (номенклатура) {ValueCatalogs} из {MaxCatalogs}");
         }
 
         private void SaveBrandsToDatabase(Exception e, int countUpdated)
@@ -284,43 +577,6 @@ namespace Synchronize.ViewModel
             return brands.Items.Count();
         }
 
-
-        //private void DoSynchronize(object obj)
-        //{
-        //    StringBuilder builder = new StringBuilder(Message);
-        //    //ShortcutInfo shortcutInfo = webService.Shortcut();
-        //    DateTimeOffset now =  DateTimeOffset.Now;
-        //    //int period = (now - shortcutInfo.RequestTime).Milliseconds;
-        //    //int timeToServer = (shortcutInfo.ResponceTime - shortcutInfo.RequestTime).Milliseconds;
-        //    //int timeToClient = (now - shortcutInfo.ResponceTime).Milliseconds;
-        //    //builder.AppendLine($"[{now:yyyy'.'MM'.'dd HH':'mm':'ss fffffff}] - RequestTime: {shortcutInfo.RequestTime:yyyy'.'MM'.'dd HH':'mm':'ss fffffff}");
-        //    //builder.AppendLine($"[{now:yyyy'.'MM'.'dd HH':'mm':'ss fffffff}] - ResponceTime: {shortcutInfo.ResponceTime:yyyy'.'MM'.'dd HH':'mm':'ss fffffff}");
-        //    //builder.AppendLine($"[{now:yyyy'.'MM'.'dd HH':'mm':'ss fffffff}] - Ping to Server: {timeToServer} ms");
-        //    //builder.AppendLine($"[{now:yyyy'.'MM'.'dd HH':'mm':'ss fffffff}] - Ping to Client: {timeToClient} ms");
-        //    //builder.AppendLine($"[{now:yyyy'.'MM'.'dd HH':'mm':'ss fffffff}] - Common Ping: {period} ms");
-        //    //string responce = webService.CheckPassword() ? "OK" : "False";
-        //    //builder.AppendLine($"[{now:yyyy'.'MM'.'dd HH':'mm':'ss fffffff}] - Password is  {responce}");
-        //    //builder.AppendLine($"[{now:yyyy'.'MM'.'dd HH':'mm':'ss fffffff}] - Brand is  {webService.GetBrandInfo(shortcutInfo.Id)?.Name}");
-        //    //builder.AppendLine(" ");
-        //    //Message =  builder.ToString();
-        //    Message = "Начало обновления...";
-        //    CountInfo countInfo = webService.PrepareToUpdate(now, false);
-        //    builder = new StringBuilder(Message);
-        //    builder.AppendLine($"Необходимо обновить {571} брендов");
-        //    Message = builder.ToString();
-        //    BrandInfo brandInfo;
-        //    for (long i = 1; i < 572; i++)
-        //    {
-        //        brandInfo = webService.GetBrandInfo(i);
-        //        Message = Message + Environment.NewLine +
-        //                  $"[{DateTimeOffset.Now:yyyy'.'MM'.'dd HH':'mm':'ss fffffff}] - Добавлен бренд: \"{brandInfo.Name}\"";
-        //        loadService.DownLoadBrandItem(brandInfo);
-        //    }
-
-        //    Message = Message + Environment.NewLine +
-        //                  $"[{DateTimeOffset.Now:yyyy'.'MM'.'dd HH':'mm':'ss fffffff}] - Ну вот пока и все...";
-        //}
-
         private void RefreshLastUpdate()
         {
             if (DataService != null)
@@ -332,6 +588,10 @@ namespace Synchronize.ViewModel
         private void InitProperties()
         {
             SetBrandsLabel();
+            SetCatalogsLabel();
+            SetDirectoriesLabel();
+            SetProductDirectionLabel();
+            SetPhotoLabel();
         }
 
         private void SetBrandsLabel()

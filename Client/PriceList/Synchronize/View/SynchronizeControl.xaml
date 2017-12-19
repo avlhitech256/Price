@@ -36,11 +36,43 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Label Grid.Row="1" Grid.ColumnSpan="2" Content="{Binding Path=LastUpdate, UpdateSourceTrigger=PropertyChanged}"/>
-            <Label Grid.Row="3"  Content="{Binding Path=BrandLabel}"/>
+            <Label Grid.Row="3"   Content="{Binding Path=BrandLabel}"/>
+            <Label Grid.Row="5"   Content="{Binding Path=DirectoryLabel}"/>
+            <Label Grid.Row="7"   Content="{Binding Path=ProductDirectionLabel}"/>
+            <Label Grid.Row="9"   Content="{Binding Path=CatalogLabel}"/>
+            <Label Grid.Row="11"  Content="{Binding Path=PhotoLabel}"/>
             <ProgressBar Grid.Row="3" 
                          Grid.Column="1" 
                          Maximum="{Binding Path=MaxBrands}"
                          Value="{Binding Path=ValueBrands}"
+                         Height="10"
+                         VerticalAlignment="Stretch"
+                         VerticalContentAlignment="Stretch"/>
+            <ProgressBar Grid.Row="5" 
+                         Grid.Column="1" 
+                         Maximum="{Binding Path=MaxDirectories}"
+                         Value="{Binding Path=ValueDirectories}"
+                         Height="10"
+                         VerticalAlignment="Stretch"
+                         VerticalContentAlignment="Stretch"/>
+            <ProgressBar Grid.Row="7" 
+                         Grid.Column="1" 
+                         Maximum="{Binding Path=MaxProductDirections}"
+                         Value="{Binding Path=ValueProductDirection}"
+                         Height="10"
+                         VerticalAlignment="Stretch"
+                         VerticalContentAlignment="Stretch"/>
+            <ProgressBar Grid.Row="9" 
+                         Grid.Column="1" 
+                         Maximum="{Binding Path=MaxCatalogs}"
+                         Value="{Binding Path=ValueCatalogs}"
+                         Height="10"
+                         VerticalAlignment="Stretch"
+                         VerticalContentAlignment="Stretch"/>
+            <ProgressBar Grid.Row="11" 
+                         Grid.Column="1" 
+                         Maximum="{Binding Path=MaxPhotos}"
+                         Value="{Binding Path=ValuePhotos}"
                          Height="10"
                          VerticalAlignment="Stretch"
                          VerticalContentAlignment="Stretch"/>
