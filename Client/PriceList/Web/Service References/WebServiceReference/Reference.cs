@@ -2056,10 +2056,10 @@ namespace Web.WebServiceReference {
         System.Threading.Tasks.Task<bool> ChangePasswodrAsync(Web.WebServiceReference.SecurityInfo securityInfo, string newPassword);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPricelistService/PrepareToUpdate", ReplyAction="http://tempuri.org/IPricelistService/PrepareToUpdateResponse")]
-        Web.WebServiceReference.CountInfo PrepareToUpdate(Web.WebServiceReference.SecurityInfo securityInfo, System.DateTimeOffset lastUpdate, bool needLoadPhotos);
+        Web.WebServiceReference.CountInfo PrepareToUpdate(Web.WebServiceReference.SecurityInfo securityInfo, System.DateTimeOffset lastUpdateBrands, System.DateTimeOffset lastUpdateCatalogs, System.DateTimeOffset lastUpdateDirectories, System.DateTimeOffset lastUpdateProductDirections, System.DateTimeOffset lastUpdatePhotos, bool needLoadPhotos);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPricelistService/PrepareToUpdate", ReplyAction="http://tempuri.org/IPricelistService/PrepareToUpdateResponse")]
-        System.Threading.Tasks.Task<Web.WebServiceReference.CountInfo> PrepareToUpdateAsync(Web.WebServiceReference.SecurityInfo securityInfo, System.DateTimeOffset lastUpdate, bool needLoadPhotos);
+        System.Threading.Tasks.Task<Web.WebServiceReference.CountInfo> PrepareToUpdateAsync(Web.WebServiceReference.SecurityInfo securityInfo, System.DateTimeOffset lastUpdateBrands, System.DateTimeOffset lastUpdateCatalogs, System.DateTimeOffset lastUpdateDirectories, System.DateTimeOffset lastUpdateProductDirections, System.DateTimeOffset lastUpdatePhotos, bool needLoadPhotos);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPricelistService/GetBrand", ReplyAction="http://tempuri.org/IPricelistService/GetBrandResponse")]
         Web.WebServiceReference.BrandInfo GetBrand(Web.WebServiceReference.SecurityInfo securityInfo, long id);
@@ -2203,12 +2203,12 @@ namespace Web.WebServiceReference {
             return base.Channel.ChangePasswodrAsync(securityInfo, newPassword);
         }
         
-        public Web.WebServiceReference.CountInfo PrepareToUpdate(Web.WebServiceReference.SecurityInfo securityInfo, System.DateTimeOffset lastUpdate, bool needLoadPhotos) {
-            return base.Channel.PrepareToUpdate(securityInfo, lastUpdate, needLoadPhotos);
+        public Web.WebServiceReference.CountInfo PrepareToUpdate(Web.WebServiceReference.SecurityInfo securityInfo, System.DateTimeOffset lastUpdateBrands, System.DateTimeOffset lastUpdateCatalogs, System.DateTimeOffset lastUpdateDirectories, System.DateTimeOffset lastUpdateProductDirections, System.DateTimeOffset lastUpdatePhotos, bool needLoadPhotos) {
+            return base.Channel.PrepareToUpdate(securityInfo, lastUpdateBrands, lastUpdateCatalogs, lastUpdateDirectories, lastUpdateProductDirections, lastUpdatePhotos, needLoadPhotos);
         }
         
-        public System.Threading.Tasks.Task<Web.WebServiceReference.CountInfo> PrepareToUpdateAsync(Web.WebServiceReference.SecurityInfo securityInfo, System.DateTimeOffset lastUpdate, bool needLoadPhotos) {
-            return base.Channel.PrepareToUpdateAsync(securityInfo, lastUpdate, needLoadPhotos);
+        public System.Threading.Tasks.Task<Web.WebServiceReference.CountInfo> PrepareToUpdateAsync(Web.WebServiceReference.SecurityInfo securityInfo, System.DateTimeOffset lastUpdateBrands, System.DateTimeOffset lastUpdateCatalogs, System.DateTimeOffset lastUpdateDirectories, System.DateTimeOffset lastUpdateProductDirections, System.DateTimeOffset lastUpdatePhotos, bool needLoadPhotos) {
+            return base.Channel.PrepareToUpdateAsync(securityInfo, lastUpdateBrands, lastUpdateCatalogs, lastUpdateDirectories, lastUpdateProductDirections, lastUpdatePhotos, needLoadPhotos);
         }
         
         public Web.WebServiceReference.BrandInfo GetBrand(Web.WebServiceReference.SecurityInfo securityInfo, long id) {

@@ -1,1 +1,0 @@
-                         <!--Text="{Binding Path=CatalogNavigateViewModel.MaximumRows, UpdateSourceTrigger=PropertyChanged}" -->

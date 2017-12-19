@@ -13,7 +13,8 @@ namespace DataBase.EntitiesMigrations
                 p => new
                 {
                     login = p.String(maxLength: 30),
-                    lastUpdate = p.DateTimeOffset(precision: 7)
+                    lastUpdate = p.DateTimeOffset(precision: 7),
+                    countToUpdate = p.Int(outParameter: true)
                 },
                 body: CreatePrepareToUpdateBrandsBody());
 
@@ -22,7 +23,8 @@ namespace DataBase.EntitiesMigrations
                 p => new
                 {
                     login = p.String(maxLength: 30),
-                    lastUpdate = p.DateTimeOffset(precision: 7)
+                    lastUpdate = p.DateTimeOffset(precision: 7),
+                    countToUpdate = p.Int(outParameter: true)
                 },
                 body: CreatePrepareToUpdateCatalogsBody());
 
@@ -31,7 +33,8 @@ namespace DataBase.EntitiesMigrations
                 p => new
                 {
                     login = p.String(maxLength: 30),
-                    lastUpdate = p.DateTimeOffset(precision: 7)
+                    lastUpdate = p.DateTimeOffset(precision: 7),
+                    countToUpdate = p.Int(outParameter: true)
                 },
                 body: CreatePrepareToUpdateDirectoriesBody());
 
@@ -40,7 +43,8 @@ namespace DataBase.EntitiesMigrations
                 p => new
                 {
                     login = p.String(maxLength: 30),
-                    lastUpdate = p.DateTimeOffset(precision: 7)
+                    lastUpdate = p.DateTimeOffset(precision: 7),
+                    countToUpdate = p.Int(outParameter: true)
                 },
                 body: CreatePrepareToUpdatePhotosBody());
 
@@ -49,9 +53,11 @@ namespace DataBase.EntitiesMigrations
                 p => new
                 {
                     login = p.String(maxLength: 30),
-                    lastUpdate = p.DateTimeOffset(precision: 7)
+                    lastUpdate = p.DateTimeOffset(precision: 7),
+                    countToUpdate = p.Int(outParameter: true)
                 },
                 body: CreatePrepareToUpdateProductDirectionsBody());
+
         }
 
         public override void Down()
@@ -74,7 +80,7 @@ namespace DataBase.EntitiesMigrations
             body.AppendLine("-- SET NOCOUNT ON added to prevent extra result sets from                                          ");
             body.AppendLine("-- interfering with SELECT statements.                                                             ");
             body.AppendLine("                                                                                                   ");
-            body.AppendLine("SET NOCOUNT ON;                                                                                    ");
+            body.AppendLine("--SET NOCOUNT ON;                                                                                  ");
             body.AppendLine("                                                                                                   ");
             body.AppendLine("-- BrandItemEntity = 1                                                                             ");
             body.AppendLine("-- CatalogItemEntity = 2                                                                           ");
@@ -84,7 +90,6 @@ namespace DataBase.EntitiesMigrations
             body.AppendLine("                                                                                                   ");
             body.AppendLine("declare @entityName int = 1;                                                                       ");
             body.AppendLine("declare @dateOfCreation datetimeoffset(7) = Sysdatetimeoffset();                                   ");
-            body.AppendLine("declare @countToUpdate bigint;                                                                     ");
             body.AppendLine("                                                                                                   ");
             body.AppendLine("INSERT INTO [dbo].[SendItemsEntities]                                                              ");
             body.AppendLine("([Login], [EntityId], [Brands].[EntityName], [Brands].[RequestDate], [Brands].[DateOfCreation])    ");
@@ -97,10 +102,10 @@ namespace DataBase.EntitiesMigrations
             body.AppendLine("                        [SendItem].[Login] = @login AND                                            ");
             body.AppendLine("                        [SendItem].[EntityName] = @entityName);                                    ");
             body.AppendLine("                                                                                                   ");
-            body.AppendLine("SELECT @countToUpdate = (SELECT COUNT(*)                                                           ");
-            body.AppendLine("                         FROM  [dbo].[SendItemsEntities]                                           ");
-            body.AppendLine("                         WHERE [Login] = @login AND                                                ");
-            body.AppendLine("                                         [EntityName] = @entityName);                              ");
+            body.AppendLine("SELECT @countToUpdate = COUNT(*)                                                                   ");
+            body.AppendLine("FROM  [dbo].[SendItemsEntities]                                                                    ");
+            body.AppendLine("WHERE [Login] = @login AND                                                                         ");
+            body.AppendLine("      [EntityName] = @entityName;                                                                  ");
             body.AppendLine("                                                                                                   ");
             body.AppendLine("RETURN (@countToUpdate);                                                                           ");
 
@@ -118,7 +123,7 @@ namespace DataBase.EntitiesMigrations
             body.AppendLine("-- SET NOCOUNT ON added to prevent extra result sets from                                             ");
             body.AppendLine("-- interfering with SELECT statements.                                                                ");
             body.AppendLine("                                                                                                      ");
-            body.AppendLine("SET NOCOUNT ON;                                                                                       ");
+            body.AppendLine("--SET NOCOUNT ON;                                                                                       ");
             body.AppendLine("                                                                                                      ");
             body.AppendLine("-- BrandItemEntity = 1                                                                                ");
             body.AppendLine("-- CatalogItemEntity = 2                                                                              ");
@@ -128,7 +133,6 @@ namespace DataBase.EntitiesMigrations
             body.AppendLine("                                                                                                      ");
             body.AppendLine("declare @entityName int = 2;                                                                          ");
             body.AppendLine("declare @dateOfCreation datetimeoffset(7) = Sysdatetimeoffset();                                      ");
-            body.AppendLine("declare @countToUpdate bigint;                                                                        ");
             body.AppendLine("                                                                                                      ");
             body.AppendLine("INSERT INTO [dbo].[SendItemsEntities]                                                                 ");
             body.AppendLine("([Login], [EntityId], [Catalogs].[EntityName], [Catalogs].[RequestDate], [Catalogs].[DateOfCreation]) ");
@@ -141,10 +145,10 @@ namespace DataBase.EntitiesMigrations
             body.AppendLine("                        [SendItem].[Login] = @login AND                                               ");
             body.AppendLine("                        [SendItem].[EntityName] = @entityName);                                       ");
             body.AppendLine("                                                                                                      ");
-            body.AppendLine("SELECT @countToUpdate = (SELECT COUNT(*)                                                              ");
-            body.AppendLine("                         FROM  [dbo].[SendItemsEntities]                                              ");
-            body.AppendLine("                         WHERE [Login] = @login AND                                                   ");
-            body.AppendLine("                                         [EntityName] = @entityName);                                 ");
+            body.AppendLine("SELECT @countToUpdate = COUNT(*)                                                                      ");
+            body.AppendLine("FROM  [dbo].[SendItemsEntities]                                                                       ");
+            body.AppendLine("WHERE [Login] = @login AND                                                                            ");
+            body.AppendLine("      [EntityName] = @entityName;                                                                     ");
             body.AppendLine("                                                                                                      ");
             body.AppendLine("RETURN (@countToUpdate);                                                                              ");
 
@@ -162,7 +166,7 @@ namespace DataBase.EntitiesMigrations
             body.AppendLine("-- SET NOCOUNT ON added to prevent extra result sets from                                                      ");
             body.AppendLine("-- interfering with SELECT statements.                                                                         ");
             body.AppendLine("                                                                                                               ");
-            body.AppendLine("SET NOCOUNT ON;                                                                                                ");
+            body.AppendLine("--SET NOCOUNT ON;                                                                                                ");
             body.AppendLine("                                                                                                               ");
             body.AppendLine("-- BrandItemEntity = 1                                                                                         ");
             body.AppendLine("-- CatalogItemEntity = 2                                                                                       ");
@@ -172,7 +176,6 @@ namespace DataBase.EntitiesMigrations
             body.AppendLine("                                                                                                               ");
             body.AppendLine("declare @entityName int = 3;                                                                                   ");
             body.AppendLine("declare @dateOfCreation datetimeoffset(7) = Sysdatetimeoffset();                                               ");
-            body.AppendLine("declare @countToUpdate bigint;                                                                                 ");
             body.AppendLine("                                                                                                               ");
             body.AppendLine("INSERT INTO [dbo].[SendItemsEntities]                                                                          ");
             body.AppendLine("([Login], [EntityId], [Directories].[EntityName], [Directories].[RequestDate], [Directories].[DateOfCreation]) ");
@@ -185,10 +188,10 @@ namespace DataBase.EntitiesMigrations
             body.AppendLine("                        [SendItem].[Login] = @login AND                                                        ");
             body.AppendLine("                        [SendItem].[EntityName] = @entityName);                                                ");
             body.AppendLine("                                                                                                               ");
-            body.AppendLine("SELECT @countToUpdate = (SELECT COUNT(*)                                                                       ");
-            body.AppendLine("                         FROM  [dbo].[SendItemsEntities]                                                       ");
-            body.AppendLine("                         WHERE [Login] = @login AND                                                            ");
-            body.AppendLine("                                         [EntityName] = @entityName);                                          ");
+            body.AppendLine("SELECT @countToUpdate = COUNT(*)                                                                               ");
+            body.AppendLine("FROM  [dbo].[SendItemsEntities]                                                                                ");
+            body.AppendLine("WHERE [Login] = @login AND                                                                                     ");
+            body.AppendLine("      [EntityName] = @entityName;                                                                              ");
             body.AppendLine("                                                                                                               ");
             body.AppendLine("RETURN (@countToUpdate);                                                                                       ");
 
@@ -206,7 +209,7 @@ namespace DataBase.EntitiesMigrations
             body.AppendLine("-- SET NOCOUNT ON added to prevent extra result sets from                                             ");
             body.AppendLine("-- interfering with SELECT statements.                                                                ");
             body.AppendLine("                                                                                                      ");
-            body.AppendLine("SET NOCOUNT ON;                                                                                       ");
+            body.AppendLine("--SET NOCOUNT ON;                                                                                       ");
             body.AppendLine("                                                                                                      ");
             body.AppendLine("-- BrandItemEntity = 1                                                                                ");
             body.AppendLine("-- CatalogItemEntity = 2                                                                              ");
@@ -216,7 +219,6 @@ namespace DataBase.EntitiesMigrations
             body.AppendLine("                                                                                                      ");
             body.AppendLine("declare @entityName int = 5;                                                                          ");
             body.AppendLine("declare @dateOfCreation datetimeoffset(7) = Sysdatetimeoffset();                                      ");
-            body.AppendLine("declare @countToUpdate bigint;                                                                        ");
             body.AppendLine("                                                                                                      ");
             body.AppendLine("INSERT INTO [dbo].[SendItemsEntities]                                                                 ");
             body.AppendLine("([Login], [EntityId], [Photos].[EntityName], [Photos].[RequestDate], [Photos].[DateOfCreation])       ");
@@ -229,10 +231,10 @@ namespace DataBase.EntitiesMigrations
             body.AppendLine("                        [SendItem].[Login] = @login AND                                               ");
             body.AppendLine("                        [SendItem].[EntityName] = @entityName);                                       ");
             body.AppendLine("                                                                                                      ");
-            body.AppendLine("SELECT @countToUpdate = (SELECT COUNT(*)                                                              ");
-            body.AppendLine("                         FROM  [dbo].[SendItemsEntities]                                              ");
-            body.AppendLine("                         WHERE [Login] = @login AND                                                   ");
-            body.AppendLine("                                         [EntityName] = @entityName);                                 ");
+            body.AppendLine("SELECT @countToUpdate = COUNT(*)                                                                      ");
+            body.AppendLine("FROM  [dbo].[SendItemsEntities]                                                                       ");
+            body.AppendLine("WHERE [Login] = @login AND                                                                            ");
+            body.AppendLine("      [EntityName] = @entityName;                                                                     ");
             body.AppendLine("                                                                                                      ");
             body.AppendLine("RETURN (@countToUpdate);                                                                              ");
 
@@ -250,7 +252,7 @@ namespace DataBase.EntitiesMigrations
             body.AppendLine("-- SET NOCOUNT ON added to prevent extra result sets from                                                                                       ");
             body.AppendLine("-- interfering with SELECT statements.                                                                                                          ");
             body.AppendLine("                                                                                                                                                ");
-            body.AppendLine("SET NOCOUNT ON;                                                                                                                                 ");
+            body.AppendLine("--SET NOCOUNT ON;                                                                                                                                 ");
             body.AppendLine("                                                                                                                                                ");
             body.AppendLine("-- BrandItemEntity = 1                                                                                                                          ");
             body.AppendLine("-- CatalogItemEntity = 2                                                                                                                        ");
@@ -260,7 +262,6 @@ namespace DataBase.EntitiesMigrations
             body.AppendLine("                                                                                                                                                ");
             body.AppendLine("declare @entityName int = 6;                                                                                                                    ");
             body.AppendLine("declare @dateOfCreation datetimeoffset(7) = Sysdatetimeoffset();                                                                                ");
-            body.AppendLine("declare @countToUpdate bigint;                                                                                                                  ");
             body.AppendLine("                                                                                                                                                ");
             body.AppendLine("INSERT INTO [dbo].[SendItemsEntities]                                                                                                           ");
             body.AppendLine("([Login], [EntityId], [ProductDirectionEntity].[EntityName], [ProductDirectionEntity].[RequestDate], [ProductDirectionEntity].[DateOfCreation]) ");
@@ -273,10 +274,10 @@ namespace DataBase.EntitiesMigrations
             body.AppendLine("                        [SendItem].[Login] = @login AND                                                                                         ");
             body.AppendLine("                        [SendItem].[EntityName] = @entityName);                                                                                 ");
             body.AppendLine("                                                                                                                                                ");
-            body.AppendLine("SELECT @countToUpdate = (SELECT COUNT(*)                                                                                                        ");
-            body.AppendLine("                         FROM  [dbo].[SendItemsEntities]                                                                                        ");
-            body.AppendLine("                         WHERE [Login] = @login AND                                                                                             ");
-            body.AppendLine("                                         [EntityName] = @entityName);                                                                           ");
+            body.AppendLine("SELECT @countToUpdate = COUNT(*)                                                                                                                ");
+            body.AppendLine("FROM  [dbo].[SendItemsEntities]                                                                                                                 ");
+            body.AppendLine("WHERE [Login] = @login AND                                                                                                                      ");
+            body.AppendLine("      [EntityName] = @entityName;                                                                                                               ");
             body.AppendLine("                                                                                                                                                ");
             body.AppendLine("RETURN (@countToUpdate);                                                                                                                        ");
 

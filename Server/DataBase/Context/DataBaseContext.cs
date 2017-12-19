@@ -47,7 +47,7 @@ namespace DataBase.Context
 
         public virtual DbSet<SendItemsEntity> SendItemsEntities { get; set; }
 
-        public virtual int PrepareToUpdateBrands(string login, DateTimeOffset? lastUpdate)
+        public virtual int PrepareToUpdateBrands(string login, Nullable<System.DateTimeOffset> lastUpdate)
         {
             var loginParameter = login != null ?
                 new ObjectParameter("login", login) :
@@ -55,13 +55,12 @@ namespace DataBase.Context
 
             var lastUpdateParameter = lastUpdate.HasValue ?
                 new ObjectParameter("lastUpdate", lastUpdate) :
-                new ObjectParameter("lastUpdate", typeof(DateTimeOffset));
+                new ObjectParameter("lastUpdate", typeof(System.DateTimeOffset));
 
-            return ((IObjectContextAdapter)this).ObjectContext
-                .ExecuteFunction("PrepareToUpdateBrands", loginParameter, lastUpdateParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PrepareToUpdateBrands", loginParameter, lastUpdateParameter);
         }
 
-        public virtual int PrepareToUpdateCatalogs(string login, DateTimeOffset? lastUpdate)
+        public virtual int PrepareToUpdateCatalogs(string login, Nullable<System.DateTimeOffset> lastUpdate)
         {
             var loginParameter = login != null ?
                 new ObjectParameter("login", login) :
@@ -69,13 +68,12 @@ namespace DataBase.Context
 
             var lastUpdateParameter = lastUpdate.HasValue ?
                 new ObjectParameter("lastUpdate", lastUpdate) :
-                new ObjectParameter("lastUpdate", typeof(DateTimeOffset));
+                new ObjectParameter("lastUpdate", typeof(System.DateTimeOffset));
 
-            return ((IObjectContextAdapter) this).ObjectContext
-                .ExecuteFunction("PrepareToUpdateCatalogs", loginParameter, lastUpdateParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PrepareToUpdateCatalogs", loginParameter, lastUpdateParameter);
         }
 
-        public virtual int PrepareToUpdateDirectories(string login, DateTimeOffset? lastUpdate)
+        public virtual int PrepareToUpdateDirectories(string login, Nullable<System.DateTimeOffset> lastUpdate)
         {
             var loginParameter = login != null ?
                 new ObjectParameter("login", login) :
@@ -83,13 +81,12 @@ namespace DataBase.Context
 
             var lastUpdateParameter = lastUpdate.HasValue ?
                 new ObjectParameter("lastUpdate", lastUpdate) :
-                new ObjectParameter("lastUpdate", typeof(DateTimeOffset));
+                new ObjectParameter("lastUpdate", typeof(System.DateTimeOffset));
 
-            return ((IObjectContextAdapter)this).ObjectContext
-                .ExecuteFunction("PrepareToUpdateCommodityDirections", loginParameter, lastUpdateParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PrepareToUpdateDirectories", loginParameter, lastUpdateParameter);
         }
 
-        public virtual int PrepareToUpdatePhotos(string login, DateTimeOffset? lastUpdate)
+        public virtual int PrepareToUpdatePhotos(string login, Nullable<System.DateTimeOffset> lastUpdate)
         {
             var loginParameter = login != null ?
                 new ObjectParameter("login", login) :
@@ -97,13 +94,12 @@ namespace DataBase.Context
 
             var lastUpdateParameter = lastUpdate.HasValue ?
                 new ObjectParameter("lastUpdate", lastUpdate) :
-                new ObjectParameter("lastUpdate", typeof(DateTimeOffset));
+                new ObjectParameter("lastUpdate", typeof(System.DateTimeOffset));
 
-            return ((IObjectContextAdapter)this).ObjectContext
-                .ExecuteFunction("PrepareToUpdatePhotos", loginParameter, lastUpdateParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PrepareToUpdatePhotos", loginParameter, lastUpdateParameter);
         }
 
-        public virtual int PrepareToUpdateProductDirections(string login, DateTimeOffset? lastUpdate)
+        public virtual int PrepareToUpdateProductDirections(string login, Nullable<System.DateTimeOffset> lastUpdate)
         {
             var loginParameter = login != null ?
                 new ObjectParameter("login", login) :
@@ -111,18 +107,19 @@ namespace DataBase.Context
 
             var lastUpdateParameter = lastUpdate.HasValue ?
                 new ObjectParameter("lastUpdate", lastUpdate) :
-                new ObjectParameter("lastUpdate", typeof(DateTimeOffset));
+                new ObjectParameter("lastUpdate", typeof(System.DateTimeOffset));
 
-            return ((IObjectContextAdapter)this).ObjectContext
-                .ExecuteFunction("PrepareToUpdateProductDirections", loginParameter, lastUpdateParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PrepareToUpdateProductDirections", loginParameter, lastUpdateParameter);
         }
+
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
 
             //SqlServerMigrationSqlGenerator
             //CreateProcedureOperation(modelBuilder)
-            
+
             //SqlCommand cmd = new SqlCommand();
             //cmd.CommandType =CommandType.StoredProcedure;
             //cmd.Parameters.AddWithValue();

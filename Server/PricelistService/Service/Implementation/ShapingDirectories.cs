@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using DataBase.Context.Entities;
 using DataBase.Context.Object;
@@ -55,11 +57,11 @@ namespace PricelistService.Service.Implementation
 
         public void ConfirmUpdate(string login, List<long> itemIds)
         {
-            IEnumerable<SendItemsEntity> brandsToDelete = dataService.Select<SendItemsEntity>()
+            List<SendItemsEntity> brandsToDelete = dataService.Select<SendItemsEntity>()
                 .Where(x => x.Login == login)
                 .Where(x => x.EntityName == EntityName.DirectoryEntity)
-                .Where(x => itemIds.Contains(x.Id))
-                .AsEnumerable();
+                .Where(x => itemIds.Contains(x.EntityId))
+                .ToList();
 
             dataService.DeleteEntities(brandsToDelete);
         }
@@ -105,54 +107,35 @@ namespace PricelistService.Service.Implementation
             return result;
         }
 
-        private void ShapingBrandsList(string login, DateTimeOffset lastUpdate)
-        {
-            if (!dataService.Select<SendItemsEntity>()
-                    .Any(x => x.RequestDate >= lastUpdate && 
-                              x.Login == login && 
-                              x.EntityName == EntityName.DirectoryEntity))
-            {
-                int count = 0;
-
-                List<long> directoryIds = dataService.Select<SendItemsEntity>()
-                    .Where(x => x.Login == login)
-                    .Where(x => x.EntityName == EntityName.DirectoryEntity)
-                    .Select(x => x.Id)
-                    .ToList();
-
-                dataService.Select<DirectoryEntity>()
-                    .Where(x => x.LastUpdated > lastUpdate)
-                    .Where(x => !directoryIds.Contains(x.Id))
-                    .ToList()
-                    .ForEach(
-                        x =>
-                        {
-                            SendItemsEntity item = new SendItemsEntity
-                            {
-                                Login = login,
-                                EntityName = EntityName.DirectoryEntity,
-                                EntityId = x.Id,
-                                RequestDate = lastUpdate
-                            };
-
-                            dataService.DataBaseContext.SendItemsEntities.Add(item);
-                            count++;
-
-                            if (count == 100)
-                            {
-                                dataService.DataBaseContext.SaveChanges();
-                                count = 0;
-                            }
-                        });
-
-                dataService.DataBaseContext.SaveChanges();
-            }
-        }
-
         public long PrepareToUpdate(string login, DateTimeOffset lastUpdate)
         {
-            ShapingBrandsList(login, lastUpdate);
-            return RemainderToUpdate(login);
+            var loginParametr = new SqlParameter();
+            loginParametr.ParameterName = "@login";
+            loginParametr.SqlDbType = SqlDbType.NVarChar;
+            loginParametr.Value = login;
+            loginParametr.Direction = ParameterDirection.Input;
+
+            var lastUpdateParametr = new SqlParameter();
+            lastUpdateParametr.ParameterName = "@lastUpdate";
+            lastUpdateParametr.SqlDbType = SqlDbType.DateTimeOffset;
+            lastUpdateParametr.Value = lastUpdate;
+            lastUpdateParametr.Direction = ParameterDirection.Input;
+
+            int count = 0;
+            var countToUpdateParametr = new SqlParameter();
+            countToUpdateParametr.ParameterName = "@countToUpdate";
+            countToUpdateParametr.SqlDbType = SqlDbType.BigInt;
+            countToUpdateParametr.Direction = ParameterDirection.Output;
+            countToUpdateParametr.Value = count;
+
+            dataService.DataBaseContext.Database
+                .ExecuteSqlCommand("PrepareToUpdateDirectories @login, @lastUpdate, @countToUpdate",
+                                   loginParametr, lastUpdateParametr, countToUpdateParametr);
+
+            count = dataService.DataBaseContext.SendItemsEntities
+                .Count(x => x.EntityName == EntityName.DirectoryEntity && x.Login == login);
+
+            return count;
         }
 
         private long RemainderToUpdate(string login)

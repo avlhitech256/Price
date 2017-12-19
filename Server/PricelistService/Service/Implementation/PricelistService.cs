@@ -72,7 +72,13 @@ namespace PricelistService.Service.Implementation
             return result;
         }
 
-        public CountInfo PrepareToUpdate(SecurityInfo securityInfo, DateTimeOffset lastUpdate, bool needLoadPhotos)
+        public CountInfo PrepareToUpdate(SecurityInfo securityInfo, 
+                                         DateTimeOffset lastUpdateBrands,
+                                         DateTimeOffset lastUpdateCatalogs,
+                                         DateTimeOffset lastUpdateDirectories,
+                                         DateTimeOffset lastUpdateProductDirections,
+                                         DateTimeOffset lastUpdatePhotos,
+                                         bool needLoadPhotos)
         {
             CountInfo result = null;
 
@@ -87,11 +93,11 @@ namespace PricelistService.Service.Implementation
 
                 result = new CountInfo
                 {
-                    CountBrands = shapingBrands.PrepareToUpdate(securityInfo.Login, lastUpdate),
-                    CountCatalogs = shapingCatalogs.PrepareToUpdate(securityInfo.Login, lastUpdate),
-                    CountDirectories = shapingDirectories.PrepareToUpdate(securityInfo.Login, lastUpdate),
-                    CountProductDirections = shapingProductDirections.PrepareToUpdate(securityInfo.Login, lastUpdate),
-                    CountPhotos = needLoadPhotos ? shapingPhotos.PrepareToUpdate(securityInfo.Login, lastUpdate) : 0,
+                    CountBrands = shapingBrands.PrepareToUpdate(securityInfo.Login, lastUpdateBrands),
+                    CountCatalogs = 0,//shapingCatalogs.PrepareToUpdate(securityInfo.Login, lastUpdateCatalogs),
+                    CountDirectories = 0,//shapingDirectories.PrepareToUpdate(securityInfo.Login, lastUpdateDirectories),
+                    CountProductDirections = 0,//shapingProductDirections.PrepareToUpdate(securityInfo.Login, lastUpdateProductDirections),
+                    CountPhotos = 0,//needLoadPhotos ? shapingPhotos.PrepareToUpdate(securityInfo.Login, lastUpdatePhotos) : 0,
                     IsAuthorized = true
                 };
             }

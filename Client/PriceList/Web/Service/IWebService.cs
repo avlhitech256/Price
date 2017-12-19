@@ -20,7 +20,12 @@ namespace Web.Service
 
         Catalogs GetCatalogs(DateTimeOffset lastUpdate);
 
-        CountInfo PrepareToUpdate(DateTimeOffset lastUpdate, bool needLoadPhotos);
+        CountInfo PrepareToUpdate(DateTimeOffset lastUpdateBrands,
+                                  DateTimeOffset lastUpdateCatalogs,
+                                  DateTimeOffset lastUpdateDirectories,
+                                  DateTimeOffset lastUpdateProductDirections,
+                                  DateTimeOffset lastUpdatePhotos,
+                                  bool needLoadPhotos);
 
         DirectoryInfo GetDirectoryInfo(long id);
 

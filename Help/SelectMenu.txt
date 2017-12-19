@@ -1,5 +1,0 @@
-                    //FocusManager.SetFocusedElement(MainGrid, menuItem);
-                    //menuItem.Focus();
-                    //menuItem.IsChecked = true;
-                    //menuItem.RaiseEvent(new MouseButtonEventArgs(MouseUpEvent));
-                    //menuItem.RaiseEvent(new RoutedEventArgs(MenuItem.ClickEvent));

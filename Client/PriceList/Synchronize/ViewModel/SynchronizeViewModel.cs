@@ -29,6 +29,11 @@ namespace Synchronize.ViewModel
         private readonly ILoadService loadService;
         private string brandLabel;
         private bool canDoSynchronize;
+        private DateTimeOffset lastUpdateBrands;
+        private DateTimeOffset lastUpdateCatalogs;
+        private DateTimeOffset lastUpdateDirectories;
+        private DateTimeOffset lastUpdateProductDirections;
+        private DateTimeOffset lastUpdatePhotos;
 
         public SynchronizeViewModel(IDomainContext domainContext)
         {
@@ -123,11 +128,6 @@ namespace Synchronize.ViewModel
                 {
                     maxBrands = value;
                     OnPropertyChanged();
-
-                    if (maxBrands > 0)
-                    {
-                        StepLoadBrandInfo();
-                    }
                 }
             }
         }
@@ -158,8 +158,8 @@ namespace Synchronize.ViewModel
             Application.Current.Dispatcher.Invoke(() =>
             {
                 loadService.DownLoadBrandItem(brandInfo);
-                Message = Message + Environment.NewLine +
-                    $"[{DateTimeOffset.Now:yyyy'.'MM'.'dd HH':'mm':'ss fffffff}] - Добавлен бренд: \"{brandInfo.Name}\"";
+                //Message = Message + Environment.NewLine +
+                //    $"[{DateTimeOffset.Now:yyyy'.'MM'.'dd HH':'mm':'ss fffffff}] - Добавлен бренд: \"{brandInfo.Name}\"";
                 ValueBrands++;
                 SetBrandsLabel();
                 
@@ -183,11 +183,6 @@ namespace Synchronize.ViewModel
                 {
                     valueBrands = value;
                     OnPropertyChanged();
-
-                    if (value < MaxBrands)
-                    {
-                        StepLoadBrandInfo();
-                    }
                 }
             }
         }
@@ -220,31 +215,75 @@ namespace Synchronize.ViewModel
         {
             canDoSynchronize = false;
             SynchronizeCommand.RiseCanExecute();
-            //DateTimeOffset date = DataService.GetLastUpdate();
-            //CountInfo countInfo = webService.PrepareToUpdate(date, NeedPhopos);
+            lastUpdateBrands = DataService.DataBaseContext.BrandItemEntities.Any()
+                ? DataService.DataBaseContext.BrandItemEntities.Select(x => x.LastUpdated).Max()
+                : DateTimeOffset.MinValue;
+            lastUpdateCatalogs = DataService.DataBaseContext.CatalogItemEntities.Any()
+                ? DataService.DataBaseContext.CatalogItemEntities.Select(x => x.LastUpdated).Max()
+                : DateTimeOffset.MinValue;
+            lastUpdateDirectories = DataService.DataBaseContext.DirectoryEntities.Any()
+                ? DataService.DataBaseContext.DirectoryEntities.Select(x => x.LastUpdated).Max()
+                : DateTimeOffset.MinValue;
+            lastUpdateProductDirections = DataService.DataBaseContext.ProductDirectionEntities.Any()
+                ? DataService.DataBaseContext.ProductDirectionEntities.Select(x => x.LastUpdated).Max()
+                : DateTimeOffset.MinValue;
+            lastUpdatePhotos = DataService.DataBaseContext.PhotoItemEntities.Any()
+                ? DataService.DataBaseContext.PhotoItemEntities.Select(x => x.LastUpdated).Max()
+                : DateTimeOffset.MinValue;
+
+            CountInfo countInfo = webService.PrepareToUpdate(lastUpdateBrands, 
+                                                             lastUpdateCatalogs, 
+                                                             lastUpdateDirectories,
+                                                             lastUpdateProductDirections, 
+                                                             lastUpdatePhotos, false);
+
             ValueBrands = 0;
-            MaxBrands = 572;//countInfo.CountBrands;
-            //bool isNotEnd = true;
-            //do
-            //{
-            //    Brands brands = webService.GetBrands(date);
-            //    isNotEnd = brands.Count <= brands.Items.Length;
-            //    loadService.DownLoadBrands(brands);
-            //    ValueBrands += brands.Items.Length;
-            //} while (isNotEnd);
-
-            //for (long i = 1; i < 572; i++)
-            //{
-            //    BrandInfo brandInfo = webService.GetBrandInfo(i);
-            //    Message = Message + Environment.NewLine +
-            //              $"[{DateTimeOffset.Now:yyyy'.'MM'.'dd HH':'mm':'ss fffffff}] - Добавлен бренд: \"{brandInfo.Name}\"";
-            //    loadService.DownLoadBrandItem(brandInfo);
-            //}
-
-
-            //canDoSynchronize = true;
-            //SynchronizeCommand.RiseCanExecute();
+            MaxBrands = countInfo.CountBrands;
+            Updates();
         }
+
+        private void Updates()
+        {
+            if (Math.Abs(ValueBrands - MaxBrands) > double.Epsilon)
+            {
+                UpdateBrands(lastUpdateBrands);
+            }
+            else
+            {
+                canDoSynchronize = true;
+                SynchronizeCommand.RiseCanExecute();
+            }
+        }
+
+        private void UpdateBrands(DateTimeOffset lastUpdate)
+        {
+            SetBrandsLabel();
+            AsyncOperationService.PerformAsyncOperation(AsyncOperationType.LoadFromWeb,
+                                                        LoadBrands,
+                                                        lastUpdate,
+                                                        SaveBrandsToDatabase);
+
+        }
+
+        private void SaveBrandsToDatabase(Exception e, int countUpdated)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                ValueBrands += countUpdated;
+                SetBrandsLabel();
+                Updates();
+            });
+        }
+
+        private int LoadBrands(DateTimeOffset lastUpdate)
+        {
+            SetBrandsLabel();
+            Brands brands = webService.GetBrands(lastUpdate);
+            loadService.DownLoadBrands(brands);
+            webService.ConfirmUpdateBrands(brands.Items.Select(x => x.Id));
+            return brands.Items.Count();
+        }
+
 
         //private void DoSynchronize(object obj)
         //{

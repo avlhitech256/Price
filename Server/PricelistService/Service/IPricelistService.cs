@@ -19,7 +19,13 @@ namespace PricelistService.Service
         bool ChangePasswodr(SecurityInfo securityInfo, string newPassword);
         
         [OperationContract]
-        CountInfo PrepareToUpdate(SecurityInfo securityInfo, DateTimeOffset lastUpdate, bool needLoadPhotos);
+        CountInfo PrepareToUpdate(SecurityInfo securityInfo,
+                                  DateTimeOffset lastUpdateBrands,
+                                  DateTimeOffset lastUpdateCatalogs,
+                                  DateTimeOffset lastUpdateDirectories,
+                                  DateTimeOffset lastUpdateProductDirections,
+                                  DateTimeOffset lastUpdatePhotos,
+                                  bool needLoadPhotos);
 
         [OperationContract]
         BrandInfo GetBrand(SecurityInfo securityInfo, long id);

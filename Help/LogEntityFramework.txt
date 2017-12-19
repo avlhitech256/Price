@@ -1,9 +1,0 @@
-context.Database.Log = (s => System.Diagnostics.Debug.WriteLine(s));
-
-
-или
-
-// Создаем экземпляр класса контекста 
-    SampleContext context = new SampleContext();
-
-    context.Database.Log = (s => Console.WriteLine(s));

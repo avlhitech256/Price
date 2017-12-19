@@ -6,7 +6,7 @@ namespace PricelistService.Service
 {
     public interface IShapingBrands
     {
-        long PrepareToUpdate(string login, DateTimeOffset lastUpdate);
+        int PrepareToUpdate(string login, DateTimeOffset lastUpdate);
 
         BrandInfo GetItem(long id);
 

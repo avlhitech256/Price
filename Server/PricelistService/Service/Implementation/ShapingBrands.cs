@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
+using System.Text;
 using DataBase.Context.Entities;
 using DataBase.Context.Object;
 using DataBase.Service;
@@ -57,11 +60,11 @@ namespace PricelistService.Service.Implementation
 
         public void ConfirmUpdate(string login, List<long> itemIds)
         {
-            IEnumerable<SendItemsEntity> brandsToDelete = dataService.Select<SendItemsEntity>()
+            List<SendItemsEntity> brandsToDelete = dataService.Select<SendItemsEntity>()
                 .Where(x => x.Login == login)
                 .Where(x => x.EntityName == EntityName.BrandItemEntity)
-                .Where(x => itemIds.Contains(x.Id))
-                .AsEnumerable();
+                .Where(x => itemIds.Contains(x.EntityId))
+                .ToList();
             dataService.DeleteEntities(brandsToDelete);
         }
 
@@ -104,53 +107,36 @@ namespace PricelistService.Service.Implementation
             return result;
         }
 
-        private void ShapingBrandsList(string login, DateTimeOffset lastUpdate)
+        public int PrepareToUpdate(string login, DateTimeOffset lastUpdate)
         {
-            if (!dataService.Select<SendItemsEntity>()
-                    .Any(x => x.RequestDate >= lastUpdate &&
-                              x.Login == login &&
-                              x.EntityName == EntityName.BrandItemEntity))
-            {
-                int count = 0;
-                List<long> brandIds = dataService.Select<SendItemsEntity>()
-                    .Where(x => x.Login == login)
-                    .Where(x => x.EntityName == EntityName.BrandItemEntity)
-                    .Select(x => x.Id)
-                    .ToList();
+            var loginParametr = new SqlParameter();
+            loginParametr.ParameterName = "@login";
+            loginParametr.SqlDbType = SqlDbType.NVarChar;
+            loginParametr.Value = login;
+            loginParametr.Direction = ParameterDirection.Input;
 
-                dataService.Select<BrandItemEntity>()
-                    .Where(x => x.LastUpdated > lastUpdate)
-                    .Where(x => !brandIds.Contains(x.Id))
-                    .ToList()
-                    .ForEach(
-                        x =>
-                        {
-                            SendItemsEntity item = new SendItemsEntity
-                            {
-                                Login = login,
-                                EntityName = EntityName.BrandItemEntity,
-                                EntityId = x.Id,
-                                RequestDate = lastUpdate
-                            };
+            var lastUpdateParametr = new SqlParameter();
+            lastUpdateParametr.ParameterName = "@lastUpdate";
+            lastUpdateParametr.SqlDbType = SqlDbType.DateTimeOffset;
+            lastUpdateParametr.Value = lastUpdate;
+            lastUpdateParametr.Direction = ParameterDirection.Input;
 
-                            dataService.DataBaseContext.SendItemsEntities.Add(item);
-                            count++;
+            int count = 0;
+            var countToUpdateParametr = new SqlParameter();
+            countToUpdateParametr.ParameterName = "@countToUpdate";
+            countToUpdateParametr.SqlDbType = SqlDbType.BigInt;
+            countToUpdateParametr.Direction = ParameterDirection.Output;
+            countToUpdateParametr.Value = count;
 
-                            if (count == 100)
-                            {
-                                dataService.DataBaseContext.SaveChanges();
-                                count = 0;
-                            }
-                        });
+            dataService.DataBaseContext.Database
+                .ExecuteSqlCommand("PrepareToUpdateBrands @login, @lastUpdate, @countToUpdate", 
+                                   loginParametr, lastUpdateParametr, countToUpdateParametr);
 
-                dataService.DataBaseContext.SaveChanges();
-            }
-        }
+            count = dataService.DataBaseContext.SendItemsEntities
+                .Count(x => x.EntityName == EntityName.BrandItemEntity && x.Login == login);
 
-        public long PrepareToUpdate(string login, DateTimeOffset lastUpdate)
-        {
-            ShapingBrandsList(login, lastUpdate);
-            return RemainderToUpdate(login);
+            return count;
+
         }
 
         private long RemainderToUpdate(string login)

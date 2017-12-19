@@ -149,14 +149,25 @@ namespace Web.Service.Implementation
             return catalogs;
         }
 
-        public CountInfo PrepareToUpdate(DateTimeOffset lastUpdate, bool needLoadPhotos)
+        public CountInfo PrepareToUpdate(DateTimeOffset lastUpdateBrands, 
+                                         DateTimeOffset lastUpdateCatalogs, 
+                                         DateTimeOffset lastUpdateDirectories, 
+                                         DateTimeOffset lastUpdateProductDirections, 
+                                         DateTimeOffset lastUpdatePhotos, 
+                                         bool needLoadPhotos)
         {
             CountInfo countInfo;
 
             using (PricelistServiceClient webService = GetWebService())
             {
                 SecurityInfo securityInfo = CreateSecurityInfo();
-                countInfo = webService.PrepareToUpdate(securityInfo, lastUpdate, needLoadPhotos);
+                countInfo = webService.PrepareToUpdate(securityInfo, 
+                                                       lastUpdateBrands, 
+                                                       lastUpdateCatalogs, 
+                                                       lastUpdateDirectories, 
+                                                       lastUpdateProductDirections, 
+                                                       lastUpdatePhotos, 
+                                                       needLoadPhotos); 
                 webService.Close();
             }
 
