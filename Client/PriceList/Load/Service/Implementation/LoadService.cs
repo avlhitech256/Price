@@ -14,6 +14,8 @@ namespace Load.Service.Implementation
 
         private readonly IDataService dataService;
         private readonly IWebService webService;
+        private readonly List<DirectoryInfo> cacheDirectoryInfo;
+        private readonly List<DirectoryEntity> cacheDirectoryEntity;
 
         #endregion
 
@@ -23,6 +25,8 @@ namespace Load.Service.Implementation
         {
             this.dataService = dataService;
             this.webService = webService;
+            cacheDirectoryInfo = new List<DirectoryInfo>();
+            cacheDirectoryEntity = new List<DirectoryEntity>();
         }
 
         #endregion
@@ -31,6 +35,12 @@ namespace Load.Service.Implementation
         #endregion
 
         #region Methods
+
+        public void Init()
+        {
+            cacheDirectoryInfo.Clear();
+            cacheDirectoryEntity.Clear();
+        }
 
         #region Brends
 
@@ -160,7 +170,7 @@ namespace Load.Service.Implementation
         private CatalogItemEntity Create(CatalogInfo catalogInfo)
         {
             BrandItemEntity brandItem = GetBrandWithLoad(catalogInfo.BrandId);
-            DirectoryEntity directory = GetDirectoryWithLoad(catalogInfo.DirectoryId);
+            DirectoryEntity directory = GetDirectoryWithLoad(catalogInfo.DirectoryId, null);
             List<PhotoItemEntity> photos = GetPhotosWithLoad(catalogInfo.Photos);
             CatalogItemEntity entity = LoadAssembler.Assemble(catalogInfo, brandItem, photos, directory);
             return entity;
@@ -169,7 +179,7 @@ namespace Load.Service.Implementation
         private void Update(CatalogItemEntity entity, CatalogInfo catalogInfo)
         {
             BrandItemEntity brandItem = GetBrandWithLoad(catalogInfo.BrandId);
-            DirectoryEntity directory = GetDirectoryWithLoad(catalogInfo.DirectoryId);
+            DirectoryEntity directory = GetDirectoryWithLoad(catalogInfo.DirectoryId, null);
             List<PhotoItemEntity> photos = GetPhotosWithLoad(catalogInfo.Photos);
 
             entity.Id = catalogInfo.Id;
@@ -268,22 +278,49 @@ namespace Load.Service.Implementation
 
         private DirectoryEntity GetDirectory(long id)
         {
-            DirectoryEntity directory = dataService.DataBaseContext.DirectoryEntities.Find(id);
-            return directory;
-        }
-
-        private DirectoryEntity GetDirectoryWithLoad(long id)
-        {
-            DirectoryEntity directory = GetDirectory(id);
+            DirectoryEntity directory = cacheDirectoryEntity.FirstOrDefault(x => x.Id == id);
 
             if (directory == null)
             {
-                DirectoryInfo directoryInfo = webService.GetDirectoryInfo(id);
+                directory = dataService.DataBaseContext.DirectoryEntities.Find(id);
+            }
+
+            return directory;
+        }
+
+        private DirectoryEntity GetDirectoryWithLoad(long? id, Directories directories)
+        {
+            DirectoryEntity directory = id.HasValue ? GetDirectory(id.Value) : null;
+
+            if (id.HasValue && directory == null)
+            {
+                DirectoryInfo directoryInfo = null;
+
+                if (directories?.Items != null && directories.Items.Any())
+                {
+                    directoryInfo = directories.Items.FirstOrDefault(x => x.Id == id.Value);
+                }
+
+                if (directoryInfo == null)
+                {
+                    directoryInfo = cacheDirectoryInfo.FirstOrDefault(x => x.Id == id.Value);
+
+                }
+
+                if (directoryInfo == null)
+                {
+                    directoryInfo = webService.GetDirectoryInfo(id.Value);
+
+                    if (directoryInfo != null)
+                    {
+                        cacheDirectoryInfo.Add(directoryInfo);
+                    }
+                }
 
                 if (directoryInfo != null)
                 {
-                    DownLoadDirectoryItem(directoryInfo);
-                    directory = GetDirectory(id);
+                    DownLoadDirectoryItem(directoryInfo, directories);
+                    directory = GetDirectory(id.Value);
 
                     if (directory != null)
                     {
@@ -295,35 +332,35 @@ namespace Load.Service.Implementation
             return directory;
         }
 
-        private DirectoryEntity Create(DirectoryInfo directoryInfo)
+        private DirectoryEntity Create(DirectoryInfo directoryInfo, Directories directories)
         {
-            DirectoryEntity parent = GetDirectoryWithLoad(directoryInfo.Parent);
-            List<DirectoryEntity> subDirectories = new List<DirectoryEntity>();
+            DirectoryEntity directory = LoadAssembler.Assemble(directoryInfo, null, new List<DirectoryEntity>());
+            cacheDirectoryEntity.Add(directory);
+            directory.Parent = GetDirectoryWithLoad(directoryInfo.Parent, directories);
 
             directoryInfo.SubDirectoryIds.ToList().ForEach(
                 x =>
                 {
-                    DirectoryEntity subDirectory = GetDirectoryWithLoad(x);
+                    DirectoryEntity subDirectory = GetDirectoryWithLoad(x, directories);
 
                     if (subDirectory != null)
                     {
-                        subDirectories.Add(subDirectory);
+                        directory.SubDirectory.Add(subDirectory);
                     }
                 });
 
-            DirectoryEntity directory = LoadAssembler.Assemble(directoryInfo, parent, subDirectories);
             return directory;
         }
 
-        private void Update(DirectoryEntity entity, DirectoryInfo directoryInfo)
+        private void Update(DirectoryEntity entity, DirectoryInfo directoryInfo, Directories directories)
         {
-            DirectoryEntity parent = GetDirectoryWithLoad(directoryInfo.Parent);
+            DirectoryEntity parent = GetDirectoryWithLoad(directoryInfo.Parent, directories);
             List<DirectoryEntity> subDirectories = new List<DirectoryEntity>();
 
             directoryInfo.SubDirectoryIds.ToList().ForEach(
                 x =>
                 {
-                    DirectoryEntity subDirectory = GetDirectoryWithLoad(x);
+                    DirectoryEntity subDirectory = GetDirectoryWithLoad(x, directories);
 
                     if (subDirectory != null)
                     {
@@ -342,17 +379,22 @@ namespace Load.Service.Implementation
 
         public void DownLoadDirectoryItem(DirectoryInfo directoryInfo)
         {
+            DownLoadDirectoryItem(directoryInfo, null);
+        }
+
+        private void DownLoadDirectoryItem(DirectoryInfo directoryInfo, Directories directories)
+        {
             DirectoryEntity oldDirectory = GetDirectory(directoryInfo.Id);
 
             if (oldDirectory != null)
             {
-                Update(oldDirectory, directoryInfo);
+                Update(oldDirectory, directoryInfo, directories);
                 dataService.DataBaseContext.SaveChanges();
                 webService.ConfirmUpdateDirectories(new[] { oldDirectory.Id });
             }
             else
             {
-                DirectoryEntity entity = Create(directoryInfo);
+                DirectoryEntity entity = Create(directoryInfo, directories);
                 dataService.Insert(entity);
                 entity = GetDirectory(directoryInfo.Id);
 
@@ -377,11 +419,11 @@ namespace Load.Service.Implementation
 
                         if (oldDirectoryItem != null)
                         {
-                            Update(oldDirectoryItem, x);
+                            Update(oldDirectoryItem, x, directories);
                         }
                         else
                         {
-                            entities.Add(Create(x));
+                            entities.Add(Create(x, directories));
                             needToSave = false;
                         }
 
@@ -572,7 +614,7 @@ namespace Load.Service.Implementation
 
         private ProductDirectionEntity Create(ProductDirectionInfo brandInfo)
         {
-            DirectoryEntity directory = GetDirectoryWithLoad(brandInfo.Id);
+            DirectoryEntity directory = GetDirectoryWithLoad(brandInfo.Id, null);
             ProductDirectionEntity brand = LoadAssembler.Assemble(brandInfo, directory);
             return brand;
         }
@@ -580,7 +622,7 @@ namespace Load.Service.Implementation
         private void Update(ProductDirectionEntity brandItem, ProductDirectionInfo brandInfo)
         {
             brandItem.Direction = LoadAssembler.Convert(brandInfo.Direction);
-            brandItem.Directory = GetDirectoryWithLoad(brandInfo.Id);
+            brandItem.Directory = GetDirectoryWithLoad(brandInfo.Id, null);
             brandItem.DateOfCreation = brandInfo.DateOfCreation;
             brandItem.ForceUpdated = brandInfo.ForceUpdated;
             brandItem.LastUpdated = brandInfo.LastUpdated;

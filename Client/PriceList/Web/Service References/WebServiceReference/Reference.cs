@@ -1304,7 +1304,7 @@ namespace Web.WebServiceReference {
         private string NameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private long ParentField;
+        private System.Nullable<long> ParentField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private long[] SubDirectoryIdsField;
@@ -1424,7 +1424,7 @@ namespace Web.WebServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public long Parent {
+        public System.Nullable<long> Parent {
             get {
                 return this.ParentField;
             }

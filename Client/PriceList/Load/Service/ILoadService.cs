@@ -5,6 +5,8 @@ namespace Load.Service
 {
     public interface ILoadService
     {
+        void Init();
+
         void DownLoadBrandItem(BrandInfo brandInfo);
 
         void DownLoadBrands(Brands brands);

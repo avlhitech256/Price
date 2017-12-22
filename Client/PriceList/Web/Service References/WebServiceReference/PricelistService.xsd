@@ -129,7 +129,7 @@
       <xs:element minOccurs="0" name="IsAuthorized" type="xs:boolean" />
       <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="LastUpdated" type="q19:DateTimeOffset" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Parent" type="xs:long" />
+      <xs:element minOccurs="0" name="Parent" nillable="true" type="xs:long" />
       <xs:element xmlns:q20="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="SubDirectoryIds" nillable="true" type="q20:ArrayOflong" />
     </xs:sequence>
   </xs:complexType>

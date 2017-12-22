@@ -121,24 +121,30 @@ namespace PricelistService.Service.Implementation
 
         public long PrepareToUpdate(string login, DateTimeOffset lastUpdate)
         {
-            var loginParametr = new SqlParameter();
-            loginParametr.ParameterName = "@login";
-            loginParametr.SqlDbType = SqlDbType.NVarChar;
-            loginParametr.Value = login;
-            loginParametr.Direction = ParameterDirection.Input;
+            var loginParametr = new SqlParameter
+            {
+                ParameterName = "@login",
+                SqlDbType = SqlDbType.NVarChar,
+                Value = login,
+                Direction = ParameterDirection.Input
+            };
 
-            var lastUpdateParametr = new SqlParameter();
-            lastUpdateParametr.ParameterName = "@lastUpdate";
-            lastUpdateParametr.SqlDbType = SqlDbType.DateTimeOffset;
-            lastUpdateParametr.Value = lastUpdate;
-            lastUpdateParametr.Direction = ParameterDirection.Input;
+            var lastUpdateParametr = new SqlParameter
+            {
+                ParameterName = "@lastUpdate",
+                SqlDbType = SqlDbType.DateTimeOffset,
+                Value = lastUpdate,
+                Direction = ParameterDirection.Input
+            };
 
             int count = 0;
-            var countToUpdateParametr = new SqlParameter();
-            countToUpdateParametr.ParameterName = "@countToUpdate";
-            countToUpdateParametr.SqlDbType = SqlDbType.BigInt;
-            countToUpdateParametr.Direction = ParameterDirection.Output;
-            countToUpdateParametr.Value = count;
+            var countToUpdateParametr = new SqlParameter
+            {
+                ParameterName = "@countToUpdate",
+                SqlDbType = SqlDbType.BigInt,
+                Direction = ParameterDirection.Output,
+                Value = count
+            };
 
             dataService.DataBaseContext.Database
                 .ExecuteSqlCommand("PrepareToUpdateCatalogs @login, @lastUpdate, @countToUpdate",

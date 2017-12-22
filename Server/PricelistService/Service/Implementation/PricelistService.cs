@@ -94,10 +94,10 @@ namespace PricelistService.Service.Implementation
                 result = new CountInfo
                 {
                     CountBrands = shapingBrands.PrepareToUpdate(securityInfo.Login, lastUpdateBrands),
-                    CountCatalogs = 0,//shapingCatalogs.PrepareToUpdate(securityInfo.Login, lastUpdateCatalogs),
-                    CountDirectories = 0,//shapingDirectories.PrepareToUpdate(securityInfo.Login, lastUpdateDirectories),
-                    CountProductDirections = 0,//shapingProductDirections.PrepareToUpdate(securityInfo.Login, lastUpdateProductDirections),
-                    CountPhotos = 0,//needLoadPhotos ? shapingPhotos.PrepareToUpdate(securityInfo.Login, lastUpdatePhotos) : 0,
+                    CountCatalogs = shapingCatalogs.PrepareToUpdate(securityInfo.Login, lastUpdateCatalogs),
+                    CountDirectories = shapingDirectories.PrepareToUpdate(securityInfo.Login, lastUpdateDirectories),
+                    CountProductDirections = shapingProductDirections.PrepareToUpdate(securityInfo.Login, lastUpdateProductDirections),
+                    CountPhotos = needLoadPhotos ? shapingPhotos.PrepareToUpdate(securityInfo.Login, lastUpdatePhotos) : 0,
                     IsAuthorized = true
                 };
             }

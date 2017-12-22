@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
 using DataBase.Context.Entities;
@@ -77,6 +78,9 @@ namespace PricelistService.Service.Implementation
 
             List<DirectoryInfo> result =
                 dataService.Select<DirectoryEntity>()
+                    .Include(x => x.Parent)
+                    .Include(x => x.SubDirectory)
+                    .Include(x => x.CatalogItems)
                     .Where(x => catalogIds.Contains(x.Id))
                     .Select(Assemble)
                     .ToList();
@@ -95,9 +99,9 @@ namespace PricelistService.Service.Implementation
                     Id = item.Id,
                     Code = item.Code,
                     Name = item.Name,
-                    Parent = item.Parent.Id,
-                    SubDirectoryIds = item.SubDirectory.Select(x => x.Id).ToList(),
-                    CatalogId = item.CatalogItems.Select(x => x.Id).ToList(),
+                    Parent = item.Parent?.Id,
+                    SubDirectoryIds = item.SubDirectory?.Select(x => x.Id).ToList() ?? new List<long>(),
+                    CatalogId = item.CatalogItems?.Select(x => x.Id).ToList() ?? new List<long>(),
                     DateOfCreation = item.DateOfCreation,
                     ForceUpdated = item.ForceUpdated,
                     LastUpdated = item.LastUpdated

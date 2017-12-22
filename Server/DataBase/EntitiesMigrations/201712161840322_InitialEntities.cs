@@ -94,7 +94,7 @@ namespace DataBase.EntitiesMigrations
             body.AppendLine("INSERT INTO [dbo].[SendItemsEntities]                                                              ");
             body.AppendLine("([Login], [EntityId], [Brands].[EntityName], [Brands].[RequestDate], [Brands].[DateOfCreation])    ");
             body.AppendLine("SELECT @login, [Id], @entityName, @lastUpdate, @dateOfCreation                                     ");
-            body.AppendLine("FROM  [dbo].[BrandItemEntities] AS [Brands]                                                        ");
+            body.AppendLine("FROM [dbo].[BrandItemEntities] AS [Brands]                                                        ");
             body.AppendLine("WHERE [Brands].[LastUpdated] > @lastUpdate AND                                                     ");
             body.AppendLine("      NOT EXISTS (SELECT *                                                                         ");
             body.AppendLine("                  FROM  [dbo].[SendItemsEntities] AS [SendItem]                                    ");
@@ -137,7 +137,7 @@ namespace DataBase.EntitiesMigrations
             body.AppendLine("INSERT INTO [dbo].[SendItemsEntities]                                                                 ");
             body.AppendLine("([Login], [EntityId], [Catalogs].[EntityName], [Catalogs].[RequestDate], [Catalogs].[DateOfCreation]) ");
             body.AppendLine("SELECT @login, [Id], @entityName, @lastUpdate, @dateOfCreation                                        ");
-            body.AppendLine("FROM  [dbo].[CatalogItemEntities] AS [Catalogs]                                                       ");
+            body.AppendLine("FROM [dbo].[CatalogItemEntities] AS [Catalogs]                                                       ");
             body.AppendLine("WHERE [Catalogs].[LastUpdated] > @lastUpdate AND                                                      ");
             body.AppendLine("      NOT EXISTS (SELECT *                                                                            ");
             body.AppendLine("                  FROM  [dbo].[SendItemsEntities] AS [SendItem]                                       ");
@@ -180,7 +180,7 @@ namespace DataBase.EntitiesMigrations
             body.AppendLine("INSERT INTO [dbo].[SendItemsEntities]                                                                          ");
             body.AppendLine("([Login], [EntityId], [Directories].[EntityName], [Directories].[RequestDate], [Directories].[DateOfCreation]) ");
             body.AppendLine("SELECT @login, [Id], @entityName, @lastUpdate, @dateOfCreation                                                 ");
-            body.AppendLine("FROM  [dbo].[DirectoryEntity] AS [Directories]                                                                 ");
+            body.AppendLine("FROM [dbo].[DirectoryEntities] AS [Directories]                                                                ");
             body.AppendLine("WHERE [Directories].[LastUpdated] > @lastUpdate AND                                                            ");
             body.AppendLine("      NOT EXISTS (SELECT *                                                                                     ");
             body.AppendLine("                  FROM  [dbo].[SendItemsEntities] AS [SendItem]                                                ");
@@ -223,7 +223,7 @@ namespace DataBase.EntitiesMigrations
             body.AppendLine("INSERT INTO [dbo].[SendItemsEntities]                                                                 ");
             body.AppendLine("([Login], [EntityId], [Photos].[EntityName], [Photos].[RequestDate], [Photos].[DateOfCreation])       ");
             body.AppendLine("SELECT @login, [Id], @entityName, @lastUpdate, @dateOfCreation                                        ");
-            body.AppendLine("FROM  [dbo].[PhotoItemEntity] AS [Photos]                                                             ");
+            body.AppendLine("FROM [dbo].[PhotoItemEntity] AS [Photos]                                                             ");
             body.AppendLine("WHERE [Photos].[LastUpdated] > @lastUpdate AND                                                        ");
             body.AppendLine("      NOT EXISTS (SELECT *                                                                            ");
             body.AppendLine("                  FROM  [dbo].[SendItemsEntities] AS [SendItem]                                       ");
@@ -266,7 +266,7 @@ namespace DataBase.EntitiesMigrations
             body.AppendLine("INSERT INTO [dbo].[SendItemsEntities]                                                                                                           ");
             body.AppendLine("([Login], [EntityId], [ProductDirectionEntity].[EntityName], [ProductDirectionEntity].[RequestDate], [ProductDirectionEntity].[DateOfCreation]) ");
             body.AppendLine("SELECT @login, [Id], @entityName, @lastUpdate, @dateOfCreation                                                                                  ");
-            body.AppendLine("FROM  [dbo].[ProductDirectionEntity] AS [ProductDirectionEntity]                                                                                ");
+            body.AppendLine("FROM [dbo].[ProductDirectionEntities] AS [ProductDirectionEntity]                                                                                ");
             body.AppendLine("WHERE [ProductDirectionEntity].[LastUpdated] > @lastUpdate AND                                                                                  ");
             body.AppendLine("      NOT EXISTS (SELECT *                                                                                                                      ");
             body.AppendLine("                  FROM  [dbo].[SendItemsEntities] AS [SendItem]                                                                                 ");
