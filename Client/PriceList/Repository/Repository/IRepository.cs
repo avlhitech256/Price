@@ -8,12 +8,14 @@ namespace Repository.Repository
 
         TEntity GetItem(long id);
 
-        IList<TEntity> GetItems();
+        IEnumerable<TEntity> GetItems();
 
         void Add(TEntity item);
 
         void Clear();
 
         void Load();
+
+        void Load(IEnumerable<long> ids);
     }
 }

@@ -19,7 +19,7 @@ namespace Load.Service
 
         void DownLoadPhotoItem(PhotoInfo photoInfo);
 
-        void DownLoadPhotos(Photos photos);
+        int DownLoadPhotos(Photos photos);
 
         void DownLoadProductDirectionItem(ProductDirectionInfo productDirectionInfo);
 

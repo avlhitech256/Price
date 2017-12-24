@@ -42,10 +42,14 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\IBrandRepository.cs" />
+    <Compile Include="Repository\ICatalogRepository.cs" />
     <Compile Include="Repository\IDirectoryRepository.cs" />
     <Compile Include="Repository\Implementation\BrandRepository.cs" />
+    <Compile Include="Repository\Implementation\CatalogRepository.cs" />
     <Compile Include="Repository\Implementation\DirectoryRepository.cs" />
+    <Compile Include="Repository\Implementation\PhotoRepository.cs" />
     <Compile Include="Repository\Implementation\Repository.cs" />
+    <Compile Include="Repository\IPhotoRepository.cs" />
     <Compile Include="Repository\IRepository.cs" />
   </ItemGroup>
   <ItemGroup />

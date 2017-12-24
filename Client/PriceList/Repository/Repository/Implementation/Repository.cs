@@ -8,7 +8,7 @@ namespace Repository.Repository.Implementation
     {
         #region Members
 
-        protected readonly List<TEntity> RepositoryItems;
+        protected readonly Dictionary<long, TEntity> RepositoryItems;
         protected readonly IDataService DataService;
 
         #endregion
@@ -18,7 +18,7 @@ namespace Repository.Repository.Implementation
         protected Repository(IDataService dataService)
         {
             this.DataService = dataService;
-            RepositoryItems = new List<TEntity>();
+            RepositoryItems = new Dictionary<long, TEntity>();
         }
 
         #endregion
@@ -34,29 +34,37 @@ namespace Repository.Repository.Implementation
 
         public TEntity GetItem(long id)
         {
-            TEntity entity = RepositoryItems.FirstOrDefault(x => GetId(x) == id);
+            TEntity entity;
 
-            if (entity == null)
+            if (!RepositoryItems.TryGetValue(id, out entity))
             {
                 entity = DataService.Find<TEntity>(id);
-
-                if (entity != null)
-                {
-                    RepositoryItems.Add(entity);
-                }
+                RepositoryItems.Add(id, entity);
             }
 
             return entity;
         }
 
-        public IList<TEntity> GetItems()
+        public IEnumerable<TEntity> GetItems()
         {
-            return RepositoryItems.AsReadOnly();
+            return RepositoryItems.Values;
         }
 
         public void Add(TEntity item)
         {
-            RepositoryItems.Add(item);
+            if (item != null)
+            {
+                TEntity entity;
+
+                if (RepositoryItems.TryGetValue(GetId(item), out entity))
+                {
+                    RepositoryItems[GetId(item)] = item;
+                }
+                else
+                {
+                    RepositoryItems.Add(GetId(item), item);
+                }
+            }
         }
 
         public void Clear()
@@ -67,8 +75,14 @@ namespace Repository.Repository.Implementation
         public void Load()
         {
             Clear();
-            RepositoryItems.AddRange(DataService.Select<TEntity>());
+            DataService.Select<TEntity>().ToList().ForEach(
+                x =>
+                {
+                    RepositoryItems.Add(GetId(x), x);
+                });
         }
+
+        public abstract void Load(IEnumerable<long> ids);
 
         #endregion
     }

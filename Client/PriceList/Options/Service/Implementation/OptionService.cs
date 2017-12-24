@@ -18,7 +18,6 @@ namespace Options.Service.Implementation
 
         private readonly IDataService dataService;
         private readonly Dictionary<string, StringHolder> optionCache;
-        private readonly List<string> existOptionCache;
         private readonly IConvertService convertService;
 
         #endregion
@@ -29,7 +28,6 @@ namespace Options.Service.Implementation
         {
             dataService = new DataService();
             optionCache = new Dictionary<string, StringHolder>();
-            existOptionCache = new List<string>();
             convertService = new ConvertService();
         }
 
@@ -146,15 +144,17 @@ namespace Options.Service.Implementation
 
         public bool ExistOption(string optionCode)
         {
-            bool value = existOptionCache.Contains(optionCode);
+            StringHolder option;
+
+            bool value = optionCache.TryGetValue(optionCode, out option);
 
             if (!value)
             {
-                value = ExistDbOption(optionCode);
+                option = new StringHolder(GetDbOption(optionCode, out value));
 
                 if (value)
                 {
-                    existOptionCache.Add(optionCode);
+                    optionCache.Add(optionCode, option);
                 }
             }
 
@@ -298,11 +298,12 @@ namespace Options.Service.Implementation
             }
             else
             {
-                option = GetDbOption(optionCode);
-                value = new StringHolder(option);
+                bool existOption;
+                option = GetDbOption(optionCode, out existOption);
 
-                if (!string.IsNullOrWhiteSpace(value.Value))
+                if (existOption)
                 {
+                    value = new StringHolder(option);
                     optionCache.Add(optionCode, value);
                 }
             }
@@ -319,7 +320,10 @@ namespace Options.Service.Implementation
 
         public void SetOption(string optionCode, string value)
         {
-            if (!string.IsNullOrWhiteSpace(optionCode) && value != GetOption(optionCode))
+            string oldValue = GetOption(optionCode);
+
+            if (!string.IsNullOrWhiteSpace(optionCode) && 
+                (value != oldValue || (string.IsNullOrEmpty(value) && string.IsNullOrEmpty(oldValue))))
             {
                 StringHolder option;
 
@@ -370,9 +374,10 @@ namespace Options.Service.Implementation
             return value;
         }
 
-        public string GetDbOption(string optionCode)
+        public string GetDbOption(string optionCode, out bool existOption)
         {
             string value = string.Empty;
+            existOption = false;
 
             if (!string.IsNullOrWhiteSpace(optionCode))
             {
@@ -383,6 +388,7 @@ namespace Options.Service.Implementation
                     if (option != null)
                     {
                         value = option.Value;
+                        existOption = true;
                     }
                 }
                 catch (Exception e)

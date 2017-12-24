@@ -32,7 +32,7 @@ namespace Load.Service.Implementation
                 Code = catalogInfo.Code,
                 Article = catalogInfo.Article,
                 Brand = brandItem,
-                BrandName = brandItem.Name,
+                BrandName = brandItem?.Name,
                 Name = catalogInfo.Name,
                 Unit = catalogInfo.Unit,
                 EnterpriceNormPack = catalogInfo.EnterpriceNormPack,

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using DatabaseService.DataBaseContext.Entities;
 using DatabaseService.DataService;
 
@@ -19,6 +20,16 @@ namespace Repository.Repository.Implementation
             return entity.Id;
         }
 
+        public override void Load(IEnumerable<long> ids)
+        {
+            Clear();
+            DataService.Select<DirectoryEntity>().Where(x => ids.Contains(x.Id)).ToList().ForEach(
+                x =>
+                {
+                    RepositoryItems.Add(x.Id, x);
+                });
+        }
+        
         #endregion
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using DatabaseService.DataBaseContext.Entities;
 using DatabaseService.DataService;
@@ -17,6 +18,8 @@ namespace Load.Service.Implementation
         private readonly IWebService webService;
         private readonly IBrandRepository brandRepository;
         private readonly IDirectoryRepository directoryRepository;
+        private readonly ICatalogRepository catalogRepository;
+        private readonly IPhotoRepository photoRepository;
 
         #endregion
 
@@ -31,6 +34,8 @@ namespace Load.Service.Implementation
             this.webService = webService;
             this.brandRepository = brandRepository;
             this.directoryRepository = directoryRepository;
+            catalogRepository = new CatalogRepository(dataService);
+            photoRepository = new PhotoRepository(dataService);
         }
 
         #endregion
@@ -168,7 +173,7 @@ namespace Load.Service.Implementation
 
         private CatalogItemEntity GetCatalogItem(long id)
         {
-            CatalogItemEntity entity = dataService.DataBaseContext.CatalogItemEntities.Find(id);
+            CatalogItemEntity entity = catalogRepository.GetItem(id);
             return entity;
         }
 
@@ -236,25 +241,35 @@ namespace Load.Service.Implementation
 
         public void DownLoadCatalogs(Catalogs catalogs)
         {
-            if (catalogs != null && catalogs.Items != null && catalogs.Items.Any())
+            if (catalogs?.Items != null && catalogs.Items.Any())
             {
+                catalogRepository.Load(catalogs.Items.Select(x => x.Id));
+                photoRepository.Load(catalogs.Items.SelectMany(x => x.Photos));
+
                 dataService.DataBaseContext.Configuration.AutoDetectChangesEnabled = false;
                 dataService.DataBaseContext.Configuration.ValidateOnSaveEnabled = false;
 
                 var entities = new List<CatalogItemEntity>();
 
-                catalogs.Items.Where(x => x != null).ToList().ForEach(
+                catalogs.Items.ToList().ForEach(
                     x =>
                     {
-                        CatalogItemEntity oldCatalogItem = GetCatalogItem(x.Id);
+                        try
+                        {
+                            CatalogItemEntity oldCatalogItem = GetCatalogItem(x.Id);
 
-                        if (oldCatalogItem != null)
-                        {
-                            Update(oldCatalogItem, x);
+                            if (oldCatalogItem != null)
+                            {
+                                Update(oldCatalogItem, x);
+                            }
+                            else
+                            {
+                                entities.Add(Create(x));
+                            }
                         }
-                        else
+                        catch (Exception e)
                         {
-                            entities.Add(Create(x));
+                            ;
                         }
 
                     });
@@ -287,7 +302,7 @@ namespace Load.Service.Implementation
 
         private DirectoryEntity GetDirectory(long id, List<DirectoryEntity> cacheDirectoryEntity)
         {
-            DirectoryEntity directory = directoryRepository.GetItem(id);//cacheDirectoryEntity.FirstOrDefault(x => x.Id == id);
+            DirectoryEntity directory = directoryRepository.GetItem(id);
 
             if (directory == null)
             {
@@ -604,8 +619,10 @@ namespace Load.Service.Implementation
             }
         }
 
-        public void DownLoadPhotos(Photos photos)
+        public int DownLoadPhotos(Photos photos)
         {
+            int count = 0;
+
             if (photos != null && photos.Items != null && photos.Items.Any())
             {
                 dataService.DataBaseContext.Configuration.AutoDetectChangesEnabled = false;
@@ -648,9 +665,13 @@ namespace Load.Service.Implementation
 
                 webService.ConfirmUpdateBrands(ids);
 
+                count = ids.Length;
+
                 dataService.DataBaseContext.Configuration.AutoDetectChangesEnabled = true;
                 dataService.DataBaseContext.Configuration.ValidateOnSaveEnabled = true;
             }
+
+            return count;
         }
 
         #endregion

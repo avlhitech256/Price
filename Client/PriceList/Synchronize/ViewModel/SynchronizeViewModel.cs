@@ -418,7 +418,7 @@ namespace Synchronize.ViewModel
             SetDirectoriesLabel();
             SetProductDirectionLabel();
             SetCatalogsLabel();
-            SetPhotoLabel();
+            SetPhotosLabel();
             Updates();
         }
 
@@ -435,6 +435,10 @@ namespace Synchronize.ViewModel
             else if ((MaxProductDirections - ValueProductDirection) > double.Epsilon)
             {
                 UpdateProductDirection(lastUpdateProductDirections);
+            }
+            else if (NeedPhopos && (MaxPhotos - ValuePhotos) > double.Epsilon)
+            {
+                UpdatePhotos(lastUpdatePhotos);
             }
             else if ((MaxCatalogs - ValueCatalogs) > double.Epsilon)
             {
@@ -464,7 +468,17 @@ namespace Synchronize.ViewModel
             AsyncOperationService.PerformAsyncOperation(AsyncOperationType.LoadFromWeb,
                                                         LoadCatalogs,
                                                         lastUpdate,
-                                                        SaveCatalogsToDatabase);
+                                                        UpdateInfoAfterLoadCatalogs);
+
+        }
+
+        private void UpdatePhotos(DateTimeOffset lastUpdate)
+        {
+            SetPhotosLabel();
+            AsyncOperationService.PerformAsyncOperation(AsyncOperationType.LoadFromWeb,
+                                                        LoadPhotos,
+                                                        lastUpdate,
+                                                        UpdateInfoAfterLoadPhotos);
 
         }
 
@@ -484,11 +498,11 @@ namespace Synchronize.ViewModel
             AsyncOperationService.PerformAsyncOperation(AsyncOperationType.LoadFromWeb,
                                                         LoadProductDirections,
                                                         lastUpdate,
-                                                        SaveProductDirectionsToDatabase);
+                                                        UpdateInfoAfterLoadProductDirections);
 
         }
 
-        private void SaveProductDirectionsToDatabase(Exception e, int countUpdated)
+        private void UpdateInfoAfterLoadProductDirections(Exception e, int countUpdated)
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
@@ -512,7 +526,7 @@ namespace Synchronize.ViewModel
             Application.Current.Dispatcher.Invoke(() => ProductDirectionLabel = $"Каталоги {ValueProductDirection} из {MaxProductDirections}");
         }
 
-        private void SetPhotoLabel()
+        private void SetPhotosLabel()
         {
             Application.Current.Dispatcher.Invoke(() => PhotoLabel = $"Фотографии {ValuePhotos} из {MaxPhotos}");
         }
@@ -548,7 +562,25 @@ namespace Synchronize.ViewModel
             return catalogs.Items.Count();
         }
 
-        private void SaveCatalogsToDatabase(Exception e, int countUpdated)
+        private int LoadPhotos(DateTimeOffset lastUpdate)
+        {
+            SetPhotosLabel();
+            Photos photos = webService.GetPhotos(lastUpdate);
+            return loadService.DownLoadPhotos(photos);
+        }
+
+        private void UpdateInfoAfterLoadPhotos(Exception e, int countUpdated)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                ValuePhotos += countUpdated;
+                SetPhotosLabel();
+                Updates();
+            });
+        }
+
+
+        private void UpdateInfoAfterLoadCatalogs(Exception e, int countUpdated)
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
@@ -594,7 +626,7 @@ namespace Synchronize.ViewModel
             SetCatalogsLabel();
             SetDirectoriesLabel();
             SetProductDirectionLabel();
-            SetPhotoLabel();
+            SetPhotosLabel();
         }
 
         private void SetBrandsLabel()

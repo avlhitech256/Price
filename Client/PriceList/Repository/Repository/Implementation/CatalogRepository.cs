@@ -5,17 +5,19 @@ using DatabaseService.DataService;
 
 namespace Repository.Repository.Implementation
 {
-    public class BrandRepository : Repository<BrandItemEntity>, IBrandRepository
+    public class CatalogRepository : Repository<CatalogItemEntity>, ICatalogRepository
     {
         #region Constructors
 
-        public BrandRepository(IDataService dataService) : base(dataService) { }
+        public CatalogRepository(IDataService dataService) : base(dataService)
+        {
+        }
 
         #endregion
 
         #region Methods
 
-        protected override long GetId(BrandItemEntity entity)
+        protected override long GetId(CatalogItemEntity entity)
         {
             return entity.Id;
         }
@@ -23,13 +25,13 @@ namespace Repository.Repository.Implementation
         public override void Load(IEnumerable<long> ids)
         {
             Clear();
-            DataService.Select<BrandItemEntity>().Where(x => ids.Contains(x.Id)).ToList().ForEach(
+            DataService.Select<CatalogItemEntity>().Where(x => ids.Contains(x.Id)).ToList().ForEach(
                 x =>
                 {
                     RepositoryItems.Add(x.Id, x);
                 });
         }
-        
+
         #endregion
     }
 }
