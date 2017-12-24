@@ -9,6 +9,7 @@ using Media.Color;
 using Media.Image;
 using Options.Service;
 using Photo.Service;
+using Repository.Repository;
 using Template.Service;
 
 namespace Domain.DomainContext
@@ -58,6 +59,9 @@ namespace Domain.DomainContext
         ITemplateService TemplateService { get; }
 
         IConvertService ConvertService { get; }
+
+        IBrandRepository BrandRepository { get; }
+        IDirectoryRepository DirectoryRepository { get; }
 
         void Refresh();
     }

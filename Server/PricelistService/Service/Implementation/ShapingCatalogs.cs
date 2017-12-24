@@ -96,7 +96,7 @@ namespace PricelistService.Service.Implementation
                     Code = item.Code,
                     Article = item.Article,
                     Name = item.Name,
-                    BrandId = item.Brand.Id,
+                    BrandId = item.Brand?.Id,
                     BrandName = item.BrandName,
                     Unit = item.Unit,
                     EnterpriceNormPack = item.EnterpriceNormPack,
@@ -106,13 +106,13 @@ namespace PricelistService.Service.Implementation
                     Currency = item.Currency,
                     Multiplicity = item.Multiplicity,
                     HasPhotos = item.HasPhotos,
-                    Photos = item.Photos != null ? item.Photos.Select(x => x.Id).ToList() : new List<long>(),
+                    Photos = item.Photos?.Select(x => x.Id).ToList() ?? new List<long>(),
                     DateOfCreation = item.DateOfCreation,
                     LastUpdated = item.LastUpdated,
                     ForceUpdated = item.ForceUpdated,
                     Status = item.Status,
                     LastUpdatedStatus = item.LastUpdatedStatus,
-                    DirectoryId = item.Directory.Id
+                    DirectoryId = item.Directory?.Id
                 };
             }
 

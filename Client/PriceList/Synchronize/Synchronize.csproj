@@ -94,6 +94,10 @@
       <Project>{4959BB8A-7823-4ACA-9883-117EDDE207B2}</Project>
       <Name>Options</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Repository\Repository.csproj">
+      <Project>{A7E6C2F8-D005-40AD-B880-B104B2060BFF}</Project>
+      <Name>Repository</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Web\Web.csproj">
       <Project>{082c068d-df77-4266-9a27-c4e45ad6fa16}</Project>
       <Name>Web</Name>

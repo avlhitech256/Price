@@ -82,12 +82,12 @@
       <xs:element minOccurs="0" name="Article" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Balance" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="BatchOfSales" type="xs:decimal" />
-      <xs:element minOccurs="0" name="BrandId" type="xs:long" />
+      <xs:element minOccurs="0" name="BrandId" nillable="true" type="xs:long" />
       <xs:element minOccurs="0" name="BrandName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Code" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Currency" nillable="true" type="xs:string" />
       <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="DateOfCreation" type="q10:DateTimeOffset" />
-      <xs:element minOccurs="0" name="DirectoryId" type="xs:long" />
+      <xs:element minOccurs="0" name="DirectoryId" nillable="true" type="xs:long" />
       <xs:element minOccurs="0" name="EnterpriceNormPack" nillable="true" type="xs:string" />
       <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="ForceUpdated" type="q11:DateTimeOffset" />
       <xs:element minOccurs="0" name="HasPhotos" type="xs:boolean" />

@@ -23,6 +23,8 @@ using Options.Service;
 using Options.Service.Implementation;
 using Photo.Service;
 using Photo.Service.Implementation;
+using Repository.Repository;
+using Repository.Repository.Implementation;
 using Template.Service;
 using Template.Service.Implementation;
 
@@ -69,6 +71,10 @@ namespace Domain.DomainContext.Implementation
             OptionService = new OptionService();
             TemplateService = new TemplateService(OptionService);
             ConvertService = new ConvertService();
+            BrandRepository = new BrandRepository(DataService);
+            BrandRepository.Load();
+            DirectoryRepository = new DirectoryRepository(DataService);
+            DirectoryRepository.Load();
             Init();
             SubscribeEvents();
         }
@@ -190,6 +196,10 @@ namespace Domain.DomainContext.Implementation
         public ITemplateService TemplateService { get; }
 
         public IConvertService ConvertService { get; }
+
+        public IBrandRepository BrandRepository { get; }
+
+        public IDirectoryRepository DirectoryRepository { get; }
 
         public bool IsLoading
         {

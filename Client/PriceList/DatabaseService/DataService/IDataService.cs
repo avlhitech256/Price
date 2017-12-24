@@ -10,6 +10,8 @@ namespace DatabaseService.DataService
     {
         DataBaseContext.DataBaseContext DataBaseContext { get; }
 
+        TEntity Find<TEntity>(object id) where TEntity : class;
+
         IQueryable<TEntity> Select<TEntity>() where TEntity : class;
 
         void Insert<TEntity>(TEntity entity) where TEntity : class;

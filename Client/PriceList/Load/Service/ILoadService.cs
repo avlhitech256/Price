@@ -1,15 +1,13 @@
-﻿using System;
+﻿using DatabaseService.DataBaseContext.Entities;
 using Web.WebServiceReference;
 
 namespace Load.Service
 {
     public interface ILoadService
     {
-        void Init();
+        BrandItemEntity DownLoadBrandItem(BrandInfo brandInfo);
 
-        void DownLoadBrandItem(BrandInfo brandInfo);
-
-        void DownLoadBrands(Brands brands);
+        int DownLoadBrands(Brands brands);
 
         void DownLoadCatalogItem(CatalogInfo catalogInfo);
 
@@ -17,7 +15,7 @@ namespace Load.Service
 
         void DownLoadDirectoryItem(DirectoryInfo directoryInfo);
 
-        void DownLoadDirectories(Directories directories);
+        int DownLoadDirectories(Directories directories);
 
         void DownLoadPhotoItem(PhotoInfo photoInfo);
 

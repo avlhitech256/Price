@@ -953,7 +953,7 @@ namespace DatabaseService.DataBaseContext.Initializer
                 {
                     Code = OptionName.Password,
                     Name = "User Password",
-                    Value = ""
+                    Value = "autotrend"
                 },
                 new OptionItemEntity
                 {

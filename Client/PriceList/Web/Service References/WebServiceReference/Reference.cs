@@ -798,7 +798,7 @@ namespace Web.WebServiceReference {
         private decimal BatchOfSalesField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private long BrandIdField;
+        private System.Nullable<long> BrandIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string BrandNameField;
@@ -813,7 +813,7 @@ namespace Web.WebServiceReference {
         private System.DateTimeOffset DateOfCreationField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private long DirectoryIdField;
+        private System.Nullable<long> DirectoryIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string EnterpriceNormPackField;
@@ -907,7 +907,7 @@ namespace Web.WebServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public long BrandId {
+        public System.Nullable<long> BrandId {
             get {
                 return this.BrandIdField;
             }
@@ -972,7 +972,7 @@ namespace Web.WebServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public long DirectoryId {
+        public System.Nullable<long> DirectoryId {
             get {
                 return this.DirectoryIdField;
             }

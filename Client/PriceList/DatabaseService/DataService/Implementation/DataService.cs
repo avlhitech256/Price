@@ -28,6 +28,12 @@ namespace DatabaseService.DataService.Implementation
             return dataBaseContext;
         }
 
+        public TEntity Find<TEntity>(object id) where TEntity : class
+        {
+            // Поиск сущности по первичному ключу с помощью универсального метода Set
+            return DataBaseContext.Set<TEntity>().Find(id);
+        }
+
         public IQueryable<TEntity> Select<TEntity>() where TEntity : class
         {
             // Загрузка данных с помощью универсального метода Set

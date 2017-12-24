@@ -27,7 +27,7 @@ namespace PricelistService.Service.Contract
         public string Name { get; set; }
 
         [DataMember]
-        public long BrandId { get; set; }
+        public long? BrandId { get; set; }
 
         [DataMember]
         public string BrandName { get; set; }
@@ -75,6 +75,6 @@ namespace PricelistService.Service.Contract
         public DateTimeOffset LastUpdatedStatus { get; set; }
 
         [DataMember]
-        public long DirectoryId { get; set; }
+        public long? DirectoryId { get; set; }
     }
 }

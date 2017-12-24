@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using Common.Data.Enum;
 using Common.Data.Notifier;
@@ -51,7 +50,10 @@ namespace Synchronize.ViewModel
         {
             DomainContext = domainContext;
             webService = new WebService(domainContext?.OptionService);
-            loadService = new LoadService(domainContext?.DataService, webService);
+            loadService = new LoadService(domainContext?.DataService, 
+                                          webService, 
+                                          domainContext?.BrandRepository, 
+                                          domainContext?.DirectoryRepository);
             CreateCommand();
             RefreshLastUpdate();
             InitProperties();
@@ -412,24 +414,29 @@ namespace Synchronize.ViewModel
             MaxProductDirections = countInfo.CountProductDirections;
             MaxCatalogs = countInfo.CountCatalogs;
             MaxPhotos = countInfo.CountPhotos;
+            SetBrandsLabel();
+            SetDirectoriesLabel();
+            SetProductDirectionLabel();
+            SetCatalogsLabel();
+            SetPhotoLabel();
             Updates();
         }
 
         private void Updates()
         {
-            if (Math.Abs(ValueBrands - MaxBrands) > double.Epsilon)
+            if ((MaxBrands - ValueBrands) > double.Epsilon)
             {
                 UpdateBrands(lastUpdateBrands);
             }
-            else if (Math.Abs(ValueDirectories - MaxDirectories) > double.Epsilon)
+            else if ((MaxDirectories - ValueDirectories) > double.Epsilon)
             {
                 UpdateDirectories(lastUpdateDirectories);
             }
-            else if (Math.Abs(ValueProductDirection - MaxProductDirections) > double.Epsilon)
+            else if ((MaxProductDirections - ValueProductDirection) > double.Epsilon)
             {
                 UpdateProductDirection(lastUpdateProductDirections);
             }
-            else if (Math.Abs(ValueCatalogs - MaxCatalogs) > double.Epsilon)
+            else if ((MaxCatalogs - ValueCatalogs) > double.Epsilon)
             {
                 UpdateCatalogs(lastUpdateCatalogs);
             }
@@ -446,7 +453,7 @@ namespace Synchronize.ViewModel
             AsyncOperationService.PerformAsyncOperation(AsyncOperationType.LoadFromWeb,
                                                         LoadBrands,
                                                         lastUpdate,
-                                                        SaveBrandsToDatabase);
+                                                        UpdateInfoAfterLoadBrands);
 
         }
 
@@ -467,7 +474,7 @@ namespace Synchronize.ViewModel
             AsyncOperationService.PerformAsyncOperation(AsyncOperationType.LoadFromWeb,
                                                         LoadDirectories,
                                                         lastUpdate,
-                                                        SaveDirectoriesToDatabase);
+                                                        UpdateInfoAfterLoadDirectories);
 
         }
 
@@ -510,7 +517,7 @@ namespace Synchronize.ViewModel
             Application.Current.Dispatcher.Invoke(() => PhotoLabel = $"Фотографии {ValuePhotos} из {MaxPhotos}");
         }
 
-        private void SaveDirectoriesToDatabase(Exception e, int countUpdated)
+        private void UpdateInfoAfterLoadDirectories(Exception e, int countUpdated)
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
@@ -524,9 +531,7 @@ namespace Synchronize.ViewModel
         {
             SetDirectoriesLabel();
             Directories directories = webService.GetDirectories(lastUpdate);
-            loadService.DownLoadDirectories(directories);
-            webService.ConfirmUpdateCatalogs(directories.Items.Select(x => x.Id));
-            return directories.Items.Count();
+            return loadService.DownLoadDirectories(directories);
         }
 
         private void SetDirectoriesLabel()
@@ -558,7 +563,7 @@ namespace Synchronize.ViewModel
             Application.Current.Dispatcher.Invoke(() => CatalogLabel = $"Товары (номенклатура) {ValueCatalogs} из {MaxCatalogs}");
         }
 
-        private void SaveBrandsToDatabase(Exception e, int countUpdated)
+        private void UpdateInfoAfterLoadBrands(Exception e, int countUpdated)
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
@@ -572,9 +577,7 @@ namespace Synchronize.ViewModel
         {
             SetBrandsLabel();
             Brands brands = webService.GetBrands(lastUpdate);
-            loadService.DownLoadBrands(brands);
-            webService.ConfirmUpdateBrands(brands.Items.Select(x => x.Id));
-            return brands.Items.Count();
+            return loadService.DownLoadBrands(brands);
         }
 
         private void RefreshLastUpdate()
