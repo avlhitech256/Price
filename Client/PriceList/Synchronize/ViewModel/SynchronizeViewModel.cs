@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using Common.Data.Enum;
@@ -33,6 +34,7 @@ namespace Synchronize.ViewModel
         private DateTimeOffset lastUpdateDirectories;
         private DateTimeOffset lastUpdateProductDirections;
         private DateTimeOffset lastUpdatePhotos;
+        private List<long> ids;
         private string directoryLabel;
         private string productDirectionLabel;
         private string photoLabel;
@@ -397,12 +399,18 @@ namespace Synchronize.ViewModel
             lastUpdatePhotos = DataService.DataBaseContext.PhotoItemEntities.Any()
                 ? DataService.DataBaseContext.PhotoItemEntities.Select(x => x.LastUpdated).Max()
                 : DateTimeOffset.MinValue;
+            ids = DataService.DataBaseContext.PhotoItemEntities
+                .Where(x => !x.IsLoad)
+                .Select(x => x.Id)
+                .ToList();
 
             CountInfo countInfo = webService.PrepareToUpdate(lastUpdateBrands, 
                                                              lastUpdateCatalogs, 
                                                              lastUpdateDirectories,
                                                              lastUpdateProductDirections, 
-                                                             lastUpdatePhotos, false);
+                                                             lastUpdatePhotos, 
+                                                             NeedPhopos,
+                                                             ids);
 
             ValueBrands = 0;
             ValueDirectories = 0;
@@ -477,7 +485,7 @@ namespace Synchronize.ViewModel
             SetPhotosLabel();
             AsyncOperationService.PerformAsyncOperation(AsyncOperationType.LoadFromWeb,
                                                         LoadPhotos,
-                                                        lastUpdate,
+                                                        new PhotoRequestInfo(lastUpdate, ids),
                                                         UpdateInfoAfterLoadPhotos);
 
         }
@@ -562,10 +570,10 @@ namespace Synchronize.ViewModel
             return catalogs.Items.Count();
         }
 
-        private int LoadPhotos(DateTimeOffset lastUpdate)
+        private int LoadPhotos(PhotoRequestInfo photoRequestInfo)
         {
             SetPhotosLabel();
-            Photos photos = webService.GetPhotos(lastUpdate);
+            Photos photos = webService.GetPhotos(photoRequestInfo.LastUpdate, photoRequestInfo.Ids);
             return loadService.DownLoadPhotos(photos);
         }
 

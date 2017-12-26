@@ -90,6 +90,9 @@
     <None Include="Service References\WebServiceReference\Web.WebServiceReference.CountInfo.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\WebServiceReference\Web.WebServiceReference.CountPhotosInfo.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\WebServiceReference\Web.WebServiceReference.Directories.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\PhotoRequestInfo.cs" />
     <Compile Include="ViewModel\SynchronizeViewModel.cs" />
     <Compile Include="View\SynchronizeControl.xaml.cs">
       <DependentUpon>SynchronizeControl.xaml</DependentUpon>

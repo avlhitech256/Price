@@ -209,7 +209,7 @@ namespace DataBase.EntitiesMigrations
             body.AppendLine("-- SET NOCOUNT ON added to prevent extra result sets from                                             ");
             body.AppendLine("-- interfering with SELECT statements.                                                                ");
             body.AppendLine("                                                                                                      ");
-            body.AppendLine("--SET NOCOUNT ON;                                                                                       ");
+            body.AppendLine("--SET NOCOUNT ON;                                                                                     ");
             body.AppendLine("                                                                                                      ");
             body.AppendLine("-- BrandItemEntity = 1                                                                                ");
             body.AppendLine("-- CatalogItemEntity = 2                                                                              ");
@@ -223,7 +223,7 @@ namespace DataBase.EntitiesMigrations
             body.AppendLine("INSERT INTO [dbo].[SendItemsEntities]                                                                 ");
             body.AppendLine("([Login], [EntityId], [Photos].[EntityName], [Photos].[RequestDate], [Photos].[DateOfCreation])       ");
             body.AppendLine("SELECT @login, [Id], @entityName, @lastUpdate, @dateOfCreation                                        ");
-            body.AppendLine("FROM [dbo].[PhotoItemEntity] AS [Photos]                                                             ");
+            body.AppendLine("FROM [dbo].[PhotoItemEntities] AS [Photos]                                                            ");
             body.AppendLine("WHERE [Photos].[LastUpdated] > @lastUpdate AND                                                        ");
             body.AppendLine("      NOT EXISTS (SELECT *                                                                            ");
             body.AppendLine("                  FROM  [dbo].[SendItemsEntities] AS [SendItem]                                       ");

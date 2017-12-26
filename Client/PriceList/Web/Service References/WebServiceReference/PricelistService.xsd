@@ -50,6 +50,13 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="CountInfo" nillable="true" type="tns:CountInfo" />
+  <xs:complexType name="CountPhotosInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CountPhotos" type="xs:long" />
+      <xs:element minOccurs="0" name="IsAuthorized" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CountPhotosInfo" nillable="true" type="tns:CountPhotosInfo" />
   <xs:complexType name="BrandInfo">
     <xs:sequence>
       <xs:element xmlns:q6="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="CatalogId" nillable="true" type="q6:ArrayOflong" />

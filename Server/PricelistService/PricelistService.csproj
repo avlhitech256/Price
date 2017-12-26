@@ -56,6 +56,7 @@
     <Compile Include="Service\Contract\Catalogs.cs" />
     <Compile Include="Service\Contract\CompanyInfo.cs" />
     <Compile Include="Service\Contract\CountInfo.cs" />
+    <Compile Include="Service\Contract\CountPhotosInfo.cs" />
     <Compile Include="Service\Contract\Directories.cs" />
     <Compile Include="Service\Contract\DirectoryInfo.cs" />
     <Compile Include="Service\Contract\ProductDirectionInfo.cs" />

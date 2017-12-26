@@ -57,20 +57,38 @@
         <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="lastUpdateProductDirections" type="q10:DateTimeOffset" />
         <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="lastUpdatePhotos" type="q11:DateTimeOffset" />
         <xs:element minOccurs="0" name="needLoadPhotos" type="xs:boolean" />
+        <xs:element xmlns:q12="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ids" nillable="true" type="q12:ArrayOflong" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="PrepareToUpdateResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract" minOccurs="0" name="PrepareToUpdateResult" nillable="true" type="q12:CountInfo" />
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract" minOccurs="0" name="PrepareToUpdateResult" nillable="true" type="q13:CountInfo" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PrepareToUpdatePhotos">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract" minOccurs="0" name="securityInfo" nillable="true" type="q14:SecurityInfo" />
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="lastUpdatePhotos" type="q15:DateTimeOffset" />
+        <xs:element minOccurs="0" name="needLoadPhotos" type="xs:boolean" />
+        <xs:element xmlns:q16="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ids" nillable="true" type="q16:ArrayOflong" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PrepareToUpdatePhotosResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract" minOccurs="0" name="PrepareToUpdatePhotosResult" nillable="true" type="q17:CountPhotosInfo" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetBrand">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract" minOccurs="0" name="securityInfo" nillable="true" type="q13:SecurityInfo" />
+        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract" minOccurs="0" name="securityInfo" nillable="true" type="q18:SecurityInfo" />
         <xs:element minOccurs="0" name="id" type="xs:long" />
       </xs:sequence>
     </xs:complexType>
@@ -78,30 +96,30 @@
   <xs:element name="GetBrandResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract" minOccurs="0" name="GetBrandResult" nillable="true" type="q14:BrandInfo" />
+        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract" minOccurs="0" name="GetBrandResult" nillable="true" type="q19:BrandInfo" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetBrands">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract" minOccurs="0" name="securityInfo" nillable="true" type="q15:SecurityInfo" />
-        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="lastUpdate" type="q16:DateTimeOffset" />
+        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract" minOccurs="0" name="securityInfo" nillable="true" type="q20:SecurityInfo" />
+        <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="lastUpdate" type="q21:DateTimeOffset" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetBrandsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract" minOccurs="0" name="GetBrandsResult" nillable="true" type="q17:Brands" />
+        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract" minOccurs="0" name="GetBrandsResult" nillable="true" type="q22:Brands" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="ConfirmUpdateBrands">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract" minOccurs="0" name="securityInfo" nillable="true" type="q18:SecurityInfo" />
-        <xs:element xmlns:q19="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="itemIds" nillable="true" type="q19:ArrayOflong" />
+        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract" minOccurs="0" name="securityInfo" nillable="true" type="q23:SecurityInfo" />
+        <xs:element xmlns:q24="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="itemIds" nillable="true" type="q24:ArrayOflong" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -113,7 +131,7 @@
   <xs:element name="GetCatalog">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract" minOccurs="0" name="securityInfo" nillable="true" type="q20:SecurityInfo" />
+        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract" minOccurs="0" name="securityInfo" nillable="true" type="q25:SecurityInfo" />
         <xs:element minOccurs="0" name="id" type="xs:long" />
       </xs:sequence>
     </xs:complexType>
@@ -121,30 +139,30 @@
   <xs:element name="GetCatalogResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract" minOccurs="0" name="GetCatalogResult" nillable="true" type="q21:CatalogInfo" />
+        <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract" minOccurs="0" name="GetCatalogResult" nillable="true" type="q26:CatalogInfo" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetCatalogs">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract" minOccurs="0" name="securityInfo" nillable="true" type="q22:SecurityInfo" />
-        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="lastUpdate" type="q23:DateTimeOffset" />
+        <xs:element xmlns:q27="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract" minOccurs="0" name="securityInfo" nillable="true" type="q27:SecurityInfo" />
+        <xs:element xmlns:q28="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="lastUpdate" type="q28:DateTimeOffset" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetCatalogsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract" minOccurs="0" name="GetCatalogsResult" nillable="true" type="q24:Catalogs" />
+        <xs:element xmlns:q29="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract" minOccurs="0" name="GetCatalogsResult" nillable="true" type="q29:Catalogs" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="ConfirmUpdateCatalogs">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract" minOccurs="0" name="securityInfo" nillable="true" type="q25:SecurityInfo" />
-        <xs:element xmlns:q26="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="itemIds" nillable="true" type="q26:ArrayOflong" />
+        <xs:element xmlns:q30="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract" minOccurs="0" name="securityInfo" nillable="true" type="q30:SecurityInfo" />
+        <xs:element xmlns:q31="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="itemIds" nillable="true" type="q31:ArrayOflong" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -156,7 +174,7 @@
   <xs:element name="GetDirectory">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q27="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract" minOccurs="0" name="securityInfo" nillable="true" type="q27:SecurityInfo" />
+        <xs:element xmlns:q32="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract" minOccurs="0" name="securityInfo" nillable="true" type="q32:SecurityInfo" />
         <xs:element minOccurs="0" name="id" type="xs:long" />
       </xs:sequence>
     </xs:complexType>
@@ -164,30 +182,30 @@
   <xs:element name="GetDirectoryResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q28="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract" minOccurs="0" name="GetDirectoryResult" nillable="true" type="q28:DirectoryInfo" />
+        <xs:element xmlns:q33="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract" minOccurs="0" name="GetDirectoryResult" nillable="true" type="q33:DirectoryInfo" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetDirectories">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q29="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract" minOccurs="0" name="securityInfo" nillable="true" type="q29:SecurityInfo" />
-        <xs:element xmlns:q30="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="lastUpdate" type="q30:DateTimeOffset" />
+        <xs:element xmlns:q34="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract" minOccurs="0" name="securityInfo" nillable="true" type="q34:SecurityInfo" />
+        <xs:element xmlns:q35="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="lastUpdate" type="q35:DateTimeOffset" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetDirectoriesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q31="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract" minOccurs="0" name="GetDirectoriesResult" nillable="true" type="q31:Directories" />
+        <xs:element xmlns:q36="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract" minOccurs="0" name="GetDirectoriesResult" nillable="true" type="q36:Directories" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="ConfirmUpdateDirectories">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q32="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract" minOccurs="0" name="securityInfo" nillable="true" type="q32:SecurityInfo" />
-        <xs:element xmlns:q33="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="itemIds" nillable="true" type="q33:ArrayOflong" />
+        <xs:element xmlns:q37="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract" minOccurs="0" name="securityInfo" nillable="true" type="q37:SecurityInfo" />
+        <xs:element xmlns:q38="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="itemIds" nillable="true" type="q38:ArrayOflong" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -199,7 +217,7 @@
   <xs:element name="GetPhoto">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q34="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract" minOccurs="0" name="securityInfo" nillable="true" type="q34:SecurityInfo" />
+        <xs:element xmlns:q39="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract" minOccurs="0" name="securityInfo" nillable="true" type="q39:SecurityInfo" />
         <xs:element minOccurs="0" name="id" type="xs:long" />
       </xs:sequence>
     </xs:complexType>
@@ -207,30 +225,31 @@
   <xs:element name="GetPhotoResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q35="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract" minOccurs="0" name="GetPhotoResult" nillable="true" type="q35:PhotoInfo" />
+        <xs:element xmlns:q40="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract" minOccurs="0" name="GetPhotoResult" nillable="true" type="q40:PhotoInfo" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetPhotos">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q36="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract" minOccurs="0" name="securityInfo" nillable="true" type="q36:SecurityInfo" />
-        <xs:element xmlns:q37="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="lastUpdate" type="q37:DateTimeOffset" />
+        <xs:element xmlns:q41="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract" minOccurs="0" name="securityInfo" nillable="true" type="q41:SecurityInfo" />
+        <xs:element xmlns:q42="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="lastUpdate" type="q42:DateTimeOffset" />
+        <xs:element xmlns:q43="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ids" nillable="true" type="q43:ArrayOflong" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetPhotosResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q38="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract" minOccurs="0" name="GetPhotosResult" nillable="true" type="q38:Photos" />
+        <xs:element xmlns:q44="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract" minOccurs="0" name="GetPhotosResult" nillable="true" type="q44:Photos" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="ConfirmUpdatePhotos">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q39="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract" minOccurs="0" name="securityInfo" nillable="true" type="q39:SecurityInfo" />
-        <xs:element xmlns:q40="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="itemIds" nillable="true" type="q40:ArrayOflong" />
+        <xs:element xmlns:q45="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract" minOccurs="0" name="securityInfo" nillable="true" type="q45:SecurityInfo" />
+        <xs:element xmlns:q46="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="itemIds" nillable="true" type="q46:ArrayOflong" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -242,7 +261,7 @@
   <xs:element name="GetProductDirection">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q41="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract" minOccurs="0" name="securityInfo" nillable="true" type="q41:SecurityInfo" />
+        <xs:element xmlns:q47="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract" minOccurs="0" name="securityInfo" nillable="true" type="q47:SecurityInfo" />
         <xs:element minOccurs="0" name="id" type="xs:long" />
       </xs:sequence>
     </xs:complexType>
@@ -250,30 +269,30 @@
   <xs:element name="GetProductDirectionResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q42="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract" minOccurs="0" name="GetProductDirectionResult" nillable="true" type="q42:ProductDirectionInfo" />
+        <xs:element xmlns:q48="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract" minOccurs="0" name="GetProductDirectionResult" nillable="true" type="q48:ProductDirectionInfo" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetProductDirections">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q43="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract" minOccurs="0" name="securityInfo" nillable="true" type="q43:SecurityInfo" />
-        <xs:element xmlns:q44="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="lastUpdate" type="q44:DateTimeOffset" />
+        <xs:element xmlns:q49="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract" minOccurs="0" name="securityInfo" nillable="true" type="q49:SecurityInfo" />
+        <xs:element xmlns:q50="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="lastUpdate" type="q50:DateTimeOffset" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetProductDirectionsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q45="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract" minOccurs="0" name="GetProductDirectionsResult" nillable="true" type="q45:ProductDirections" />
+        <xs:element xmlns:q51="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract" minOccurs="0" name="GetProductDirectionsResult" nillable="true" type="q51:ProductDirections" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="ConfirmUpdateProductDirections">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q46="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract" minOccurs="0" name="securityInfo" nillable="true" type="q46:SecurityInfo" />
-        <xs:element xmlns:q47="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="itemIds" nillable="true" type="q47:ArrayOflong" />
+        <xs:element xmlns:q52="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract" minOccurs="0" name="securityInfo" nillable="true" type="q52:SecurityInfo" />
+        <xs:element xmlns:q53="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="itemIds" nillable="true" type="q53:ArrayOflong" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

@@ -547,6 +547,67 @@ namespace Web.WebServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CountPhotosInfo", Namespace="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract")]
+    [System.SerializableAttribute()]
+    public partial class CountPhotosInfo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private long CountPhotosField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsAuthorizedField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long CountPhotos {
+            get {
+                return this.CountPhotosField;
+            }
+            set {
+                if ((this.CountPhotosField.Equals(value) != true)) {
+                    this.CountPhotosField = value;
+                    this.RaisePropertyChanged("CountPhotos");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsAuthorized {
+            get {
+                return this.IsAuthorizedField;
+            }
+            set {
+                if ((this.IsAuthorizedField.Equals(value) != true)) {
+                    this.IsAuthorizedField = value;
+                    this.RaisePropertyChanged("IsAuthorized");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="BrandInfo", Namespace="http://schemas.datacontract.org/2004/07/PricelistService.Service.Contract")]
     [System.SerializableAttribute()]
     public partial class BrandInfo : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -2056,10 +2117,16 @@ namespace Web.WebServiceReference {
         System.Threading.Tasks.Task<bool> ChangePasswodrAsync(Web.WebServiceReference.SecurityInfo securityInfo, string newPassword);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPricelistService/PrepareToUpdate", ReplyAction="http://tempuri.org/IPricelistService/PrepareToUpdateResponse")]
-        Web.WebServiceReference.CountInfo PrepareToUpdate(Web.WebServiceReference.SecurityInfo securityInfo, System.DateTimeOffset lastUpdateBrands, System.DateTimeOffset lastUpdateCatalogs, System.DateTimeOffset lastUpdateDirectories, System.DateTimeOffset lastUpdateProductDirections, System.DateTimeOffset lastUpdatePhotos, bool needLoadPhotos);
+        Web.WebServiceReference.CountInfo PrepareToUpdate(Web.WebServiceReference.SecurityInfo securityInfo, System.DateTimeOffset lastUpdateBrands, System.DateTimeOffset lastUpdateCatalogs, System.DateTimeOffset lastUpdateDirectories, System.DateTimeOffset lastUpdateProductDirections, System.DateTimeOffset lastUpdatePhotos, bool needLoadPhotos, long[] ids);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPricelistService/PrepareToUpdate", ReplyAction="http://tempuri.org/IPricelistService/PrepareToUpdateResponse")]
-        System.Threading.Tasks.Task<Web.WebServiceReference.CountInfo> PrepareToUpdateAsync(Web.WebServiceReference.SecurityInfo securityInfo, System.DateTimeOffset lastUpdateBrands, System.DateTimeOffset lastUpdateCatalogs, System.DateTimeOffset lastUpdateDirectories, System.DateTimeOffset lastUpdateProductDirections, System.DateTimeOffset lastUpdatePhotos, bool needLoadPhotos);
+        System.Threading.Tasks.Task<Web.WebServiceReference.CountInfo> PrepareToUpdateAsync(Web.WebServiceReference.SecurityInfo securityInfo, System.DateTimeOffset lastUpdateBrands, System.DateTimeOffset lastUpdateCatalogs, System.DateTimeOffset lastUpdateDirectories, System.DateTimeOffset lastUpdateProductDirections, System.DateTimeOffset lastUpdatePhotos, bool needLoadPhotos, long[] ids);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPricelistService/PrepareToUpdatePhotos", ReplyAction="http://tempuri.org/IPricelistService/PrepareToUpdatePhotosResponse")]
+        Web.WebServiceReference.CountPhotosInfo PrepareToUpdatePhotos(Web.WebServiceReference.SecurityInfo securityInfo, System.DateTimeOffset lastUpdatePhotos, bool needLoadPhotos, long[] ids);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPricelistService/PrepareToUpdatePhotos", ReplyAction="http://tempuri.org/IPricelistService/PrepareToUpdatePhotosResponse")]
+        System.Threading.Tasks.Task<Web.WebServiceReference.CountPhotosInfo> PrepareToUpdatePhotosAsync(Web.WebServiceReference.SecurityInfo securityInfo, System.DateTimeOffset lastUpdatePhotos, bool needLoadPhotos, long[] ids);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPricelistService/GetBrand", ReplyAction="http://tempuri.org/IPricelistService/GetBrandResponse")]
         Web.WebServiceReference.BrandInfo GetBrand(Web.WebServiceReference.SecurityInfo securityInfo, long id);
@@ -2122,10 +2189,10 @@ namespace Web.WebServiceReference {
         System.Threading.Tasks.Task<Web.WebServiceReference.PhotoInfo> GetPhotoAsync(Web.WebServiceReference.SecurityInfo securityInfo, long id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPricelistService/GetPhotos", ReplyAction="http://tempuri.org/IPricelistService/GetPhotosResponse")]
-        Web.WebServiceReference.Photos GetPhotos(Web.WebServiceReference.SecurityInfo securityInfo, System.DateTimeOffset lastUpdate);
+        Web.WebServiceReference.Photos GetPhotos(Web.WebServiceReference.SecurityInfo securityInfo, System.DateTimeOffset lastUpdate, long[] ids);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPricelistService/GetPhotos", ReplyAction="http://tempuri.org/IPricelistService/GetPhotosResponse")]
-        System.Threading.Tasks.Task<Web.WebServiceReference.Photos> GetPhotosAsync(Web.WebServiceReference.SecurityInfo securityInfo, System.DateTimeOffset lastUpdate);
+        System.Threading.Tasks.Task<Web.WebServiceReference.Photos> GetPhotosAsync(Web.WebServiceReference.SecurityInfo securityInfo, System.DateTimeOffset lastUpdate, long[] ids);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPricelistService/ConfirmUpdatePhotos", ReplyAction="http://tempuri.org/IPricelistService/ConfirmUpdatePhotosResponse")]
         void ConfirmUpdatePhotos(Web.WebServiceReference.SecurityInfo securityInfo, long[] itemIds);
@@ -2203,12 +2270,20 @@ namespace Web.WebServiceReference {
             return base.Channel.ChangePasswodrAsync(securityInfo, newPassword);
         }
         
-        public Web.WebServiceReference.CountInfo PrepareToUpdate(Web.WebServiceReference.SecurityInfo securityInfo, System.DateTimeOffset lastUpdateBrands, System.DateTimeOffset lastUpdateCatalogs, System.DateTimeOffset lastUpdateDirectories, System.DateTimeOffset lastUpdateProductDirections, System.DateTimeOffset lastUpdatePhotos, bool needLoadPhotos) {
-            return base.Channel.PrepareToUpdate(securityInfo, lastUpdateBrands, lastUpdateCatalogs, lastUpdateDirectories, lastUpdateProductDirections, lastUpdatePhotos, needLoadPhotos);
+        public Web.WebServiceReference.CountInfo PrepareToUpdate(Web.WebServiceReference.SecurityInfo securityInfo, System.DateTimeOffset lastUpdateBrands, System.DateTimeOffset lastUpdateCatalogs, System.DateTimeOffset lastUpdateDirectories, System.DateTimeOffset lastUpdateProductDirections, System.DateTimeOffset lastUpdatePhotos, bool needLoadPhotos, long[] ids) {
+            return base.Channel.PrepareToUpdate(securityInfo, lastUpdateBrands, lastUpdateCatalogs, lastUpdateDirectories, lastUpdateProductDirections, lastUpdatePhotos, needLoadPhotos, ids);
         }
         
-        public System.Threading.Tasks.Task<Web.WebServiceReference.CountInfo> PrepareToUpdateAsync(Web.WebServiceReference.SecurityInfo securityInfo, System.DateTimeOffset lastUpdateBrands, System.DateTimeOffset lastUpdateCatalogs, System.DateTimeOffset lastUpdateDirectories, System.DateTimeOffset lastUpdateProductDirections, System.DateTimeOffset lastUpdatePhotos, bool needLoadPhotos) {
-            return base.Channel.PrepareToUpdateAsync(securityInfo, lastUpdateBrands, lastUpdateCatalogs, lastUpdateDirectories, lastUpdateProductDirections, lastUpdatePhotos, needLoadPhotos);
+        public System.Threading.Tasks.Task<Web.WebServiceReference.CountInfo> PrepareToUpdateAsync(Web.WebServiceReference.SecurityInfo securityInfo, System.DateTimeOffset lastUpdateBrands, System.DateTimeOffset lastUpdateCatalogs, System.DateTimeOffset lastUpdateDirectories, System.DateTimeOffset lastUpdateProductDirections, System.DateTimeOffset lastUpdatePhotos, bool needLoadPhotos, long[] ids) {
+            return base.Channel.PrepareToUpdateAsync(securityInfo, lastUpdateBrands, lastUpdateCatalogs, lastUpdateDirectories, lastUpdateProductDirections, lastUpdatePhotos, needLoadPhotos, ids);
+        }
+        
+        public Web.WebServiceReference.CountPhotosInfo PrepareToUpdatePhotos(Web.WebServiceReference.SecurityInfo securityInfo, System.DateTimeOffset lastUpdatePhotos, bool needLoadPhotos, long[] ids) {
+            return base.Channel.PrepareToUpdatePhotos(securityInfo, lastUpdatePhotos, needLoadPhotos, ids);
+        }
+        
+        public System.Threading.Tasks.Task<Web.WebServiceReference.CountPhotosInfo> PrepareToUpdatePhotosAsync(Web.WebServiceReference.SecurityInfo securityInfo, System.DateTimeOffset lastUpdatePhotos, bool needLoadPhotos, long[] ids) {
+            return base.Channel.PrepareToUpdatePhotosAsync(securityInfo, lastUpdatePhotos, needLoadPhotos, ids);
         }
         
         public Web.WebServiceReference.BrandInfo GetBrand(Web.WebServiceReference.SecurityInfo securityInfo, long id) {
@@ -2291,12 +2366,12 @@ namespace Web.WebServiceReference {
             return base.Channel.GetPhotoAsync(securityInfo, id);
         }
         
-        public Web.WebServiceReference.Photos GetPhotos(Web.WebServiceReference.SecurityInfo securityInfo, System.DateTimeOffset lastUpdate) {
-            return base.Channel.GetPhotos(securityInfo, lastUpdate);
+        public Web.WebServiceReference.Photos GetPhotos(Web.WebServiceReference.SecurityInfo securityInfo, System.DateTimeOffset lastUpdate, long[] ids) {
+            return base.Channel.GetPhotos(securityInfo, lastUpdate, ids);
         }
         
-        public System.Threading.Tasks.Task<Web.WebServiceReference.Photos> GetPhotosAsync(Web.WebServiceReference.SecurityInfo securityInfo, System.DateTimeOffset lastUpdate) {
-            return base.Channel.GetPhotosAsync(securityInfo, lastUpdate);
+        public System.Threading.Tasks.Task<Web.WebServiceReference.Photos> GetPhotosAsync(Web.WebServiceReference.SecurityInfo securityInfo, System.DateTimeOffset lastUpdate, long[] ids) {
+            return base.Channel.GetPhotosAsync(securityInfo, lastUpdate, ids);
         }
         
         public void ConfirmUpdatePhotos(Web.WebServiceReference.SecurityInfo securityInfo, long[] itemIds) {

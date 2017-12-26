@@ -78,7 +78,8 @@ namespace PricelistService.Service.Implementation
                                          DateTimeOffset lastUpdateDirectories,
                                          DateTimeOffset lastUpdateProductDirections,
                                          DateTimeOffset lastUpdatePhotos,
-                                         bool needLoadPhotos)
+                                         bool needLoadPhotos,
+                                         long[] ids)
         {
             CountInfo result = null;
 
@@ -97,12 +98,32 @@ namespace PricelistService.Service.Implementation
                     CountCatalogs = shapingCatalogs.PrepareToUpdate(securityInfo.Login, lastUpdateCatalogs),
                     CountDirectories = shapingDirectories.PrepareToUpdate(securityInfo.Login, lastUpdateDirectories),
                     CountProductDirections = shapingProductDirections.PrepareToUpdate(securityInfo.Login, lastUpdateProductDirections),
-                    CountPhotos = needLoadPhotos ? shapingPhotos.PrepareToUpdate(securityInfo.Login, lastUpdatePhotos) : 0,
+                    CountPhotos = needLoadPhotos ? shapingPhotos.PrepareToUpdate(securityInfo.Login, lastUpdatePhotos, ids) : 0,
                     IsAuthorized = true
                 };
             }
 
             return result;
+        }
+
+        public CountPhotosInfo PrepareToUpdatePhotos(SecurityInfo securityInfo,
+                                                     DateTimeOffset lastUpdatePhotos,
+                                                     bool needLoadPhotos,
+                                                     long[] ids)
+        {
+            CountPhotosInfo countPhotosInfo = null;
+
+            if (ValidatePassword(securityInfo))
+            {
+                IShapingPhotos shapingPhotos = new ShapingPhotos(dataService, optionService);
+                countPhotosInfo = new CountPhotosInfo
+                {
+                    CountPhotos = needLoadPhotos ? shapingPhotos.PrepareToUpdate(securityInfo.Login, lastUpdatePhotos, ids) : 0,
+                    IsAuthorized = true
+                };
+            }
+
+            return countPhotosInfo;
         }
 
         public BrandInfo GetBrand(SecurityInfo securityInfo, long id)
@@ -223,14 +244,14 @@ namespace PricelistService.Service.Implementation
             return photoInfo;
         }
 
-        public Photos GetPhotos(SecurityInfo securityInfo, DateTimeOffset lastUpdate)
+        public Photos GetPhotos(SecurityInfo securityInfo, DateTimeOffset lastUpdate, long[] ids)
         {
             Photos photos = null;
 
             if (ValidatePassword(securityInfo))
             {
                 IShapingPhotos shaping = new ShapingPhotos(dataService, optionService);
-                photos = shaping.GetItems(securityInfo.Login, lastUpdate);
+                photos = shaping.GetItems(securityInfo.Login, lastUpdate, ids);
             }
 
             return photos;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
 using DataBase.Context.Entities;
@@ -37,13 +38,13 @@ namespace PricelistService.Service.Implementation
             return Assemble(dataService.DataBaseContext.PhotoItemEntities.Find(id));
         }
 
-        public Photos GetItems(string login, DateTimeOffset lastUpdate)
+        public Photos GetItems(string login, DateTimeOffset lastUpdate, long[] ids)
         {
             long count = RemainderToUpdate(login);
 
             if (count == 0L)
             {
-                count = PrepareToUpdate(login, lastUpdate);
+                count = PrepareToUpdate(login, lastUpdate, ids);
             }
 
             Photos result = new Photos
@@ -68,7 +69,7 @@ namespace PricelistService.Service.Implementation
 
         private List<PhotoInfo> GetPhotoInfos(string login)
         {
-            List<long> catalogIds = dataService.Select<SendItemsEntity>()
+            List<long> photosIds = dataService.Select<SendItemsEntity>()
                 .Where(x => x.Login == login)
                 .Where(x => x.EntityName == EntityName.PhotoItemEntity)
                 .Take(optionService.CountSendItems)
@@ -77,7 +78,8 @@ namespace PricelistService.Service.Implementation
 
             List<PhotoInfo> result =
                 dataService.Select<PhotoItemEntity>()
-                    .Where(x => catalogIds.Contains(x.Id))
+                    .Include(x => x.CatalogItem)
+                    .Where(x => photosIds.Contains(x.Id))
                     .Select(Assemble)
                     .ToList();
 
@@ -106,7 +108,7 @@ namespace PricelistService.Service.Implementation
             return result;
         }
 
-        public long PrepareToUpdate(string login, DateTimeOffset lastUpdate)
+        public long PrepareToUpdate(string login, DateTimeOffset lastUpdate, long[] ids)
         {
             var loginParametr = new SqlParameter();
             loginParametr.ParameterName = "@login";
@@ -120,6 +122,21 @@ namespace PricelistService.Service.Implementation
             lastUpdateParametr.Value = lastUpdate;
             lastUpdateParametr.Direction = ParameterDirection.Input;
 
+            DataTable data = new DataTable();
+            data.Columns.Add("Id", typeof(long));
+
+            foreach (long r in ids)
+            {
+                data.Rows.Add(r);
+            }
+
+            var idsParametr = new SqlParameter();
+            idsParametr.ParameterName = "@ids";
+            idsParametr.SqlDbType = SqlDbType.Structured;
+            idsParametr.TypeName = "bigintTable";
+            idsParametr.Value = data;
+            idsParametr.Direction = ParameterDirection.Input;
+
             int count = 0;
             var countToUpdateParametr = new SqlParameter();
             countToUpdateParametr.ParameterName = "@countToUpdate";
@@ -128,8 +145,8 @@ namespace PricelistService.Service.Implementation
             countToUpdateParametr.Value = count;
 
             dataService.DataBaseContext.Database
-                .ExecuteSqlCommand("PrepareToUpdatePhotos @login, @lastUpdate, @countToUpdate",
-                                   loginParametr, lastUpdateParametr, countToUpdateParametr);
+                .ExecuteSqlCommand("PrepareToUpdatePhotos @login, @lastUpdate, @ids, @countToUpdate",
+                                   loginParametr, lastUpdateParametr, idsParametr, countToUpdateParametr);
 
             count = dataService.DataBaseContext.SendItemsEntities
                 .Count(x => x.EntityName == EntityName.PhotoItemEntity && x.Login == login);

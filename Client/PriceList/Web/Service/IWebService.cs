@@ -25,7 +25,8 @@ namespace Web.Service
                                   DateTimeOffset lastUpdateDirectories,
                                   DateTimeOffset lastUpdateProductDirections,
                                   DateTimeOffset lastUpdatePhotos,
-                                  bool needLoadPhotos);
+                                  bool needLoadPhotos,
+                                  List<long> ids);
 
         DirectoryInfo GetDirectoryInfo(long id);
 
@@ -33,7 +34,7 @@ namespace Web.Service
 
         PhotoInfo GetPhotoInfo(long id);
 
-        Photos GetPhotos(DateTimeOffset lastUpdate);
+        Photos GetPhotos(DateTimeOffset lastUpdate, IEnumerable<long> ids);
 
         ProductDirectionInfo GetProductDirectionInfo(long id);
 

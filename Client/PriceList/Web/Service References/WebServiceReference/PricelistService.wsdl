@@ -34,6 +34,12 @@
   <wsdl:message name="IPricelistService_PrepareToUpdate_OutputMessage">
     <wsdl:part name="parameters" element="tns:PrepareToUpdateResponse" />
   </wsdl:message>
+  <wsdl:message name="IPricelistService_PrepareToUpdatePhotos_InputMessage">
+    <wsdl:part name="parameters" element="tns:PrepareToUpdatePhotos" />
+  </wsdl:message>
+  <wsdl:message name="IPricelistService_PrepareToUpdatePhotos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PrepareToUpdatePhotosResponse" />
+  </wsdl:message>
   <wsdl:message name="IPricelistService_GetBrand_InputMessage">
     <wsdl:part name="parameters" element="tns:GetBrand" />
   </wsdl:message>
@@ -141,6 +147,10 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IPricelistService/PrepareToUpdate" message="tns:IPricelistService_PrepareToUpdate_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPricelistService/PrepareToUpdateResponse" message="tns:IPricelistService_PrepareToUpdate_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="PrepareToUpdatePhotos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPricelistService/PrepareToUpdatePhotos" message="tns:IPricelistService_PrepareToUpdatePhotos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPricelistService/PrepareToUpdatePhotosResponse" message="tns:IPricelistService_PrepareToUpdatePhotos_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="GetBrand">
       <wsdl:input wsaw:Action="http://tempuri.org/IPricelistService/GetBrand" message="tns:IPricelistService_GetBrand_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPricelistService/GetBrandResponse" message="tns:IPricelistService_GetBrand_OutputMessage" />
@@ -233,6 +243,15 @@
     </wsdl:operation>
     <wsdl:operation name="PrepareToUpdate">
       <soap:operation soapAction="http://tempuri.org/IPricelistService/PrepareToUpdate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PrepareToUpdatePhotos">
+      <soap:operation soapAction="http://tempuri.org/IPricelistService/PrepareToUpdatePhotos" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

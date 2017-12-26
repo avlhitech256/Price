@@ -25,7 +25,14 @@ namespace PricelistService.Service
                                   DateTimeOffset lastUpdateDirectories,
                                   DateTimeOffset lastUpdateProductDirections,
                                   DateTimeOffset lastUpdatePhotos,
-                                  bool needLoadPhotos);
+                                  bool needLoadPhotos,
+                                  long[] ids);
+
+        [OperationContract]
+        CountPhotosInfo PrepareToUpdatePhotos(SecurityInfo securityInfo,
+                                              DateTimeOffset lastUpdatePhotos,
+                                              bool needLoadPhotos,
+                                              long[] ids);
 
         [OperationContract]
         BrandInfo GetBrand(SecurityInfo securityInfo, long id);
@@ -58,7 +65,7 @@ namespace PricelistService.Service
         PhotoInfo GetPhoto(SecurityInfo securityInfo, long id);
 
         [OperationContract]
-        Photos GetPhotos(SecurityInfo securityInfo, DateTimeOffset lastUpdate);
+        Photos GetPhotos(SecurityInfo securityInfo, DateTimeOffset lastUpdate, long[] ids);
 
         [OperationContract]
         void ConfirmUpdatePhotos(SecurityInfo securityInfo, List<long> itemIds);

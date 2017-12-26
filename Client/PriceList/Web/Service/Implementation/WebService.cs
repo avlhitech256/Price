@@ -154,9 +154,25 @@ namespace Web.Service.Implementation
                                          DateTimeOffset lastUpdateDirectories, 
                                          DateTimeOffset lastUpdateProductDirections, 
                                          DateTimeOffset lastUpdatePhotos, 
-                                         bool needLoadPhotos)
+                                         bool needLoadPhotos,
+                                         List<long> ids)
         {
             CountInfo countInfo;
+
+            int maxPhotos = 1000;
+
+            if (ids.Count() > maxPhotos)
+            {
+                int countPages = ids.Count / maxPhotos;
+
+                for (int i = 0; i < countPages; i++)
+                {
+                    List<long> idsList = ids.Skip(maxPhotos * i).Take(maxPhotos).ToList();
+                    PrepareToUpdatePhotos(lastUpdatePhotos, needLoadPhotos, idsList);
+                }
+
+                ids = ids.Skip(maxPhotos * countPages).Take(maxPhotos).ToList();
+            }
 
             using (PricelistServiceClient webService = GetWebService())
             {
@@ -167,11 +183,30 @@ namespace Web.Service.Implementation
                                                        lastUpdateDirectories, 
                                                        lastUpdateProductDirections, 
                                                        lastUpdatePhotos, 
-                                                       needLoadPhotos); 
+                                                       needLoadPhotos,
+                                                       ids.ToArray()); 
                 webService.Close();
             }
 
             return countInfo;
+        }
+
+        private CountPhotosInfo PrepareToUpdatePhotos(DateTimeOffset lastUpdatePhotos,
+                                                     bool needLoadPhotos,
+                                                     IEnumerable<long> ids)
+        {
+            CountPhotosInfo countPhotosInfo;
+
+            using (PricelistServiceClient webService = GetWebService())
+            {
+                SecurityInfo securityInfo = CreateSecurityInfo();
+                countPhotosInfo = webService.PrepareToUpdatePhotos(securityInfo, 
+                                                                   lastUpdatePhotos, 
+                                                                   needLoadPhotos, 
+                                                                   ids.ToArray());
+            }
+
+            return countPhotosInfo;
         }
 
         public DirectoryInfo GetDirectoryInfo(long id)
@@ -216,14 +251,14 @@ namespace Web.Service.Implementation
             return photoInfo;
         }
 
-        public Photos GetPhotos(DateTimeOffset lastUpdate)
+        public Photos GetPhotos(DateTimeOffset lastUpdate, IEnumerable<long> ids)
         {
             Photos photos;
 
             using (PricelistServiceClient webService = GetWebService())
             {
                 SecurityInfo securityInfo = CreateSecurityInfo();
-                photos = webService.GetPhotos(securityInfo, lastUpdate);
+                photos = webService.GetPhotos(securityInfo, lastUpdate, ids.ToArray());
                 webService.Close();
             }
 
