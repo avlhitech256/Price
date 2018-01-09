@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using Async.Service;
 using Common.Data.Enum;
 using Common.Data.Notifier;
 using Common.Event;
@@ -129,7 +130,8 @@ namespace PriceList.ViewModel.TopMenu
             }
             else
             {
-                throw e;
+                //throw e;
+                DomainContext?.CloseMainWindow?.Invoke();
             }
         }
 

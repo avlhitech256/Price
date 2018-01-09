@@ -7,10 +7,23 @@
              xmlns:searchControl="clr-namespace:CommonControl.SearchControl;assembly=CommonControl"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="900">
+    <UserControl.Resources>
+        <Style x:Key="ProgressBarStyle" TargetType="ProgressBar">
+            <Style.Setters>
+                <Setter Property="Foreground" Value="{DynamicResource SelectedGradientBrush}"/>
+            </Style.Setters>
+            <Style.Triggers>
+                <Trigger Property="Value" Value="0">
+                    <Setter Property="Foreground" Value="{DynamicResource DefaultGradientBrush}"></Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
-            <ColumnDefinition Width="120"></ColumnDefinition>
+            <ColumnDefinition Width="140"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
             <Grid.RowDefinitions>
@@ -36,44 +49,49 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Label Grid.Row="1" Grid.ColumnSpan="2" Content="{Binding Path=LastUpdate, UpdateSourceTrigger=PropertyChanged}"/>
-            <Label Grid.Row="3"   Content="{Binding Path=BrandLabel}"/>
-            <Label Grid.Row="5"   Content="{Binding Path=DirectoryLabel}"/>
-            <Label Grid.Row="7"   Content="{Binding Path=ProductDirectionLabel}"/>
-            <Label Grid.Row="9"   Content="{Binding Path=CatalogLabel}"/>
-            <Label Grid.Row="11"  Content="{Binding Path=PhotoLabel}"/>
+            <Label Grid.Row="3" Grid.Column="0" Content="{Binding Path=BrandLabel}"/>
+            <Label Grid.Row="5" Grid.Column="0" Content="{Binding Path=DirectoryLabel}"/>
+            <Label Grid.Row="7" Grid.Column="0" Content="{Binding Path=ProductDirectionLabel}"/>
+            <Label Grid.Row="9" Grid.Column="0" Content="{Binding Path=PhotoLabel}"/>
+            <Label Grid.Row="11" Grid.Column="0" Content="{Binding Path=CatalogLabel}"/>
             <ProgressBar Grid.Row="3" 
                          Grid.Column="1" 
                          Maximum="{Binding Path=MaxBrands}"
                          Value="{Binding Path=ValueBrands}"
-                         Height="10"
+                         Height="20"
+                         Style="{DynamicResource ProgressBarStyle}"
                          VerticalAlignment="Stretch"
                          VerticalContentAlignment="Stretch"/>
             <ProgressBar Grid.Row="5" 
                          Grid.Column="1" 
                          Maximum="{Binding Path=MaxDirectories}"
                          Value="{Binding Path=ValueDirectories}"
-                         Height="10"
+                         Height="20"
+                         Style="{DynamicResource ProgressBarStyle}"
                          VerticalAlignment="Stretch"
                          VerticalContentAlignment="Stretch"/>
             <ProgressBar Grid.Row="7" 
                          Grid.Column="1" 
                          Maximum="{Binding Path=MaxProductDirections}"
                          Value="{Binding Path=ValueProductDirection}"
-                         Height="10"
+                         Height="20"
+                         Style="{DynamicResource ProgressBarStyle}"
                          VerticalAlignment="Stretch"
                          VerticalContentAlignment="Stretch"/>
             <ProgressBar Grid.Row="9" 
                          Grid.Column="1" 
-                         Maximum="{Binding Path=MaxCatalogs}"
-                         Value="{Binding Path=ValueCatalogs}"
-                         Height="10"
+                         Maximum="{Binding Path=MaxPhotos}"
+                         Value="{Binding Path=ValuePhotos}"
+                         Height="20"
+                         Style="{DynamicResource ProgressBarStyle}"
                          VerticalAlignment="Stretch"
                          VerticalContentAlignment="Stretch"/>
             <ProgressBar Grid.Row="11" 
                          Grid.Column="1" 
-                         Maximum="{Binding Path=MaxPhotos}"
-                         Value="{Binding Path=ValuePhotos}"
-                         Height="10"
+                         Maximum="{Binding Path=MaxCatalogs}"
+                         Value="{Binding Path=ValueCatalogs}"
+                         Height="20"
+                         Style="{DynamicResource ProgressBarStyle}"
                          VerticalAlignment="Stretch"
                          VerticalContentAlignment="Stretch"/>
             <TextBox x:Name="TextBox" 
@@ -89,7 +107,13 @@
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
-            <Button Grid.Row="1" Content="OK" Width="60" Height="20" Margin="10" Command="{Binding Path=SynchronizeCommand}"/>
+            <Button Grid.Row="1" 
+                    Content="Синхронизация" 
+                    Width="120" 
+                    Margin="10" 
+                    Style="{DynamicResource ButtonStyle}"
+                    IsDefault="True"
+                    Command="{Binding Path=SynchronizeCommand}"/>
             <CheckBox Grid.Row="2" 
                       Content="Загрузить фото" 
                       HorizontalAlignment="Center"

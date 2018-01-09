@@ -1,5 +1,8 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
+using Async.Service;
 using Common.Annotations;
+using Common.Event;
 using Common.Messenger;
 using Common.Service;
 using DatabaseService.DataService;
@@ -11,6 +14,8 @@ using Options.Service;
 using Photo.Service;
 using Repository.Repository;
 using Template.Service;
+using UserDecisions.Service;
+using Web.Service;
 
 namespace Domain.DomainContext
 {
@@ -38,7 +43,13 @@ namespace Domain.DomainContext
         IDataService DataService { get; }
 
         [CanBeNull]
+        IUserDecisionsService UserDecisionsService { get; }
+
+        [CanBeNull]
         IAsyncOperationService AsyncOperationService { get; }
+
+        [CanBeNull]
+        IWebService WebService { get; }
 
         bool IsEditControl { get; set; }
 
@@ -61,8 +72,19 @@ namespace Domain.DomainContext
         IConvertService ConvertService { get; }
 
         IBrandRepository BrandRepository { get; }
+
         IDirectoryRepository DirectoryRepository { get; }
 
+        Action CloseMainWindow { get; set; }
+
+        bool AccessToInternet { get; set; }
+
+        string PingTime { get; set; }
+
+        bool IsSynchronizeEntry { get; set; }
+
         void Refresh();
+
+        event AccessToInternetEventHandler AccessToInternetChanged;
     }
 }

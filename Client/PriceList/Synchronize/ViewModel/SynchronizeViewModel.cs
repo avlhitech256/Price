@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using Async.Service;
 using Common.Data.Enum;
 using Common.Data.Notifier;
 using Common.Messenger;
@@ -51,7 +52,7 @@ namespace Synchronize.ViewModel
         public SynchronizeViewModel(IDomainContext domainContext)
         {
             DomainContext = domainContext;
-            webService = new WebService(domainContext?.OptionService);
+            webService = domainContext.WebService;
             loadService = new LoadService(domainContext?.DataService, 
                                           webService, 
                                           domainContext?.BrandRepository, 
@@ -59,7 +60,7 @@ namespace Synchronize.ViewModel
             CreateCommand();
             RefreshLastUpdate();
             InitProperties();
-            canDoSynchronize = true;
+            SubscribeEvents();
         }
 
         public IDomainContext DomainContext { get; }
@@ -374,9 +375,25 @@ namespace Synchronize.ViewModel
 
         public DelegateCommand SynchronizeCommand { get; private set; }
 
+        private void SubscribeEvents()
+        {
+            if (DomainContext != null)
+            {
+                DomainContext.AccessToInternetChanged += OnAccessToInternetChanged;
+            }
+        }
+
+        private void OnAccessToInternetChanged(object sender, Common.Event.AccessToInternetEventArgs e)
+        {
+            canDoSynchronize = e.Enable;
+            SynchronizeCommand.RiseCanExecute();
+        }
+
         private void CreateCommand()
         {
+            canDoSynchronize = true;
             SynchronizeCommand = new DelegateCommand(DoSynchronize, CanDoSynchronize);
+            SynchronizeCommand.RiseCanExecute();
         }
 
 
@@ -514,9 +531,16 @@ namespace Synchronize.ViewModel
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                ValueProductDirection += countUpdated;
-                SetProductDirectionLabel();
-                Updates();
+                if (e == null)
+                {
+                    ValueProductDirection += countUpdated;
+                    SetProductDirectionLabel();
+                    Updates();
+                }
+                else
+                {
+                    DomainContext?.CloseMainWindow?.Invoke();
+                }
             });
         }
 
@@ -543,9 +567,16 @@ namespace Synchronize.ViewModel
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                ValueDirectories += countUpdated;
-                SetDirectoriesLabel();
-                Updates();
+                if (e == null)
+                {
+                    ValueDirectories += countUpdated;
+                    SetDirectoriesLabel();
+                    Updates();
+                }
+                else
+                {
+                    DomainContext?.CloseMainWindow?.Invoke();
+                }
             });
         }
 
@@ -581,20 +612,33 @@ namespace Synchronize.ViewModel
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                ValuePhotos += countUpdated;
-                SetPhotosLabel();
-                Updates();
+                if (e == null)
+                {
+                    ValuePhotos += countUpdated;
+                    SetPhotosLabel();
+                    Updates();
+                }
+                else
+                {
+                    DomainContext?.CloseMainWindow?.Invoke();
+                }
             });
         }
-
-
+        
         private void UpdateInfoAfterLoadCatalogs(Exception e, int countUpdated)
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                ValueCatalogs += countUpdated;
-                SetCatalogsLabel();
-                Updates();
+                if (e == null)
+                {
+                    ValueCatalogs += countUpdated;
+                    SetCatalogsLabel();
+                    Updates();
+                }
+                else
+                {
+                    DomainContext?.CloseMainWindow?.Invoke();
+                }
             });
         }
 
@@ -607,9 +651,16 @@ namespace Synchronize.ViewModel
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                ValueBrands += countUpdated;
-                SetBrandsLabel();
-                Updates();
+                if (e == null)
+                {
+                    ValueBrands += countUpdated;
+                    SetBrandsLabel();
+                    Updates();
+                }
+                else
+                {
+                    DomainContext?.CloseMainWindow?.Invoke();
+                }
             });
         }
 
@@ -645,7 +696,7 @@ namespace Synchronize.ViewModel
 
         private bool CanDoSynchronize(object arg)
         {
-            return canDoSynchronize; // TODO Проверить наличие Internet (ShortCut)
+            return canDoSynchronize;
         }
 
         public void ApplySearchCriteria()

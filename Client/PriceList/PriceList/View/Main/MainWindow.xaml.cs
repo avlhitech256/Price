@@ -14,6 +14,8 @@ using Domain.DomainContext.Implementation;
 using Photo.ViewModel;
 using PriceList.View.Child;
 using PriceList.ViewModel.MainWindow;
+using UserDecisions.Service;
+using UserDecisions.Service.Implementation;
 
 namespace PriceList.View.Main
 {
@@ -26,6 +28,7 @@ namespace PriceList.View.Main
 
         private Timer mainTimer;
         private readonly ILoadingService loadService;
+        private IUserDecisionsService userDecisionsService;
 
         #endregion
 
@@ -37,21 +40,33 @@ namespace PriceList.View.Main
             SplashScreen splashScreen = CreateSplashScreen(picturesList);
 
             InitializeComponent();
-            DomainContext = new DomainContext();
-            DataContext = new MainWindowViewModel(DomainContext);
-            loadService = new LoadingService(DomainContext, LoadingBackgroung, WaitControl);
 
-            SetDomainContext();
-            SubscribeMessenger();
+            userDecisionsService = new UserDecisionsService();
 
-            if (splashScreen != null)
+            try
             {
-                DateTime now = DateTime.Now.AddSeconds(3);
-                splashScreen.Close(TimeSpan.FromSeconds(1));
-                while (DateTime.Now < now) { }
-            }
+                DomainContext = new DomainContext();
+                DomainContext.CloseMainWindow = Close;
+                DataContext = new MainWindowViewModel(DomainContext);
+                loadService = new LoadingService(DomainContext, LoadingBackgroung, WaitControl);
 
-            SetMainTimer();
+                SetDomainContext();
+                SubscribeMessenger();
+
+                if (splashScreen != null)
+                {
+                    DateTime now = DateTime.Now.AddSeconds(3);
+                    splashScreen.Close(TimeSpan.FromSeconds(1));
+                    while (DateTime.Now < now) { }
+                }
+
+                SetMainTimer();
+            }
+            catch (Exception e)
+            {
+                userDecisionsService.ShowException(e);
+                Close();
+            }
         }
 
         #endregion
@@ -59,6 +74,7 @@ namespace PriceList.View.Main
         #region Properties
 
         private IDomainContext DomainContext { get; }
+
         private IMessenger Messenger => DomainContext?.Messenger;
 
         #endregion

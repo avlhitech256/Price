@@ -7,4 +7,6 @@
     public delegate void MinWidthEventHandler(object sender, MinWidthEventArgs e);
 
     public delegate void BeforeChangeEventHandler(object sender, BeforeChangeArgs e);
+
+    public delegate void AccessToInternetEventHandler(object sender, AccessToInternetEventArgs e);
 }

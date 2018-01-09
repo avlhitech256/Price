@@ -72,15 +72,7 @@ namespace Repository.Repository.Implementation
             RepositoryItems.Clear();
         }
 
-        public void Load()
-        {
-            Clear();
-            DataService.Select<TEntity>().ToList().ForEach(
-                x =>
-                {
-                    RepositoryItems.Add(GetId(x), x);
-                });
-        }
+        public abstract void Load();
 
         public abstract void Load(IEnumerable<long> ids);
 

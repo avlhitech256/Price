@@ -148,6 +148,11 @@ namespace PriceList.View.TopMenu
 
             if (args != null)
             {
+                if (DomainContext != null)
+                {
+                    DomainContext.IsSynchronizeEntry = args.MenuItemName == MenuItemName.Sync;
+                }
+
                 Messenger?.Send(CommandName.SetEntryControl, args);
             }
 

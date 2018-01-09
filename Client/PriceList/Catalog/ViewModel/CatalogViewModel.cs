@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Timers;
 using System.Windows;
+using Async.Service;
 using Catalog.Model;
 using Catalog.SearchCriteria;
 using Common.Data.Enum;

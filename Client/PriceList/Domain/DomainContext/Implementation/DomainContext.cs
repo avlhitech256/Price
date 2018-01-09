@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Windows;
+using System.Windows.Threading;
+using Async.Service;
 using Common.Annotations;
 using Common.Data.Enum;
 using Common.Data.Notifier;
@@ -27,6 +29,11 @@ using Repository.Repository;
 using Repository.Repository.Implementation;
 using Template.Service;
 using Template.Service.Implementation;
+using UserDecisions.Service;
+using UserDecisions.Service.Implementation;
+using Web.Service;
+using Web.Service.Implementation;
+using Web.WebServiceReference;
 
 namespace Domain.DomainContext.Implementation
 {
@@ -43,6 +50,10 @@ namespace Domain.DomainContext.Implementation
         private bool isLoading;
         private bool isWaiting;
         private readonly AsyncOperationType[] waitFormSupported;
+        private bool accessToInternet;
+        private readonly DispatcherTimer pingTimer;
+        private string pingTime;
+        private bool isSynchronizeEntry;
 
         #endregion
 
@@ -61,14 +72,16 @@ namespace Domain.DomainContext.Implementation
                 AsyncOperationType.GetSumBasket
             };
 
-            AsyncOperationService = new AsyncOperationService(UIContext.Current);
             Messenger = new Messenger();
             ColorService = new ColorService();
             ImageService = new ImageService();
             PhotoService = new PhotoService(Messenger, ImageService);
             PrecisionService = new PrecisionService(2, true);
             DataService = new DataService();
+            UserDecisionsService = new UserDecisionsService();
+            AsyncOperationService = new AsyncOperationService(UserDecisionsService, UIContext.Current);
             OptionService = new OptionService();
+            WebService = new WebService(OptionService);
             TemplateService = new TemplateService(OptionService);
             ConvertService = new ConvertService();
             BrandRepository = new BrandRepository(DataService);
@@ -77,6 +90,10 @@ namespace Domain.DomainContext.Implementation
             DirectoryRepository.Load();
             Init();
             SubscribeEvents();
+            pingTimer = new DispatcherTimer();
+            pingTimer.Interval = TimeSpan.FromMilliseconds(1000);
+            pingTimer.Tick += PingTimerOnTick;
+            pingTimer.Start();
         }
 
         #endregion
@@ -111,7 +128,11 @@ namespace Domain.DomainContext.Implementation
 
         public IDataService DataService { get; }
 
+        public IUserDecisionsService UserDecisionsService { get; }
+
         public IAsyncOperationService AsyncOperationService { get; }
+
+        public IWebService WebService { get; }
 
         public bool IsEditControl
         {
@@ -239,6 +260,58 @@ namespace Domain.DomainContext.Implementation
 
         public Action HideWaitScreen { get; set; }
 
+        public Action CloseMainWindow { get; set; }
+
+        public bool AccessToInternet
+        {
+            get
+            {
+                return accessToInternet;
+            }
+            set
+            {
+                if (accessToInternet != value)
+                {
+                    accessToInternet = value;
+                    OnChangeAccessToInternet(value);
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public string PingTime
+        {
+            get
+            {
+                return pingTime;
+            }
+            set
+            {
+                if (pingTime != value)
+                {
+                    pingTime = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public bool IsSynchronizeEntry
+        {
+            get
+            {
+                return isSynchronizeEntry;
+            }
+            set
+            {
+                if (isSynchronizeEntry != value)
+                {
+                    isSynchronizeEntry = value;
+                    SetPingInterval();
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         #endregion
 
         #region Methods
@@ -318,6 +391,56 @@ namespace Domain.DomainContext.Implementation
 
             return description;
         }
+
+        private void OnChangeAccessToInternet(bool enabled)
+        {
+            var args = new AccessToInternetEventArgs(enabled);
+            AccessToInternetChanged?.Invoke(this, args);
+        }
+
+        private void PingTimerOnTick(object sender, EventArgs eventArgs)
+        {
+            pingTimer.Stop();
+
+            try
+            {
+                if (WebService != null)
+                {
+                    ShortcutInfo shortCutIfo = WebService.Shortcut();
+                    DateTimeOffset now = DateTimeOffset.Now;
+                    AccessToInternet = shortCutIfo != null &&
+                                       shortCutIfo.ResponceTime > DateTimeOffset.MinValue &&
+                                       shortCutIfo.RequestTime > DateTimeOffset.MinValue &&
+                                       shortCutIfo.RequestTime < now;
+
+                    PingTime = shortCutIfo != null 
+                        ? (now - shortCutIfo.RequestTime).Milliseconds + " ms"
+                        : string.Empty;
+
+                }
+            }
+            catch (Exception)
+            {
+                AccessToInternet = false;
+                PingTime = string.Empty;
+            }
+
+            SetPingInterval();
+            pingTimer.Start();
+        }
+
+        private void SetPingInterval()
+        {
+            pingTimer.Interval = AccessToInternet && !IsSynchronizeEntry
+                ? TimeSpan.FromMilliseconds(15000)
+                : TimeSpan.FromMilliseconds(1000);
+        }
+
+        #endregion
+
+        #region Events
+
+        public event AccessToInternetEventHandler AccessToInternetChanged;
 
         #endregion
     }

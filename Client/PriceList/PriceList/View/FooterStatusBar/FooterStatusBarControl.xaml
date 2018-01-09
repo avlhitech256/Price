@@ -20,53 +20,74 @@
             <ColumnDefinition Width="Auto"></ColumnDefinition>
             <ColumnDefinition Width="Auto"></ColumnDefinition>
             <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Label Content="Итоговое сальдо:" 
+        <Label Content="Время отклика сервера:" 
                Grid.Column="1" 
                Margin="10,1,1,1" 
                HorizontalAlignment="Right" 
                HorizontalContentAlignment="
                Center" VerticalContentAlignment="Center">
         </Label>
-        <Label Content="Просроченная дебиторская задолженность:" 
+        <Label Content="Итоговое сальдо:" 
                Grid.Column="3" 
                Margin="10,1,1,1" 
                HorizontalAlignment="Right" 
                HorizontalContentAlignment="
                Center" VerticalContentAlignment="Center">
         </Label>
-        <Label Content="Домен:" 
+        <Label Content="Просроченная дебиторская задолженность:" 
                Grid.Column="5" 
                Margin="10,1,1,1" 
                HorizontalAlignment="Right" 
                HorizontalContentAlignment="
                Center" VerticalContentAlignment="Center">
         </Label>
-        <Label Content="Пользователь:" 
+        <Label Content="Домен:" 
                Grid.Column="7" 
                Margin="10,1,1,1" 
                HorizontalAlignment="Right" 
                HorizontalContentAlignment="
                Center" VerticalContentAlignment="Center">
         </Label>
-        <Label Content="Рабочая станция:" 
+        <Label Content="Пользователь:" 
                Grid.Column="9" 
+               Margin="10,1,1,1" 
+               HorizontalAlignment="Right" 
+               HorizontalContentAlignment="
+               Center" VerticalContentAlignment="Center">
+        </Label>
+        <Label Content="Рабочая станция:" 
+               Grid.Column="11" 
                Margin="10,1,1,1" 
                HorizontalAlignment="Right" 
                HorizontalContentAlignment="Center" 
                VerticalContentAlignment="Center">
         </Label>
         <Label Content="Сервер баз данных:" 
-               Grid.Column="11" 
+               Grid.Column="13" 
                Margin="10,1,1,1" 
                HorizontalAlignment="Right" 
                VerticalContentAlignment="Center" 
                HorizontalContentAlignment="Center">
         </Label>
+        <TextBox Name="InternetTextBox" 
+                 Text="{Binding Path=PingTime, Mode=OneWay}"
+                 VerticalContentAlignment="Center" 
+                 Grid.Column="2" 
+                 Margin="1" 
+                 HorizontalAlignment="Left" 
+                 Height="Auto" 
+                 Width="Auto" 
+                 MinWidth="30" 
+                 IsReadOnly="True"
+                 Background="{Binding Path=AccessToInternet, Converter={StaticResource BoolToAccessInternetBackgroundConverter}}">
+        </TextBox>
         <TextBox Name="DebtTextBox" 
                  Text="{Binding Path=Debd, Mode=OneWay}"
                  VerticalContentAlignment="Center" 
-                 Grid.Column="2" 
+                 Grid.Column="4" 
                  Margin="1" 
                  HorizontalAlignment="Left" 
                  Height="Auto" 
@@ -77,7 +98,7 @@
         <TextBox Name="OverdueAccountsReceivableTextBox" 
                  Text="{Binding Path=OverdueAccountsReceivable, Mode=OneWay}"
                  VerticalContentAlignment="Center" 
-                 Grid.Column="4" 
+                 Grid.Column="6" 
                  Margin="1" 
                  HorizontalAlignment="Left" 
                  Height="Auto" 
@@ -88,7 +109,7 @@
         <TextBox Name="DomainTextBox" 
                  Text="{Binding Path=UserDomain, Mode=OneWay}"
                  VerticalContentAlignment="Center" 
-                 Grid.Column="6" 
+                 Grid.Column="8" 
                  Margin="1" 
                  HorizontalAlignment="Left" 
                  Height="Auto" 
@@ -99,7 +120,7 @@
         <TextBox Name="UserTextBox" 
                  Text="{Binding Path=UserName, Mode=OneWay}"
                  VerticalContentAlignment="Center" 
-                 Grid.Column="8" 
+                 Grid.Column="10" 
                  Margin="1" 
                  HorizontalAlignment="Left" 
                  Height="Auto" 
@@ -110,7 +131,7 @@
         <TextBox Name="WorkstationTextBox" 
                  Text="{Binding Path=Workstation, Mode=OneWay}"
                  VerticalContentAlignment="Center" 
-                 Grid.Column="10" 
+                 Grid.Column="12" 
                  Margin="1" 
                  HorizontalAlignment="Left" 
                  Height="Auto" 
@@ -119,7 +140,7 @@
                  IsReadOnly="True">
         </TextBox>
         <TextBox Name="EnvironmentTextBox" 
-                 Grid.Column="12" 
+                 Grid.Column="14" 
                  Text="{Binding Path=DataBaseServer, Mode=OneWay}"
                  Margin="1" 
                  VerticalContentAlignment="Center" 

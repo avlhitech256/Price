@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:PriceList"
              xmlns:implementation="clr-namespace:Common.Service.Implementation;assembly=Common"
+             xmlns:converter="clr-namespace:Media.Converter;assembly=Media"
              StartupUri="View/Main/MainWindow.xaml">
     <Application.Resources>
 
@@ -212,6 +213,7 @@
         </Style>
 
         <implementation:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <converter:BoolToAccessInternetBackgroundConverter x:Key="BoolToAccessInternetBackgroundConverter" />
 
     </Application.Resources>
 </Application>

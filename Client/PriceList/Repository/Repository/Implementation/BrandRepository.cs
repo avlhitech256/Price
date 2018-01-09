@@ -20,6 +20,16 @@ namespace Repository.Repository.Implementation
             return entity.Id;
         }
 
+        public override void Load()
+        {
+            Clear();
+            DataService.Select<BrandItemEntity>().ToList().ForEach(
+                x =>
+                {
+                    RepositoryItems.Add(x.Id, x);
+                });
+        }
+
         public override void Load(IEnumerable<long> ids)
         {
             Clear();

@@ -220,6 +220,18 @@ namespace DataBase.EntitiesMigrations
             body.AppendLine("declare @entityName int = 5;                                                                          ");
             body.AppendLine("declare @dateOfCreation datetimeoffset(7) = Sysdatetimeoffset();                                      ");
             body.AppendLine("                                                                                                      ");
+            body.AppendLine("INSERT INTO[dbo].[SendItemsEntities]                                                                  ");
+            body.AppendLine("([Login], [EntityId], [Photos].[EntityName], [Photos].[RequestDate], [Photos].[DateOfCreation])       ");
+            body.AppendLine("SELECT @login, [Id], @entityName, @lastUpdate, @dateOfCreation                                        ");
+            body.AppendLine("FROM [dbo].[PhotoItemEntities] AS [Photos]                                                            ");
+            body.AppendLine("WHERE[Photos].[Id] IN(SELECT Id FROM @ids) AND                                                        ");
+            body.AppendLine("[Photos].[IsLoad] = 1 AND                                                                             ");
+            body.AppendLine("NOT EXISTS (SELECT *                                                                                  ");
+            body.AppendLine("FROM  [dbo].[SendItemsEntities] AS [SendItem]                                                         ");
+            body.AppendLine("WHERE [SendItem].[EntityId] = [Photos].[Id] AND                                                       ");
+            body.AppendLine("[SendItem].[Login] = @login AND                                                                       ");
+            body.AppendLine("[SendItem].[EntityName] = @entityName);                                                               ");
+            body.AppendLine("                                                                                                      ");
             body.AppendLine("INSERT INTO [dbo].[SendItemsEntities]                                                                 ");
             body.AppendLine("([Login], [EntityId], [Photos].[EntityName], [Photos].[RequestDate], [Photos].[DateOfCreation])       ");
             body.AppendLine("SELECT @login, [Id], @entityName, @lastUpdate, @dateOfCreation                                        ");

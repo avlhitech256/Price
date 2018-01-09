@@ -113,6 +113,10 @@
     <Compile Include="ViewModel\CatalogViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Async\Async.csproj">
+      <Project>{3BCCB813-5518-47B0-B165-86CC61EDD63E}</Project>
+      <Name>Async</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CommonControl\CommonControl.csproj">
       <Project>{9c178753-f272-451b-8cc3-8b78a275bc48}</Project>
       <Name>CommonControl</Name>

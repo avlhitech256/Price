@@ -331,6 +331,10 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Async\Async.csproj">
+      <Project>{3BCCB813-5518-47B0-B165-86CC61EDD63E}</Project>
+      <Name>Async</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Basket\Basket.csproj">
       <Project>{f2340fef-9582-419e-b58c-53ab4ad66299}</Project>
       <Name>Basket</Name>
@@ -370,6 +374,10 @@
     <ProjectReference Include="..\Synchronize\Synchronize.csproj">
       <Project>{109960b3-b5a7-4648-8227-b8f713bbe009}</Project>
       <Name>Synchronize</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UserDecisions\UserDecisions.csproj">
+      <Project>{190f846d-a3c6-4e1f-8533-b3d5300367ae}</Project>
+      <Name>UserDecisions</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

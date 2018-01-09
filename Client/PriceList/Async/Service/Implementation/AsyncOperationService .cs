@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Net.Mime;
 using System.Threading.Tasks;
+using Async.Service;
 using Common.Data.Enum;
 using Common.Event;
+using UserDecisions.Service;
 
 namespace Common.Service.Implementation
 {
@@ -9,12 +12,12 @@ namespace Common.Service.Implementation
     {
         //private static readonly ILog LOGGER = LogManager.GetLogger(typeof(AsyncOperationService));
 
-        //private readonly IUserDecisionsService userDecisionsService;
+        private readonly IUserDecisionsService userDecisionsService;
         private readonly TaskScheduler taskScheduler;
 
-        public AsyncOperationService(/*IUserDecisionsService userDecisionsService,*/ TaskScheduler taskScheduler)
+        public AsyncOperationService(IUserDecisionsService userDecisionsService, TaskScheduler taskScheduler)
         {
-            //this.userDecisionsService = userDecisionsService;
+            this.userDecisionsService = userDecisionsService;
             this.taskScheduler = taskScheduler;
         }
 
@@ -64,7 +67,7 @@ namespace Common.Service.Implementation
         {
             try
             {
-                ;//userDecisionsService.ShowException(exception, exception.Message);
+                userDecisionsService.ShowException(exception);
             }
             catch (Exception ex)
             {

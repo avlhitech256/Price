@@ -19,7 +19,7 @@ namespace File.Service.Implementation
 
         #endregion
 
-        #region#
+        #region Constructors
 
         public FileService(IJsonService jsonService = null, IImageService imageService = null)
         {
@@ -29,7 +29,7 @@ namespace File.Service.Implementation
 
         #endregion
 
-        #region#
+        #region Methods
 
         public MemoryStream ReadFile(string fileName)
         {

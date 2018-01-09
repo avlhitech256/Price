@@ -2,7 +2,7 @@
 using Common.Data.Enum;
 using Common.Event;
 
-namespace Common.Service
+namespace Async.Service
 {
     public interface IAsyncOperationService
     {

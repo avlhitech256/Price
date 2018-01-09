@@ -36,6 +36,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
@@ -69,6 +70,10 @@
     <Compile Include="ViewModel\IControlViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Async\Async.csproj">
+      <Project>{3bccb813-5518-47b0-b165-86cc61edd63e}</Project>
+      <Name>Async</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{fc5aa2b4-3b40-468f-b13e-f16b2ee8fdea}</Project>
       <Name>Common</Name>
@@ -96,6 +101,14 @@
     <ProjectReference Include="..\Template\Template.csproj">
       <Project>{c57fbec8-8f6e-46ec-bf2f-eb2396f188df}</Project>
       <Name>Template</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UserDecisions\UserDecisions.csproj">
+      <Project>{190f846d-a3c6-4e1f-8533-b3d5300367ae}</Project>
+      <Name>UserDecisions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Web\Web.csproj">
+      <Project>{082c068d-df77-4266-9a27-c4e45ad6fa16}</Project>
+      <Name>Web</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
