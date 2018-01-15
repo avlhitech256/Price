@@ -47,6 +47,10 @@ namespace DataBase.Context
 
         public virtual DbSet<SendItemsEntity> SendItemsEntities { get; set; }
 
+        public virtual DbSet<PriceGroupItemEntity> PriceGroupItemEntities { get; set; }
+
+        public virtual DbSet<TypeOfPriceItemEntity> TypeOfPriceItemEntities { get; set; }
+
         public virtual int PrepareToUpdateBrands(string login, Nullable<System.DateTimeOffset> lastUpdate)
         {
             var loginParameter = login != null ?

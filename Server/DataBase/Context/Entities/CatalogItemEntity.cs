@@ -67,5 +67,7 @@ namespace DataBase.Context.Entities
         public virtual NomenclatureGroupEntity NomenclatureGroup { get; set; }
 
         public virtual List<CommodityDirectionEntity> CommodityDirection { get; set; }
+
+        public virtual PriceGroupItemEntity PriceGroup { get; set; }
     }
 }

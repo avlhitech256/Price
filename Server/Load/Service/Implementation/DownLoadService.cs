@@ -156,6 +156,7 @@ namespace Load.Service.Implementation
             dataService.DataBaseContext.Configuration.ValidateOnSaveEnabled = false;
 
             CreateBrandItems(dataService.DataBaseContext, jsonLoadData, loadUpdateTime);
+            CreatePriceGroupItems(dataService.DataBaseContext, jsonLoadData, loadUpdateTime);
             CreateDirectoryItems(dataService.DataBaseContext, jsonLoadData, loadUpdateTime);
             CreateProductDirection(dataService.DataBaseContext, loadUpdateTime);
             CreateNomenclatureGroupItems(dataService.DataBaseContext, jsonLoadData, loadUpdateTime);
@@ -163,25 +164,42 @@ namespace Load.Service.Implementation
             LoadPictures(dataService.DataBaseContext, 
                          optionService.WorkingSourcePath + optionService.SubDirForPhoto,
                          optionService.PhotoPatterns, loadUpdateTime);
-            CreateCatalogItems(dataService.DataBaseContext, jsonLoadData);
+            CreateCatalogItems(dataService.DataBaseContext, jsonLoadData, loadUpdateTime);
 
             dataService.DataBaseContext.Configuration.AutoDetectChangesEnabled = true;
             dataService.DataBaseContext.Configuration.ValidateOnSaveEnabled = true;
         }
 
-        private void CreateCatalogItems(DataBaseContext dataBaseContext, JsonLoadData jsonLoadData)
+        private void CreateCatalogItems(DataBaseContext dataBaseContext, 
+                                       JsonLoadData jsonLoadData,
+                                       DateTimeOffset loadUpdateTime)
         {
             if (dataBaseContext != null && jsonLoadData?.Nomenclatures != null && jsonLoadData.Nomenclatures.Any())
             {
-                int countOfCatalogItem = 0;
+                int countItems = 0;
 
                 jsonLoadData.Nomenclatures.ForEach(
                     x =>
                     {
-                        dataBaseContext.CatalogItemEntities.Add(Assemble(dataBaseContext, x));
-                        countOfCatalogItem++;
+                        CatalogItemEntity oldCatalogItem = GetCatalogItem(dataBaseContext, x.UID);
 
-                        if (countOfCatalogItem % 100 == 0)
+                        if (oldCatalogItem != null)
+                        {
+                            Update(oldCatalogItem, x, dataBaseContext, loadUpdateTime);
+                            countItems++;
+                        }
+                        else
+                        {
+                            CatalogItemEntity newCatalogItem = Assemble(dataBaseContext, x, loadUpdateTime);
+
+                            if (newCatalogItem != null)
+                            {
+                                dataBaseContext.CatalogItemEntities.Add(newCatalogItem);
+                                countItems++;
+                            }
+                        }
+
+                        if (countItems % 100 == 0)
                         {
                             try
                             {
@@ -205,11 +223,81 @@ namespace Load.Service.Implementation
             }
         }
 
+        private void Update(CatalogItemEntity entity, Nomenclature jsonItem, 
+                            DataBaseContext dataBaseContext, DateTimeOffset loadUpdateTime)
+        {
+            if (entity != null && jsonItem != null)
+            {
+                if (Equals(entity, jsonItem, dataBaseContext))
+                {
+                    entity.ForceUpdated = loadUpdateTime;
+                }
+                else
+                {
+                    entity.Name = jsonItem.Name;
+                    entity.LastUpdated = loadUpdateTime;
+                }
+            }
+        }
+
+        private bool Equals(CatalogItemEntity entity, Nomenclature jsonItem, DataBaseContext dataBaseContext)
+        {
+            Guid code;
+            BrandItemEntity brandItem = GetBrandItem(dataBaseContext, jsonItem);
+            PriceGroupItemEntity priceGroupItem = GetPriceGroupItem(dataBaseContext, jsonItem);
+            DirectoryEntity directoryItem = GetDirectoryItem(dataBaseContext, jsonItem);
+            NomenclatureGroupEntity nomenclatureGroupItem =
+                GetNomenclatureGroupItem(dataBaseContext, jsonItem);
+            List<CommodityDirectionEntity> commodityDirectionItemsForCatalogItem =
+                GetCommodityDirection(dataBaseContext, jsonItem);
+            PriceInfo priceInfo = GetPriceInfo(jsonItem);
+            List<PhotoItemEntity> photoItems = GetPhotoItems(dataBaseContext, jsonItem);
+            List<string> needToCreatePhotos = GetNeedToCreatePhotos(photoItems, jsonItem);
+            photoItems.AddRange(CreateEmptyPhotos(dataBaseContext, needToCreatePhotos));
+
+            return jsonItem.UID.ConvertToGuid(out code) &&
+                   entity.UID == code &&
+                   entity.Code == jsonItem.Code &&
+                   entity.Article == jsonItem.VendorCode &&
+                   entity.Name == jsonItem.Name &&
+                   entity.Brand == brandItem &&
+                   entity.BrandName == brandItem?.Name &&
+                   entity.Unit == jsonItem.Measure &&
+                   entity.EnterpriceNormPack == jsonItem.NormPackaging &&
+                   entity.BatchOfSales == jsonItem.BatchOfSales.ConvertToDecimal() &&
+                   entity.Balance == jsonItem.InStock &&
+                   entity.Price == priceInfo.Prise &&
+                   entity.Currency == priceInfo.Currency &&
+                   entity.Multiplicity == 0 && //??????????????????????????????????????????????????
+                   entity.HasPhotos == photoItems.Any(x => x.IsLoad) &&
+                   Equals(entity.Photos.Select(x => x.Id), photoItems.Select(x => x.Id)) &&
+                   entity.DateOfCreation == jsonItem.DateOfCreation.ConvertToDateTimeOffset() &&
+                   entity.Status == GenerateStatus() &&
+                   entity.Directory.Id == directoryItem.Id &&
+                   entity.NomenclatureGroup.Id == nomenclatureGroupItem.Id &&
+                   Equals(entity.CommodityDirection.Select(x => x.Id), 
+                          commodityDirectionItemsForCatalogItem.Select(x => x.Id)) &&
+                   entity.PriceGroup.Id == priceGroupItem.Id;
+        }
+
+        private bool Equals(IEnumerable<long> firstIds, IEnumerable<long> secondIds)
+        {
+            List<long> firstListIds = firstIds as List<long> ?? firstIds?.ToList();
+            List<long> secondListIds = secondIds as List<long> ?? secondIds?.ToList();
+
+            return firstListIds != null && secondListIds != null &&
+                   firstListIds.Count == secondListIds.Count &&
+                   firstListIds.All(secondListIds.Contains) &&
+                   secondListIds.All(firstListIds.Contains);
+        }
+
         [NotNull]
         private CatalogItemEntity Assemble(DataBaseContext dataBaseContext,
-                                           Nomenclature nomenclature)
+                                           Nomenclature nomenclature,
+                                           DateTimeOffset loadUpdateTime)
         {
             BrandItemEntity brandItem = GetBrandItem(dataBaseContext, nomenclature);
+            PriceGroupItemEntity priceGroupItem = GetPriceGroupItem(dataBaseContext, nomenclature);
             DirectoryEntity directoryItem = GetDirectoryItem(dataBaseContext, nomenclature);
             NomenclatureGroupEntity nomenclatureGroupItem =
                 GetNomenclatureGroupItem(dataBaseContext, nomenclature);
@@ -219,7 +307,6 @@ namespace Load.Service.Implementation
             List<PhotoItemEntity> photoItems = GetPhotoItems(dataBaseContext, nomenclature);
             List<string> needToCreatePhotos = GetNeedToCreatePhotos(photoItems, nomenclature);
             photoItems.AddRange(CreateEmptyPhotos(dataBaseContext, needToCreatePhotos));
-            var now = DateTimeOffset.Now;
 
             var catalogItem = new CatalogItemEntity
             {
@@ -240,13 +327,14 @@ namespace Load.Service.Implementation
                 HasPhotos = photoItems.Any(x => x.IsLoad),
                 Photos = photoItems,
                 DateOfCreation = nomenclature.DateOfCreation.ConvertToDateTimeOffset(),
-                LastUpdated = now,
-                ForceUpdated = now,
+                LastUpdated = loadUpdateTime,
+                ForceUpdated = loadUpdateTime,
                 Status = GenerateStatus(),
-                LastUpdatedStatus = DateTimeOffset.Now,
+                LastUpdatedStatus = loadUpdateTime,
                 Directory = directoryItem,
                 NomenclatureGroup = nomenclatureGroupItem,
                 CommodityDirection = commodityDirectionItemsForCatalogItem,
+                PriceGroup = priceGroupItem
             };
 
             if (brandItem != null)
@@ -258,6 +346,18 @@ namespace Load.Service.Implementation
                 else
                 {
                     brandItem.CatalogItems = new List<CatalogItemEntity> { catalogItem };
+                }
+            }
+
+            if (priceGroupItem != null)
+            {
+                if (priceGroupItem.CatalogItems != null)
+                {
+                    priceGroupItem.CatalogItems.Add(catalogItem);
+                }
+                else
+                {
+                    priceGroupItem.CatalogItems = new List<CatalogItemEntity> { catalogItem };
                 }
             }
 
@@ -535,6 +635,25 @@ namespace Load.Service.Implementation
             }
         }
 
+        private CatalogItemEntity GetCatalogItem(DataBaseContext dataBaseContext, string code)
+        {
+            CatalogItemEntity catalogItem = null;
+            Guid guidCode;
+
+            if (code.ConvertToGuid(out guidCode))
+            {
+                catalogItem = GetCatalogItem(dataBaseContext, guidCode);
+            }
+
+            return catalogItem;
+        }
+
+        private CatalogItemEntity GetCatalogItem(DataBaseContext dataBaseContext, Guid code)
+        {
+            CatalogItemEntity catalogItem = dataBaseContext.CatalogItemEntities.FirstOrDefault(x => x.UID == code);
+            return catalogItem;
+        }
+
         private BrandItemEntity GetBrandItem(DataBaseContext dataBaseContext,
                                              Nomenclature nomenclature)
         {
@@ -565,6 +684,38 @@ namespace Load.Service.Implementation
         {
             BrandItemEntity brandItem = dataBaseContext.BrandItemEntities.FirstOrDefault(x => x.Code == code);
             return brandItem;
+        }
+
+        private PriceGroupItemEntity GetPriceGroupItem(DataBaseContext dataBaseContext,
+                                                       Nomenclature nomenclature)
+        {
+            PriceGroupItemEntity brandItem = null;
+
+            if (dataBaseContext != null && nomenclature != null)
+            {
+                brandItem = GetPriceGroupItem(dataBaseContext, nomenclature.BrandUID);
+            }
+
+            return brandItem;
+        }
+
+        private PriceGroupItemEntity GetPriceGroupItem(DataBaseContext dataBaseContext, string code)
+        {
+            PriceGroupItemEntity priceGroupItemItem = null;
+            Guid guidCode;
+
+            if (code.ConvertToGuid(out guidCode))
+            {
+                priceGroupItemItem = GetPriceGroupItem(dataBaseContext, guidCode);
+            }
+
+            return priceGroupItemItem;
+        }
+
+        private PriceGroupItemEntity GetPriceGroupItem(DataBaseContext dataBaseContext, Guid code)
+        {
+            PriceGroupItemEntity priceGroupItemItem = dataBaseContext.PriceGroupItemEntities.FirstOrDefault(x => x.Code == code);
+            return priceGroupItemItem;
         }
 
         private DirectoryEntity GetDirectoryItem(DataBaseContext dataBaseContext, string code)
@@ -1211,6 +1362,100 @@ namespace Load.Service.Implementation
             if (brand != null)
             {
                 brandItem = new BrandItemEntity
+                {
+                    Code = brand.UID.ConvertToGuid(),
+                    Name = brand.Name,
+                    DateOfCreation = loadUpdateTime,
+                    ForceUpdated = loadUpdateTime,
+                    LastUpdated = loadUpdateTime
+                };
+            }
+
+            return brandItem;
+        }
+
+        private void CreatePriceGroupItems(DataBaseContext dataBaseContext,
+                                          JsonLoadData jsonLoadData,
+                                          DateTimeOffset loadUpdateTime)
+        {
+            if (dataBaseContext != null && jsonLoadData?.PriceGroups != null && jsonLoadData.PriceGroups.Any())
+            {
+                int countItems = 0;
+
+                jsonLoadData.PriceGroups.ForEach(
+                    x =>
+                    {
+                        PriceGroupItemEntity oldPriceGroupItem = GetPriceGroupItem(dataBaseContext, x.UID);
+
+                        if (oldPriceGroupItem != null)
+                        {
+                            Update(oldPriceGroupItem, x, loadUpdateTime);
+                            countItems++;
+                        }
+                        else
+                        {
+                            PriceGroupItemEntity newPriceGroupItem = Assemble(x, loadUpdateTime);
+
+                            if (newPriceGroupItem != null)
+                            {
+                                dataBaseContext.PriceGroupItemEntities.Add(newPriceGroupItem);
+                                countItems++;
+                            }
+                        }
+
+                        if (countItems % 100 == 0)
+                        {
+                            try
+                            {
+                                dataBaseContext.SaveChanges();
+                            }
+                            catch (Exception)
+                            {
+                                ;
+                            }
+                        }
+                    });
+
+                try
+                {
+                    dataBaseContext.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    ;
+                }
+            }
+        }
+
+        private void Update(PriceGroupItemEntity entity, PriceGroup jsonItem, DateTimeOffset loadUpdateTime)
+        {
+            if (entity != null && jsonItem != null)
+            {
+                if (Equals(entity, jsonItem))
+                {
+                    entity.ForceUpdated = loadUpdateTime;
+                }
+                else
+                {
+                    entity.Name = jsonItem.Name;
+                    entity.LastUpdated = loadUpdateTime;
+                }
+            }
+        }
+
+        private bool Equals(PriceGroupItemEntity entity, PriceGroup jsonItem)
+        {
+            Guid code;
+            return jsonItem.UID.ConvertToGuid(out code) && entity.Code == code && entity.Name == jsonItem.Name;
+        }
+
+        private PriceGroupItemEntity Assemble(PriceGroup brand, DateTimeOffset loadUpdateTime)
+        {
+            PriceGroupItemEntity brandItem = null;
+
+            if (brand != null)
+            {
+                brandItem = new PriceGroupItemEntity
                 {
                     Code = brand.UID.ConvertToGuid(),
                     Name = brand.Name,
