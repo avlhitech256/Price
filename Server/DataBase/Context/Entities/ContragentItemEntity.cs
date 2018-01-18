@@ -5,21 +5,40 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataBase.Context.Entities
 {
-    public class TypeOfPriceItemEntity
+    public class ContragentItemEntity
     {
         public long Id { get; set; }
 
         [Index("IX_Code", 1, IsUnique = true)]
-        public Guid Code { get; set; }
+        public Guid UID { get; set; }
+
+        [MaxLength(30)]
+        public string Code { get; set; }
 
         [MaxLength(255)]
         public string Name { get; set; }
 
-        public virtual List<TypeOfPricesNomenclatureItemEntity> CatalogItems { get; set; }
+        [MaxLength(30)]
+        public string Login { get; set; }
+
+        [MaxLength(255)]
+        public string Password { get; set; }
+
+        public decimal MutualSettlements { get; set; }
+
+        [MaxLength(5)]
+        public string MutualSettlementsCurrency { get; set; } 
+
+        public decimal PDZ { get; set; }
+
+        [MaxLength(5)]
+        public string PDZCurrency { get; set; }
 
         public virtual List<PriceTypePriceGroupContragentEntity> PriceTypePriceGroups { get; set; }
 
         public virtual List<PriceTypeNomenclatureGroupContragentEntity> PriceTypeNomenclatureGroups { get; set; }
+
+        public virtual List<DiscountsContragentEntity> Discounts { get; set; }
 
         [Index("IX_DateOfCreation", 1, IsUnique = false)]
         public DateTimeOffset DateOfCreation { get; set; }

@@ -49,15 +49,6 @@ namespace DataBase.Context.Entities
 
         public virtual List<PhotoItemEntity> Photos { get; set; }
 
-        [Index("IX_DateOfCreation", 1, IsUnique = false)]
-        public DateTimeOffset DateOfCreation { get; set; }
-
-        [Index("IX_LastUpdated", 1, IsUnique = false)]
-        public DateTimeOffset LastUpdated { get; set; }
-
-        [Index("IX_ForceUpdated", 1, IsUnique = false)]
-        public DateTimeOffset ForceUpdated { get; set; }
-
         public CatalogItemStatus Status { get; set; }
 
         public DateTimeOffset LastUpdatedStatus { get; set; }
@@ -71,5 +62,16 @@ namespace DataBase.Context.Entities
         public virtual PriceGroupItemEntity PriceGroup { get; set; }
 
         public virtual List<TypeOfPricesNomenclatureItemEntity> TypeOfPriceItems { get; set; }
+
+        public virtual List<DiscountsContragentEntity> Discounts { get; set; }
+
+        [Index("IX_DateOfCreation", 1, IsUnique = false)]
+        public DateTimeOffset DateOfCreation { get; set; }
+
+        [Index("IX_LastUpdated", 1, IsUnique = false)]
+        public DateTimeOffset LastUpdated { get; set; }
+
+        [Index("IX_ForceUpdated", 1, IsUnique = false)]
+        public DateTimeOffset ForceUpdated { get; set; }
     }
 }

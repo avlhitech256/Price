@@ -17,6 +17,8 @@ namespace DataBase.Context.Entities
 
         public virtual List<CatalogItemEntity> CatalogItems { get; set; }
 
+        public virtual List<PriceTypeNomenclatureGroupContragentEntity> PriceTypeNomenclatureGroups { get; set; }
+
         [Index("IX_DateOfCreation", 1, IsUnique = false)]
         public DateTimeOffset DateOfCreation { get; set; }
 

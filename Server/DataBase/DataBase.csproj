@@ -57,12 +57,16 @@
     <Compile Include="Context\Entities\BrandItemEntity.cs" />
     <Compile Include="Context\Entities\CatalogItemEntity.cs" />
     <Compile Include="Context\Entities\CommodityDirectionEntity.cs" />
+    <Compile Include="Context\Entities\ContragentItemEntity.cs" />
     <Compile Include="Context\Entities\DirectoryEntity.cs" />
+    <Compile Include="Context\Entities\DiscountsContragentEntity.cs" />
     <Compile Include="Context\Entities\NomenclatureGroupEntity.cs" />
     <Compile Include="Context\Entities\OptionItemEntity.cs" />
     <Compile Include="Context\Entities\OrderEntity.cs" />
     <Compile Include="Context\Entities\PhotoItemEntity.cs" />
     <Compile Include="Context\Entities\PriceGroupItemEntity.cs" />
+    <Compile Include="Context\Entities\PriceTypeNomenclatureGroupContragentEntity.cs" />
+    <Compile Include="Context\Entities\PriceTypePriceGroupContragentEntity.cs" />
     <Compile Include="Context\Entities\ProductDirectionEntity.cs" />
     <Compile Include="Context\Entities\SendItemsEntity.cs" />
     <Compile Include="Context\Entities\TypeOfPriceItemEntity.cs" />
