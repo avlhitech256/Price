@@ -157,6 +157,7 @@ namespace Load.Service.Implementation
 
             CreateBrandItems(dataService.DataBaseContext, jsonLoadData, loadUpdateTime);
             CreatePriceGroupItems(dataService.DataBaseContext, jsonLoadData, loadUpdateTime);
+            CreateTypeOfPriceItems(dataService.DataBaseContext, jsonLoadData, loadUpdateTime);
             CreateDirectoryItems(dataService.DataBaseContext, jsonLoadData, loadUpdateTime);
             CreateProductDirection(dataService.DataBaseContext, loadUpdateTime);
             CreateNomenclatureGroupItems(dataService.DataBaseContext, jsonLoadData, loadUpdateTime);
@@ -171,8 +172,8 @@ namespace Load.Service.Implementation
         }
 
         private void CreateCatalogItems(DataBaseContext dataBaseContext, 
-                                       JsonLoadData jsonLoadData,
-                                       DateTimeOffset loadUpdateTime)
+                                        JsonLoadData jsonLoadData,
+                                        DateTimeOffset loadUpdateTime)
         {
             if (dataBaseContext != null && jsonLoadData?.Nomenclatures != null && jsonLoadData.Nomenclatures.Any())
             {
@@ -186,6 +187,7 @@ namespace Load.Service.Implementation
                         if (oldCatalogItem != null)
                         {
                             Update(oldCatalogItem, x, dataBaseContext, loadUpdateTime);
+                            CreateTypeOfPricesNomenclatureItems(oldCatalogItem, dataBaseContext, x, loadUpdateTime);
                             countItems++;
                         }
                         else
@@ -195,6 +197,7 @@ namespace Load.Service.Implementation
                             if (newCatalogItem != null)
                             {
                                 dataBaseContext.CatalogItemEntities.Add(newCatalogItem);
+                                CreateTypeOfPricesNomenclatureItems(newCatalogItem, dataBaseContext, x, loadUpdateTime);
                                 countItems++;
                             }
                         }
@@ -266,7 +269,7 @@ namespace Load.Service.Implementation
                    entity.EnterpriceNormPack == jsonItem.NormPackaging &&
                    entity.BatchOfSales == jsonItem.BatchOfSales.ConvertToDecimal() &&
                    entity.Balance == jsonItem.InStock &&
-                   entity.Price == priceInfo.Prise &&
+                   entity.Price == priceInfo.Price &&
                    entity.Currency == priceInfo.Currency &&
                    entity.Multiplicity == 0 && //??????????????????????????????????????????????????
                    entity.HasPhotos == photoItems.Any(x => x.IsLoad) &&
@@ -321,7 +324,7 @@ namespace Load.Service.Implementation
                 EnterpriceNormPack = nomenclature.NormPackaging,
                 BatchOfSales = nomenclature.BatchOfSales.ConvertToDecimal(),
                 Balance = nomenclature.InStock,
-                Price = priceInfo.Prise,
+                Price = priceInfo.Price,
                 Currency = priceInfo.Currency,
                 Multiplicity = 0,
                 HasPhotos = photoItems.Any(x => x.IsLoad),
@@ -582,11 +585,19 @@ namespace Load.Service.Implementation
             if (nomenclature?.TypesOfPrices != null && nomenclature.TypesOfPrices.Any())
             {
                 PriceTypeItem typeOfPrice = nomenclature.TypesOfPrices.FirstOrDefault();
+                priceInfo = GetPriceInfo(typeOfPrice);
+            }
 
-                if (typeOfPrice != null)
-                {
-                    PriceInfoParse(typeOfPrice.Price, priceInfo);
-                }
+            return priceInfo;
+        }
+
+        private PriceInfo GetPriceInfo(PriceTypeItem typeOfPrice)
+        {
+            var priceInfo = new PriceInfo();
+
+            if (typeOfPrice != null)
+            {
+                PriceInfoParse(typeOfPrice.Price, priceInfo);
             }
 
             return priceInfo;
@@ -608,7 +619,7 @@ namespace Load.Service.Implementation
 
                         if (decimal.TryParse(stringPrice, out price))
                         {
-                            priceInfo.Prise = price;
+                            priceInfo.Price = price;
 
                             if (splitPriceString.Length >= 2)
                             {
@@ -684,6 +695,25 @@ namespace Load.Service.Implementation
         {
             BrandItemEntity brandItem = dataBaseContext.BrandItemEntities.FirstOrDefault(x => x.Code == code);
             return brandItem;
+        }
+
+        private TypeOfPriceItemEntity GetTypeOfPriceItem(DataBaseContext dataBaseContext, string code)
+        {
+            TypeOfPriceItemEntity typeOfPriceItem = null;
+            Guid guidCode;
+
+            if (code.ConvertToGuid(out guidCode))
+            {
+                typeOfPriceItem = GetTypeOfPriceItem(dataBaseContext, guidCode);
+            }
+
+            return typeOfPriceItem;
+        }
+
+        private TypeOfPriceItemEntity GetTypeOfPriceItem(DataBaseContext dataBaseContext, Guid code)
+        {
+            TypeOfPriceItemEntity typeOfPriceItem = dataBaseContext.TypeOfPriceItemEntities.FirstOrDefault(x => x.Code == code);
+            return typeOfPriceItem;
         }
 
         private PriceGroupItemEntity GetPriceGroupItem(DataBaseContext dataBaseContext,
@@ -1279,6 +1309,269 @@ namespace Load.Service.Implementation
 
             return directoryItem;
         }
+
+
+        private void CreateTypeOfPriceItems(DataBaseContext dataBaseContext,
+                                            JsonLoadData jsonLoadData,
+                                            DateTimeOffset loadUpdateTime)
+        {
+            if (dataBaseContext != null && jsonLoadData?.TypesOfPrices != null && jsonLoadData.TypesOfPrices.Any())
+            {
+                int countItems = 0;
+
+                jsonLoadData.TypesOfPrices.ForEach(
+                    x =>
+                    {
+                        TypeOfPriceItemEntity oldTypeOfPriceItem = GetTypeOfPriceItem(dataBaseContext, x.UID);
+
+                        if (oldTypeOfPriceItem != null)
+                        {
+                            Update(oldTypeOfPriceItem, x, loadUpdateTime);
+                            countItems++;
+                        }
+                        else
+                        {
+                            TypeOfPriceItemEntity newTypeOfPriceItem = Assemble(x, loadUpdateTime);
+
+                            if (newTypeOfPriceItem != null)
+                            {
+                                dataBaseContext.TypeOfPriceItemEntities.Add(newTypeOfPriceItem);
+                                countItems++;
+                            }
+                        }
+
+                        if (countItems % 100 == 0)
+                        {
+                            try
+                            {
+                                dataBaseContext.SaveChanges();
+                            }
+                            catch (Exception)
+                            {
+                                ;
+                            }
+                        }
+                    });
+
+                try
+                {
+                    dataBaseContext.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    ;
+                }
+            }
+        }
+
+        private void Update(TypeOfPriceItemEntity entity, PriceType jsonItem, DateTimeOffset loadUpdateTime)
+        {
+            if (entity != null && jsonItem != null)
+            {
+                if (Equals(entity, jsonItem))
+                {
+                    entity.ForceUpdated = loadUpdateTime;
+                }
+                else
+                {
+                    entity.Name = jsonItem.Name;
+                    entity.LastUpdated = loadUpdateTime;
+                }
+            }
+        }
+
+        private bool Equals(TypeOfPriceItemEntity entity, PriceType jsonItem)
+        {
+            Guid code;
+            return jsonItem.UID.ConvertToGuid(out code) && entity.Code == code && entity.Name == jsonItem.Name;
+        }
+
+        private TypeOfPriceItemEntity Assemble(PriceType typeOfPrice, DateTimeOffset loadUpdateTime)
+        {
+            TypeOfPriceItemEntity brandItem = null;
+
+            if (typeOfPrice != null)
+            {
+                brandItem = new TypeOfPriceItemEntity
+                {
+                    Code = typeOfPrice.UID.ConvertToGuid(),
+                    Name = typeOfPrice.Name,
+                    DateOfCreation = loadUpdateTime,
+                    ForceUpdated = loadUpdateTime,
+                    LastUpdated = loadUpdateTime
+                };
+            }
+
+            return brandItem;
+        }
+
+        private void CreateTypeOfPricesNomenclatureItems(CatalogItemEntity catalogItem,
+                                                         DataBaseContext dataBaseContext,
+                                                         Nomenclature jsonLoadData,
+                                                         DateTimeOffset loadUpdateTime)
+        {
+            if (dataBaseContext != null && jsonLoadData?.TypesOfPrices != null && jsonLoadData.TypesOfPrices.Any())
+            {
+                List<PriceTypeItem> needToUpdateItems =
+                    jsonLoadData.TypesOfPrices
+                        .Where(x => catalogItem.TypeOfPriceItems
+                        .Any(
+                            y =>
+                            {
+                                Guid code;
+                                return x.UID.ConvertToGuid(out code) && code.Equals(y.TypeOfPriceItem.Code);
+                            }))
+                        .ToList();
+
+                List<PriceTypeItem> needToCreateItems =
+                    jsonLoadData.TypesOfPrices
+                        .Where(x => catalogItem.TypeOfPriceItems
+                        .All(
+                            y =>
+                            {
+                                Guid code;
+                                return x.UID.ConvertToGuid(out code) && !code.Equals(y.TypeOfPriceItem.Code);
+                            }))
+                        .ToList();
+
+                int countItems = 0;
+
+                needToUpdateItems.ForEach(
+                    x =>
+                    {
+                        countItems++;
+                        TypeOfPricesNomenclatureItemEntity entity =
+                            catalogItem.TypeOfPriceItems.FirstOrDefault(
+                                t =>
+                                {
+                                    Guid code;
+                                    return x.UID.ConvertToGuid(out code) && !code.Equals(t.TypeOfPriceItem.Code);
+                                });
+                        Update(entity, x, loadUpdateTime);
+
+                        if (countItems % 100 == 0)
+                        {
+                            try
+                            {
+                                dataBaseContext.SaveChanges();
+                            }
+                            catch (Exception)
+                            {
+                                ;
+                            }
+                        }
+                    });
+
+                countItems = 0;
+
+                needToCreateItems.ForEach(
+                    x =>
+                    {
+                        Guid code;
+
+                        if (x.UID.ConvertToGuid(out code))
+                        {
+                            TypeOfPriceItemEntity typeOfPriceItem = 
+                                dataBaseContext.TypeOfPriceItemEntities.FirstOrDefault(t => t.Code == code);
+                            TypeOfPricesNomenclatureItemEntity entity = Assemble(x, catalogItem, typeOfPriceItem, loadUpdateTime);
+                            dataBaseContext.TypeOfPricesNomenclatureItemEntities.Add(entity);
+                            countItems++;
+                        }
+
+                        if (countItems % 100 == 0)
+                        {
+                            try
+                            {
+                                dataBaseContext.SaveChanges();
+                            }
+                            catch (Exception)
+                            {
+                                ;
+                            }
+                        }
+                    });
+
+                try
+                {
+                    dataBaseContext.SaveChanges();
+                }
+                catch (Exception)
+                {
+                    ;
+                }
+            }
+        }
+
+        private void Update(TypeOfPricesNomenclatureItemEntity entity, PriceTypeItem jsonItem, DateTimeOffset loadUpdateTime)
+        {
+            if (entity != null && jsonItem != null)
+            {
+                if (Equals(entity, jsonItem))
+                {
+                    entity.ForceUpdated = loadUpdateTime;
+                }
+                else
+                {
+                    Guid code;
+
+                    if (jsonItem.UID.ConvertToGuid(out code))
+                    {
+                        entity.TypeOfPriceItem.Code = code;
+                    }
+
+                    PriceInfo priceInfo = GetPriceInfo(jsonItem);
+                    entity.Price = priceInfo.Price;
+                    entity.Currency = priceInfo.Currency;
+                    entity.LastUpdated = loadUpdateTime;
+                }
+            }
+        }
+
+        private bool Equals(TypeOfPricesNomenclatureItemEntity entity, PriceTypeItem jsonItem)
+        {
+            bool result = false;
+
+            if (entity != null && jsonItem != null)
+            {
+                Guid code;
+                PriceInfo priceInfo = GetPriceInfo(jsonItem);
+                result = jsonItem.UID.ConvertToGuid(out code) && entity.TypeOfPriceItem.Code == code &&
+                       entity.Price == priceInfo.Price && entity.Currency == priceInfo.Currency;
+            }
+
+            return result;
+        }
+
+        private TypeOfPricesNomenclatureItemEntity Assemble(PriceTypeItem priceTypeItem,
+                                                            CatalogItemEntity catalogItem,
+                                                            TypeOfPriceItemEntity typeOfPrice,
+                                                            DateTimeOffset loadUpdateTime)
+        {
+            TypeOfPricesNomenclatureItemEntity typeOfPricesNomenclatureItem = null;
+
+            if (priceTypeItem != null && catalogItem != null && typeOfPrice != null)
+            {
+                PriceInfo priceInfo = GetPriceInfo(priceTypeItem);
+                typeOfPricesNomenclatureItem = new TypeOfPricesNomenclatureItemEntity
+                {
+                    CatalogItem = catalogItem,
+                    TypeOfPriceItem = typeOfPrice,
+                    Price = priceInfo.Price,
+                    Currency = priceInfo.Currency,
+                    DateOfCreation = loadUpdateTime,
+                    ForceUpdated = loadUpdateTime,
+                    LastUpdated = loadUpdateTime
+                };
+
+                catalogItem.TypeOfPriceItems.Add(typeOfPricesNomenclatureItem);
+                typeOfPrice.CatalogItems.Add(typeOfPricesNomenclatureItem);
+            }
+
+            return typeOfPricesNomenclatureItem;
+        }
+
+
+
 
         private void CreateBrandItems(DataBaseContext dataBaseContext, 
                                       JsonLoadData jsonLoadData, 

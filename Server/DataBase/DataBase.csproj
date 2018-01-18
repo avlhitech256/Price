@@ -66,6 +66,7 @@
     <Compile Include="Context\Entities\ProductDirectionEntity.cs" />
     <Compile Include="Context\Entities\SendItemsEntity.cs" />
     <Compile Include="Context\Entities\TypeOfPriceItemEntity.cs" />
+    <Compile Include="Context\Entities\TypeOfPricesNomenclatureItemEntity.cs" />
     <Compile Include="Context\Initializer\DataBaseInitializer.cs" />
     <Compile Include="Context\Object\EntityName.cs" />
     <Compile Include="EntitiesMigrations\201712161748219_InitialCreate.cs" />

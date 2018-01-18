@@ -5,17 +5,18 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataBase.Context.Entities
 {
-    public class TypeOfPriceItemEntity
+    public class TypeOfPricesNomenclatureItemEntity
     {
         public long Id { get; set; }
 
-        [Index("IX_Code", 1, IsUnique = true)]
-        public Guid Code { get; set; }
+        public virtual CatalogItemEntity CatalogItem { get; set; }
 
-        [MaxLength(255)]
-        public string Name { get; set; }
+        public virtual TypeOfPriceItemEntity TypeOfPriceItem { get; set; }
 
-        public virtual List<TypeOfPricesNomenclatureItemEntity> CatalogItems { get; set; }
+        public decimal Price { get; set; }
+
+        [MaxLength(5)]
+        public string Currency { get; set; }
 
         [Index("IX_DateOfCreation", 1, IsUnique = false)]
         public DateTimeOffset DateOfCreation { get; set; }

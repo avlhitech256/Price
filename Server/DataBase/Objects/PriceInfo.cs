@@ -6,7 +6,7 @@
         
         public PriceInfo(decimal price, string currency)
         {
-            Prise = price;
+            Price = price;
             Currency = currency;
         }
 
@@ -16,7 +16,7 @@
 
         #region Properties
 
-        public decimal Prise { get; set; }
+        public decimal Price { get; set; }
 
         public string Currency { get; set; }
 
