@@ -166,9 +166,189 @@ namespace Load.Service.Implementation
                          optionService.WorkingSourcePath + optionService.SubDirForPhoto,
                          optionService.PhotoPatterns, loadUpdateTime);
             CreateCatalogItems(dataService.DataBaseContext, jsonLoadData, loadUpdateTime);
+            CreateContragentItems(dataService.DataBaseContext, jsonLoadData, loadUpdateTime);
 
             dataService.DataBaseContext.Configuration.AutoDetectChangesEnabled = true;
             dataService.DataBaseContext.Configuration.ValidateOnSaveEnabled = true;
+        }
+
+        private void CreateContragentItems(DataBaseContext dataBaseContext, 
+                                           JsonLoadData jsonLoadData, DateTimeOffset loadUpdateTime)
+        {
+            if (dataBaseContext != null && jsonLoadData?.Clients != null && jsonLoadData.Clients.Any())
+            {
+                int countItems = 0;
+
+                jsonLoadData.Clients.ForEach(
+                    x =>
+                    {
+                        ContragentItemEntity oldContragentItem = GetContragentItem(dataBaseContext, x.UID);
+
+                        if (oldContragentItem != null)
+                        {
+                            Update(oldContragentItem, x, dataBaseContext, loadUpdateTime);
+                            CreateTypeOfPricesNomenclatureItems(oldContragentItem, dataBaseContext, x, loadUpdateTime);
+                            countItems++;
+                        }
+                        else
+                        {
+                            ContragentItemEntity newContragentItem = Assemble(dataBaseContext, x, loadUpdateTime);
+
+                            if (newContragentItem != null)
+                            {
+                                dataBaseContext.ContragentItemEntities.Add(newContragentItem);
+                                CreateTypeOfPricesNomenclatureItems(newContragentItem, dataBaseContext, x, loadUpdateTime);
+                                countItems++;
+                            }
+                        }
+
+                        if (countItems % 100 == 0)
+                        {
+                            try
+                            {
+                                dataBaseContext.SaveChanges();
+                            }
+                            catch (Exception e)
+                            {
+                                ;
+                            }
+                        }
+                    });
+
+                try
+                {
+                    dataBaseContext.SaveChanges();
+                }
+                catch (Exception e)
+                {
+                    ;
+                }
+            }
+        }
+
+        private void Update(ContragentItemEntity entity, Client jsonItem,
+                            DataBaseContext dataBaseContext, DateTimeOffset loadUpdateTime)
+        {
+            if (entity != null && jsonItem != null)
+            {
+                if (Equals(entity, jsonItem, dataBaseContext))
+                {
+                    entity.ForceUpdated = loadUpdateTime;
+                }
+                else
+                {
+                    entity.Name = jsonItem.Name;
+                    entity.LastUpdated = loadUpdateTime;
+                }
+            }
+        }
+
+        private bool Equals(ContragentItemEntity entity, Client jsonItem, DataBaseContext dataBaseContext)
+        {
+            PriceInfo mutualSettlementsPriceInfo = GetPriceInfoOfMutualSettlements(jsonItem);
+            PriceInfo pdzPriceInfo = GetPriceInfoOfPDZ(jsonItem);
+
+            return Equals(entity.UID, jsonItem.UID) &&
+                   entity.Code == jsonItem.Code &&
+                   entity.Name == jsonItem.Name &&
+                   entity.Login == jsonItem.Login &&
+                   entity.MutualSettlements == mutualSettlementsPriceInfo.Price &&
+                   entity.MutualSettlementsCurrency == mutualSettlementsPriceInfo.Currency &&
+                   entity.PDZ == pdzPriceInfo.Price &&
+                   entity.PDZCurrency == pdzPriceInfo.Currency &&
+                   Equals(entity.PriceTypePriceGroups, jsonItem.PriceTypePriceGroup) &&
+                   Equals(entity.Discounts, jsonItem.Discounts) &&
+                   Equals(entity.PriceTypeNomenclatureGroups, jsonItem.PriceTypeNomenclatureGroup);
+        }
+
+        private bool Equals(IEnumerable<PriceTypeNomenclatureGroupContragentEntity> firstPriceTypeNomenclatureGroups, 
+                            IEnumerable<TypeOfNomenclature> secondPriceTypeNomenclatureGroups)
+        {
+            List<PriceTypeNomenclatureGroupContragentEntity> firstPriceTypeNomenclatureGroupsList =
+                firstPriceTypeNomenclatureGroups as List<PriceTypeNomenclatureGroupContragentEntity> ??
+                firstPriceTypeNomenclatureGroups?.ToList();
+            List<TypeOfNomenclature> secondPriceTypeNomenclatureGroupsList =
+                secondPriceTypeNomenclatureGroups as List<TypeOfNomenclature> ??
+                secondPriceTypeNomenclatureGroups?.ToList();
+
+            return firstPriceTypeNomenclatureGroupsList != null && secondPriceTypeNomenclatureGroupsList != null &&
+                   firstPriceTypeNomenclatureGroupsList.Count == secondPriceTypeNomenclatureGroupsList.Count &&
+                   firstPriceTypeNomenclatureGroupsList.All(e => secondPriceTypeNomenclatureGroupsList.Any(j => Equals(e, j))) &&
+                   secondPriceTypeNomenclatureGroupsList.All(j => firstPriceTypeNomenclatureGroupsList.Any(e => Equals(e, j)));
+
+        }
+
+        private bool Equals(PriceTypeNomenclatureGroupContragentEntity firstPriceTypeNomenclatureGroup,
+            TypeOfNomenclature secondPriceTypeNomenclatureGroup)
+        {
+            return firstPriceTypeNomenclatureGroup != null && secondPriceTypeNomenclatureGroup != null &&
+                   Equals(firstPriceTypeNomenclatureGroup.NomenclatureGroupItem.Code,
+                       secondPriceTypeNomenclatureGroup.NomenclatureGroupUID) &&
+                   Equals(firstPriceTypeNomenclatureGroup.TypeOfPriceItem.Code,
+                       secondPriceTypeNomenclatureGroup.PriceTypeUID);
+        }
+
+        private bool Equals(IEnumerable<DiscountsContragentEntity> firstDiscounts, IEnumerable<Discount> secondDiscounts)
+        {
+            List<DiscountsContragentEntity> firstDiscountsList = 
+                firstDiscounts as List<DiscountsContragentEntity> ?? firstDiscounts?.ToList();
+            List<Discount> secondDiscountList = secondDiscounts as List<Discount> ?? secondDiscounts?.ToList();
+
+            return firstDiscountsList != null && secondDiscountList != null &&
+                   firstDiscountsList.Count == secondDiscountList.Count &&
+                   firstDiscountsList.All(e => secondDiscountList.Any(j => Equals(e, j))) &&
+                   secondDiscountList.All(j => firstDiscountsList.Any(e => Equals(e, j)));
+
+        }
+
+        private bool Equals(DiscountsContragentEntity firstDiscount, Discount secondDiscount)
+        {
+            return firstDiscount != null && secondDiscount != null &&
+                   Equals(firstDiscount.CatalogItems.Select(x => x.UID), secondDiscount.Nomenclature);
+
+        }
+
+        private bool Equals(IEnumerable<PriceTypePriceGroupContragentEntity> firstPriceTypePriceGroups,
+                            IEnumerable<TypesOfPrices> secondPriceTypePriceGroups)
+        {
+            List<PriceTypePriceGroupContragentEntity> firstPriceTypePriceGroupsList =
+                firstPriceTypePriceGroups as List<PriceTypePriceGroupContragentEntity> ??
+                firstPriceTypePriceGroups?.ToList();
+            List<TypesOfPrices> secondPriceTypePriceGroupsList =
+                secondPriceTypePriceGroups as List<TypesOfPrices> ??
+                secondPriceTypePriceGroups?.ToList();
+            return firstPriceTypePriceGroupsList != null &&
+                   secondPriceTypePriceGroupsList != null &&
+                   firstPriceTypePriceGroupsList.Count == secondPriceTypePriceGroupsList.Count &&
+                   firstPriceTypePriceGroupsList.All(e => secondPriceTypePriceGroupsList.Any(j => Equals(e, j))) &&
+                   secondPriceTypePriceGroupsList.All(j => firstPriceTypePriceGroupsList.Any(e => Equals(e, j)));
+        }
+
+        private bool Equals(PriceTypePriceGroupContragentEntity firstPriceTypePriceGroup,
+                            TypesOfPrices secondPriceTypePriceGroup)
+        {
+            return firstPriceTypePriceGroup != null &&
+                   secondPriceTypePriceGroup != null &&
+                   Equals(firstPriceTypePriceGroup.PriceGroupItem.Code, secondPriceTypePriceGroup.PriceGroupUID) &&
+                   Equals(firstPriceTypePriceGroup.TypeOfPriceItem.Code, secondPriceTypePriceGroup.PriceTypeUID);
+        }
+
+        private bool Equals(IEnumerable<Guid> firstCodes, IEnumerable<string> secondStringCodes)
+        {
+            List<Guid> firstListCodes = firstCodes as List<Guid> ?? firstCodes?.ToList();
+            List<string> secondListStrings = secondStringCodes as List<string> ?? secondStringCodes?.ToList();
+            return firstListCodes != null && secondListStrings != null &&
+                   firstListCodes.Count == secondListStrings.Count &&
+                   firstListCodes.All(c => secondListStrings.Any(s => Equals(c, s))) &&
+                   secondListStrings.All(s => firstListCodes.Any(c => Equals(c, s)));
+        }
+
+        private bool Equals(Guid firstCode, string secondStringCode)
+        {
+            Guid code;
+            return !string.IsNullOrWhiteSpace(secondStringCode) &&
+                   secondStringCode.ConvertToGuid(out code) &&
+                   firstCode == code;
         }
 
         private void CreateCatalogItems(DataBaseContext dataBaseContext, 
@@ -237,7 +417,39 @@ namespace Load.Service.Implementation
                 }
                 else
                 {
+                    BrandItemEntity brandItem = GetBrandItem(dataBaseContext, jsonItem);
+                    PriceGroupItemEntity priceGroupItem = GetPriceGroupItem(dataBaseContext, jsonItem);
+                    DirectoryEntity directoryItem = GetDirectoryItem(dataBaseContext, jsonItem);
+                    NomenclatureGroupEntity nomenclatureGroupItem =
+                        GetNomenclatureGroupItem(dataBaseContext, jsonItem);
+                    List<CommodityDirectionEntity> commodityDirectionItemsForCatalogItem =
+                        GetCommodityDirection(dataBaseContext, jsonItem);
+                    PriceInfo priceInfo = GetPriceInfo(jsonItem);
+                    List<PhotoItemEntity> photoItems = GetPhotoItems(dataBaseContext, jsonItem);
+                    List<string> needToCreatePhotos = GetNeedToCreatePhotos(photoItems, jsonItem);
+                    photoItems.AddRange(CreateEmptyPhotos(dataBaseContext, needToCreatePhotos));
+
                     entity.Name = jsonItem.Name;
+                    entity.Code = jsonItem.Code;
+                    entity.Article = jsonItem.VendorCode;
+                    entity.Name = jsonItem.Name;
+                    entity.Brand = brandItem;
+                    entity.BrandName = brandItem?.Name;
+                    entity.Unit = jsonItem.Measure;
+                    entity.EnterpriceNormPack = jsonItem.NormPackaging;
+                    entity.BatchOfSales = jsonItem.BatchOfSales.ConvertToDecimal();
+                    entity.Balance = jsonItem.InStock;
+                    entity.Price = priceInfo.Price;
+                    entity.Currency = priceInfo.Currency;
+                    entity.Multiplicity = 0;
+                    entity.HasPhotos = photoItems.Any(x => x.IsLoad);
+                    entity.Photos = photoItems;
+                    entity.DateOfCreation = jsonItem.DateOfCreation.ConvertToDateTimeOffset();
+                    entity.Status = GenerateStatus();
+                    entity.Directory = directoryItem;
+                    entity.NomenclatureGroup = nomenclatureGroupItem;
+                    entity.CommodityDirection = commodityDirectionItemsForCatalogItem;
+                    entity.PriceGroup = priceGroupItem;
                     entity.LastUpdated = loadUpdateTime;
                 }
             }
@@ -603,6 +815,30 @@ namespace Load.Service.Implementation
             return priceInfo;
         }
 
+        private PriceInfo GetPriceInfoOfPDZ(Client client)
+        {
+            var priceInfo = new PriceInfo();
+
+            if (client != null)
+            {
+                PriceInfoParse(client.PDZ, priceInfo);
+            }
+
+            return priceInfo;
+        }
+
+        private PriceInfo GetPriceInfoOfMutualSettlements(Client client)
+        {
+            var priceInfo = new PriceInfo();
+
+            if (client != null)
+            {
+                PriceInfoParse(client.MutualSettlements, priceInfo);
+            }
+
+            return priceInfo;
+        }
+
         private void PriceInfoParse(string priceWithCurrency, PriceInfo priceInfo)
         {
             if (!string.IsNullOrWhiteSpace(priceWithCurrency))
@@ -644,6 +880,25 @@ namespace Load.Service.Implementation
                     }
                 }
             }
+        }
+
+        private ContragentItemEntity GetContragentItem(DataBaseContext dataBaseContext, string code)
+        {
+            ContragentItemEntity contragentItem = null;
+            Guid guidCode;
+
+            if (code.ConvertToGuid(out guidCode))
+            {
+                contragentItem = GetContragentItem(dataBaseContext, guidCode);
+            }
+
+            return contragentItem;
+        }
+
+        private ContragentItemEntity GetContragentItem(DataBaseContext dataBaseContext, Guid code)
+        {
+            ContragentItemEntity catalogItem = dataBaseContext.ContragentItemEntities.FirstOrDefault(x => x.UID == code);
+            return catalogItem;
         }
 
         private CatalogItemEntity GetCatalogItem(DataBaseContext dataBaseContext, string code)

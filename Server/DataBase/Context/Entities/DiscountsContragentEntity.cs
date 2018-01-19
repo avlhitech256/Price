@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataBase.Context.Entities
@@ -7,7 +8,7 @@ namespace DataBase.Context.Entities
     {
         public long Id { get; set; }
 
-        public virtual CatalogItemEntity CatalogItem { get; set; }
+        public virtual List<CatalogItemEntity> CatalogItems { get; set; }
 
         public virtual ContragentItemEntity ContragentItem { get; set; }
 
