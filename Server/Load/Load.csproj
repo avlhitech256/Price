@@ -51,6 +51,9 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\IDownLoadService.cs" />
+    <Compile Include="Service\Implementation\DirectDiscount.cs" />
+    <Compile Include="Service\Implementation\DirectPriceTypeNomenclatureGroupContragent.cs" />
+    <Compile Include="Service\Implementation\DirectPriceTypePriceGroupContragent.cs" />
     <Compile Include="Service\Implementation\DownLoadService.cs" />
     <Compile Include="Service\Implementation\JsonLoadData.cs" />
     <Compile Include="Service\Implementation\LoadingThreadInfo.cs" />

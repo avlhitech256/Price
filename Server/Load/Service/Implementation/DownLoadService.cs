@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.EntityClient;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -187,7 +188,6 @@ namespace Load.Service.Implementation
                         if (oldContragentItem != null)
                         {
                             Update(oldContragentItem, x, dataBaseContext, loadUpdateTime);
-                            CreateTypeOfPricesNomenclatureItems(oldContragentItem, dataBaseContext, x, loadUpdateTime);
                             countItems++;
                         }
                         else
@@ -197,7 +197,6 @@ namespace Load.Service.Implementation
                             if (newContragentItem != null)
                             {
                                 dataBaseContext.ContragentItemEntities.Add(newContragentItem);
-                                CreateTypeOfPricesNomenclatureItems(newContragentItem, dataBaseContext, x, loadUpdateTime);
                                 countItems++;
                             }
                         }
@@ -237,10 +236,382 @@ namespace Load.Service.Implementation
                 }
                 else
                 {
+                    PriceInfo mutualSettlementsPriceInfo = GetPriceInfoOfMutualSettlements(jsonItem);
+                    PriceInfo pdzPriceInfo = GetPriceInfoOfPDZ(jsonItem);
+
+                    entity.Code = jsonItem.Code;
                     entity.Name = jsonItem.Name;
+                    entity.Login = jsonItem.Login;
+                    entity.MutualSettlements = mutualSettlementsPriceInfo.Price;
+                    entity.MutualSettlementsCurrency = mutualSettlementsPriceInfo.Currency;
+                    entity.PDZ = pdzPriceInfo.Price;
+                    entity.PDZCurrency = pdzPriceInfo.Currency;
+                    UpdateDiscounts(entity, jsonItem, dataBaseContext, loadUpdateTime);
+                    UpdatePriceTypePriceGroupContragents(entity, jsonItem, dataBaseContext, loadUpdateTime);
+                    UpdatePriceTypeNomenclatureGroupContragents(entity, jsonItem, dataBaseContext, loadUpdateTime);
+                    
                     entity.LastUpdated = loadUpdateTime;
                 }
             }
+        }
+
+        private void UpdatePriceTypeNomenclatureGroupContragents(ContragentItemEntity entity, 
+                                                                 Client jsonItem,
+                                                                 DataBaseContext dataBaseContext, 
+                                                                 DateTimeOffset loadUpdateTime)
+        {
+            var priceTypeNomenclatureGroupContragentItems = new List<DirectPriceTypeNomenclatureGroupContragent>();
+
+            foreach (TypeOfNomenclature typeOfNomenclature in jsonItem.PriceTypeNomenclatureGroup)
+            {
+                bool validConvertCode = true;
+
+                Guid nomenclatureGroupCode;
+
+                if (!typeOfNomenclature.NomenclatureGroupUID.ConvertToGuid(out nomenclatureGroupCode))
+                {
+                    //TODO Вывести в лог об ошибочном GUID
+                    validConvertCode = false;
+                }
+
+                Guid typeOfPriceCode;
+
+                if (!typeOfNomenclature.PriceTypeUID.ConvertToGuid(out typeOfPriceCode))
+                {
+                    //TODO Вывести в лог об ошибочном GUID
+                    validConvertCode = false;
+                }
+
+                if (validConvertCode)
+                {
+                    var directPriceTypeNomenclatureGroupContragent =
+                        new DirectPriceTypeNomenclatureGroupContragent(typeOfPriceCode, nomenclatureGroupCode);
+                    priceTypeNomenclatureGroupContragentItems.Add(directPriceTypeNomenclatureGroupContragent);
+                }
+                else
+                {
+                    //TODO Вывести сообщение о невозможности создать запись в БазеДанных с такими кодами
+                }
+            }
+
+            List<PriceTypeNomenclatureGroupContragentEntity> needToUpdate = null;
+
+            try
+            {
+                entity.PriceTypeNomenclatureGroups.RemoveAll(
+                    e =>
+                        priceTypeNomenclatureGroupContragentItems
+                            .All(d => e.TypeOfPriceItem.Code != d.TypeOfPriceCode ||
+                                      e.NomenclatureGroupItem.Code != d.NomenclatureGroupCode));
+                needToUpdate = entity.PriceTypeNomenclatureGroups.ToList();
+
+            }
+            catch (Exception e)
+            {
+                // TODO Запись в LOG-file ошибок работы с базой данных
+            }
+
+            if (needToUpdate != null && needToUpdate.Any())
+            {
+                needToUpdate.ForEach(e => e.ForceUpdated = loadUpdateTime);
+
+                List<DirectPriceTypeNomenclatureGroupContragent> needToCreate =
+                    priceTypeNomenclatureGroupContragentItems
+                        .Where(d => needToUpdate.All(e => e.TypeOfPriceItem.Code != d.TypeOfPriceCode ||
+                                                          e.NomenclatureGroupItem.Code != d.NomenclatureGroupCode))
+                        .ToList();
+
+                needToCreate.ForEach(d => Assemble(entity, d, dataBaseContext, loadUpdateTime));
+            }
+        }
+
+        private void Assemble(ContragentItemEntity contragentItem,
+                      DirectPriceTypeNomenclatureGroupContragent directPriceTypeNomenclatureGroupContragentItem,
+                      DataBaseContext dataBaseContext, DateTimeOffset loadUpdateTime)
+        {
+            bool validFoundEntities = true;
+            var entity = new PriceTypeNomenclatureGroupContragentEntity();
+
+            NomenclatureGroupEntity nomenclatureGroupItem = null;
+
+            try
+            {
+                nomenclatureGroupItem = dataBaseContext.NomenclatureGroupEntities.FirstOrDefault(
+                    e => e.Code == directPriceTypeNomenclatureGroupContragentItem.NomenclatureGroupCode);
+            }
+            catch (Exception e)
+            {
+                // TODO Запись в LOG-file ошибок работы с базой данных
+            }
+
+            if (nomenclatureGroupItem == null)
+            {
+                validFoundEntities = false;
+                //TODO Вывести сообщение что не найдена сущность
+            }
+
+            TypeOfPriceItemEntity typeOfPriceItem = null;
+
+            try
+            {
+                typeOfPriceItem = dataBaseContext.TypeOfPriceItemEntities.FirstOrDefault(
+                        e => e.Code == directPriceTypeNomenclatureGroupContragentItem.TypeOfPriceCode);
+            }
+            catch (Exception e)
+            {
+                // TODO Запись в LOG-file ошибок работы с базой данных
+            }
+
+            if (typeOfPriceItem == null)
+            {
+                validFoundEntities = false;
+                //TODO Вывести сообщение что не найдена сущность
+            }
+
+            if (validFoundEntities)
+            {
+                entity.NomenclatureGroupItem = nomenclatureGroupItem;
+                entity.TypeOfPriceItem = typeOfPriceItem;
+                entity.ContragentItem = contragentItem;
+                entity.ForceUpdated = loadUpdateTime;
+                entity.DateOfCreation = loadUpdateTime;
+                entity.LastUpdated = loadUpdateTime;
+
+                contragentItem.PriceTypeNomenclatureGroups.Add(entity);
+                typeOfPriceItem.PriceTypeNomenclatureGroups.Add(entity);
+                nomenclatureGroupItem.PriceTypeNomenclatureGroups.Add(entity);
+                dataBaseContext.PriceTypeNomenclatureGroupContragentEntities.Add(entity);
+            }
+            else
+            {
+                //TODO Вывести сообщение о невозможности создания сущности со следующими кодами
+            }
+
+        }
+
+        private void UpdatePriceTypePriceGroupContragents(ContragentItemEntity entity, Client jsonItem,
+                                                          DataBaseContext dataBaseContext, DateTimeOffset loadUpdateTime)
+        {
+            var priceTypePriceGroupContragentItems = new List<DirectPriceTypePriceGroupContragent>();
+
+            foreach (TypesOfPrices typesOfPricese in jsonItem.PriceTypePriceGroup)
+            {
+                bool validConvertCode = true;
+
+                Guid priceGroupCode;
+
+                if (!typesOfPricese.PriceGroupUID.ConvertToGuid(out priceGroupCode))
+                {
+                    //TODO Вывести в лог об ошибочном GUID
+                    validConvertCode = false;
+                }
+
+                Guid typeOfPriceCode;
+
+                if (!typesOfPricese.PriceTypeUID.ConvertToGuid(out typeOfPriceCode))
+                {
+                    //TODO Вывести в лог об ошибочном GUID
+                    validConvertCode = false;
+                }
+
+                if (validConvertCode)
+                {
+                    var directPriceTypePriceGroupContragent = 
+                        new DirectPriceTypePriceGroupContragent(typeOfPriceCode, priceGroupCode);
+                    priceTypePriceGroupContragentItems.Add(directPriceTypePriceGroupContragent);
+                }
+                else
+                {
+                    //TODO Вывести сообщение о невозможности создать запись в БазеДанных с такими кодами
+                }
+            }
+
+            List<PriceTypePriceGroupContragentEntity> needToUpdate = null;
+
+            try
+            {
+                entity.PriceTypePriceGroups.RemoveAll(
+                    e =>
+                        priceTypePriceGroupContragentItems
+                            .All(d => e.TypeOfPriceItem.Code != d.TypeOfPriceCode ||
+                                      e.PriceGroupItem.Code != d.PriceGroupCode));
+                needToUpdate = entity.PriceTypePriceGroups.ToList();
+
+            }
+            catch (Exception e)
+            {
+                // TODO Запись в LOG-file ошибок работы с базой данных
+            }
+
+            if (needToUpdate != null && needToUpdate.Any())
+            {
+                needToUpdate.ForEach(e => e.ForceUpdated = loadUpdateTime);
+
+                List<DirectPriceTypePriceGroupContragent> needToCreate =
+                    priceTypePriceGroupContragentItems
+                        .Where(d => needToUpdate.All(e => e.TypeOfPriceItem.Code != d.TypeOfPriceCode ||
+                                                          e.PriceGroupItem.Code != d.PriceGroupCode))
+                        .ToList();
+
+                needToCreate.ForEach(d => Assemble(entity, d, dataBaseContext, loadUpdateTime));
+            }
+        }
+
+        private void Assemble(ContragentItemEntity contragentItem, 
+                              DirectPriceTypePriceGroupContragent directPriceTypePriceGroupContragentItem,
+                              DataBaseContext dataBaseContext, DateTimeOffset loadUpdateTime)
+        {
+            bool validFoundEntities = true;
+            var entity = new PriceTypePriceGroupContragentEntity();
+
+            PriceGroupItemEntity priceGroupItem = null;
+
+            try
+            {
+                priceGroupItem = dataBaseContext.PriceGroupItemEntities.FirstOrDefault(
+                    e => e.Code == directPriceTypePriceGroupContragentItem.PriceGroupCode);
+            }
+            catch (Exception e)
+            {
+                // TODO Запись в LOG-file ошибок работы с базой данных
+            }
+
+            if (priceGroupItem == null)
+            {
+                validFoundEntities = false;
+                //TODO Вывести сообщение что не найдена сущность
+            }
+
+            TypeOfPriceItemEntity typeOfPriceItem = null;
+
+            try
+            {
+                typeOfPriceItem = dataBaseContext.TypeOfPriceItemEntities.FirstOrDefault(
+                        e => e.Code == directPriceTypePriceGroupContragentItem.TypeOfPriceCode);
+            }
+            catch (Exception e)
+            {
+                // TODO Запись в LOG-file ошибок работы с базой данных
+            }
+
+            if (typeOfPriceItem == null)
+            {
+                validFoundEntities = false;
+                //TODO Вывести сообщение что не найдена сущность
+            }
+
+            if (validFoundEntities)
+            {
+                entity.PriceGroupItem = priceGroupItem;
+                entity.TypeOfPriceItem = typeOfPriceItem;
+                entity.ContragentItem = contragentItem;
+                entity.ForceUpdated = loadUpdateTime;
+                entity.DateOfCreation = loadUpdateTime;
+                entity.LastUpdated = loadUpdateTime;
+
+                contragentItem.PriceTypePriceGroups.Add(entity);
+                typeOfPriceItem.PriceTypePriceGroups.Add(entity);
+                priceGroupItem.PriceTypePriceGroups.Add(entity);
+                dataBaseContext.PriceTypePriceGroupContragentEntities.Add(entity);
+            }
+            else
+            {
+                //TODO Вывести сообщение о невозможности создания сущности со следующими кодами
+            }
+
+        }
+
+        private void UpdateDiscounts(ContragentItemEntity entity, Client jsonItem,
+                                     DataBaseContext dataBaseContext, DateTimeOffset loadUpdateTime)
+        {
+            List<DirectDiscount> discounts = new List<DirectDiscount>();
+
+            foreach (Discount discount in jsonItem.Discounts)
+            {
+                var priceInfo = new PriceInfo();
+                PriceInfoParse(discount.Rate, priceInfo);
+                decimal rate = priceInfo.Price;
+
+                foreach (string stringCode in discount.Nomenclature)
+                {
+                    Guid code;
+
+                    if (stringCode.ConvertToGuid(out code))
+                    {
+                        var directDiscount = new DirectDiscount(code, rate);
+                        discounts.Add(directDiscount);
+                    }
+                }
+            }
+
+            List<Guid> jsonItemCodes = discounts.Select(x => x.NomenclatureCode).ToList();
+            entity.Discounts.RemoveAll(x => jsonItemCodes.All(j => x.CatalogItem.UID != j));
+            List<DiscountsContragentEntity> needToUpdate = entity.Discounts.ToList();
+
+            discounts.ForEach(
+                x =>
+                {
+                    DiscountsContragentEntity discountEntity =
+                        needToUpdate.FirstOrDefault(e => e.CatalogItem.UID == x.NomenclatureCode);
+
+                    if (discountEntity != null)
+                    {
+                        Update(discountEntity, x, loadUpdateTime);
+                    }
+                    else
+                    {
+                        CatalogItemEntity catalogItem =
+                            dataBaseContext.CatalogItemEntities.FirstOrDefault(e => e.UID == x.NomenclatureCode);
+
+                        if (catalogItem != null)
+                        {
+                            discountEntity = Assemble(entity, catalogItem, x, loadUpdateTime);
+                            dataBaseContext.DiscountsContragentEntities.Add(discountEntity);
+                        }
+                        else
+                        {
+                            //TODO Записать в лог что не найден нужный элемент номенклатуры
+                        }
+                    }
+                });
+
+        }
+
+        private void Update(DiscountsContragentEntity entity, DirectDiscount discount, DateTimeOffset loadUpdateTime)
+        {
+            if (Equals(entity, discount))
+            {
+                entity.ForceUpdated = loadUpdateTime;
+            }
+            else
+            {
+                entity.Rate = discount.Rate;
+                entity.LastUpdated = loadUpdateTime;
+            }
+        }
+
+        private bool Equals(DiscountsContragentEntity entity, DirectDiscount discount)
+        {
+            return entity.Rate == discount.Rate;
+        }
+
+        private DiscountsContragentEntity Assemble(ContragentItemEntity contragentItem, 
+                                                   CatalogItemEntity catalogItem, 
+                                                   DirectDiscount discount,
+                                                   DateTimeOffset loadUpdateTime)
+        {
+            DiscountsContragentEntity entity = new DiscountsContragentEntity();
+            entity.CatalogItem = catalogItem;
+            entity.ContragentItem = contragentItem;
+            entity.Rate = discount.Rate;
+            entity.DateOfCreation = loadUpdateTime;
+            entity.ForceUpdated = loadUpdateTime;
+            entity.LastUpdated = loadUpdateTime;
+
+            contragentItem.Discounts.Add(entity);
+            catalogItem.Discounts.Add(entity);
+
+            return entity;
         }
 
         private bool Equals(ContragentItemEntity entity, Client jsonItem, DataBaseContext dataBaseContext)
