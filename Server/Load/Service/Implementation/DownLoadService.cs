@@ -225,6 +225,38 @@ namespace Load.Service.Implementation
             }
         }
 
+        private ContragentItemEntity Assemble(DataBaseContext dataBaseContext, Client jsonItem, DateTimeOffset loadUpdateTime)
+        {
+            ContragentItemEntity entity = null;
+            Guid code;
+
+            if (jsonItem.UID.ConvertToGuid(out code))
+            {
+                entity = new ContragentItemEntity();
+
+                PriceInfo mutualSettlementsPriceInfo = GetPriceInfoOfMutualSettlements(jsonItem);
+                PriceInfo pdzPriceInfo = GetPriceInfoOfPDZ(jsonItem);
+
+                entity.UID = code;
+                entity.Code = jsonItem.Code;
+                entity.Name = jsonItem.Name;
+                entity.Login = jsonItem.Login;
+                entity.MutualSettlements = mutualSettlementsPriceInfo.Price;
+                entity.MutualSettlementsCurrency = mutualSettlementsPriceInfo.Currency;
+                entity.PDZ = pdzPriceInfo.Price;
+                entity.PDZCurrency = pdzPriceInfo.Currency;
+                UpdateDiscounts(entity, jsonItem, dataBaseContext, loadUpdateTime);
+                UpdatePriceTypePriceGroupContragents(entity, jsonItem, dataBaseContext, loadUpdateTime);
+                UpdatePriceTypeNomenclatureGroupContragents(entity, jsonItem, dataBaseContext, loadUpdateTime);
+
+                entity.DateOfCreation = loadUpdateTime;
+                entity.ForceUpdated = loadUpdateTime;
+                entity.LastUpdated = loadUpdateTime;
+            }
+
+            return entity;
+        }
+
         private void Update(ContragentItemEntity entity, Client jsonItem,
                             DataBaseContext dataBaseContext, DateTimeOffset loadUpdateTime)
         {
@@ -590,10 +622,10 @@ namespace Load.Service.Implementation
             }
         }
 
-        private bool Equals(DiscountsContragentEntity entity, DirectDiscount discount)
-        {
-            return entity.Rate == discount.Rate;
-        }
+        //private bool Equals(DiscountsContragentEntity entity, DirectDiscount discount)
+        //{
+        //    return entity.Rate == discount.Rate;
+        //}
 
         private DiscountsContragentEntity Assemble(ContragentItemEntity contragentItem, 
                                                    CatalogItemEntity catalogItem, 
@@ -663,19 +695,41 @@ namespace Load.Service.Implementation
         {
             List<DiscountsContragentEntity> firstDiscountsList = 
                 firstDiscounts as List<DiscountsContragentEntity> ?? firstDiscounts?.ToList();
-            List<Discount> secondDiscountList = secondDiscounts as List<Discount> ?? secondDiscounts?.ToList();
+            List<DirectDiscount> seconDirectDiscounts = secondDiscounts.SelectMany(Convert).ToList();
 
-            return firstDiscountsList != null && secondDiscountList != null &&
-                   firstDiscountsList.Count == secondDiscountList.Count &&
-                   firstDiscountsList.All(e => secondDiscountList.Any(j => Equals(e, j))) &&
-                   secondDiscountList.All(j => firstDiscountsList.Any(e => Equals(e, j)));
+
+            return firstDiscountsList != null &&
+                   firstDiscountsList.Count == seconDirectDiscounts.Count &&
+                   firstDiscountsList.All(e => seconDirectDiscounts.Any(j => Equals(e, j))) &&
+                   seconDirectDiscounts.All(j => firstDiscountsList.Any(e => Equals(e, j)));
 
         }
 
-        private bool Equals(DiscountsContragentEntity firstDiscount, Discount secondDiscount)
+        private IEnumerable<DirectDiscount> Convert(Discount discount)
+        {
+            IEnumerable<DirectDiscount> discounts = new List<DirectDiscount>();
+
+            if (discount != null)
+            {
+                decimal rate = GetPriceInfoOfDiscount(discount).Price;
+                discounts = discount.Nomenclature
+                    .Select(x =>
+                    {
+                        Guid code;
+
+                        return x.ConvertToGuid(out code) ? new DirectDiscount(code, rate) : null;
+                    })
+                    .Where(x => x != null);
+            }
+
+            return discounts;
+        } 
+
+        private bool Equals(DiscountsContragentEntity firstDiscount, DirectDiscount secondDiscount)
         {
             return firstDiscount != null && secondDiscount != null &&
-                   Equals(firstDiscount.CatalogItems.Select(x => x.UID), secondDiscount.Nomenclature);
+                   Equals(firstDiscount.CatalogItem.UID, secondDiscount.NomenclatureCode) &&
+                   firstDiscount.Rate == secondDiscount.Rate;
 
         }
 
@@ -1205,6 +1259,18 @@ namespace Load.Service.Implementation
             if (client != null)
             {
                 PriceInfoParse(client.MutualSettlements, priceInfo);
+            }
+
+            return priceInfo;
+        }
+
+        private PriceInfo GetPriceInfoOfDiscount(Discount discount)
+        {
+            var priceInfo = new PriceInfo();
+
+            if (discount != null)
+            {
+                PriceInfoParse(discount.Rate, priceInfo);
             }
 
             return priceInfo;
