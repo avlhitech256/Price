@@ -1,3 +1,5 @@
+using System.Data;
+using System.Data.SqlClient;
 using System.Text;
 
 namespace DataBase.EntitiesMigrations
@@ -38,12 +40,19 @@ namespace DataBase.EntitiesMigrations
                 },
                 body: CreatePrepareToUpdateDirectoriesBody());
 
+            var idsParametr = new SqlParameter();
+            idsParametr.ParameterName = "@ids";
+            idsParametr.SqlDbType = SqlDbType.Structured;
+            idsParametr.TypeName = "bigintTable";
+            idsParametr.Direction = ParameterDirection.Input;
+            
             CreateStoredProcedure(
                 "dbo.PrepareToUpdatePhotos",
                 p => new
                 {
                     login = p.String(maxLength: 30),
                     lastUpdate = p.DateTimeOffset(precision: 7),
+                    idsParametr,
                     countToUpdate = p.Int(outParameter: true)
                 },
                 body: CreatePrepareToUpdatePhotosBody());
