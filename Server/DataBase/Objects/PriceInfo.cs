@@ -1,5 +1,8 @@
-﻿namespace DataBase.Objects
+﻿using System.Diagnostics;
+
+namespace DataBase.Objects
 {
+    [DebuggerDisplay("{Price} ==> {Currency}")]
     public class PriceInfo
     {
         #region Constructors

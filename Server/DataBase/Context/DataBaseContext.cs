@@ -61,7 +61,6 @@ namespace DataBase.Context
 
         public virtual DbSet<PriceTypeNomenclatureGroupContragentEntity> PriceTypeNomenclatureGroupContragentEntities { get; set; }
 
-
         public virtual int PrepareToUpdateBrands(string login, Nullable<System.DateTimeOffset> lastUpdate)
         {
             var loginParameter = login != null ?

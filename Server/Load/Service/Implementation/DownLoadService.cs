@@ -343,7 +343,7 @@ namespace Load.Service.Implementation
                 // TODO Запись в LOG-file ошибок работы с базой данных
             }
 
-            if (needToUpdate != null && needToUpdate.Any())
+            if (needToUpdate != null)
             {
                 needToUpdate.ForEach(e => e.ForceUpdated = loadUpdateTime);
 
@@ -475,10 +475,9 @@ namespace Load.Service.Implementation
                 // TODO Запись в LOG-file ошибок работы с базой данных
             }
 
-            if (needToUpdate != null && needToUpdate.Any())
+            if (needToUpdate != null)
             {
                 needToUpdate.ForEach(e => e.ForceUpdated = loadUpdateTime);
-
                 List<DirectPriceTypePriceGroupContragent> needToCreate =
                     priceTypePriceGroupContragentItems
                         .Where(d => needToUpdate.All(e => e.TypeOfPriceItem.Code != d.TypeOfPriceCode ||
@@ -487,6 +486,7 @@ namespace Load.Service.Implementation
 
                 needToCreate.ForEach(d => Assemble(entity, d, dataBaseContext, loadUpdateTime));
             }
+
         }
 
         private void Assemble(ContragentItemEntity contragentItem, 
@@ -577,14 +577,14 @@ namespace Load.Service.Implementation
             }
 
             List<Guid> jsonItemCodes = discounts.Select(x => x.NomenclatureCode).ToList();
-            entity.Discounts.RemoveAll(x => jsonItemCodes.All(j => x.CatalogItem.UID != j));
-            List<DiscountsContragentEntity> needToUpdate = entity.Discounts.ToList();
+            entity.Discounts?.RemoveAll(x => jsonItemCodes.All(j => x.CatalogItem.UID != j));
+            List<DiscountsContragentEntity> needToUpdate = entity.Discounts?.ToList();
 
             discounts.ForEach(
                 x =>
                 {
                     DiscountsContragentEntity discountEntity =
-                        needToUpdate.FirstOrDefault(e => e.CatalogItem.UID == x.NomenclatureCode);
+                        needToUpdate?.FirstOrDefault(e => e.CatalogItem.UID == x.NomenclatureCode);
 
                     if (discountEntity != null)
                     {
@@ -640,8 +640,24 @@ namespace Load.Service.Implementation
             entity.ForceUpdated = loadUpdateTime;
             entity.LastUpdated = loadUpdateTime;
 
-            contragentItem.Discounts.Add(entity);
-            catalogItem.Discounts.Add(entity);
+            if (contragentItem.Discounts != null)
+            {
+                contragentItem.Discounts.Add(entity);
+            }
+            else
+            {
+                contragentItem.Discounts = new List<DiscountsContragentEntity> { entity };
+            }
+
+            if (catalogItem.Discounts != null)
+            {
+                catalogItem.Discounts.Add(entity);
+            }
+            else
+            {
+                catalogItem.Discounts = new List<DiscountsContragentEntity> { entity };
+            }
+
 
             return entity;
         }
@@ -853,6 +869,7 @@ namespace Load.Service.Implementation
                     List<PhotoItemEntity> photoItems = GetPhotoItems(dataBaseContext, jsonItem);
                     List<string> needToCreatePhotos = GetNeedToCreatePhotos(photoItems, jsonItem);
                     photoItems.AddRange(CreateEmptyPhotos(dataBaseContext, needToCreatePhotos));
+                    //TypeOfPricesNomenclatureItemEntity typeOfPricesNomenclatureItem = 
 
                     entity.Name = jsonItem.Name;
                     entity.Code = jsonItem.Code;
@@ -2106,24 +2123,28 @@ namespace Load.Service.Implementation
             {
                 List<PriceTypeItem> needToUpdateItems =
                     jsonLoadData.TypesOfPrices
-                        .Where(x => catalogItem.TypeOfPriceItems
-                        .Any(
-                            y =>
-                            {
-                                Guid code;
-                                return x.UID.ConvertToGuid(out code) && code.Equals(y.TypeOfPriceItem.Code);
-                            }))
+                        .Where(x => catalogItem.TypeOfPriceItems != null &&
+                                    catalogItem.TypeOfPriceItems
+                                        .Any(
+                                            y =>
+                                            {
+                                                Guid code;
+                                                return x.UID.ConvertToGuid(out code) && 
+                                                       code.Equals(y.TypeOfPriceItem.Code);
+                                            }))
                         .ToList();
 
                 List<PriceTypeItem> needToCreateItems =
                     jsonLoadData.TypesOfPrices
-                        .Where(x => catalogItem.TypeOfPriceItems
-                        .All(
-                            y =>
-                            {
-                                Guid code;
-                                return x.UID.ConvertToGuid(out code) && !code.Equals(y.TypeOfPriceItem.Code);
-                            }))
+                        .Where(x => catalogItem.TypeOfPriceItems != null &&
+                                    catalogItem.TypeOfPriceItems
+                                        .All(
+                                            y =>
+                                            {
+                                                Guid code;
+                                                return x.UID.ConvertToGuid(out code) && 
+                                                       !code.Equals(y.TypeOfPriceItem.Code);
+                                            }))
                         .ToList();
 
                 int countItems = 0;
