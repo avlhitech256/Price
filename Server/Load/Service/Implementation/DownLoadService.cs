@@ -152,25 +152,32 @@ namespace Load.Service.Implementation
 
         private void LoadToDatabase(JsonLoadData jsonLoadData, DateTimeOffset loadUpdateTime)
         {
-            // Отключаем отслеживание и проверку изменений для оптимизации вставки множества полей
-            dataService.DataBaseContext.Configuration.AutoDetectChangesEnabled = false;
-            dataService.DataBaseContext.Configuration.ValidateOnSaveEnabled = false;
+            try
+            {
+                // Отключаем отслеживание и проверку изменений для оптимизации вставки множества полей
+                dataService.DataBaseContext.Configuration.AutoDetectChangesEnabled = false;
+                dataService.DataBaseContext.Configuration.ValidateOnSaveEnabled = false;
 
-            CreateBrandItems(dataService.DataBaseContext, jsonLoadData, loadUpdateTime);
-            CreatePriceGroupItems(dataService.DataBaseContext, jsonLoadData, loadUpdateTime);
-            CreateTypeOfPriceItems(dataService.DataBaseContext, jsonLoadData, loadUpdateTime);
-            CreateDirectoryItems(dataService.DataBaseContext, jsonLoadData, loadUpdateTime);
-            CreateProductDirection(dataService.DataBaseContext, loadUpdateTime);
-            CreateNomenclatureGroupItems(dataService.DataBaseContext, jsonLoadData, loadUpdateTime);
-            CreateCommodityDirectionsItems(dataService.DataBaseContext, jsonLoadData, loadUpdateTime);
-            LoadPictures(dataService.DataBaseContext, 
-                         optionService.WorkingSourcePath + optionService.SubDirForPhoto,
-                         optionService.PhotoPatterns, loadUpdateTime);
-            CreateCatalogItems(dataService.DataBaseContext, jsonLoadData, loadUpdateTime);
-            CreateContragentItems(dataService.DataBaseContext, jsonLoadData, loadUpdateTime);
+                CreateBrandItems(dataService.DataBaseContext, jsonLoadData, loadUpdateTime);
+                CreatePriceGroupItems(dataService.DataBaseContext, jsonLoadData, loadUpdateTime);
+                CreateTypeOfPriceItems(dataService.DataBaseContext, jsonLoadData, loadUpdateTime);
+                CreateDirectoryItems(dataService.DataBaseContext, jsonLoadData, loadUpdateTime);
+                CreateProductDirection(dataService.DataBaseContext, loadUpdateTime);
+                CreateNomenclatureGroupItems(dataService.DataBaseContext, jsonLoadData, loadUpdateTime);
+                CreateCommodityDirectionsItems(dataService.DataBaseContext, jsonLoadData, loadUpdateTime);
+                LoadPictures(dataService.DataBaseContext,
+                             optionService.WorkingSourcePath + optionService.SubDirForPhoto,
+                             optionService.PhotoPatterns, loadUpdateTime);
+                CreateCatalogItems(dataService.DataBaseContext, jsonLoadData, loadUpdateTime);
+                CreateContragentItems(dataService.DataBaseContext, jsonLoadData, loadUpdateTime);
 
-            dataService.DataBaseContext.Configuration.AutoDetectChangesEnabled = true;
-            dataService.DataBaseContext.Configuration.ValidateOnSaveEnabled = true;
+                dataService.DataBaseContext.Configuration.AutoDetectChangesEnabled = true;
+                dataService.DataBaseContext.Configuration.ValidateOnSaveEnabled = true;
+            }
+            catch (Exception e)
+            {
+                ; //TODO Записать ошибку в LOG-file
+            }
         }
 
         private void CreateContragentItems(DataBaseContext dataBaseContext, 
@@ -361,64 +368,86 @@ namespace Load.Service.Implementation
                       DirectPriceTypeNomenclatureGroupContragent directPriceTypeNomenclatureGroupContragentItem,
                       DataBaseContext dataBaseContext, DateTimeOffset loadUpdateTime)
         {
-            bool validFoundEntities = true;
-            var entity = new PriceTypeNomenclatureGroupContragentEntity();
-
-            NomenclatureGroupEntity nomenclatureGroupItem = null;
-
-            try
+            if (contragentItem != null && directPriceTypeNomenclatureGroupContragentItem != null)
             {
-                nomenclatureGroupItem = dataBaseContext.NomenclatureGroupEntities.FirstOrDefault(
-                    e => e.Code == directPriceTypeNomenclatureGroupContragentItem.NomenclatureGroupCode);
-            }
-            catch (Exception e)
-            {
-                // TODO Запись в LOG-file ошибок работы с базой данных
-            }
+                bool validFoundEntities = true;
+                var entity = new PriceTypeNomenclatureGroupContragentEntity();
 
-            if (nomenclatureGroupItem == null)
-            {
-                validFoundEntities = false;
-                //TODO Вывести сообщение что не найдена сущность
-            }
+                NomenclatureGroupEntity nomenclatureGroupItem = null;
 
-            TypeOfPriceItemEntity typeOfPriceItem = null;
+                try
+                {
+                    nomenclatureGroupItem = dataBaseContext.NomenclatureGroupEntities.FirstOrDefault(
+                        e => e.Code == directPriceTypeNomenclatureGroupContragentItem.NomenclatureGroupCode);
+                }
+                catch (Exception e)
+                {
+                    // TODO Запись в LOG-file ошибок работы с базой данных
+                }
 
-            try
-            {
-                typeOfPriceItem = dataBaseContext.TypeOfPriceItemEntities.FirstOrDefault(
+                if (nomenclatureGroupItem == null)
+                {
+                    validFoundEntities = false;
+                    //TODO Вывести сообщение что не найдена сущность
+                }
+
+                TypeOfPriceItemEntity typeOfPriceItem = null;
+
+                try
+                {
+                    typeOfPriceItem = dataBaseContext.TypeOfPriceItemEntities.FirstOrDefault(
                         e => e.Code == directPriceTypeNomenclatureGroupContragentItem.TypeOfPriceCode);
-            }
-            catch (Exception e)
-            {
-                // TODO Запись в LOG-file ошибок работы с базой данных
-            }
+                }
+                catch (Exception e)
+                {
+                    // TODO Запись в LOG-file ошибок работы с базой данных
+                }
 
-            if (typeOfPriceItem == null)
-            {
-                validFoundEntities = false;
-                //TODO Вывести сообщение что не найдена сущность
-            }
+                if (typeOfPriceItem == null)
+                {
+                    validFoundEntities = false;
+                    //TODO Вывести сообщение что не найдена сущность
+                }
 
-            if (validFoundEntities)
-            {
-                entity.NomenclatureGroupItem = nomenclatureGroupItem;
-                entity.TypeOfPriceItem = typeOfPriceItem;
-                entity.ContragentItem = contragentItem;
-                entity.ForceUpdated = loadUpdateTime;
-                entity.DateOfCreation = loadUpdateTime;
-                entity.LastUpdated = loadUpdateTime;
+                if (validFoundEntities)
+                {
+                    entity.NomenclatureGroupItem = nomenclatureGroupItem;
+                    entity.TypeOfPriceItem = typeOfPriceItem;
+                    entity.ContragentItem = contragentItem;
+                    entity.ForceUpdated = loadUpdateTime;
+                    entity.DateOfCreation = loadUpdateTime;
+                    entity.LastUpdated = loadUpdateTime;
 
-                contragentItem.PriceTypeNomenclatureGroups.Add(entity);
-                typeOfPriceItem.PriceTypeNomenclatureGroups.Add(entity);
-                nomenclatureGroupItem.PriceTypeNomenclatureGroups.Add(entity);
-                dataBaseContext.PriceTypeNomenclatureGroupContragentEntities.Add(entity);
-            }
-            else
-            {
-                //TODO Вывести сообщение о невозможности создания сущности со следующими кодами
-            }
+                    if (contragentItem.PriceTypeNomenclatureGroups == null)
+                    {
+                        contragentItem.PriceTypeNomenclatureGroups =
+                            new List<PriceTypeNomenclatureGroupContragentEntity>();
+                    }
 
+                    contragentItem.PriceTypeNomenclatureGroups.Add(entity);
+
+                    if (typeOfPriceItem.PriceTypeNomenclatureGroups == null)
+                    {
+                        typeOfPriceItem.PriceTypeNomenclatureGroups =
+                            new List<PriceTypeNomenclatureGroupContragentEntity>();
+                    }
+
+                    typeOfPriceItem.PriceTypeNomenclatureGroups.Add(entity);
+
+                    if (nomenclatureGroupItem.PriceTypeNomenclatureGroups == null)
+                    {
+                        nomenclatureGroupItem.PriceTypeNomenclatureGroups =
+                            new List<PriceTypeNomenclatureGroupContragentEntity>();
+                    }
+
+                    nomenclatureGroupItem.PriceTypeNomenclatureGroups.Add(entity);
+                    dataBaseContext.PriceTypeNomenclatureGroupContragentEntities.Add(entity);
+                }
+                else
+                {
+                    ; //TODO Вывести сообщение о невозможности создания сущности со следующими кодами
+                }
+            }
         }
 
         private void UpdatePriceTypePriceGroupContragents(ContragentItemEntity entity, Client jsonItem,
@@ -493,64 +522,86 @@ namespace Load.Service.Implementation
                               DirectPriceTypePriceGroupContragent directPriceTypePriceGroupContragentItem,
                               DataBaseContext dataBaseContext, DateTimeOffset loadUpdateTime)
         {
-            bool validFoundEntities = true;
-            var entity = new PriceTypePriceGroupContragentEntity();
-
-            PriceGroupItemEntity priceGroupItem = null;
-
-            try
+            if (contragentItem != null && directPriceTypePriceGroupContragentItem != null)
             {
-                priceGroupItem = dataBaseContext.PriceGroupItemEntities.FirstOrDefault(
-                    e => e.Code == directPriceTypePriceGroupContragentItem.PriceGroupCode);
-            }
-            catch (Exception e)
-            {
-                // TODO Запись в LOG-file ошибок работы с базой данных
-            }
+                bool validFoundEntities = true;
+                var entity = new PriceTypePriceGroupContragentEntity();
 
-            if (priceGroupItem == null)
-            {
-                validFoundEntities = false;
-                //TODO Вывести сообщение что не найдена сущность
-            }
+                PriceGroupItemEntity priceGroupItem = null;
 
-            TypeOfPriceItemEntity typeOfPriceItem = null;
+                try
+                {
+                    priceGroupItem = dataBaseContext.PriceGroupItemEntities.FirstOrDefault(
+                        e => e.Code == directPriceTypePriceGroupContragentItem.PriceGroupCode);
+                }
+                catch (Exception e)
+                {
+                    // TODO Запись в LOG-file ошибок работы с базой данных
+                }
 
-            try
-            {
-                typeOfPriceItem = dataBaseContext.TypeOfPriceItemEntities.FirstOrDefault(
+                if (priceGroupItem == null)
+                {
+                    validFoundEntities = false;
+                    //TODO Вывести сообщение что не найдена сущность
+                }
+
+                TypeOfPriceItemEntity typeOfPriceItem = null;
+
+                try
+                {
+                    typeOfPriceItem = dataBaseContext.TypeOfPriceItemEntities.FirstOrDefault(
                         e => e.Code == directPriceTypePriceGroupContragentItem.TypeOfPriceCode);
-            }
-            catch (Exception e)
-            {
-                // TODO Запись в LOG-file ошибок работы с базой данных
-            }
+                }
+                catch (Exception e)
+                {
+                    // TODO Запись в LOG-file ошибок работы с базой данных
+                }
 
-            if (typeOfPriceItem == null)
-            {
-                validFoundEntities = false;
-                //TODO Вывести сообщение что не найдена сущность
-            }
+                if (typeOfPriceItem == null)
+                {
+                    validFoundEntities = false;
+                    //TODO Вывести сообщение что не найдена сущность
+                }
 
-            if (validFoundEntities)
-            {
-                entity.PriceGroupItem = priceGroupItem;
-                entity.TypeOfPriceItem = typeOfPriceItem;
-                entity.ContragentItem = contragentItem;
-                entity.ForceUpdated = loadUpdateTime;
-                entity.DateOfCreation = loadUpdateTime;
-                entity.LastUpdated = loadUpdateTime;
+                if (validFoundEntities)
+                {
+                    entity.PriceGroupItem = priceGroupItem;
+                    entity.TypeOfPriceItem = typeOfPriceItem;
+                    entity.ContragentItem = contragentItem;
+                    entity.ForceUpdated = loadUpdateTime;
+                    entity.DateOfCreation = loadUpdateTime;
+                    entity.LastUpdated = loadUpdateTime;
 
-                contragentItem.PriceTypePriceGroups.Add(entity);
-                typeOfPriceItem.PriceTypePriceGroups.Add(entity);
-                priceGroupItem.PriceTypePriceGroups.Add(entity);
-                dataBaseContext.PriceTypePriceGroupContragentEntities.Add(entity);
-            }
-            else
-            {
-                //TODO Вывести сообщение о невозможности создания сущности со следующими кодами
-            }
+                    if (contragentItem.PriceTypePriceGroups == null)
+                    {
+                        contragentItem.PriceTypePriceGroups =
+                            new List<PriceTypePriceGroupContragentEntity>();
+                    }
 
+                    contragentItem.PriceTypePriceGroups.Add(entity);
+
+                    if (typeOfPriceItem.PriceTypePriceGroups == null)
+                    {
+                        typeOfPriceItem.PriceTypePriceGroups =
+                            new List<PriceTypePriceGroupContragentEntity>();
+                    }
+
+                    typeOfPriceItem.PriceTypePriceGroups.Add(entity);
+
+                    if (priceGroupItem.PriceTypePriceGroups == null)
+                    {
+                        priceGroupItem.PriceTypePriceGroups =
+                            new List<PriceTypePriceGroupContragentEntity>();
+                    }
+
+                    priceGroupItem.PriceTypePriceGroups.Add(entity);
+                    dataBaseContext.PriceTypePriceGroupContragentEntities.Add(entity);
+                }
+                else
+                {
+                    //TODO Вывести сообщение о невозможности создания сущности со следующими кодами
+                }
+            }
         }
 
         private void UpdateDiscounts(ContragentItemEntity entity, Client jsonItem,
@@ -640,24 +691,19 @@ namespace Load.Service.Implementation
             entity.ForceUpdated = loadUpdateTime;
             entity.LastUpdated = loadUpdateTime;
 
-            if (contragentItem.Discounts != null)
+            if (contragentItem.Discounts == null)
             {
-                contragentItem.Discounts.Add(entity);
-            }
-            else
-            {
-                contragentItem.Discounts = new List<DiscountsContragentEntity> { entity };
+                contragentItem.Discounts = new List<DiscountsContragentEntity>();
             }
 
-            if (catalogItem.Discounts != null)
+            contragentItem.Discounts.Add(entity);
+
+            if (catalogItem.Discounts == null)
             {
-                catalogItem.Discounts.Add(entity);
-            }
-            else
-            {
-                catalogItem.Discounts = new List<DiscountsContragentEntity> { entity };
+                catalogItem.Discounts = new List<DiscountsContragentEntity>();
             }
 
+            catalogItem.Discounts.Add(entity);
 
             return entity;
         }
@@ -869,7 +915,6 @@ namespace Load.Service.Implementation
                     List<PhotoItemEntity> photoItems = GetPhotoItems(dataBaseContext, jsonItem);
                     List<string> needToCreatePhotos = GetNeedToCreatePhotos(photoItems, jsonItem);
                     photoItems.AddRange(CreateEmptyPhotos(dataBaseContext, needToCreatePhotos));
-                    //TypeOfPricesNomenclatureItemEntity typeOfPricesNomenclatureItem = 
 
                     entity.Name = jsonItem.Name;
                     entity.Code = jsonItem.Code;
@@ -996,50 +1041,42 @@ namespace Load.Service.Implementation
 
             if (brandItem != null)
             {
-                if (brandItem.CatalogItems != null)
+                if (brandItem.CatalogItems == null)
                 {
-                    brandItem.CatalogItems.Add(catalogItem);
+                    brandItem.CatalogItems = new List<CatalogItemEntity>();
                 }
-                else
-                {
-                    brandItem.CatalogItems = new List<CatalogItemEntity> { catalogItem };
-                }
+
+                brandItem.CatalogItems.Add(catalogItem);
             }
 
             if (priceGroupItem != null)
             {
-                if (priceGroupItem.CatalogItems != null)
+                if (priceGroupItem.CatalogItems == null)
                 {
-                    priceGroupItem.CatalogItems.Add(catalogItem);
+                    priceGroupItem.CatalogItems = new List<CatalogItemEntity>();
                 }
-                else
-                {
-                    priceGroupItem.CatalogItems = new List<CatalogItemEntity> { catalogItem };
-                }
+
+                priceGroupItem.CatalogItems.Add(catalogItem);
             }
 
             if (directoryItem != null)
             {
-                if (directoryItem.CatalogItems != null)
+                if (directoryItem.CatalogItems == null)
                 {
-                    directoryItem.CatalogItems.Add(catalogItem);
+                    directoryItem.CatalogItems = new List<CatalogItemEntity>();
                 }
-                else
-                {
-                    directoryItem.CatalogItems = new List<CatalogItemEntity> { catalogItem };
-                }
+
+                directoryItem.CatalogItems.Add(catalogItem);
             }
 
             if (nomenclatureGroupItem != null)
             {
-                if (nomenclatureGroupItem.CatalogItems != null)
+                if (nomenclatureGroupItem.CatalogItems == null)
                 {
-                    nomenclatureGroupItem.CatalogItems.Add(catalogItem);
+                    nomenclatureGroupItem.CatalogItems = new List<CatalogItemEntity>();
                 }
-                else
-                {
-                    nomenclatureGroupItem.CatalogItems = new List<CatalogItemEntity> { catalogItem };
-                }
+
+                nomenclatureGroupItem.CatalogItems.Add(catalogItem);
             }
 
             if (commodityDirectionItemsForCatalogItem.Any())
@@ -1049,14 +1086,12 @@ namespace Load.Service.Implementation
                     {
                         if (x != null)
                         {
-                            if (x.CatalogItems != null)
+                            if (x.CatalogItems == null)
                             {
-                                x.CatalogItems.Add(catalogItem);
+                                x.CatalogItems = new List<CatalogItemEntity>();
                             }
-                            else
-                            {
-                                x.CatalogItems = new List<CatalogItemEntity> { catalogItem };
-                            }
+
+                            x.CatalogItems.Add(catalogItem);
                         }
                     });
             }
@@ -1219,6 +1254,7 @@ namespace Load.Service.Implementation
                                                                     !photoItems.Any() ||
                                                                     photoItems.All(p => p.Name != x)).ToList();
             }
+
             return needToCreatePhotos;
         }
         private IEnumerable<PhotoItemEntity> CreateEmptyPhotos(DataBaseContext dataBaseContext,
@@ -1226,8 +1262,13 @@ namespace Load.Service.Implementation
         {
             var emptyPhotos = new List<PhotoItemEntity>();
 
-            photos.ForEach(x => emptyPhotos.Add(new PhotoItemEntity { Name = x, IsLoad = false, Photo = null }));
-            dataBaseContext.PhotoItemEntities.AddRange(emptyPhotos);
+            if (photos != null)
+            {
+                emptyPhotos = photos
+                    .Select(x => new PhotoItemEntity {Name = x, IsLoad = false, Photo = null})
+                    .ToList();
+                dataBaseContext.PhotoItemEntities.AddRange(emptyPhotos);
+            }
 
             return emptyPhotos;
         }
@@ -1937,7 +1978,11 @@ namespace Load.Service.Implementation
                         .ForEach(x =>
                         {
                             DirectoryEntity subDirectory = Assemble(dataBaseContext, x, loadUpdateTime);
-                            entity.SubDirectory.Add(subDirectory);
+
+                            if (subDirectory != null)
+                            {
+                                entity.SubDirectory.Add(subDirectory);
+                            }
                         });
 
                     entity.LastUpdated = loadUpdateTime;
@@ -2119,12 +2164,34 @@ namespace Load.Service.Implementation
                                                          Nomenclature jsonLoadData,
                                                          DateTimeOffset loadUpdateTime)
         {
-            if (dataBaseContext != null && jsonLoadData?.TypesOfPrices != null && jsonLoadData.TypesOfPrices.Any())
+            if (dataBaseContext != null && jsonLoadData?.TypesOfPrices != null)
             {
+                if (catalogItem.TypeOfPriceItems == null)
+                {
+                    catalogItem.TypeOfPriceItems = new List<TypeOfPricesNomenclatureItemEntity>();
+                }
+
+                List<Guid> listCodes = new List<Guid>();
+
+                foreach (PriceTypeItem typesOfPrice in jsonLoadData.TypesOfPrices)
+                {
+                    Guid code;
+
+                    if (typesOfPrice.UID.ConvertToGuid(out code))
+                    {
+                        listCodes.Add(code);
+                    }
+                    else
+                    {
+                        //TODO Записать в LOG что невозможно преобразовать код
+                    }
+                }
+
+                catalogItem.TypeOfPriceItems.RemoveAll(x => !listCodes.Contains(x.TypeOfPriceItem.Code));
+
                 List<PriceTypeItem> needToUpdateItems =
                     jsonLoadData.TypesOfPrices
-                        .Where(x => catalogItem.TypeOfPriceItems != null &&
-                                    catalogItem.TypeOfPriceItems
+                        .Where(x => catalogItem.TypeOfPriceItems
                                         .Any(
                                             y =>
                                             {
@@ -2136,8 +2203,7 @@ namespace Load.Service.Implementation
 
                 List<PriceTypeItem> needToCreateItems =
                     jsonLoadData.TypesOfPrices
-                        .Where(x => catalogItem.TypeOfPriceItems != null &&
-                                    catalogItem.TypeOfPriceItems
+                        .Where(x => catalogItem.TypeOfPriceItems
                                         .All(
                                             y =>
                                             {
@@ -2276,7 +2342,18 @@ namespace Load.Service.Implementation
                     LastUpdated = loadUpdateTime
                 };
 
+                if (catalogItem.TypeOfPriceItems == null)
+                {
+                    catalogItem.TypeOfPriceItems = new List<TypeOfPricesNomenclatureItemEntity>();
+                }
+
                 catalogItem.TypeOfPriceItems.Add(typeOfPricesNomenclatureItem);
+
+                if (typeOfPrice.CatalogItems == null)
+                {
+                    typeOfPrice.CatalogItems = new List<TypeOfPricesNomenclatureItemEntity>();
+                }
+
                 typeOfPrice.CatalogItems.Add(typeOfPricesNomenclatureItem);
             }
 
@@ -2417,7 +2494,7 @@ namespace Load.Service.Implementation
                             }
                             catch (Exception)
                             {
-                                ;
+                                ;//TODO
                             }
                         }
                     });
