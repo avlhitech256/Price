@@ -5,8 +5,10 @@ using System.Data.SqlClient;
 using System.Linq;
 using DataBase.Context.Entities;
 using DataBase.Context.Object;
+using DataBase.Objects;
 using DataBase.Service;
 using Option.Service;
+using Price.Service;
 using PricelistService.Service.Contract;
 
 namespace PricelistService.Service.Implementation
@@ -17,24 +19,26 @@ namespace PricelistService.Service.Implementation
 
         private readonly IDataService dataService;
         private readonly IOptionService optionService;
+        private readonly IPriceService priceService;
 
         #endregion
 
         #region Constructors
 
-        public ShapingCatalogs(IDataService dataService, IOptionService optionService)
+        public ShapingCatalogs(IDataService dataService, IOptionService optionService, IPriceService priceService)
         {
             this.dataService = dataService;
             this.optionService = optionService;
+            this.priceService = priceService;
         }
 
         #endregion
 
         #region Methods
 
-        public CatalogInfo GetItem(long id)
+        public CatalogInfo GetItem(string login, long id)
         {
-            return Assemble(dataService.DataBaseContext.CatalogItemEntities.Find(id));
+            return Assemble(dataService.DataBaseContext.CatalogItemEntities.Find(id), login);
         }
 
         public Catalogs GetItems(string login, DateTimeOffset lastUpdate)
@@ -49,7 +53,7 @@ namespace PricelistService.Service.Implementation
             Catalogs result = new Catalogs
             {
                 Count = count,
-                Items = GetBrandInfos(login)
+                Items = GetCatalogInfos(login)
             };
 
             return result;
@@ -65,7 +69,7 @@ namespace PricelistService.Service.Implementation
             dataService.DeleteEntities(brandsToDelete);
         }
 
-        private List<CatalogInfo> GetBrandInfos(string login)
+        private List<CatalogInfo> GetCatalogInfos(string login)
         {
             List<long> catalogIds = dataService.Select<SendItemsEntity>()
                 .Where(x => x.Login == login)
@@ -77,18 +81,20 @@ namespace PricelistService.Service.Implementation
             List<CatalogInfo> result =
                 dataService.Select<CatalogItemEntity>()
                     .Where(x => catalogIds.Contains(x.Id))
-                    .Select(Assemble)
+                    .Select(x => Assemble(x, login))
                     .ToList();
 
             return result;
         }
 
-        private CatalogInfo Assemble(CatalogItemEntity item)
+        private CatalogInfo Assemble(CatalogItemEntity item, string login)
         {
             CatalogInfo result = null;
 
             if (item != null)
             {
+                PriceInfo priceInfo = priceService.GetPrice(item, login);
+
                 result = new CatalogInfo
                 {
                     Id = item.Id,
@@ -102,8 +108,8 @@ namespace PricelistService.Service.Implementation
                     EnterpriceNormPack = item.EnterpriceNormPack,
                     BatchOfSales = item.BatchOfSales,
                     Balance = item.Balance,
-                    Price = item.Price,
-                    Currency = item.Currency,
+                    Price = priceInfo.Price,
+                    Currency = priceInfo.Currency,
                     Multiplicity = item.Multiplicity,
                     HasPhotos = item.HasPhotos,
                     Photos = item.Photos?.Select(x => x.Id).ToList() ?? new List<long>(),

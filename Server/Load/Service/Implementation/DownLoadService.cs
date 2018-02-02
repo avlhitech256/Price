@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity.Core.EntityClient;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -911,7 +910,7 @@ namespace Load.Service.Implementation
                         GetNomenclatureGroupItem(dataBaseContext, jsonItem);
                     List<CommodityDirectionEntity> commodityDirectionItemsForCatalogItem =
                         GetCommodityDirection(dataBaseContext, jsonItem);
-                    PriceInfo priceInfo = GetPriceInfo(jsonItem);
+                    //PriceInfo priceInfo = GetPriceInfo(jsonItem);
                     List<PhotoItemEntity> photoItems = GetPhotoItems(dataBaseContext, jsonItem);
                     List<string> needToCreatePhotos = GetNeedToCreatePhotos(photoItems, jsonItem);
                     photoItems.AddRange(CreateEmptyPhotos(dataBaseContext, needToCreatePhotos));
@@ -926,8 +925,8 @@ namespace Load.Service.Implementation
                     entity.EnterpriceNormPack = jsonItem.NormPackaging;
                     entity.BatchOfSales = jsonItem.BatchOfSales.ConvertToDecimal();
                     entity.Balance = jsonItem.InStock;
-                    entity.Price = priceInfo.Price;
-                    entity.Currency = priceInfo.Currency;
+                    //entity.Price = priceInfo.Price;
+                    //entity.Currency = priceInfo.Currency;
                     entity.Multiplicity = 0;
                     entity.HasPhotos = photoItems.Any(x => x.IsLoad);
                     entity.Photos = photoItems;
@@ -952,7 +951,7 @@ namespace Load.Service.Implementation
                 GetNomenclatureGroupItem(dataBaseContext, jsonItem);
             List<CommodityDirectionEntity> commodityDirectionItemsForCatalogItem =
                 GetCommodityDirection(dataBaseContext, jsonItem);
-            PriceInfo priceInfo = GetPriceInfo(jsonItem);
+            //PriceInfo priceInfo = GetPriceInfo(jsonItem);
             List<PhotoItemEntity> photoItems = GetPhotoItems(dataBaseContext, jsonItem);
             List<string> needToCreatePhotos = GetNeedToCreatePhotos(photoItems, jsonItem);
             photoItems.AddRange(CreateEmptyPhotos(dataBaseContext, needToCreatePhotos));
@@ -968,8 +967,8 @@ namespace Load.Service.Implementation
                    entity.EnterpriceNormPack == jsonItem.NormPackaging &&
                    entity.BatchOfSales == jsonItem.BatchOfSales.ConvertToDecimal() &&
                    entity.Balance == jsonItem.InStock &&
-                   entity.Price == priceInfo.Price &&
-                   entity.Currency == priceInfo.Currency &&
+                   //entity.Price == priceInfo.Price &&
+                   //entity.Currency == priceInfo.Currency &&
                    entity.Multiplicity == 0 && //??????????????????????????????????????????????????
                    entity.HasPhotos == photoItems.Any(x => x.IsLoad) &&
                    Equals(entity.Photos.Select(x => x.Id), photoItems.Select(x => x.Id)) &&
@@ -1005,7 +1004,7 @@ namespace Load.Service.Implementation
                 GetNomenclatureGroupItem(dataBaseContext, nomenclature);
             List<CommodityDirectionEntity> commodityDirectionItemsForCatalogItem =
                 GetCommodityDirection(dataBaseContext, nomenclature);
-            PriceInfo priceInfo = GetPriceInfo(nomenclature);
+            //PriceInfo priceInfo = GetPriceInfo(nomenclature);
             List<PhotoItemEntity> photoItems = GetPhotoItems(dataBaseContext, nomenclature);
             List<string> needToCreatePhotos = GetNeedToCreatePhotos(photoItems, nomenclature);
             photoItems.AddRange(CreateEmptyPhotos(dataBaseContext, needToCreatePhotos));
@@ -1023,8 +1022,8 @@ namespace Load.Service.Implementation
                 EnterpriceNormPack = nomenclature.NormPackaging,
                 BatchOfSales = nomenclature.BatchOfSales.ConvertToDecimal(),
                 Balance = nomenclature.InStock,
-                Price = priceInfo.Price,
-                Currency = priceInfo.Currency,
+                //Price = priceInfo.Price,
+                //Currency = priceInfo.Currency,
                 Multiplicity = 0,
                 HasPhotos = photoItems.Any(x => x.IsLoad),
                 Photos = photoItems,
@@ -1273,18 +1272,18 @@ namespace Load.Service.Implementation
             return emptyPhotos;
         }
 
-        private PriceInfo GetPriceInfo(Nomenclature nomenclature)
-        {
-            var priceInfo = new PriceInfo();
+        //private PriceInfo GetPriceInfo(Nomenclature nomenclature)
+        //{
+        //    var priceInfo = new PriceInfo();
 
-            if (nomenclature?.TypesOfPrices != null && nomenclature.TypesOfPrices.Any())
-            {
-                PriceTypeItem typeOfPrice = nomenclature.TypesOfPrices.FirstOrDefault();
-                priceInfo = GetPriceInfo(typeOfPrice);
-            }
+        //    if (nomenclature?.TypesOfPrices != null && nomenclature.TypesOfPrices.Any())
+        //    {
+        //        PriceTypeItem typeOfPrice = nomenclature.TypesOfPrices.FirstOrDefault();
+        //        priceInfo = GetPriceInfo(typeOfPrice);
+        //    }
 
-            return priceInfo;
-        }
+        //    return priceInfo;
+        //}
 
         private PriceInfo GetPriceInfo(PriceTypeItem typeOfPrice)
         {

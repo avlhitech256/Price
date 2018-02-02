@@ -100,6 +100,10 @@
       <Project>{665427c4-e971-4ea6-ba22-6f9ab17f5af1}</Project>
       <Name>Option</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Price\Price.csproj">
+      <Project>{1aecef5c-f345-4419-a718-5e2072bc291b}</Project>
+      <Name>Price</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

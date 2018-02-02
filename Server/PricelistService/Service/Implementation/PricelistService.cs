@@ -4,6 +4,8 @@ using DataBase.Service;
 using DataBase.Service.Implementation;
 using Option.Service;
 using Option.Service.Implementation;
+using Price.Service;
+using Price.Service.Implementation;
 using PricelistService.Service.Contract;
 
 namespace PricelistService.Service.Implementation
@@ -15,6 +17,7 @@ namespace PricelistService.Service.Implementation
 
         private readonly IDataService dataService;
         private readonly IOptionService optionService;
+        private readonly IPriceService priceService;
 
         #endregion
 
@@ -24,6 +27,7 @@ namespace PricelistService.Service.Implementation
         {
             dataService = new DataService();
             optionService = new OptionService();
+            priceService = new PriceService(dataService);
         }
 
         #endregion
@@ -86,7 +90,7 @@ namespace PricelistService.Service.Implementation
             if (ValidatePassword(securityInfo))
             {
                 IShapingBrands shapingBrands = new ShapingBrands(dataService, optionService);
-                IShapingCatalogs shapingCatalogs = new ShapingCatalogs(dataService, optionService);
+                IShapingCatalogs shapingCatalogs = new ShapingCatalogs(dataService, optionService, priceService);
                 IShapingDirectories shapingDirectories = new ShapingDirectories(dataService, optionService);
                 IShapingProductDirections shapingProductDirections = new ShapingProductDirections(dataService,
                     optionService);
@@ -167,8 +171,8 @@ namespace PricelistService.Service.Implementation
 
             if (ValidatePassword(securityInfo))
             {
-                IShapingCatalogs shaping = new ShapingCatalogs(dataService, optionService);
-                catalogInfo = shaping.GetItem(id);
+                IShapingCatalogs shaping = new ShapingCatalogs(dataService, optionService, priceService);
+                catalogInfo = shaping.GetItem(securityInfo.Login, id);
             }
 
             return catalogInfo;
@@ -180,7 +184,7 @@ namespace PricelistService.Service.Implementation
 
             if (ValidatePassword(securityInfo))
             {
-                IShapingCatalogs shaping = new ShapingCatalogs(dataService, optionService);
+                IShapingCatalogs shaping = new ShapingCatalogs(dataService, optionService, priceService);
                 catalogs = shaping.GetItems(securityInfo.Login, lastUpdate);
             }
 
@@ -191,7 +195,7 @@ namespace PricelistService.Service.Implementation
         {
             if (ValidatePassword(securityInfo))
             {
-                IShapingCatalogs shaping = new ShapingCatalogs(dataService, optionService);
+                IShapingCatalogs shaping = new ShapingCatalogs(dataService, optionService, priceService);
                 shaping.ConfirmUpdate(securityInfo.Login, itemIds);
             }
         }

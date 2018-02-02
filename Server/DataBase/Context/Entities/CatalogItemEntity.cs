@@ -38,11 +38,6 @@ namespace DataBase.Context.Entities
         [MaxLength(30)]
         public string Balance { get; set; }
 
-        public decimal Price { get; set; }
-
-        [MaxLength(5)]
-        public string Currency { get; set; }
-
         public decimal Multiplicity { get; set; }
 
         public bool HasPhotos { get; set; }

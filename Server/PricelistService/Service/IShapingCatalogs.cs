@@ -8,7 +8,7 @@ namespace PricelistService.Service
     {
         long PrepareToUpdate(string login, DateTimeOffset lastUpdate);
 
-        CatalogInfo GetItem(long id);
+        CatalogInfo GetItem(string login, long id);
 
         Catalogs GetItems(string login, DateTimeOffset lastUpdate);
 

@@ -10,7 +10,7 @@ EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "WebService", "WebService\", "{00793656-8DEC-4972-B41B-03049262DCF4}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5.2"
-		ProjectReferences = "{998fc234-28ad-40a0-941b-db90287711b1}|PricelistService.dll;{273286BE-3FC0-4C0F-87C0-302A587C2904}|DataBase.dll;{9798781F-3852-4A2D-9294-8D8D8C6D7401}|Common.dll;{E0E9D4DF-E346-4F0A-9121-13C52B550F33}|File.dll;{6EAD33C5-A8AA-4CE3-BF25-1A07B9A4928C}|Json.dll;{10916E8F-3122-48A2-89AD-E88EFD13E55D}|Media.dll;{A37C9416-BC06-4B61-ACFD-73FBF91B643F}|Load.dll;{665427C4-E971-4EA6-BA22-6F9AB17F5AF1}|Option.dll;"
+		ProjectReferences = "{998fc234-28ad-40a0-941b-db90287711b1}|PricelistService.dll;{273286BE-3FC0-4C0F-87C0-302A587C2904}|DataBase.dll;{9798781F-3852-4A2D-9294-8D8D8C6D7401}|Common.dll;{E0E9D4DF-E346-4F0A-9121-13C52B550F33}|File.dll;{6EAD33C5-A8AA-4CE3-BF25-1A07B9A4928C}|Json.dll;{10916E8F-3122-48A2-89AD-E88EFD13E55D}|Media.dll;{A37C9416-BC06-4B61-ACFD-73FBF91B643F}|Load.dll;{665427C4-E971-4EA6-BA22-6F9AB17F5AF1}|Option.dll;{1AECEF5C-F345-4419-A718-5E2072BC291B}|Price.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_44432"
 		Debug.AspNetCompiler.PhysicalPath = "WebService\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_44432\"
@@ -47,6 +47,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsolePricelistLoader", "ConsolePricelistLoader\ConsolePricelistLoader.csproj", "{C6D8BA90-D513-4404-8788-102DC6BD19CC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Option", "Option\Option.csproj", "{665427C4-E971-4EA6-BA22-6F9AB17F5AF1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Price", "Price\Price.csproj", "{1AECEF5C-F345-4419-A718-5E2072BC291B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -102,6 +104,10 @@ Global
 		{665427C4-E971-4EA6-BA22-6F9AB17F5AF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{665427C4-E971-4EA6-BA22-6F9AB17F5AF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{665427C4-E971-4EA6-BA22-6F9AB17F5AF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1AECEF5C-F345-4419-A718-5E2072BC291B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AECEF5C-F345-4419-A718-5E2072BC291B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AECEF5C-F345-4419-A718-5E2072BC291B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AECEF5C-F345-4419-A718-5E2072BC291B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

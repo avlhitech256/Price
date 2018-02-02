@@ -81,6 +81,10 @@
     <Compile Include="EntitiesMigrations\201712161840322_InitialEntities.Designer.cs">
       <DependentUpon>201712161840322_InitialEntities.cs</DependentUpon>
     </Compile>
+    <Compile Include="EntitiesMigrations\201802012012274_InitialEntities1.cs" />
+    <Compile Include="EntitiesMigrations\201802012012274_InitialEntities1.Designer.cs">
+      <DependentUpon>201802012012274_InitialEntities1.cs</DependentUpon>
+    </Compile>
     <Compile Include="EntitiesMigrations\Configuration.cs" />
     <Compile Include="Objects\PriceInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -97,6 +101,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EntitiesMigrations\201712161840322_InitialEntities.resx">
       <DependentUpon>201712161840322_InitialEntities.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EntitiesMigrations\201802012012274_InitialEntities1.resx">
+      <DependentUpon>201802012012274_InitialEntities1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
