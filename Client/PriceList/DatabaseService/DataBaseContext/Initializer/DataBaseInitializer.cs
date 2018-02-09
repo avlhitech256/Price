@@ -947,7 +947,7 @@ namespace DatabaseService.DataBaseContext.Initializer
                 {
                     Code = OptionName.Login,
                     Name = "User Login",
-                    Value = "autotrend"
+                    Value = "k6731"
                 },
                 new OptionItemEntity
                 {

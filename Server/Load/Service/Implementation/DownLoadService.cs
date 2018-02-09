@@ -334,13 +334,18 @@ namespace Load.Service.Implementation
 
             List<PriceTypeNomenclatureGroupContragentEntity> needToUpdate = null;
 
+            if (entity.PriceTypeNomenclatureGroups == null)
+            {
+                entity.PriceTypeNomenclatureGroups = new List<PriceTypeNomenclatureGroupContragentEntity>();
+            }
+
             try
             {
                 entity.PriceTypeNomenclatureGroups.RemoveAll(
                     e =>
-                        priceTypeNomenclatureGroupContragentItems
-                            .All(d => e.TypeOfPriceItem.Code != d.TypeOfPriceCode ||
-                                      e.NomenclatureGroupItem.Code != d.NomenclatureGroupCode));
+                        !priceTypeNomenclatureGroupContragentItems
+                            .Any(d => e.TypeOfPriceItem.Code == d.TypeOfPriceCode ||
+                                      e.NomenclatureGroupItem.Code == d.NomenclatureGroupCode));
                 needToUpdate = entity.PriceTypeNomenclatureGroups.ToList();
 
             }
@@ -355,8 +360,8 @@ namespace Load.Service.Implementation
 
                 List<DirectPriceTypeNomenclatureGroupContragent> needToCreate =
                     priceTypeNomenclatureGroupContragentItems
-                        .Where(d => needToUpdate.All(e => e.TypeOfPriceItem.Code != d.TypeOfPriceCode ||
-                                                          e.NomenclatureGroupItem.Code != d.NomenclatureGroupCode))
+                        .Where(d => !needToUpdate.Any(e => e.TypeOfPriceItem.Code == d.TypeOfPriceCode ||
+                                                          e.NomenclatureGroupItem.Code == d.NomenclatureGroupCode))
                         .ToList();
 
                 needToCreate.ForEach(d => Assemble(entity, d, dataBaseContext, loadUpdateTime));
@@ -488,13 +493,18 @@ namespace Load.Service.Implementation
 
             List<PriceTypePriceGroupContragentEntity> needToUpdate = null;
 
+            if (entity.PriceTypePriceGroups == null)
+            {
+                entity.PriceTypePriceGroups = new List<PriceTypePriceGroupContragentEntity>();
+            }
+
             try
             {
                 entity.PriceTypePriceGroups.RemoveAll(
                     e =>
-                        priceTypePriceGroupContragentItems
-                            .All(d => e.TypeOfPriceItem.Code != d.TypeOfPriceCode ||
-                                      e.PriceGroupItem.Code != d.PriceGroupCode));
+                        !priceTypePriceGroupContragentItems
+                            .Any(d => e.TypeOfPriceItem.Code == d.TypeOfPriceCode &&
+                                      e.PriceGroupItem.Code == d.PriceGroupCode));
                 needToUpdate = entity.PriceTypePriceGroups.ToList();
 
             }
@@ -508,8 +518,8 @@ namespace Load.Service.Implementation
                 needToUpdate.ForEach(e => e.ForceUpdated = loadUpdateTime);
                 List<DirectPriceTypePriceGroupContragent> needToCreate =
                     priceTypePriceGroupContragentItems
-                        .Where(d => needToUpdate.All(e => e.TypeOfPriceItem.Code != d.TypeOfPriceCode ||
-                                                          e.PriceGroupItem.Code != d.PriceGroupCode))
+                        .Where(d => !needToUpdate.Any(e => e.TypeOfPriceItem.Code == d.TypeOfPriceCode &&
+                                                           e.PriceGroupItem.Code == d.PriceGroupCode))
                         .ToList();
 
                 needToCreate.ForEach(d => Assemble(entity, d, dataBaseContext, loadUpdateTime));
@@ -607,6 +617,11 @@ namespace Load.Service.Implementation
                                      DataBaseContext dataBaseContext, DateTimeOffset loadUpdateTime)
         {
             List<DirectDiscount> discounts = new List<DirectDiscount>();
+
+            if (entity.Discounts == null)
+            {
+                entity.Discounts = new List<DiscountsContragentEntity>();
+            }
 
             foreach (Discount discount in jsonItem.Discounts)
             {
@@ -1472,7 +1487,7 @@ namespace Load.Service.Implementation
 
             if (dataBaseContext != null && nomenclature != null)
             {
-                brandItem = GetPriceGroupItem(dataBaseContext, nomenclature.BrandUID);
+                brandItem = GetPriceGroupItem(dataBaseContext, nomenclature.PriceGroupUID);
             }
 
             return brandItem;

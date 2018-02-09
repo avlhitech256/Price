@@ -132,13 +132,27 @@ namespace PricelistService.Service.Implementation
             countToUpdateParametr.Direction = ParameterDirection.Output;
             countToUpdateParametr.Value = count;
 
-            dataService.DataBaseContext.Database
-                .ExecuteSqlCommand("PrepareToUpdateDirectories @login, @lastUpdate, @countToUpdate",
-                                   loginParametr, lastUpdateParametr, countToUpdateParametr);
+            try
+            {
+                dataService.DataBaseContext.Database
+                    .ExecuteSqlCommand("PrepareToUpdateDirectories @login, @lastUpdate, @countToUpdate",
+                        loginParametr, lastUpdateParametr, countToUpdateParametr);
+            }
+            catch (Exception e)
+            {
+                ; //TODO Записать в LOG-file ошибку
+            }
 
-            count = dataService.DataBaseContext.SendItemsEntities
-                .Count(x => x.EntityName == EntityName.DirectoryEntity && x.Login == login);
-
+            try
+            {
+                count = dataService.DataBaseContext.SendItemsEntities
+                    .Count(x => x.EntityName == EntityName.DirectoryEntity && x.Login == login);
+            }
+            catch (Exception e)
+            {
+                ; //TODO Записать в LOG-file ошибку
+            }
+            
             return count;
         }
 

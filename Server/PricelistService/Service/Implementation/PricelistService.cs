@@ -28,6 +28,7 @@ namespace PricelistService.Service.Implementation
             dataService = new DataService();
             optionService = new OptionService();
             priceService = new PriceService(dataService);
+            dataService.DataBaseContext.Database.CommandTimeout = 120;
         }
 
         #endregion

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
 using DataBase.Context.Entities;
@@ -80,7 +81,11 @@ namespace PricelistService.Service.Implementation
 
             List<CatalogInfo> result =
                 dataService.Select<CatalogItemEntity>()
+                    .Include(x => x.Discounts)
+                    .Include(x => x.PriceGroup)
+                    .Include(x => x.NomenclatureGroup)
                     .Where(x => catalogIds.Contains(x.Id))
+                    .ToList()
                     .Select(x => Assemble(x, login))
                     .ToList();
 
@@ -152,12 +157,27 @@ namespace PricelistService.Service.Implementation
                 Value = count
             };
 
-            dataService.DataBaseContext.Database
-                .ExecuteSqlCommand("PrepareToUpdateCatalogs @login, @lastUpdate, @countToUpdate",
-                                   loginParametr, lastUpdateParametr, countToUpdateParametr);
+            try
+            {
+                dataService.DataBaseContext.Database
+                    .ExecuteSqlCommand("PrepareToUpdateCatalogs @login, @lastUpdate, @countToUpdate",
+                        loginParametr, lastUpdateParametr, countToUpdateParametr);
+            }
+            catch (Exception e)
+            {
+                ; //TODO Записать в LOG-file ошибку
+            }
 
-            count = dataService.DataBaseContext.SendItemsEntities
-                .Count(x => x.EntityName == EntityName.CatalogItemEntity && x.Login == login);
+            try
+            {
+                count = dataService.DataBaseContext.SendItemsEntities
+                    .Count(x => x.EntityName == EntityName.CatalogItemEntity && x.Login == login);
+            }
+            catch (Exception e)
+            {
+                ; //TODO Записать в LOG-file ошибку
+            }
+
 
             return count;
         }

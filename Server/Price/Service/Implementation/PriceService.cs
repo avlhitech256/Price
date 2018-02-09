@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Data.Entity;
+using System.Linq;
 using System.Xml;
 using DataBase.Context.Entities;
 using DataBase.Objects;
@@ -35,7 +36,11 @@ namespace Price.Service.Implementation
 
         private ContragentItemEntity GetContagent(string login)
         {
-            return dataService.DataBaseContext.ContragentItemEntities.FirstOrDefault(x => x.Login == login);
+            return dataService.DataBaseContext.ContragentItemEntities
+                .Include(x => x.Discounts)
+                .Include(x => x.PriceTypePriceGroups)
+                .Include(x => x.PriceTypeNomenclatureGroups)
+                .FirstOrDefault(x => x.Login == login);
         }
 
         private PriceInfo GetPrice(CatalogItemEntity catalogItem, ContragentItemEntity contragentItem)
