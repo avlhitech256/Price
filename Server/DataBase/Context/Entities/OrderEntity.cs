@@ -11,6 +11,7 @@ namespace DataBase.Context.Entities
 
         [Index("IX_OrderNumber", 1, IsUnique = true)]
         [MaxLength(30)]
+        [Required]
         public string OrderNumber { get; set; }
 
         public decimal Sum { get; set; }

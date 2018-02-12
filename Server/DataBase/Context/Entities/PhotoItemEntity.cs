@@ -10,6 +10,7 @@ namespace DataBase.Context.Entities
 
         [Index("IX_Name", 1, IsUnique = true)]
         [MaxLength(255)]
+        [Required]
         public string Name { get; set; }
 
         public bool IsLoad { get; set; }

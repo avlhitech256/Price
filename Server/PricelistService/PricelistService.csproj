@@ -79,6 +79,8 @@
     <Compile Include="Service\IShapingDirectories.cs" />
     <Compile Include="Service\IShapingPhotos.cs" />
     <Compile Include="Service\IShapingProductDirections.cs" />
+    <Compile Include="Service\Objects\DbCatalogInfo.cs" />
+    <Compile Include="Service\Objects\DbPhotoIdInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -10,6 +10,7 @@ namespace DataBase.Context.Entities
         public long Id { get; set; }
 
         [Index("IX_Code", 1, IsUnique = true)]
+        [Required]
         public Guid Code { get; set; }
 
         [MaxLength(255)]

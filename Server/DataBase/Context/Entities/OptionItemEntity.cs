@@ -10,6 +10,7 @@ namespace DataBase.Context.Entities
 
         [Index("IX_Code", 1, IsUnique = true)]
         [MaxLength(50)]
+        [Required]
         public string Code { get; set; }
 
         [MaxLength(255)]

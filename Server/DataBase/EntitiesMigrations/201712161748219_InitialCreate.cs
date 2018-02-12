@@ -131,7 +131,7 @@ namespace DataBase.EntitiesMigrations
                     UID = c.Guid(nullable: false),
                     Code = c.String(maxLength: 30),
                     Name = c.String(maxLength: 255),
-                    Login = c.String(maxLength: 30),
+                    Login = c.String(nullable: false, maxLength: 30),
                     Password = c.String(maxLength: 255),
                     MutualSettlements = c.Decimal(nullable: false, precision: 18, scale: 2),
                     MutualSettlementsCurrency = c.String(maxLength: 5),
@@ -143,6 +143,7 @@ namespace DataBase.EntitiesMigrations
                 })
                 .PrimaryKey(t => t.Id)
                 .Index(t => t.UID, unique: true, name: "IX_Code")
+                .Index(t => t.Login, unique: true, name: "IX_Login")
                 .Index(t => t.DateOfCreation)
                 .Index(t => t.LastUpdated)
                 .Index(t => t.ForceUpdated);
@@ -271,7 +272,7 @@ namespace DataBase.EntitiesMigrations
                 c => new
                 {
                     Id = c.Long(nullable: false, identity: true),
-                    Name = c.String(maxLength: 255),
+                    Name = c.String(nullable: false, maxLength: 255),
                     IsLoad = c.Boolean(nullable: false),
                     Photo = c.Binary(storeType: "image"),
                     DateOfCreation = c.DateTimeOffset(nullable: false, precision: 7),
@@ -292,7 +293,7 @@ namespace DataBase.EntitiesMigrations
                 c => new
                 {
                     Id = c.Long(nullable: false, identity: true),
-                    Code = c.String(maxLength: 50),
+                    Code = c.String(nullable: false, maxLength: 50),
                     Name = c.String(maxLength: 255),
                     Value = c.String(maxLength: 255),
                     DateOfCreation = c.DateTimeOffset(nullable: false, precision: 7),
@@ -308,7 +309,7 @@ namespace DataBase.EntitiesMigrations
                 c => new
                 {
                     Id = c.Long(nullable: false, identity: true),
-                    OrderNumber = c.String(maxLength: 30),
+                    OrderNumber = c.String(nullable: false, maxLength: 30),
                     Sum = c.Decimal(nullable: false, precision: 18, scale: 2),
                     OrderStatus = c.Int(nullable: false),
                     Comment = c.String(maxLength: 1024),
@@ -346,7 +347,7 @@ namespace DataBase.EntitiesMigrations
                 c => new
                 {
                     Id = c.Long(nullable: false, identity: true),
-                    Login = c.String(maxLength: 30),
+                    Login = c.String(nullable: false, maxLength: 30),
                     EntityId = c.Long(nullable: false),
                     EntityName = c.Int(nullable: false),
                     RequestDate = c.DateTimeOffset(nullable: false, precision: 7),
@@ -521,6 +522,7 @@ namespace DataBase.EntitiesMigrations
             DropIndex("dbo.ContragentItemEntities", new[] { "ForceUpdated" });
             DropIndex("dbo.ContragentItemEntities", new[] { "LastUpdated" });
             DropIndex("dbo.ContragentItemEntities", new[] { "DateOfCreation" });
+            DropIndex("dbo.ContragentItemEntities", new[] { "IX_Login" });
             DropIndex("dbo.ContragentItemEntities", "IX_Code");
             DropIndex("dbo.DiscountsContragentEntities", new[] { "ContragentItem_Id" });
             DropIndex("dbo.DiscountsContragentEntities", new[] { "CatalogItem_Id" });

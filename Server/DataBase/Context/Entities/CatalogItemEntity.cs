@@ -11,6 +11,7 @@ namespace DataBase.Context.Entities
         public long Id { get; set; }
 
         [Index("IX_UID", 1, IsUnique = true)]
+        [Required]
         public Guid UID { get; set; }
 
         [MaxLength(30)]

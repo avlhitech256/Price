@@ -10,6 +10,7 @@ namespace DataBase.Context.Entities
         public long Id { get; set; }
 
         [Index("IX_Code", 1, IsUnique = true)]
+        [Required]
         public Guid UID { get; set; }
 
         [MaxLength(30)]
@@ -18,6 +19,8 @@ namespace DataBase.Context.Entities
         [MaxLength(255)]
         public string Name { get; set; }
 
+        [Index("IX_Login", 1, IsUnique = true)]
+        [Required]
         [MaxLength(30)]
         public string Login { get; set; }
 

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
 using DataBase.Context.Entities;
@@ -11,6 +10,7 @@ using DataBase.Service;
 using Option.Service;
 using Price.Service;
 using PricelistService.Service.Contract;
+using PricelistService.Service.Objects;
 
 namespace PricelistService.Service.Implementation
 {
@@ -72,22 +72,124 @@ namespace PricelistService.Service.Implementation
 
         private List<CatalogInfo> GetCatalogInfos(string login)
         {
-            List<long> catalogIds = dataService.Select<SendItemsEntity>()
-                .Where(x => x.Login == login)
-                .Where(x => x.EntityName == EntityName.CatalogItemEntity)
-                .Take(optionService.CountSendItems)
-                .Select(x => x.EntityId)
-                .ToList();
+            //List<long> catalogIds = dataService.Select<SendItemsEntity>()
+            //    .Where(x => x.Login == login)
+            //    .Where(x => x.EntityName == EntityName.CatalogItemEntity)
+            //    .Take(optionService.CountSendItems)
+            //    .Select(x => x.EntityId)
+            //    .ToList();
 
-            List<CatalogInfo> result =
-                dataService.Select<CatalogItemEntity>()
-                    .Include(x => x.Discounts)
-                    .Include(x => x.PriceGroup)
-                    .Include(x => x.NomenclatureGroup)
-                    .Where(x => catalogIds.Contains(x.Id))
-                    .ToList()
-                    .Select(x => Assemble(x, login))
-                    .ToList();
+            //List<CatalogInfo> result =
+            //    dataService.Select<CatalogItemEntity>()
+            //        .Include(x => x.Discounts)
+            //        .Include(x => x.PriceGroup)
+            //        .Include(x => x.NomenclatureGroup)
+            //        .Where(x => catalogIds.Contains(x.Id))
+            //        .ToList()
+            //        .Select(x => Assemble(x, login))
+            //        .ToList();
+
+            var loginParametr = new SqlParameter();
+            loginParametr.ParameterName = "@login";
+            loginParametr.SqlDbType = SqlDbType.NVarChar;
+            loginParametr.Value = login;
+            loginParametr.Direction = ParameterDirection.Input;
+
+            var countToUpdateParametr = new SqlParameter();
+            countToUpdateParametr.ParameterName = "@countToUpdate";
+            countToUpdateParametr.SqlDbType = SqlDbType.BigInt;
+            countToUpdateParametr.Direction = ParameterDirection.Input;
+            countToUpdateParametr.Value = optionService.CountSendItems;
+
+            List<DbCatalogInfo> catalogInfos = null;
+
+            try
+            {
+                catalogInfos = dataService.DataBaseContext.Database
+                    .SqlQuery<DbCatalogInfo>("GetCatalogItems @login, @lastUpdate, @ids, @countToUpdate",
+                        loginParametr, countToUpdateParametr).ToList();
+            }
+            catch (Exception e)
+            {
+                ; //TODO Записать в LOG-file ошибку
+            }
+
+            List<CatalogInfo> result = new List<CatalogInfo>();
+
+            if (catalogInfos != null && catalogInfos.Any())
+            {
+                DataTable ctalogIds = new DataTable();
+                ctalogIds.Columns.Add("Id", typeof(long));
+                catalogInfos.ForEach(x => ctalogIds.Rows.Add(x.Id));
+
+                var idsParametr = new SqlParameter();
+                idsParametr.ParameterName = "@ids";
+                idsParametr.SqlDbType = SqlDbType.Structured;
+                idsParametr.TypeName = "bigintTable";
+                idsParametr.Value = ctalogIds;
+                idsParametr.Direction = ParameterDirection.Input;
+
+                List<DbPhotoIdInfo> photoIds = new List<DbPhotoIdInfo>();
+
+                try
+                {
+                    photoIds = dataService.DataBaseContext.Database
+                        .SqlQuery<DbPhotoIdInfo>("GetPhotosIds @ids", idsParametr).ToList();
+                }
+                catch (Exception e)
+                {
+                    ; //TODO Записать в LOG-file ошибку
+                }
+
+                catalogInfos.ForEach(
+                    x =>
+                    {
+                        CatalogInfo catalogInfo = Assemble(x, photoIds);
+                        if (catalogInfo != null)
+                        {
+                            result.Add(catalogInfo);
+                        }
+                    });
+            }
+
+            return result;
+        }
+
+        private CatalogInfo Assemble(DbCatalogInfo dbCatalogInfo, List<DbPhotoIdInfo> photoIds)
+        {
+            CatalogInfo result = null;
+
+            if (dbCatalogInfo != null && photoIds != null)
+            {
+                List<long> photos = photoIds.Where(x => x.CatalogId == dbCatalogInfo.Id).Select(x => x.PhotoId).ToList();
+
+                result = new CatalogInfo
+                {
+                    IsAuthorized = true,
+                    Id = dbCatalogInfo.Id,
+                    UID = dbCatalogInfo.UID,
+                    Code = dbCatalogInfo.Code,
+                    Article = dbCatalogInfo.Article,
+                    Name = dbCatalogInfo.Name,
+                    BrandId = dbCatalogInfo.BrandId,
+                    BrandName = dbCatalogInfo.BrandName,
+                    Unit = dbCatalogInfo.Unit,
+                    EnterpriceNormPack = dbCatalogInfo.EnterpriceNormPack,
+                    BatchOfSales = dbCatalogInfo.BatchOfSales,
+                    Balance = dbCatalogInfo.Balance,
+                    Price = dbCatalogInfo.Price,
+                    Currency = dbCatalogInfo.Currency,
+                    Multiplicity = dbCatalogInfo.Multiplicity,
+                    HasPhotos = dbCatalogInfo.HasPhotos,
+                    Photos = photos,
+                    DateOfCreation = dbCatalogInfo.DateOfCreation,
+                    LastUpdated = dbCatalogInfo.LastUpdated,
+                    ForceUpdated = dbCatalogInfo.ForceUpdated,
+                    Status = dbCatalogInfo.Status,
+                    LastUpdatedStatus = dbCatalogInfo.LastUpdatedStatus,
+                    DirectoryId = dbCatalogInfo.DirectoryId
+                };
+            }
 
             return result;
         }
