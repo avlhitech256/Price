@@ -6,7 +6,7 @@ namespace DataBase.EntitiesMigrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
             MigrationsDirectory = @"EntitiesMigrations";
             ContextKey = "DataBase.Context.DataBaseContext";
         }

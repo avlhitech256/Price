@@ -378,5 +378,82 @@ namespace DataBase.EntitiesMigrations
 
             return body.ToString();
         }
+
+        private string CreateGetCatalogItemsProcedure()
+        {
+            StringBuilder body = new StringBuilder();
+
+
+
+            body.AppendLine("    -- +---------------------------------------------------+                                           ");
+            body.AppendLine("    -- | © 2017-2018 OLEXANDR LIKHOSHVA ALL RIGHT RESERVED |                                           ");
+            body.AppendLine("    -- | https://www.linkedin.com/in/olexandrlikhoshva/    |                                           ");
+            body.AppendLine("    -- +---------------------------------------------------+                                           ");
+            body.AppendLine("    -- SET NOCOUNT ON added to prevent extra result sets from");
+            body.AppendLine("    -- interfering with SELECT statements.");
+            body.AppendLine("    -- SET NOCOUNT ON;");
+            body.AppendLine("");
+            body.AppendLine("    SELECT TOP (@countToUpdate)");
+            body.AppendLine("           [CatalogItems].[Id] AS [Id],");
+            body.AppendLine("           [CatalogItems].[UID] AS [UID],");
+            body.AppendLine("           [CatalogItems].[Code] AS [Code],");
+            body.AppendLine("           [CatalogItems].[Article] AS [Article],");
+            body.AppendLine("           [CatalogItems].[Name] AS [Name],");
+            body.AppendLine("           [CatalogItems].[Brand_Id] AS [BrandId],");
+            body.AppendLine("           [CatalogItems].[BrandName] AS [BrandName],");
+            body.AppendLine("           [CatalogItems].[Unit] AS [Unit],");
+            body.AppendLine("           [CatalogItems].[EnterpriceNormPack] AS [EnterpriceNormPack],");
+            body.AppendLine("           [CatalogItems].[BatchOfSales] AS [BatchOfSales],");
+            body.AppendLine("           [CatalogItems].[Balance] AS [Balance],");
+            body.AppendLine("           [CatalogItems].[Balance] AS [Balance],");
+            body.AppendLine("           CASE WHEN TOPN1.Price IS NOT NULL ");
+            body.AppendLine("              THEN ");
+            body.AppendLine("                CASE WHEN Discounts.Rate IS NOT NULL ");
+            body.AppendLine("                   THEN TOPN1.Price + Discounts.Rate * TOPN1.Price");
+            body.AppendLine("                   ELSE TOPN1.Price");
+            body.AppendLine("                END");
+            body.AppendLine("              ELSE ");
+            body.AppendLine("                CASE WHEN Discounts.Rate IS NOT NULL ");
+            body.AppendLine("                   THEN TOPN2.Price + Discounts.Rate * TOPN2.Price");
+            body.AppendLine("                   ELSE TOPN2.Price");
+            body.AppendLine("                END");
+            body.AppendLine("           END AS [Price],");
+            body.AppendLine("           CASE WHEN TOPN1.Price IS NOT NULL ");
+            body.AppendLine("              THEN TOPN1.Currency");
+            body.AppendLine("              ELSE TOPN2.Currency");
+            body.AppendLine("           END AS [Currency],");
+            body.AppendLine("           [CatalogItems].[Multiplicity] AS [Multiplicity],");
+            body.AppendLine("           [CatalogItems].[HasPhotos] AS [HasPhotos],");
+            body.AppendLine("           [CatalogItems].[DateOfCreation] AS [DateOfCreation],");
+            body.AppendLine("           [CatalogItems].[LastUpdated] AS [LastUpdated],");
+            body.AppendLine("           [CatalogItems].[ForceUpdated] AS [ForceUpdated],");
+            body.AppendLine("           [CatalogItems].[Status] AS [Status],");
+            body.AppendLine("           [CatalogItems].[Directory_Id] AS [DirectoryId]");
+            body.AppendLine("    FROM [SendItemsEntities] AS [SendItems]");
+            body.AppendLine("    INNER JOIN [CatalogItemEntities] AS [CatalogItems] ON [SendItems].[EntityId] = [CatalogItems].[Id] ");
+            body.AppendLine("    LEFT JOIN [ContragentItemEntities] AS [Contragent] ON [SendItems].[Login] = [Contragent].[Login]");
+            body.AppendLine("    LEFT JOIN [PriceTypePriceGroupContragentEntities] AS [PTPGC] ON [CatalogItems].[PriceGroup_Id] = [PTPGC].[PriceGroupItem_Id] AND ");
+            body.AppendLine("                                                                    [Contragent].[Id] = [PTPGC].[ContragentItem_Id]");
+            body.AppendLine("    LEFT JOIN [TypeOfPricesNomenclatureItemEntities] AS [TOPN1] ON [CatalogItems].[Id] = [TOPN1].[CatalogItem_Id] AND ");
+            body.AppendLine("                                                                   [PTPGC].[TypeOfPriceItem_Id] = [TOPN1].[TypeOfPriceItem_Id]");
+            body.AppendLine("    LEFT JOIN [PriceTypeNomenclatureGroupContragentEntities] AS [PTNGC] ON [CatalogItems].[NomenclatureGroup_Id] = [PTNGC].[NomenclatureGroupItem_Id] AND ");
+            body.AppendLine("                                                                           [Contragent].[Id] = [PTNGC].[ContragentItem_Id]");
+            body.AppendLine("    LEFT JOIN [TypeOfPricesNomenclatureItemEntities] AS [TOPN2] ON [CatalogItems].[Id] = [TOPN2].[CatalogItem_Id] AND ");
+            body.AppendLine("                                                                   [PTNGC].[TypeOfPriceItem_Id] = [TOPN2].[TypeOfPriceItem_Id]");
+            body.AppendLine("    LEFT JOIN [DiscountsContragentEntities] AS [Discounts] ON [CatalogItems].[Id] = [Discounts].[CatalogItem_Id] AND");
+            body.AppendLine("                                                              [Contragent].[Id] = [Discounts].[ContragentItem_Id]");
+            body.AppendLine("    WHERE [SendItems].[Login] = @login AND ");
+            body.AppendLine("          [SendItems].[EntityName] = 2;");
+            body.AppendLine("");
+            body.AppendLine("    -- Entity Names:");
+            body.AppendLine("    -- BrandItemEntity = 1                                                                             ");
+            body.AppendLine("    -- CatalogItemEntity = 2                                                                           ");
+            body.AppendLine("    -- DirectoryEntity = 3                                                                             ");
+            body.AppendLine("    -- PhotoItemEntity = 5                                                                             ");
+            body.AppendLine("    -- ProductDirectionEntity = 6                                                                      ");
+            body.AppendLine("");
+
+            return body.ToString();
+        }
     }
 }
