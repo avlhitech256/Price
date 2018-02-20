@@ -9,10 +9,7 @@ namespace DataBase.Context.Entities
     {
         public long Id { get; set; }
 
-        [Index("IX_Login", 1, IsUnique = false)]
-        [MaxLength(30)]
-        [Required]
-        public string Login { get; set; }
+        public virtual ContragentItemEntity Contragent { get; set; }
 
         public long EntityId { get; set; }
 

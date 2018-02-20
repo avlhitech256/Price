@@ -59,7 +59,8 @@ namespace PricelistService.Service.Implementation
         public void ConfirmUpdate(string login, List<long> itemIds)
         {
             List<SendItemsEntity> photosToDelete = dataService.Select<SendItemsEntity>()
-                .Where(x => x.Login == login)
+                .Include(x => x.Contragent)
+                .Where(x => x.Contragent.Login == login)
                 .Where(x => x.EntityName == EntityName.PhotoItemEntity)
                 .Where(x => itemIds.Contains(x.EntityId))
                 .ToList();
@@ -70,7 +71,8 @@ namespace PricelistService.Service.Implementation
         private List<PhotoInfo> GetPhotoInfos(string login)
         {
             List<long> photosIds = dataService.Select<SendItemsEntity>()
-                .Where(x => x.Login == login)
+                .Include(x => x.Contragent)
+                .Where(x => x.Contragent.Login == login)
                 .Where(x => x.EntityName == EntityName.PhotoItemEntity)
                 .Take(optionService.CountSendItems)
                 .Select(x => x.EntityId)
@@ -158,7 +160,8 @@ namespace PricelistService.Service.Implementation
             try
             {
                 count = dataService.DataBaseContext.SendItemsEntities
-                    .Count(x => x.EntityName == EntityName.PhotoItemEntity && x.Login == login);
+                    .Include(x => x.Contragent)
+                    .Count(x => x.EntityName == EntityName.PhotoItemEntity && x.Contragent.Login == login);
             }
             catch (Exception e)
             {
@@ -172,7 +175,8 @@ namespace PricelistService.Service.Implementation
         private long RemainderToUpdate(string login)
         {
             return dataService.Select<SendItemsEntity>()
-                .Count(x => x.Login == login && x.EntityName == EntityName.PhotoItemEntity);
+                .Include(x => x.Contragent)
+                .Count(x => x.Contragent.Login == login && x.EntityName == EntityName.PhotoItemEntity);
         }
 
         #endregion

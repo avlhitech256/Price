@@ -1,0 +1,447 @@
+USE [ServerPriceList]
+GO
+/****** Object:  StoredProcedure [dbo].[GetCatalogItems]    Script Date: 16.02.2018 23:11:32 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[GetCatalogItems]
+    @login [nvarchar](30),
+    @countToUpdate [int]
+AS
+BEGIN
+    --     +---------------------------------------------------+
+    --     | Author:       OLEXANDR LIKHOSHVA                  |
+    --     | Create date:  2018.02.11 23:45                    |
+    --     | Copyright:    © 2017-2018  ALL RIGHT RESERVED     |
+    --     | https://www.linkedin.com/in/olexandrlikhoshva/    |
+    --     |---------------------------------------------------|
+    --     | Description:  Procedure for getting Catalog items |
+    --     +---------------------------------------------------+
+    --     SET NOCOUNT ON added to prevent extra result sets from
+    --     interfering with SELECT statements.
+    --     SET NOCOUNT ON;
+    
+    
+    declare @contragentId bigint = -1;
+    
+    
+    SELECT TOP (1) @contragentId = [Contragent].[Login] 
+    FROM [ContragentItemEntities] AS [Contragent]
+	WHERE ([Contragent].[Login] = @login);
+    
+    SELECT TOP (@countToUpdate)
+    [CatalogItems].[Id] AS [Id],
+    [CatalogItems].[UID] AS [UID],
+    [CatalogItems].[Code] AS [Code],
+    [CatalogItems].[Article] AS [Article],
+    [CatalogItems].[Name] AS [Name],
+    [CatalogItems].[Brand_Id] AS [BrandId],
+    [CatalogItems].[BrandName] AS [BrandName],
+    [CatalogItems].[Unit] AS [Unit],
+    [CatalogItems].[EnterpriceNormPack] AS [EnterpriceNormPack],
+    [CatalogItems].[BatchOfSales] AS [BatchOfSales],
+    [CatalogItems].[Balance] AS [Balance],
+    [CatalogItems].[Balance] AS [Balance],
+    CASE WHEN TOPN1.Price IS NOT NULL 
+    THEN 
+    CASE WHEN Discounts.Rate IS NOT NULL 
+    THEN TOPN1.Price + Discounts.Rate * TOPN1.Price
+    ELSE TOPN1.Price
+    END
+    ELSE 
+    CASE WHEN Discounts.Rate IS NOT NULL 
+    THEN 
+    CASE WHEN TOPN2.Price IS NOT NULL 
+    THEN TOPN2.Price + Discounts.Rate * TOPN2.Price
+    ELSE 0
+    END
+    ELSE
+    CASE WHEN TOPN2.Price IS NOT NULL 
+    THEN TOPN2.Price
+    ELSE 0
+    END
+    
+    END
+    END AS [Price],
+    CASE WHEN TOPN1.Price IS NOT NULL 
+    
+    THEN TOPN1.Currency
+    ELSE TOPN2.Currency
+    END AS [Currency],
+    [CatalogItems].[Multiplicity] AS [Multiplicity],
+    [CatalogItems].[HasPhotos] AS [HasPhotos],
+    [CatalogItems].[DateOfCreation] AS [DateOfCreation],
+    [CatalogItems].[LastUpdated] AS [LastUpdated],
+    [CatalogItems].[ForceUpdated] AS [ForceUpdated],
+    [CatalogItems].[Status] AS [Status],
+    [CatalogItems].[Directory_Id] AS [DirectoryId]
+    FROM [SendItemsEntities] AS [SendItems]
+    INNER JOIN [CatalogItemEntities] AS [CatalogItems] ON [SendItems].[EntityId] = [CatalogItems].[Id] 
+    LEFT JOIN [PriceTypePriceGroupContragentEntities] AS [PTPGC] ON [CatalogItems].[PriceGroup_Id] = [PTPGC].[PriceGroupItem_Id] AND 
+    [SendItems].[Contragent_Id] = [PTPGC].[ContragentItem_Id]
+    LEFT JOIN [TypeOfPricesNomenclatureItemEntities] AS [TOPN1] ON [CatalogItems].[Id] = [TOPN1].[CatalogItem_Id] AND 
+    [PTPGC].[TypeOfPriceItem_Id] = [TOPN1].[TypeOfPriceItem_Id]
+    LEFT JOIN [PriceTypeNomenclatureGroupContragentEntities] AS [PTNGC] ON [CatalogItems].[NomenclatureGroup_Id] = [PTNGC].[NomenclatureGroupItem_Id] AND 
+    [SendItems].[Contragent_Id] = [PTNGC].[ContragentItem_Id]
+    LEFT JOIN [TypeOfPricesNomenclatureItemEntities] AS [TOPN2] ON [CatalogItems].[Id] = [TOPN2].[CatalogItem_Id] AND 
+    [PTNGC].[TypeOfPriceItem_Id] = [TOPN2].[TypeOfPriceItem_Id]
+    LEFT JOIN [DiscountsContragentEntities] AS [Discounts] ON [CatalogItems].[Id] = [Discounts].[CatalogItem_Id] AND
+    [SendItems].[Contragent_Id] = [Discounts].[ContragentItem_Id]
+    WHERE [SendItems].[Contragent_Id] = @contragentId AND 
+    [SendItems].[EntityName] = 2;
+    
+    -- Entity Names:
+    -- BrandItemEntity = 1
+    -- CatalogItemEntity = 2
+    -- DirectoryEntity = 3
+    -- PhotoItemEntity = 5
+    -- ProductDirectionEntity = 6
+    
+    
+END
+
+
+------------------------------------------------------------------------------------------------------------
+
+
+USE [ServerPriceList]
+GO
+/****** Object:  StoredProcedure [dbo].[GetPhotosIds]    Script Date: 16.02.2018 23:16:53 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[GetPhotosIds]
+    @ids [dbo].[bigintTable] READONLY
+AS
+BEGIN
+--     +---------------------------------------------------+
+--     | Author:       OLEXANDR LIKHOSHVA                  |
+--     | Create date:  2018.02.11 23:48                    |
+--     | Copyright:    © 2017-2018  ALL RIGHT RESERVED     |
+--     | https://www.linkedin.com/in/olexandrlikhoshva/    |
+--     |---------------------------------------------------|
+--     | Description:  Procedure for getting Photos ids    |
+--     +---------------------------------------------------+
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	-- SET NOCOUNT ON;
+ 
+	SELECT [Photos].[CatalogItem_Id] AS [CatalogId], [Photos].[Id] AS [PhotoId]
+    FROM [dbo].[PhotoItemEntities] AS [Photos]
+    WHERE[Photos].[CatalogItem_Id] IN (SELECT Id FROM @ids)
+ 
+END
+
+
+------------------------------------------------------------------------------------------------------------
+
+
+USE [ServerPriceList]
+GO
+/****** Object:  StoredProcedure [dbo].[PrepareToUpdateBrands]    Script Date: 16.02.2018 23:17:27 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[PrepareToUpdateBrands]
+    @login [nvarchar](30),
+    @lastUpdate [datetimeoffset](7),
+    @countToUpdate [int] OUT
+AS
+BEGIN
+    -- +---------------------------------------------------+                                           
+    -- | © 2017-2018 OLEXANDR LIKHOSHVA ALL RIGHT RESERVED |                                           
+    -- | https://www.linkedin.com/in/olexandrlikhoshva/    |                                           
+    -- +---------------------------------------------------+                                           
+    -- SET NOCOUNT ON added to prevent extra result sets from                                          
+    -- interfering with SELECT statements.                                                             
+    
+    --SET NOCOUNT ON;                                                                                  
+    
+    -- BrandItemEntity = 1                                                                             
+    -- CatalogItemEntity = 2                                                                           
+    -- DirectoryEntity = 3                                                                             
+    -- PhotoItemEntity = 5                                                                             
+    -- ProductDirectionEntity = 6                                                                      
+    
+    declare @entityName int = 1;                                                                       
+    declare @dateOfCreation datetimeoffset(7) = Sysdatetimeoffset();  
+    declare @contragentId bigint = -1;
+    
+    SELECT TOP (1) @contragentId = [Contragent].[Id] 
+    FROM [ContragentItemEntities] AS [Contragent]
+	WHERE ([Contragent].[Login] = @login);
+    
+    INSERT INTO [dbo].[SendItemsEntities]                                                              
+    ([Contragent_Id], [EntityId], [Brands].[EntityName], [Brands].[RequestDate], [Brands].[DateOfCreation])    
+    SELECT @contragentId, [Id], @entityName, @lastUpdate, @dateOfCreation                                     
+    FROM [dbo].[BrandItemEntities] AS [Brands]                                                         
+    WHERE [Brands].[LastUpdated] > @lastUpdate AND                                                     
+    NOT EXISTS (SELECT *                                                                         
+    FROM  [dbo].[SendItemsEntities] AS [SendItem]                                    
+    WHERE [SendItem].[EntityId] = [Brands].[Id] AND                                  
+    [SendItem].[Contragent_Id] = @contragentId AND                                            
+    [SendItem].[EntityName] = @entityName);                                    
+    
+    SELECT @countToUpdate = COUNT(*)                                                                   
+    FROM  [dbo].[SendItemsEntities]                                                                    
+    WHERE [Contragent_Id] = @contragentId AND                                                                         
+    [EntityName] = @entityName;                                                                  
+    
+    RETURN (@countToUpdate);                                                                           
+    
+END
+
+
+------------------------------------------------------------------------------------------------------------
+
+
+USE [ServerPriceList]
+GO
+/****** Object:  StoredProcedure [dbo].[PrepareToUpdateCatalogs]    Script Date: 16.02.2018 23:18:24 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[PrepareToUpdateCatalogs]
+    @login [nvarchar](30),
+    @lastUpdate [datetimeoffset](7),
+    @countToUpdate [int] OUT
+AS
+BEGIN
+    -- +---------------------------------------------------+                                              
+    -- | © 2017-2018 OLEXANDR LIKHOSHVA ALL RIGHT RESERVED |                                              
+    -- | https://www.linkedin.com/in/olexandrlikhoshva/    |                                              
+    -- +---------------------------------------------------+                                              
+    -- SET NOCOUNT ON added to prevent extra result sets from                                             
+    -- interfering with SELECT statements.                                                                
+    
+    --SET NOCOUNT ON;                                                                                     
+    
+    -- BrandItemEntity = 1                                                                                
+    -- CatalogItemEntity = 2                                                                              
+    -- DirectoryEntity = 3                                                                                
+    -- PhotoItemEntity = 5                                                                                
+    -- ProductDirectionEntity = 6                                                                         
+    
+    declare @entityName int = 2;                                                                          
+    declare @dateOfCreation datetimeoffset(7) = Sysdatetimeoffset();                                      
+    declare @contragentId bigint = -1;
+    
+    SELECT TOP (1) @contragentId = [Contragent].[Id] 
+    FROM [ContragentItemEntities] AS [Contragent]
+	WHERE ([Contragent].[Login] = @login);
+    
+    INSERT INTO [dbo].[SendItemsEntities]                                                                 
+    ([Contragent_Id], [EntityId], [Catalogs].[EntityName], [Catalogs].[RequestDate], [Catalogs].[DateOfCreation]) 
+    SELECT @contragentId, [Id], @entityName, @lastUpdate, @dateOfCreation                                        
+    FROM [dbo].[CatalogItemEntities] AS [Catalogs]                                                        
+    WHERE [Catalogs].[LastUpdated] > @lastUpdate AND                                                      
+    NOT EXISTS (SELECT *                                                                            
+    FROM  [dbo].[SendItemsEntities] AS [SendItem]                                       
+    WHERE [SendItem].[EntityId] = [Catalogs].[Id] AND                                   
+    [SendItem].[Contragent_Id] = @contragentId AND                                               
+    [SendItem].[EntityName] = @entityName);                                       
+    
+    SELECT @countToUpdate = COUNT(*)                                                                      
+    FROM  [dbo].[SendItemsEntities]                                                                       
+    WHERE [Contragent_Id] = @contragentId AND                                                                            
+    [EntityName] = @entityName;                                                                     
+    
+    RETURN (@countToUpdate);                                                                              
+    
+END
+
+
+------------------------------------------------------------------------------------------------------------
+
+
+USE [ServerPriceList]
+GO
+/****** Object:  StoredProcedure [dbo].[PrepareToUpdateDirectories]    Script Date: 16.02.2018 23:20:11 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[PrepareToUpdateDirectories]
+    @login [nvarchar](30),
+    @lastUpdate [datetimeoffset](7),
+    @countToUpdate [int] OUT
+AS
+BEGIN
+    -- +---------------------------------------------------+                                                       
+    -- | © 2017-2018 OLEXANDR LIKHOSHVA ALL RIGHT RESERVED |                                                       
+    -- | https://www.linkedin.com/in/olexandrlikhoshva/    |                                                       
+    -- +---------------------------------------------------+                                                       
+    -- SET NOCOUNT ON added to prevent extra result sets from                                                      
+    -- interfering with SELECT statements.                                                                         
+    
+    --SET NOCOUNT ON;                                                                                              
+    
+    -- BrandItemEntity = 1                                                                                         
+    -- CatalogItemEntity = 2                                                                                       
+    -- DirectoryEntity = 3                                                                                         
+    -- PhotoItemEntity = 5                                                                                         
+    -- ProductDirectionEntity = 6                                                                                  
+    
+    declare @entityName int = 3;                                                                                   
+    declare @dateOfCreation datetimeoffset(7) = Sysdatetimeoffset();                                               
+    declare @contragentId bigint = -1;
+    
+    SELECT TOP (1) @contragentId = [Contragent].[Id] 
+    FROM [ContragentItemEntities] AS [Contragent]
+	WHERE ([Contragent].[Login] = @login);
+    
+    INSERT INTO [dbo].[SendItemsEntities]                                                                          
+    ([Contragent_Id], [EntityId], [Directories].[EntityName], [Directories].[RequestDate], [Directories].[DateOfCreation]) 
+    SELECT @contragentId, [Id], @entityName, @lastUpdate, @dateOfCreation                                                 
+    FROM [dbo].[DirectoryEntities] AS [Directories]                                                                
+    WHERE [Directories].[LastUpdated] > @lastUpdate AND                                                            
+    NOT EXISTS (SELECT *                                                                                     
+    FROM  [dbo].[SendItemsEntities] AS [SendItem]                                                
+    WHERE [SendItem].[EntityId] = [Directories].[Id] AND                                         
+    [SendItem].[Contragent_Id] = @contragentId AND                                                        
+    [SendItem].[EntityName] = @entityName);                                                
+    
+    SELECT @countToUpdate = COUNT(*)                                                                               
+    FROM  [dbo].[SendItemsEntities]                                                                                
+    WHERE [Contragent_Id] = @contragentId AND                                                                                     
+    [EntityName] = @entityName;                                                                              
+    
+    RETURN (@countToUpdate);                                                                                       
+    
+END
+
+
+------------------------------------------------------------------------------------------------------------
+
+
+USE [ServerPriceList]
+GO
+/****** Object:  StoredProcedure [dbo].[PrepareToUpdatePhotos]    Script Date: 16.02.2018 23:21:04 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[PrepareToUpdatePhotos]                                                         
+    @login [nvarchar](30),                                                                             
+    @lastUpdate [datetimeoffset](7),                                                                   
+    @ids [dbo].[bigintTable] READONLY,                                                                 
+    @countToUpdate [int] OUT                                                                           
+AS                                                                                                     
+BEGIN                                                                                                  
+    -- +---------------------------------------------------+                                           
+    -- | © 2017-2018 OLEXANDR LIKHOSHVA ALL RIGHT RESERVED |                                           
+    -- | https://www.linkedin.com/in/olexandrlikhoshva/    |                                           
+    -- +---------------------------------------------------+                                           
+    -- SET NOCOUNT ON added to prevent extra result sets from                                          
+    -- interfering with SELECT statements.                                                             
+                                                                                                       
+    --SET NOCOUNT ON;                                                                                  
+                                                                                                       
+    -- BrandItemEntity = 1                                                                             
+    -- CatalogItemEntity = 2                                                                           
+    -- DirectoryEntity = 3                                                                             
+    -- PhotoItemEntity = 5                                                                             
+    -- ProductDirectionEntity = 6                                                                      
+                                                                                                       
+    declare @entityName int = 5;                                                                        
+    declare @dateOfCreation datetimeoffset(7) = Sysdatetimeoffset();                                    
+    declare @contragentId bigint = -1;
+    
+    SELECT TOP (1) @contragentId = [Contragent].[Id] 
+    FROM [ContragentItemEntities] AS [Contragent]
+	WHERE ([Contragent].[Login] = @login);
+                                                                                                       
+   INSERT INTO[dbo].[SendItemsEntities]                                                                
+   ([Contragent_Id], [EntityId], [Photos].[EntityName], [Photos].[RequestDate], [Photos].[DateOfCreation])     
+   SELECT @contragentId, [Id], @entityName, @lastUpdate, @dateOfCreation                                      
+   FROM [dbo].[PhotoItemEntities] AS [Photos]                                                          
+   WHERE[Photos].[Id] IN(SELECT Id FROM @ids) AND                                                      
+   [Photos].[IsLoad] = 1 AND                                                                           
+   NOT EXISTS (SELECT *                                                                                
+   FROM  [dbo].[SendItemsEntities] AS [SendItem]                                                       
+   WHERE [SendItem].[EntityId] = [Photos].[Id] AND                                                     
+   [SendItem].[Contragent_Id] = @contragentId AND                                                                     
+   [SendItem].[EntityName] = @entityName);                                                             
+                                                                                                       
+   INSERT INTO [dbo].[SendItemsEntities]                                                               
+   ([Contragent_Id], [EntityId], [Photos].[EntityName], [Photos].[RequestDate], [Photos].[DateOfCreation])     
+   SELECT @contragentId, [Id], @entityName, @lastUpdate, @dateOfCreation                                      
+   FROM [dbo].[PhotoItemEntities] AS [Photos]                                                          
+   WHERE [Photos].[LastUpdated] > @lastUpdate AND                                                      
+         NOT EXISTS (SELECT *                                                                          
+                     FROM  [dbo].[SendItemsEntities] AS [SendItem]                                     
+                     WHERE [SendItem].[EntityId] = [Photos].[Id] AND                                   
+                           [SendItem].[Contragent_Id] = @contragentId AND                                             
+                           [SendItem].[EntityName] = @entityName);                                     
+                                                                                                       
+   SELECT @countToUpdate = COUNT(*)                                                                    
+   FROM  [dbo].[SendItemsEntities]                                                                     
+   WHERE [Contragent_Id] = @contragentId AND                                                                          
+         [EntityName] = @entityName;                                                                   
+                                                                                                       
+   RETURN (@countToUpdate);                                                                            
+END                                                                                                    
+
+
+------------------------------------------------------------------------------------------------------------
+
+
+USE [ServerPriceList]
+GO
+/****** Object:  StoredProcedure [dbo].[PrepareToUpdateProductDirections]    Script Date: 16.02.2018 23:22:12 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[PrepareToUpdateProductDirections]
+    @login [nvarchar](30),
+    @lastUpdate [datetimeoffset](7),
+    @countToUpdate [int] OUT
+AS
+BEGIN
+    -- +---------------------------------------------------+                                                                                        
+    -- | © 2017-2018 OLEXANDR LIKHOSHVA ALL RIGHT RESERVED |                                                                                        
+    -- | https://www.linkedin.com/in/olexandrlikhoshva/    |                                                                                        
+    -- +---------------------------------------------------+                                                                                        
+    -- SET NOCOUNT ON added to prevent extra result sets from                                                                                       
+    -- interfering with SELECT statements.                                                                                                          
+    
+    --SET NOCOUNT ON;                                                                                                                                 
+    
+    -- BrandItemEntity = 1                                                                                                                          
+    -- CatalogItemEntity = 2                                                                                                                        
+    -- DirectoryEntity = 3                                                                                                                          
+    -- PhotoItemEntity = 5                                                                                                                          
+    -- ProductDirectionEntity = 6                                                                                                                   
+    
+    declare @entityName int = 6;                                                                                                                    
+    declare @dateOfCreation datetimeoffset(7) = Sysdatetimeoffset();                                                                                
+    declare @contragentId bigint = -1;
+    
+    SELECT TOP (1) @contragentId = [Contragent].[Id] 
+    FROM [ContragentItemEntities] AS [Contragent]
+	WHERE ([Contragent].[Login] = @login);
+    
+    INSERT INTO [dbo].[SendItemsEntities]                                                                                                           
+    ([Contragent_Id], [EntityId], [ProductDirectionEntity].[EntityName], [ProductDirectionEntity].[RequestDate], [ProductDirectionEntity].[DateOfCreation]) 
+    SELECT @contragentId, [Id], @entityName, @lastUpdate, @dateOfCreation                                                                                  
+    FROM [dbo].[ProductDirectionEntities] AS [ProductDirectionEntity]                                                                                
+    WHERE [ProductDirectionEntity].[LastUpdated] > @lastUpdate AND                                                                                  
+    NOT EXISTS (SELECT *                                                                                                                      
+    FROM  [dbo].[SendItemsEntities] AS [SendItem]                                                                                 
+    WHERE [SendItem].[EntityId] = [ProductDirectionEntity].[Id] AND                                                               
+    [SendItem].[Contragent_Id] = @contragentId AND                                                                                         
+    [SendItem].[EntityName] = @entityName);                                                                                 
+    
+    SELECT @countToUpdate = COUNT(*)                                                                                                                
+    FROM  [dbo].[SendItemsEntities]                                                                                                                 
+    WHERE [Contragent_Id] = @contragentId AND                                                                                                                      
+    [EntityName] = @entityName;                                                                                                               
+    
+    RETURN (@countToUpdate);                                                                                                                        
+    
+END

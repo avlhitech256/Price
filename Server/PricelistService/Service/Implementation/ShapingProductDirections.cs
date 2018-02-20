@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
 using DataBase.Context.Entities;
@@ -58,7 +59,8 @@ namespace PricelistService.Service.Implementation
         public void ConfirmUpdate(string login, List<long> itemIds)
         {
             List<SendItemsEntity> photosToDelete = dataService.Select<SendItemsEntity>()
-                .Where(x => x.Login == login)
+                .Include(x => x.Contragent)
+                .Where(x => x.Contragent.Login == login)
                 .Where(x => x.EntityName == EntityName.ProductDirectionEntity)
                 .Where(x => itemIds.Contains(x.EntityId))
                 .ToList();
@@ -69,7 +71,8 @@ namespace PricelistService.Service.Implementation
         private List<ProductDirectionInfo> GetProductDirectionInfos(string login)
         {
             List<long> productDirectionIds = dataService.Select<SendItemsEntity>()
-                .Where(x => x.Login == login)
+                .Include(x => x.Contragent)
+                .Where(x => x.Contragent.Login == login)
                 .Where(x => x.EntityName == EntityName.ProductDirectionEntity)
                 .Take(optionService.CountSendItems)
                 .Select(x => x.EntityId)
@@ -139,7 +142,8 @@ namespace PricelistService.Service.Implementation
             try
             {
             count = dataService.DataBaseContext.SendItemsEntities
-                .Count(x => x.EntityName == EntityName.ProductDirectionEntity && x.Login == login);
+                .Include(x => x.Contragent)
+                .Count(x => x.EntityName == EntityName.ProductDirectionEntity && x.Contragent.Login == login);
             }
             catch (Exception e)
             {
@@ -152,7 +156,8 @@ namespace PricelistService.Service.Implementation
         private long RemainderToUpdate(string login)
         {
             return dataService.Select<SendItemsEntity>()
-                .Count(x => x.Login == login && x.EntityName == EntityName.ProductDirectionEntity);
+                .Include(x => x.Contragent)
+                .Count(x => x.Contragent.Login == login && x.EntityName == EntityName.ProductDirectionEntity);
         }
 
         #endregion

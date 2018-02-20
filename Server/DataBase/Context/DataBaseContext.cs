@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Infrastructure;
+using System.Data.SqlClient;
 using System.Diagnostics;
+using System.Linq;
 using DataBase.Context.Entities;
 using DataBase.Context.Initializer;
 
@@ -126,7 +130,42 @@ namespace DataBase.Context
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PrepareToUpdateProductDirections", loginParameter, lastUpdateParameter);
         }
 
+        public virtual int GetCatalogItems(string login, int countToUpdate)
+        {
+            var loginParameter = login != null ?
+                new ObjectParameter("login", login) :
+                new ObjectParameter("login", typeof(string));
 
+            var countToUpdateParameter = new ObjectParameter("lastUpdate", countToUpdate);
+
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetCatalogItems", loginParameter, countToUpdateParameter);
+        }
+
+        public virtual int GetPhotosIds(IEnumerable<long> catalogIds)
+        {
+            int result = 0;
+
+            if (catalogIds != null)
+            {
+                DataTable catalogTable = new DataTable();
+                catalogTable.Columns.Add("Id", typeof(long));
+                List<long> catalogListIds = (catalogIds as List<long>) ?? catalogIds.ToList();
+                catalogListIds.ForEach(x => catalogTable.Rows.Add(x));
+
+                var ids = new SqlParameter();
+                ids.ParameterName = "@ids";
+                ids.SqlDbType = SqlDbType.Structured;
+                ids.TypeName = "bigintTable";
+                ids.Direction = ParameterDirection.Input;
+                ids.Value = catalogTable;
+
+                var idsParametr = new ObjectParameter("ids", ids);
+
+                result = ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetPhotosIds", idsParametr);
+            }
+
+            return result;
+        }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

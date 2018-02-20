@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
 using DataBase.Context.Entities;
@@ -60,7 +61,8 @@ namespace PricelistService.Service.Implementation
         public void ConfirmUpdate(string login, List<long> itemIds)
         {
             List<SendItemsEntity> brandsToDelete = dataService.Select<SendItemsEntity>()
-                .Where(x => x.Login == login)
+                .Include(x => x.Contragent)
+                .Where(x => x.Contragent.Login == login)
                 .Where(x => x.EntityName == EntityName.BrandItemEntity)
                 .Where(x => itemIds.Contains(x.EntityId))
                 .ToList();
@@ -70,7 +72,8 @@ namespace PricelistService.Service.Implementation
         private List<BrandInfo> GetBrandInfos(string login)
         {
             List<long> brandIds = dataService.Select<SendItemsEntity>()
-                .Where(x => x.Login == login)
+                .Include(x => x.Contragent)
+                .Where(x => x.Contragent.Login == login)
                 .Where(x => x.EntityName == EntityName.BrandItemEntity)
                 .Take(optionService.CountSendItems)
                 .Select(x => x.EntityId)
@@ -141,7 +144,8 @@ namespace PricelistService.Service.Implementation
             try
             {
                 count = dataService.DataBaseContext.SendItemsEntities
-                .Count(x => x.EntityName == EntityName.BrandItemEntity && x.Login == login);
+                .Include(x => x.Contragent)
+                .Count(x => x.EntityName == EntityName.BrandItemEntity && x.Contragent.Login == login);
             }
             catch (Exception e)
             {
@@ -155,7 +159,8 @@ namespace PricelistService.Service.Implementation
         private long RemainderToUpdate(string login)
         {
             return dataService.Select<SendItemsEntity>()
-                .Count(x => x.Login == login && x.EntityName == EntityName.BrandItemEntity);
+                .Include(x => x.Contragent)
+                .Count(x => x.Contragent.Login == login && x.EntityName == EntityName.BrandItemEntity);
         }
 
         #endregion

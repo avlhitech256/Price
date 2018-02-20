@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using DatabaseService.DataBaseContext.Entities;
 using DatabaseService.DataService;
@@ -243,64 +245,149 @@ namespace Load.Service.Implementation
         {
             if (catalogs?.Items != null && catalogs.Items.Any())
             {
-                catalogRepository.Load(catalogs.Items.Select(x => x.Id));
-                photoRepository.Load(catalogs.Items.SelectMany(x => x.Photos));
+                long[] ids = new long[0];
 
-                dataService.DataBaseContext.Configuration.AutoDetectChangesEnabled = false;
-                dataService.DataBaseContext.Configuration.ValidateOnSaveEnabled = false;
-
-                var entities = new List<CatalogItemEntity>();
-
-                catalogs.Items.ToList().ForEach(
-                    x =>
-                    {
-                        try
-                        {
-                            CatalogItemEntity oldCatalogItem = GetCatalogItem(x.Id);
-
-                            if (oldCatalogItem != null)
-                            {
-                                Update(oldCatalogItem, x);
-                            }
-                            else
-                            {
-                                entities.Add(Create(x));
-                            }
-                        }
-                        catch (Exception e)
-                        {
-                            ;
-                        }
-
-                    });
-
-                if (entities.Any())
+                try
                 {
-                    dataService.InsertMany(entities);
-                }
-                else
-                {
-                    dataService.DataBaseContext.SaveChanges();
-                }
+                    DataTable catalogsTable = new DataTable();
 
-                long[] ids =
-                    catalogs.Items
-                        .Where(x => GetCatalogItem(x.Id) != null)
-                        .Select(x => x.Id)
-                        .ToArray();
+                    catalogsTable.Columns.Add("Id", typeof (long));
+                    catalogsTable.Columns.Add("UID", typeof(Guid));
+                    catalogsTable.Columns.Add("Code", typeof(string));
+                    catalogsTable.Columns.Add("Article", typeof(string));
+                    catalogsTable.Columns.Add("Name", typeof(string));
+                    catalogsTable.Columns.Add("BrandName", typeof(string));
+                    catalogsTable.Columns.Add("Unit", typeof(string));
+                    catalogsTable.Columns.Add("EnterpriceNormPack", typeof(string));
+                    catalogsTable.Columns.Add("BatchOfSales", typeof(decimal));
+                    catalogsTable.Columns.Add("Balance", typeof(string));
+                    catalogsTable.Columns.Add("Price", typeof(decimal));
+                    catalogsTable.Columns.Add("Currency", typeof(string));
+                    catalogsTable.Columns.Add("Multiplicity", typeof(decimal));
+                    catalogsTable.Columns.Add("HasPhotos", typeof(byte));
+                    catalogsTable.Columns.Add("Status", typeof(int));
+                    catalogsTable.Columns.Add("LastUpdatedStatus", typeof(DateTimeOffset));
+                    catalogsTable.Columns.Add("DateOfCreation", typeof(DateTimeOffset));
+                    catalogsTable.Columns.Add("LastUpdated", typeof(DateTimeOffset));
+                    catalogsTable.Columns.Add("ForceUpdated", typeof(DateTimeOffset));
+                    catalogsTable.Columns.Add("Brand_Id", typeof(long));
+                    catalogsTable.Columns.Add("Directory_Id", typeof(long));
+
+                    catalogs.Items.ToList().ForEach(x => AddCatalogDataRow(catalogsTable, x));
+
+                    var idsParametr = new SqlParameter();
+                    idsParametr.ParameterName = "@catalogs";
+                    idsParametr.SqlDbType = SqlDbType.Structured;
+                    idsParametr.TypeName = "catalogsTable";
+                    idsParametr.Value = catalogsTable;
+                    idsParametr.Direction = ParameterDirection.Input;
+
+                    ids = dataService.DataBaseContext.Database
+                        .SqlQuery<long>("UpdateCatalogs @catalogs", idsParametr).ToArray();
+
+                }
+                catch (Exception e)
+                {
+                    ;
+                }
 
                 webService.ConfirmUpdateCatalogs(ids);
 
-                dataService.DataBaseContext.Configuration.AutoDetectChangesEnabled = true;
-                dataService.DataBaseContext.Configuration.ValidateOnSaveEnabled = true;
             }
         }
 
-        #endregion
+        private void AddCatalogDataRow(DataTable catalogsTable, CatalogInfo item)
+        {
+            DataRow row = catalogsTable.NewRow();
+            
+            row["Id"] = item.Id;
+            row["UID"] = item.UID;
+            row["Code"] = item.Code;
+            row["Article"] = item.Article;
+            row["Name"] = item.Name;
+            row["BrandName"] = item.BrandName;
+            row["Unit"] = item.Unit;
+            row["EnterpriceNormPack"] = item.EnterpriceNormPack;
+            row["BatchOfSales"] = item.BatchOfSales;
+            row["Balance"] = item.Balance;
+            row["Price"] = item.Price;
+            row["Currency"] = item.Currency;
+            row["Multiplicity"] = item.Multiplicity;
+            row["HasPhotos"] = item.HasPhotos;
+            row["Status"] = item.Status;
+            row["LastUpdatedStatus"] = item.LastUpdatedStatus;
+            row["DateOfCreation"] = item.DateOfCreation;
+            row["LastUpdated"] = item.LastUpdated;
+            row["ForceUpdated"] = item.ForceUpdated;
+            row["Brand_Id"] = item.BrandId;
+            row["Directory_Id"] = item.DirectoryId;
 
-        #region Directory
+            catalogsTable.Rows.Add(row);
+        }
 
-        private DirectoryEntity GetDirectory(long id, List<DirectoryEntity> cacheDirectoryEntity)
+
+    //public void DownLoadCatalogs(Catalogs catalogs)
+    //{
+    //    if (catalogs?.Items != null && catalogs.Items.Any())
+    //    {
+    //        catalogRepository.Load(catalogs.Items.Select(x => x.Id));
+    //        photoRepository.Load(catalogs.Items.SelectMany(x => x.Photos));
+
+    //        dataService.DataBaseContext.Configuration.AutoDetectChangesEnabled = false;
+    //        dataService.DataBaseContext.Configuration.ValidateOnSaveEnabled = false;
+
+    //        var entities = new List<CatalogItemEntity>();
+
+    //        catalogs.Items.ToList().ForEach(
+    //            x =>
+    //            {
+    //                try
+    //                {
+    //                    CatalogItemEntity oldCatalogItem = GetCatalogItem(x.Id);
+
+    //                    if (oldCatalogItem != null)
+    //                    {
+    //                        Update(oldCatalogItem, x);
+    //                    }
+    //                    else
+    //                    {
+    //                        entities.Add(Create(x));
+    //                    }
+    //                }
+    //                catch (Exception e)
+    //                {
+    //                    ;
+    //                }
+
+    //            });
+
+    //        if (entities.Any())
+    //        {
+    //            dataService.InsertMany(entities);
+    //        }
+    //        else
+    //        {
+    //            dataService.DataBaseContext.SaveChanges();
+    //        }
+
+    //        long[] ids =
+    //            catalogs.Items
+    //                .Where(x => GetCatalogItem(x.Id) != null)
+    //                .Select(x => x.Id)
+    //                .ToArray();
+
+    //        webService.ConfirmUpdateCatalogs(ids);
+
+    //        dataService.DataBaseContext.Configuration.AutoDetectChangesEnabled = true;
+    //        dataService.DataBaseContext.Configuration.ValidateOnSaveEnabled = true;
+    //    }
+    //}
+
+    #endregion
+
+    #region Directory
+
+    private DirectoryEntity GetDirectory(long id, List<DirectoryEntity> cacheDirectoryEntity)
         {
             DirectoryEntity directory = directoryRepository.GetItem(id);
 

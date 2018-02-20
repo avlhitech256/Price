@@ -1,4 +1,4 @@
-SELECT TOP (50) CatalogItems.*,  TOPN1.Price, TOPN1.Currency, TypeOfPrice1.[Name], Contragent1.[Name]
+﻿SELECT TOP (50) CatalogItems.*,  TOPN1.Price, TOPN1.Currency, TypeOfPrice1.[Name], Contragent1.[Name]
 FROM SendItemsEntities AS SendItems
 INNER JOIN CatalogItemEntities AS CatalogItems ON CatalogItems.Id = SendItems.EntityId
 LEFT JOIN TypeOfPricesNomenclatureItemEntities AS TOPN1 ON CatalogItems.Id = TOPN1.CatalogItem_Id
@@ -188,24 +188,30 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 -- =============================================
--- Author:		<Author,,Name>
--- Create date: <Create Date,,>
--- Description:	<Description,,>
+-- Author:		<OLEXANDR LIKHOSHVA>
+-- Create date: <2018.02.11 23:45>
+-- Description:	<Procedure for getting Catalog items>
 -- =============================================
 CREATE PROCEDURE [dbo].[GetCatalogItems] 
-	@login [nvarchar](30)
+	@login [nvarchar](30),
+	@countToUpdate [bigint]
 AS
 BEGIN
     -- +---------------------------------------------------+                                           
     -- | © 2017-2018 OLEXANDR LIKHOSHVA ALL RIGHT RESERVED |                                           
     -- | https://www.linkedin.com/in/olexandrlikhoshva/    |                                           
     -- +---------------------------------------------------+                                           
-	-- SET NOCOUNT ON added to prevent extra result sets from
-	-- interfering with SELECT statements.
-	-- SET NOCOUNT ON;
+    -- SET NOCOUNT ON added to prevent extra result sets from
+    -- interfering with SELECT statements.
+    -- SET NOCOUNT ON;
+
+	declare @contragentId bigint = -1;
+	
+	SELECT TOP (1) @contragentId = [Contragent].[Login] 
+	FROM [ContragentItemEntities] AS [Contragent];
 
     SELECT TOP (@countToUpdate)
-	       [CatalogItems].[Id] AS [Id],
+           [CatalogItems].[Id] AS [Id],
            [CatalogItems].[UID] AS [UID],
            [CatalogItems].[Code] AS [Code],
            [CatalogItems].[Article] AS [Article],
@@ -217,21 +223,29 @@ BEGIN
            [CatalogItems].[BatchOfSales] AS [BatchOfSales],
            [CatalogItems].[Balance] AS [Balance],
            [CatalogItems].[Balance] AS [Balance],
-	       CASE WHEN TOPN1.Price IS NOT NULL 
-	          THEN 
-		        CASE WHEN Discounts.Rate IS NOT NULL 
-		           THEN TOPN1.Price + Discounts.Rate * TOPN1.Price
-			       ELSE TOPN1.Price
-		        END
-		      ELSE 
-		        CASE WHEN Discounts.Rate IS NOT NULL 
-		           THEN TOPN2.Price + Discounts.Rate * TOPN2.Price
-			       ELSE TOPN2.Price
-		        END
+           CASE WHEN TOPN1.Price IS NOT NULL 
+              THEN 
+                 CASE WHEN Discounts.Rate IS NOT NULL 
+                    THEN TOPN1.Price + Discounts.Rate * TOPN1.Price
+                    ELSE TOPN1.Price
+                 END
+              ELSE 
+                 CASE WHEN Discounts.Rate IS NOT NULL 
+                    THEN 
+                       CASE WHEN TOPN2.Price IS NOT NULL 
+                          THEN TOPN2.Price + Discounts.Rate * TOPN2.Price
+                          ELSE 0
+                       END
+                    ELSE
+                       CASE WHEN TOPN2.Price IS NOT NULL 
+                          THEN TOPN2.Price
+                          ELSE 0
+                       END
+	         END
            END AS [Price],
-	       CASE WHEN TOPN1.Price IS NOT NULL 
-	          THEN TOPN1.Currency
-		      ELSE TOPN2.Currency
+           CASE WHEN TOPN1.Price IS NOT NULL 
+	      THEN TOPN1.Currency
+              ELSE TOPN2.Currency
            END AS [Currency],
            [CatalogItems].[Multiplicity] AS [Multiplicity],
            [CatalogItems].[HasPhotos] AS [HasPhotos],
@@ -239,25 +253,24 @@ BEGIN
            [CatalogItems].[LastUpdated] AS [LastUpdated],
            [CatalogItems].[ForceUpdated] AS [ForceUpdated],
            [CatalogItems].[Status] AS [Status],
-	       [CatalogItems].[Directory_Id] AS [DirectoryId]
+           [CatalogItems].[Directory_Id] AS [DirectoryId]
     FROM [SendItemsEntities] AS [SendItems]
     INNER JOIN [CatalogItemEntities] AS [CatalogItems] ON [SendItems].[EntityId] = [CatalogItems].[Id] 
-    LEFT JOIN [ContragentItemEntities] AS [Contragent] ON [SendItems].[Login] = [Contragent].[Login]
     LEFT JOIN [PriceTypePriceGroupContragentEntities] AS [PTPGC] ON [CatalogItems].[PriceGroup_Id] = [PTPGC].[PriceGroupItem_Id] AND 
-                                                                    [Contragent].[Id] = [PTPGC].[ContragentItem_Id]
+                                                                    [SendItems].[Contragent_Id] = [PTPGC].[ContragentItem_Id]
     LEFT JOIN [TypeOfPricesNomenclatureItemEntities] AS [TOPN1] ON [CatalogItems].[Id] = [TOPN1].[CatalogItem_Id] AND 
                                                                    [PTPGC].[TypeOfPriceItem_Id] = [TOPN1].[TypeOfPriceItem_Id]
     LEFT JOIN [PriceTypeNomenclatureGroupContragentEntities] AS [PTNGC] ON [CatalogItems].[NomenclatureGroup_Id] = [PTNGC].[NomenclatureGroupItem_Id] AND 
-                                                                           [Contragent].[Id] = [PTNGC].[ContragentItem_Id]
+                                                                           [SendItems].[Contragent_Id] = [PTNGC].[ContragentItem_Id]
     LEFT JOIN [TypeOfPricesNomenclatureItemEntities] AS [TOPN2] ON [CatalogItems].[Id] = [TOPN2].[CatalogItem_Id] AND 
                                                                    [PTNGC].[TypeOfPriceItem_Id] = [TOPN2].[TypeOfPriceItem_Id]
     LEFT JOIN [DiscountsContragentEntities] AS [Discounts] ON [CatalogItems].[Id] = [Discounts].[CatalogItem_Id] AND
-                                                              [Contragent].[Id] = [Discounts].[ContragentItem_Id]
-    WHERE [SendItems].[Login] = @login AND 
+                                                              [SendItems].[Contragent_Id] = [Discounts].[ContragentItem_Id]
+    WHERE [SendItems].[Contragent_Id] = @contragentId AND 
           [SendItems].[EntityName] = 2;
     
-	-- Entity Names:
-	-- BrandItemEntity = 1                                                                             
+    -- Entity Names:
+    -- BrandItemEntity = 1                                                                             
     -- CatalogItemEntity = 2                                                                           
     -- DirectoryEntity = 3                                                                             
     -- PhotoItemEntity = 5                                                                             
@@ -276,7 +289,7 @@ GO
 -- =============================================
 -- Author:		<OLEXANDR LIKHOSHVA>
 -- Create date: <2018.02.11 23:45>
--- Description:	<Procedure for getting Catalog items>
+-- Description:	<Procedure for getting Photo ids>
 -- =============================================
 CREATE PROCEDURE [dbo].[GetPhotosIds]
 	@ids [dbo].[bigintTable] READONLY
@@ -290,9 +303,9 @@ BEGIN
 	-- interfering with SELECT statements.
 	-- SET NOCOUNT ON;
 	
-	SELECT [Photos].[CatalogItem_Id] AS [CatalogId], [Photos].[Id] AS [PhotoId]                                      
+    SELECT [Photos].[CatalogItem_Id] AS [CatalogId], [Photos].[Id] AS [PhotoId]                                      
     FROM [dbo].[PhotoItemEntities] AS [Photos]                                                          
-    WHERE[Photos].[CatalogItem_Id] IN(SELECT Id FROM @ids)
+    WHERE[Photos].[CatalogItem_Id] IN (SELECT Id FROM @ids)
 	
 END
 GO

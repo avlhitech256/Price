@@ -85,6 +85,14 @@
     <Compile Include="EntitiesMigrations\201802012012274_InitialEntities1.Designer.cs">
       <DependentUpon>201802012012274_InitialEntities1.cs</DependentUpon>
     </Compile>
+    <Compile Include="EntitiesMigrations\201802132105543_InitialEntities2.cs" />
+    <Compile Include="EntitiesMigrations\201802132105543_InitialEntities2.Designer.cs">
+      <DependentUpon>201802132105543_InitialEntities2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EntitiesMigrations\201802142252417_InitialEntities3.cs" />
+    <Compile Include="EntitiesMigrations\201802142252417_InitialEntities3.Designer.cs">
+      <DependentUpon>201802142252417_InitialEntities3.cs</DependentUpon>
+    </Compile>
     <Compile Include="EntitiesMigrations\Configuration.cs" />
     <Compile Include="Objects\PriceInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -104,6 +112,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EntitiesMigrations\201802012012274_InitialEntities1.resx">
       <DependentUpon>201802012012274_InitialEntities1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EntitiesMigrations\201802132105543_InitialEntities2.resx">
+      <DependentUpon>201802132105543_InitialEntities2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EntitiesMigrations\201802142252417_InitialEntities3.resx">
+      <DependentUpon>201802142252417_InitialEntities3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

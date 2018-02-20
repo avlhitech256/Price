@@ -59,7 +59,8 @@ namespace PricelistService.Service.Implementation
         public void ConfirmUpdate(string login, List<long> itemIds)
         {
             List<SendItemsEntity> brandsToDelete = dataService.Select<SendItemsEntity>()
-                .Where(x => x.Login == login)
+                .Include(x => x.Contragent)
+                .Where(x => x.Contragent.Login == login)
                 .Where(x => x.EntityName == EntityName.DirectoryEntity)
                 .Where(x => itemIds.Contains(x.EntityId))
                 .ToList();
@@ -70,7 +71,8 @@ namespace PricelistService.Service.Implementation
         private List<DirectoryInfo> GetDirectoryInfos(string login)
         {
             List<long> catalogIds = dataService.Select<SendItemsEntity>()
-                .Where(x => x.Login == login)
+                .Include(x => x.Contragent)
+                .Where(x => x.Contragent.Login == login)
                 .Where(x => x.EntityName == EntityName.DirectoryEntity)
                 .Take(optionService.CountSendItems)
                 .Select(x => x.EntityId)
@@ -146,7 +148,8 @@ namespace PricelistService.Service.Implementation
             try
             {
                 count = dataService.DataBaseContext.SendItemsEntities
-                    .Count(x => x.EntityName == EntityName.DirectoryEntity && x.Login == login);
+                    .Include(x => x.Contragent)
+                    .Count(x => x.EntityName == EntityName.DirectoryEntity && x.Contragent.Login == login);
             }
             catch (Exception e)
             {
@@ -159,7 +162,8 @@ namespace PricelistService.Service.Implementation
         private long RemainderToUpdate(string login)
         {
             return dataService.Select<SendItemsEntity>()
-                .Count(x => x.Login == login && x.EntityName == EntityName.DirectoryEntity);
+                .Include(x => x.Contragent)
+                .Count(x => x.Contragent.Login == login && x.EntityName == EntityName.DirectoryEntity);
         }
 
         #endregion
