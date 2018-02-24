@@ -249,41 +249,27 @@ namespace Load.Service.Implementation
 
                 try
                 {
-                    DataTable catalogsTable = new DataTable();
+                    DataTable catalogsTable = CreateCatalogsTable(catalogs.Items);
 
-                    catalogsTable.Columns.Add("Id", typeof (long));
-                    catalogsTable.Columns.Add("UID", typeof(Guid));
-                    catalogsTable.Columns.Add("Code", typeof(string));
-                    catalogsTable.Columns.Add("Article", typeof(string));
-                    catalogsTable.Columns.Add("Name", typeof(string));
-                    catalogsTable.Columns.Add("BrandName", typeof(string));
-                    catalogsTable.Columns.Add("Unit", typeof(string));
-                    catalogsTable.Columns.Add("EnterpriceNormPack", typeof(string));
-                    catalogsTable.Columns.Add("BatchOfSales", typeof(decimal));
-                    catalogsTable.Columns.Add("Balance", typeof(string));
-                    catalogsTable.Columns.Add("Price", typeof(decimal));
-                    catalogsTable.Columns.Add("Currency", typeof(string));
-                    catalogsTable.Columns.Add("Multiplicity", typeof(decimal));
-                    catalogsTable.Columns.Add("HasPhotos", typeof(byte));
-                    catalogsTable.Columns.Add("Status", typeof(int));
-                    catalogsTable.Columns.Add("LastUpdatedStatus", typeof(DateTimeOffset));
-                    catalogsTable.Columns.Add("DateOfCreation", typeof(DateTimeOffset));
-                    catalogsTable.Columns.Add("LastUpdated", typeof(DateTimeOffset));
-                    catalogsTable.Columns.Add("ForceUpdated", typeof(DateTimeOffset));
-                    catalogsTable.Columns.Add("Brand_Id", typeof(long));
-                    catalogsTable.Columns.Add("Directory_Id", typeof(long));
+                    var catalogsParametr = new SqlParameter();
+                    catalogsParametr.ParameterName = "@catalogs";
+                    catalogsParametr.SqlDbType = SqlDbType.Structured;
+                    catalogsParametr.TypeName = "catalogsTable";
+                    catalogsParametr.Value = catalogsTable;
+                    catalogsParametr.Direction = ParameterDirection.Input;
 
-                    catalogs.Items.ToList().ForEach(x => AddCatalogDataRow(catalogsTable, x));
+                    DataTable linkToPhotoTable = CreateLinkToPhoto(catalogs.Items);
 
-                    var idsParametr = new SqlParameter();
-                    idsParametr.ParameterName = "@catalogs";
-                    idsParametr.SqlDbType = SqlDbType.Structured;
-                    idsParametr.TypeName = "catalogsTable";
-                    idsParametr.Value = catalogsTable;
-                    idsParametr.Direction = ParameterDirection.Input;
+                    var linkToPhotosParametr = new SqlParameter();
+                    linkToPhotosParametr.ParameterName = "@linkToPhotos";
+                    linkToPhotosParametr.SqlDbType = SqlDbType.Structured;
+                    linkToPhotosParametr.TypeName = "linkToPhotoTable";
+                    linkToPhotosParametr.Value = linkToPhotoTable;
+                    linkToPhotosParametr.Direction = ParameterDirection.Input;
 
                     ids = dataService.DataBaseContext.Database
-                        .SqlQuery<long>("UpdateCatalogs @catalogs", idsParametr).ToArray();
+                        .SqlQuery<long>("UpdateCatalogs @catalogs, @linkToPhotos", 
+                                        catalogsParametr, linkToPhotosParametr).ToArray();
 
                 }
                 catch (Exception e)
@@ -294,6 +280,67 @@ namespace Load.Service.Implementation
                 webService.ConfirmUpdateCatalogs(ids);
 
             }
+        }
+
+        private DataTable CreateLinkToPhoto(CatalogInfo[] items)
+        {
+            DataTable linkToPhotoTable = new DataTable();
+
+            linkToPhotoTable.Columns.Add("Catalog_Id", typeof (long));
+            linkToPhotoTable.Columns.Add("Photo_Id", typeof (long));
+
+            items.ToList().ForEach(x => AddLinkToPhotoDataRows(linkToPhotoTable, x));
+
+            return linkToPhotoTable;
+        }
+
+        private void AddLinkToPhotoDataRows(DataTable linkToPhotosTable, CatalogInfo item)
+        {
+            if (linkToPhotosTable != null)
+            {
+                item?.Photos.ToList().ForEach(x => AddLinkToPhotoDataRow(linkToPhotosTable, item.Id, x));
+            }
+        }
+
+        private void AddLinkToPhotoDataRow(DataTable linkToPhotosTable, long catalogId, long photoId)
+        {
+            DataRow row = linkToPhotosTable.NewRow();
+
+            row["Catalog_Id"] = catalogId;
+            row["Photo_Id"] = photoId;
+
+            linkToPhotosTable.Rows.Add(row);
+        }
+
+        private DataTable CreateCatalogsTable(CatalogInfo[] items)
+        {
+            DataTable catalogsTable = new DataTable();
+
+            catalogsTable.Columns.Add("Id", typeof(long));
+            catalogsTable.Columns.Add("UID", typeof(Guid));
+            catalogsTable.Columns.Add("Code", typeof(string));
+            catalogsTable.Columns.Add("Article", typeof(string));
+            catalogsTable.Columns.Add("Name", typeof(string));
+            catalogsTable.Columns.Add("BrandName", typeof(string));
+            catalogsTable.Columns.Add("Unit", typeof(string));
+            catalogsTable.Columns.Add("EnterpriceNormPack", typeof(string));
+            catalogsTable.Columns.Add("BatchOfSales", typeof(decimal));
+            catalogsTable.Columns.Add("Balance", typeof(string));
+            catalogsTable.Columns.Add("Price", typeof(decimal));
+            catalogsTable.Columns.Add("Currency", typeof(string));
+            catalogsTable.Columns.Add("Multiplicity", typeof(decimal));
+            catalogsTable.Columns.Add("HasPhotos", typeof(byte));
+            catalogsTable.Columns.Add("Status", typeof(int));
+            catalogsTable.Columns.Add("LastUpdatedStatus", typeof(DateTimeOffset));
+            catalogsTable.Columns.Add("DateOfCreation", typeof(DateTimeOffset));
+            catalogsTable.Columns.Add("LastUpdated", typeof(DateTimeOffset));
+            catalogsTable.Columns.Add("ForceUpdated", typeof(DateTimeOffset));
+            catalogsTable.Columns.Add("Brand_Id", typeof(long));
+            catalogsTable.Columns.Add("Directory_Id", typeof(long));
+
+            items?.ToList().ForEach(x => AddCatalogDataRow(catalogsTable, x));
+
+            return catalogsTable;
         }
 
         private void AddCatalogDataRow(DataTable catalogsTable, CatalogInfo item)
@@ -461,20 +508,6 @@ namespace Load.Service.Implementation
                                                         cacheDirectoryInfos, 
                                                         cacheDirectoryEntities, 
                                                         entitiesToInsert);
-
-                directoryInfo.SubDirectoryIds.ToList().ForEach(
-                    x =>
-                    {
-                        DirectoryEntity subDirectory = GetDirectoryWithLoad(x, 
-                                                                            cacheDirectoryInfos, 
-                                                                            cacheDirectoryEntities, 
-                                                                            entitiesToInsert);
-
-                        if (subDirectory != null)
-                        {
-                            directory.SubDirectory.Add(subDirectory);
-                        }
-                    });
             }
 
             return directory;
@@ -494,19 +527,6 @@ namespace Load.Service.Implementation
                                                               entitiesToInsert);
                 List<DirectoryEntity> subDirectories = new List<DirectoryEntity>();
 
-                directoryInfo.SubDirectoryIds.ToList().ForEach(
-                    x =>
-                    {
-                        DirectoryEntity subDirectory = GetDirectoryWithLoad(x, 
-                                                                            cacheDirectoryInfos, 
-                                                                            cacheDirectoryEntities,
-                                                                            entitiesToInsert);
-
-                        if (subDirectory != null)
-                        {
-                            subDirectories.Add(subDirectory);
-                        }
-                    });
 
                 entity.Code = directoryInfo.Code;
                 entity.Name = directoryInfo.Name;

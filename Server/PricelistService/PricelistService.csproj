@@ -80,6 +80,7 @@
     <Compile Include="Service\IShapingPhotos.cs" />
     <Compile Include="Service\IShapingProductDirections.cs" />
     <Compile Include="Service\Objects\DbCatalogInfo.cs" />
+    <Compile Include="Service\Objects\DbDirectoryInfo.cs" />
     <Compile Include="Service\Objects\DbPhotoIdInfo.cs" />
   </ItemGroup>
   <ItemGroup>

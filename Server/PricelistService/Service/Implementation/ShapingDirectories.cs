@@ -9,6 +9,7 @@ using DataBase.Context.Object;
 using DataBase.Service;
 using Option.Service;
 using PricelistService.Service.Contract;
+using PricelistService.Service.Objects;
 
 namespace PricelistService.Service.Implementation
 {
@@ -70,22 +71,67 @@ namespace PricelistService.Service.Implementation
 
         private List<DirectoryInfo> GetDirectoryInfos(string login)
         {
-            List<long> catalogIds = dataService.Select<SendItemsEntity>()
-                .Include(x => x.Contragent)
-                .Where(x => x.Contragent.Login == login)
-                .Where(x => x.EntityName == EntityName.DirectoryEntity)
-                .Take(optionService.CountSendItems)
-                .Select(x => x.EntityId)
-                .ToList();
+            var loginParametr = new SqlParameter();
+            loginParametr.ParameterName = "@login";
+            loginParametr.SqlDbType = SqlDbType.NVarChar;
+            loginParametr.Value = login;
+            loginParametr.Direction = ParameterDirection.Input;
 
-            List<DirectoryInfo> result =
-                dataService.Select<DirectoryEntity>()
-                    .Include(x => x.Parent)
-                    .Include(x => x.SubDirectory)
-                    .Include(x => x.CatalogItems)
-                    .Where(x => catalogIds.Contains(x.Id))
-                    .Select(Assemble)
-                    .ToList();
+            var countToUpdateParametr = new SqlParameter();
+            countToUpdateParametr.ParameterName = "@countToUpdate";
+            countToUpdateParametr.SqlDbType = SqlDbType.BigInt;
+            countToUpdateParametr.Direction = ParameterDirection.Input;
+            countToUpdateParametr.Value = optionService.CountSendItems;
+
+            List<DbDirectoryInfo> directoryInfos = null;
+
+            try
+            {
+                directoryInfos = dataService.DataBaseContext.Database
+                    .SqlQuery<DbDirectoryInfo>("GetDirectoryItems @login, @countToUpdate",
+                        loginParametr, countToUpdateParametr).ToList();
+            }
+            catch (Exception e)
+            {
+                ; //TODO Записать в LOG-file ошибку
+            }
+
+            List<DirectoryInfo> result = new List<DirectoryInfo>();
+
+            if (directoryInfos != null && directoryInfos.Any())
+            {
+                directoryInfos.ForEach(
+                    x =>
+                    {
+                        DirectoryInfo directoryInfo = Assemble(x);
+
+                        if (directoryInfo != null)
+                        {
+                            result.Add(directoryInfo);
+                        }
+                    });
+            }
+            
+            return result;
+        }
+
+        private DirectoryInfo Assemble(DbDirectoryInfo dbDirectoryInfo)
+        {
+            DirectoryInfo result = null;
+
+            if (dbDirectoryInfo != null)
+            {
+                result = new DirectoryInfo
+                {
+                    Id = dbDirectoryInfo.Id,
+                    Code = dbDirectoryInfo.Code,
+                    Name = dbDirectoryInfo.Name,
+                    Parent = dbDirectoryInfo.ParentId,
+                    DateOfCreation = dbDirectoryInfo.DateOfCreation,
+                    LastUpdated = dbDirectoryInfo.LastUpdated,
+                    ForceUpdated = dbDirectoryInfo.ForceUpdated
+                };
+            }
 
             return result;
         }
@@ -102,8 +148,6 @@ namespace PricelistService.Service.Implementation
                     Code = item.Code,
                     Name = item.Name,
                     Parent = item.Parent?.Id,
-                    SubDirectoryIds = item.SubDirectory?.Select(x => x.Id).ToList() ?? new List<long>(),
-                    CatalogId = item.CatalogItems?.Select(x => x.Id).ToList() ?? new List<long>(),
                     DateOfCreation = item.DateOfCreation,
                     ForceUpdated = item.ForceUpdated,
                     LastUpdated = item.LastUpdated

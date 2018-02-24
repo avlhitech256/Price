@@ -74,23 +74,6 @@ namespace PricelistService.Service.Implementation
 
         private List<CatalogInfo> GetCatalogInfos(string login)
         {
-            //List<long> catalogIds = dataService.Select<SendItemsEntity>()
-            //    .Where(x => x.Login == login)
-            //    .Where(x => x.EntityName == EntityName.CatalogItemEntity)
-            //    .Take(optionService.CountSendItems)
-            //    .Select(x => x.EntityId)
-            //    .ToList();
-
-            //List<CatalogInfo> result =
-            //    dataService.Select<CatalogItemEntity>()
-            //        .Include(x => x.Discounts)
-            //        .Include(x => x.PriceGroup)
-            //        .Include(x => x.NomenclatureGroup)
-            //        .Where(x => catalogIds.Contains(x.Id))
-            //        .ToList()
-            //        .Select(x => Assemble(x, login))
-            //        .ToList();
-
             var loginParametr = new SqlParameter();
             loginParametr.ParameterName = "@login";
             loginParametr.SqlDbType = SqlDbType.NVarChar;

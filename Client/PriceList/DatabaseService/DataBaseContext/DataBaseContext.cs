@@ -97,5 +97,23 @@ namespace DatabaseService.DataBaseContext
                 }
             }
         }
+
+        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        //{
+
+        //    //SqlServerMigrationSqlGenerator
+        //    //CreateProcedureOperation(modelBuilder)
+
+        //    //SqlCommand cmd = new SqlCommand();
+        //    //cmd.CommandType =CommandType.StoredProcedure;
+        //    //cmd.Parameters.AddWithValue();
+        //    //cmd.b
+        //    //cmd.ExecuteNonQuery();
+
+        //    //this.Database.
+            
+
+        //    base.OnModelCreating(modelBuilder);
+        //}
     }
 }

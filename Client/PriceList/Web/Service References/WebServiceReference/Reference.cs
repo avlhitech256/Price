@@ -1341,9 +1341,6 @@ namespace Web.WebServiceReference {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private long[] CatalogIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Guid CodeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -1356,9 +1353,6 @@ namespace Web.WebServiceReference {
         private long IdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool IsAuthorizedField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.DateTimeOffset LastUpdatedField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -1367,9 +1361,6 @@ namespace Web.WebServiceReference {
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<long> ParentField;
         
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private long[] SubDirectoryIdsField;
-        
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
             get {
@@ -1377,19 +1368,6 @@ namespace Web.WebServiceReference {
             }
             set {
                 this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public long[] CatalogId {
-            get {
-                return this.CatalogIdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CatalogIdField, value) != true)) {
-                    this.CatalogIdField = value;
-                    this.RaisePropertyChanged("CatalogId");
-                }
             }
         }
         
@@ -1446,19 +1424,6 @@ namespace Web.WebServiceReference {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool IsAuthorized {
-            get {
-                return this.IsAuthorizedField;
-            }
-            set {
-                if ((this.IsAuthorizedField.Equals(value) != true)) {
-                    this.IsAuthorizedField = value;
-                    this.RaisePropertyChanged("IsAuthorized");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
         public System.DateTimeOffset LastUpdated {
             get {
                 return this.LastUpdatedField;
@@ -1493,19 +1458,6 @@ namespace Web.WebServiceReference {
                 if ((this.ParentField.Equals(value) != true)) {
                     this.ParentField = value;
                     this.RaisePropertyChanged("Parent");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public long[] SubDirectoryIds {
-            get {
-                return this.SubDirectoryIdsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.SubDirectoryIdsField, value) != true)) {
-                    this.SubDirectoryIdsField = value;
-                    this.RaisePropertyChanged("SubDirectoryIds");
                 }
             }
         }
