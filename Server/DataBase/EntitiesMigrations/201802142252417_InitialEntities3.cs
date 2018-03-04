@@ -393,13 +393,12 @@ namespace DataBase.EntitiesMigrations
             body.AppendLine("    WITH [BrandsForUpdate] AS");
             body.AppendLine("        (SELECT [BrandsItems].[Code] AS [Code],");
             body.AppendLine("                [BrandsItems].[Name] AS [Name],");
-            body.AppendLine("                [BrandsItems].[Name] AS [OldName],");
             body.AppendLine("                [BrandsItems].[LastUpdated] AS [LastUpdated],");
             body.AppendLine("                [BrandsItems].[ForceUpdated] AS [ForceUpdated]");
             body.AppendLine("         FROM [BrandItemEntities] AS [BrandsItems]");
             body.AppendLine("         WHERE [BrandsItems].[Code] IN (SELECT [Code] FROM @brands))");
             body.AppendLine("    UPDATE [ItemsForUpdate]");
-            body.AppendLine("    SET [ItemsForUpdate].[LastUpdated] = CASE WHEN [ItemsForUpdate].[OldName] = [UpdateItems].[Name]");
+            body.AppendLine("    SET [ItemsForUpdate].[LastUpdated] = CASE WHEN [ItemsForUpdate].[Name] = [UpdateItems].[Name]");
             body.AppendLine("                                             THEN [ItemsForUpdate].[LastUpdated]");
             body.AppendLine("                                             ELSE @lastUpdate");
             body.AppendLine("                                         END,");

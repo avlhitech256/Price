@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -158,7 +159,7 @@ namespace Load.Service.Implementation
                 dataService.DataBaseContext.Configuration.AutoDetectChangesEnabled = false;
                 dataService.DataBaseContext.Configuration.ValidateOnSaveEnabled = false;
 
-                CreateBrandItems(dataService.DataBaseContext, jsonLoadData, loadUpdateTime);
+                CreateBrandItems(jsonLoadData, loadUpdateTime);
                 CreatePriceGroupItems(dataService.DataBaseContext, jsonLoadData, loadUpdateTime);
                 CreateTypeOfPriceItems(dataService.DataBaseContext, jsonLoadData, loadUpdateTime);
                 CreateDirectoryItems(dataService.DataBaseContext, jsonLoadData, loadUpdateTime);
@@ -2375,11 +2376,9 @@ namespace Load.Service.Implementation
             return typeOfPricesNomenclatureItem;
         }
 
-        private void CreateBrandItems(DataBaseContext dataBaseContext,
-                                      JsonLoadData jsonLoadData,
-                                      DateTimeOffset loadUpdateTime)
+        private void CreateBrandItems(JsonLoadData jsonLoadData, DateTimeOffset loadUpdateTime)
         {
-            if (dataBaseContext != null && jsonLoadData?.Brands != null && jsonLoadData.Brands.Any())
+            if (jsonLoadData?.Brands != null && jsonLoadData.Brands.Any())
             {
                 int countItems = 0;
                 List<Brand> batchOfBrands = new List<Brand>();
@@ -2391,35 +2390,43 @@ namespace Load.Service.Implementation
 
                         if (countItems % optionService.CountSendItems == 0)
                         {
-                            try
-                            {
-                                dataBaseContext.SaveChanges();
-                            }
-                            catch (Exception)
-                            {
-                                ;
-                            }
+                            UpdateBrandItems(batchOfBrands, loadUpdateTime);
                         }
                     });
 
-                try
-                {
-                    dataBaseContext.SaveChanges();
-                }
-                catch (Exception)
-                {
-                    ;
-                }
+                UpdateBrandItems(batchOfBrands, loadUpdateTime);
             }
         }
 
-        private void UpdateBrandItems(DataBaseContext dataBaseContext,
-                                      List<Brand> batchOfBrands,
+        private void UpdateBrandItems(List<Brand> batchOfBrands,
                                       DateTimeOffset loadUpdateTime)
         {
             if (batchOfBrands != null && batchOfBrands.Any())
             {
                 DataTable brandsTable = CreateBrandsTable(batchOfBrands);
+
+                var brandsParametr = new SqlParameter();
+                brandsParametr.ParameterName = "@brands";
+                brandsParametr.SqlDbType = SqlDbType.Structured;
+                brandsParametr.TypeName = "brandsTable";
+                brandsParametr.Value = brandsTable;
+                brandsParametr.Direction = ParameterDirection.Input;
+
+                var lastUpdateParametr = new SqlParameter();
+                lastUpdateParametr.ParameterName = "@lastUpdate";
+                lastUpdateParametr.SqlDbType = SqlDbType.DateTimeOffset;
+                lastUpdateParametr.Value = loadUpdateTime;
+                lastUpdateParametr.Direction = ParameterDirection.Input;
+
+                try
+                {
+                    dataService.DataBaseContext.Database
+                        .ExecuteSqlCommand("UpdateBrands @brands, @lastUpdate", brandsParametr, lastUpdateParametr);
+                }
+                catch (Exception e)
+                {
+                    // TODO Записать в LOG-файл ошибки работы с базой данных
+                }
             }
         }
 
@@ -2430,7 +2437,11 @@ namespace Load.Service.Implementation
             brandsTable.Columns.Add("Code", typeof(Guid));
             brandsTable.Columns.Add("Name", typeof(string));
 
-            items?.ForEach(x => AddBrandsDataRow(brandsTable, x));
+            if (items != null && items.Any())
+            {
+                items.ForEach(x => AddBrandsDataRow(brandsTable, x));
+                items.Clear();
+            }
 
             return brandsTable;
         }
@@ -2508,46 +2519,46 @@ namespace Load.Service.Implementation
         //    }
         //}
 
-        private void Update(BrandItemEntity entity, Brand jsonItem, DateTimeOffset loadUpdateTime)
-        {
-            if (entity != null && jsonItem != null)
-            {
-                if (Equals(entity, jsonItem))
-                {
-                    entity.ForceUpdated = loadUpdateTime;
-                }
-                else
-                {
-                    entity.Name = jsonItem.Name;
-                    entity.LastUpdated = loadUpdateTime;
-                }
-            }
-        }
+        //private void Update(BrandItemEntity entity, Brand jsonItem, DateTimeOffset loadUpdateTime)
+        //{
+        //    if (entity != null && jsonItem != null)
+        //    {
+        //        if (Equals(entity, jsonItem))
+        //        {
+        //            entity.ForceUpdated = loadUpdateTime;
+        //        }
+        //        else
+        //        {
+        //            entity.Name = jsonItem.Name;
+        //            entity.LastUpdated = loadUpdateTime;
+        //        }
+        //    }
+        //}
 
-        private bool Equals(BrandItemEntity entity, Brand jsonItem)
-        {
-            Guid code;
-            return jsonItem.UID.ConvertToGuid(out code) && entity.Code == code && entity.Name == jsonItem.Name;
-        }
+        //private bool Equals(BrandItemEntity entity, Brand jsonItem)
+        //{
+        //    Guid code;
+        //    return jsonItem.UID.ConvertToGuid(out code) && entity.Code == code && entity.Name == jsonItem.Name;
+        //}
 
-        private BrandItemEntity Assemble(Brand brand, DateTimeOffset loadUpdateTime)
-        {
-            BrandItemEntity brandItem = null;
+        //private BrandItemEntity Assemble(Brand brand, DateTimeOffset loadUpdateTime)
+        //{
+        //    BrandItemEntity brandItem = null;
 
-            if (brand != null)
-            {
-                brandItem = new BrandItemEntity
-                {
-                    Code = brand.UID.ConvertToGuid(),
-                    Name = brand.Name,
-                    DateOfCreation = loadUpdateTime,
-                    ForceUpdated = loadUpdateTime,
-                    LastUpdated = loadUpdateTime
-                };
-            }
+        //    if (brand != null)
+        //    {
+        //        brandItem = new BrandItemEntity
+        //        {
+        //            Code = brand.UID.ConvertToGuid(),
+        //            Name = brand.Name,
+        //            DateOfCreation = loadUpdateTime,
+        //            ForceUpdated = loadUpdateTime,
+        //            LastUpdated = loadUpdateTime
+        //        };
+        //    }
 
-            return brandItem;
-        }
+        //    return brandItem;
+        //}
 
         private void CreatePriceGroupItems(DataBaseContext dataBaseContext,
                                           JsonLoadData jsonLoadData,
