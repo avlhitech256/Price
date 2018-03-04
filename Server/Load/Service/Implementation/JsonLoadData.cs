@@ -45,12 +45,38 @@ namespace Load.Service.Implementation
 
         public void AddMetaData(MetaData metaData)
         {
-            Catalogs.AddRange(metaData.Catalog);
-            PriceGroups.AddRange(metaData.PriceGroups);
-            NomenclatureGroups.AddRange(metaData.NomenclatureGroups);
-            Brands.AddRange(metaData.Brands);
-            TypesOfPrices.AddRange(metaData.TypesOfPrices);
-            CommodityDirections.AddRange(metaData.CommodityDirections);
+            if (metaData != null)
+            {
+                if (metaData.Catalog != null)
+                {
+                    Catalogs.AddRange(metaData.Catalog);
+                }
+
+                if (metaData.PriceGroups != null)
+                {
+                    PriceGroups.AddRange(metaData.PriceGroups);
+                }
+
+                if (metaData.NomenclatureGroups != null)
+                {
+                    NomenclatureGroups.AddRange(metaData.NomenclatureGroups);
+                }
+
+                if (metaData.Brands != null)
+                {
+                    Brands.AddRange(metaData.Brands);
+                }
+
+                if (metaData.TypesOfPrices != null)
+                {
+                    TypesOfPrices.AddRange(metaData.TypesOfPrices);
+                }
+
+                if (metaData.CommodityDirections != null)
+                {
+                    CommodityDirections.AddRange(metaData.CommodityDirections);
+                }
+            }
         }
 
         public void AddPriceList(PriceList priceList)

@@ -2387,6 +2387,7 @@ namespace Load.Service.Implementation
                     x =>
                     {
                         batchOfBrands.Add(x);
+                        countItems++;
 
                         if (countItems % optionService.CountSendItems == 0)
                         {
