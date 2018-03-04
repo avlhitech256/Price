@@ -8,9 +8,6 @@ namespace PricelistService.Service.Contract
     public class BrandInfo
     {
         [DataMember]
-        public bool IsAuthorized { get; set; }
-
-        [DataMember]
         public long Id { get; set; }
 
         [DataMember]
@@ -18,9 +15,6 @@ namespace PricelistService.Service.Contract
 
         [DataMember]
         public string Name { get; set; }
-
-        [DataMember]
-        public virtual List<long> CatalogId { get; set; }
 
         [DataMember]
         public DateTimeOffset DateOfCreation { get; set; }

@@ -13,9 +13,13 @@ namespace DatabaseService.DataBaseContext.Initializer
             dataBaseContext.Database.ExecuteSqlCommand(CreateCatalogsTableType());
             dataBaseContext.Database.ExecuteSqlCommand(CreateLinkToPhotoTableType());
             dataBaseContext.Database.ExecuteSqlCommand(CreateDirectoriesTableType());
+            dataBaseContext.Database.ExecuteSqlCommand(CreateProductDirectionsTableType());
+            dataBaseContext.Database.ExecuteSqlCommand(CreateBrandsTableType());
 
             dataBaseContext.Database.ExecuteSqlCommand(CreateUpdateCatalogsProcedure());
             dataBaseContext.Database.ExecuteSqlCommand(CreateUpdateDirectoriesProcedure());
+            dataBaseContext.Database.ExecuteSqlCommand(CreateUpdateProductDirectionsProcedure());
+            dataBaseContext.Database.ExecuteSqlCommand(CreateUpdateBrandsProcedure());
 
             // Отключаем отслеживание и проверку изменений для оптимизации вставки множества полей
             dataBaseContext.Configuration.AutoDetectChangesEnabled = false;
@@ -93,14 +97,45 @@ namespace DatabaseService.DataBaseContext.Initializer
             return type.ToString();
         }
 
+        private string CreateProductDirectionsTableType()
+        {
+            StringBuilder type = new StringBuilder();
+
+            type.AppendLine("CREATE TYPE [dbo].[productDirectionsTable] AS TABLE(");
+            type.AppendLine("      [Id] [bigint] NOT NULL,");
+            type.AppendLine("      [Direction] [int] NOT NULL,");
+            type.AppendLine("      [Directory_Id] [bigint] NULL,");
+            type.AppendLine("      [DateOfCreation] [datetimeoffset](7) NOT NULL,");
+            type.AppendLine("      [LastUpdated] [datetimeoffset](7) NOT NULL,");
+            type.AppendLine("      [ForceUpdated] [datetimeoffset](7) NOT NULL,");
+            type.AppendLine("      PRIMARY KEY ([Id])");
+            type.AppendLine(")");
+
+            return type.ToString();
+        }
+
+        private string CreateBrandsTableType()
+        {
+            StringBuilder type = new StringBuilder();
+
+            type.AppendLine("CREATE TYPE [dbo].[brandsTable] AS TABLE");
+            type.AppendLine("(");
+            type.AppendLine("      [Id] [bigint] NOT NULL,");
+            type.AppendLine("      [Code] [uniqueidentifier] NOT NULL,");
+            type.AppendLine("      [Name] [nvarchar](255) NULL,");
+            type.AppendLine("      [DateOfCreation] [datetimeoffset](7) NOT NULL,");
+            type.AppendLine("      [LastUpdated] [datetimeoffset](7) NOT NULL,");
+            type.AppendLine("      [ForceUpdated] [datetimeoffset](7) NOT NULL,");
+            type.AppendLine("      PRIMARY KEY ([Id])");
+            type.AppendLine(")");
+
+            return type.ToString();
+        }
+
         private string CreateUpdateCatalogsProcedure()
         {
             StringBuilder procedure = new StringBuilder();
 
-            procedure.AppendLine("SET ANSI_NULLS ON");
-            procedure.AppendLine("GO");
-            procedure.AppendLine("SET QUOTED_IDENTIFIER ON");
-            procedure.AppendLine("GO");
             procedure.AppendLine("CREATE PROCEDURE [dbo].[UpdateCatalogs]");
             procedure.AppendLine("	@catalogs [dbo].[catalogsTable] READONLY,");
             procedure.AppendLine("	@linkToPhotos [dbo].[linkToPhotoTable] READONLY");
@@ -146,7 +181,7 @@ namespace DatabaseService.DataBaseContext.Initializer
             procedure.AppendLine("      FROM [CatalogForUpdate] AS [ItemsForUpdate]");
             procedure.AppendLine("      INNER JOIN @catalogs AS [UpdateItems] ON [ItemsForUpdate].[Id] = [UpdateItems].[Id]");
             procedure.AppendLine("      LEFT JOIN [BrandItemEntities] AS [BrandItems] ON [UpdateItems].[Brand_Id] = [BrandItems].[Id]");
-            procedure.AppendLine("      LEFT JOIN [DirectoryEntities] AS [Directories] ON [UpdateItems].[Directory_Id] = [Directories].[Id]");
+            procedure.AppendLine("      LEFT JOIN [DirectoryEntities] AS [Directories] ON [UpdateItems].[Directory_Id] = [Directories].[Id];");
             procedure.AppendLine(" ");
             procedure.AppendLine("      INSERT INTO  [CatalogItemEntities]");
             procedure.AppendLine("      ([Id], [UID], [Code], [Article], [Name], [Brand_Id], [BrandName], [Unit], [EnterpriceNormPack],");
@@ -162,17 +197,14 @@ namespace DatabaseService.DataBaseContext.Initializer
             procedure.AppendLine("      FROM @catalogs AS [UpdateItems]");
             procedure.AppendLine("      LEFT JOIN [BrandItemEntities] AS [BrandItems] ON [UpdateItems].[Brand_Id] = [BrandItems].[Id]");
             procedure.AppendLine("      LEFT JOIN [DirectoryEntities] AS [Directories] ON [UpdateItems].[Directory_Id] = [Directories].[Id]");
-            procedure.AppendLine("      WHERE [UpdateItems].[Id] NOT IN (SELECT [CatalogItems].[Id] FROM [CatalogItemEntities] AS [CatalogItems])");
+            procedure.AppendLine("      WHERE [UpdateItems].[Id] NOT IN (SELECT [CatalogItems].[Id] FROM [CatalogItemEntities] AS [CatalogItems]);");
             procedure.AppendLine(" ");
             procedure.AppendLine("      UPDATE [PhotoItems]");
             procedure.AppendLine("      SET [PhotoItems].[CatalogItem_Id] = [Link].[Catalog_Id]");
             procedure.AppendLine("      FROM [PhotoItemEntities] AS [PhotoItems]");
-            procedure.AppendLine("      INNER JOIN @linkToPhotos AS [Link] ON [PhotoItems].[Id] = [Link].[Photo_Id]");
-            procedure.AppendLine(" ");
-            procedure.AppendLine("      SELECT [Id] FROM @catalogs;");
+            procedure.AppendLine("      INNER JOIN @linkToPhotos AS [Link] ON [PhotoItems].[Id] = [Link].[Photo_Id];");
             procedure.AppendLine(" ");
             procedure.AppendLine("END");
-            procedure.AppendLine("GO");
 
             return procedure.ToString();
         }
@@ -181,10 +213,6 @@ namespace DatabaseService.DataBaseContext.Initializer
         {
             StringBuilder procedure = new StringBuilder();
 
-            procedure.AppendLine("SET ANSI_NULLS ON");
-            procedure.AppendLine("GO");
-            procedure.AppendLine("SET QUOTED_IDENTIFIER ON");
-            procedure.AppendLine("GO");
             procedure.AppendLine("CREATE PROCEDURE [dbo].[UpdateDirectories]");
             procedure.AppendLine("	@directories [dbo].[directoriesTable] READONLY");
             procedure.AppendLine("AS");
@@ -212,16 +240,104 @@ namespace DatabaseService.DataBaseContext.Initializer
             procedure.AppendLine("          [ItemsForUpdate].[LastUpdated] = [UpdateItems].[LastUpdated],");
             procedure.AppendLine("          [ItemsForUpdate].[ForceUpdated] = [UpdateItems].[ForceUpdated]");
             procedure.AppendLine("      FROM [DirectoriesForUpdate] AS [ItemsForUpdate]");
-            procedure.AppendLine("      INNER JOIN @directories AS [UpdateItems] ON [ItemsForUpdate].[Id] = [UpdateItems].[Id]");
+            procedure.AppendLine("      INNER JOIN @directories AS [UpdateItems] ON [ItemsForUpdate].[Id] = [UpdateItems].[Id];");
             procedure.AppendLine(" ");
-            procedure.AppendLine("      INSERT INTO  [DirectoriesForUpdate]");
+            procedure.AppendLine("      INSERT INTO  [DirectoryEntities]");
             procedure.AppendLine("      ([Id], [Code], [Name], [Parent_Id], [DateOfCreation], [LastUpdated], [ForceUpdated])");
             procedure.AppendLine("      SELECT [InsertItems].[Id], [InsertItems].[Code], [InsertItems].[Name], [InsertItems].[Parent_Id],");
             procedure.AppendLine("             [InsertItems].[DateOfCreation], [InsertItems].[LastUpdated], [InsertItems].[ForceUpdated]");
             procedure.AppendLine("      FROM @directories AS [InsertItems]");
-            procedure.AppendLine("      WHERE [InsertItems].[Id] NOT IN (SELECT [DirectoryItems].[Id] FROM [DirectoryEntities] AS [DirectoryItems])");
+            procedure.AppendLine("      WHERE [InsertItems].[Id] NOT IN (SELECT [DirectoryItems].[Id] FROM [DirectoryEntities] AS [DirectoryItems]);");
             procedure.AppendLine(" ");
-            procedure.AppendLine("      SELECT [Id] FROM @directories;");
+            procedure.AppendLine("END");
+
+            return procedure.ToString();
+        }
+
+        private string CreateUpdateProductDirectionsProcedure()
+        {
+            StringBuilder procedure = new StringBuilder();
+
+            procedure.AppendLine("CREATE PROCEDURE [dbo].[UpdateProductDirections]");
+            procedure.AppendLine("    @productDirections [dbo].[productDirectionsTable] READONLY");
+            procedure.AppendLine("AS");
+            procedure.AppendLine("BEGIN");
+            procedure.AppendLine("--  +---------------------------------------------------+");
+            procedure.AppendLine("--  | Author:       OLEXANDR LIKHOSHVA                  |");
+            procedure.AppendLine("--  | Create date:  2018.02.25 01:15                    |");
+            procedure.AppendLine("--  | Copyright:    © 2017-2018  ALL RIGHT RESERVED     |");
+            procedure.AppendLine("--  | https://www.linkedin.com/in/olexandrlikhoshva/    |");
+            procedure.AppendLine("--  |---------------------------------------------------|");
+            procedure.AppendLine("--  | Description:  Procedure for insert or update      |");
+            procedure.AppendLine("--  |               ProductDirectionEntities            |");
+            procedure.AppendLine("--  +---------------------------------------------------+");
+            procedure.AppendLine("--  SET NOCOUNT ON added to prevent extra result sets from");
+            procedure.AppendLine("--  interfering with SELECT statements.");
+            procedure.AppendLine("--  SET NOCOUNT ON;");
+            procedure.AppendLine(" ");
+            procedure.AppendLine("    WITH [ProductDirectionForUpdate] AS");
+            procedure.AppendLine("         (SELECT * FROM [ProductDirectionEntities] AS [ProductDirectionItems]");
+            procedure.AppendLine("          WHERE [ProductDirectionItems].[Id] IN (SELECT [Id] FROM @productDirections))");
+            procedure.AppendLine("    UPDATE [ItemsForUpdate]");
+            procedure.AppendLine("    SET [ItemsForUpdate].[Direction] = [UpdateItems].[Direction],");
+            procedure.AppendLine("        [ItemsForUpdate].[Directory_Id] = [UpdateItems].[Directory_Id],");
+            procedure.AppendLine("        [ItemsForUpdate].[DateOfCreation] = [UpdateItems].[DateOfCreation],");
+            procedure.AppendLine("        [ItemsForUpdate].[LastUpdated] = [UpdateItems].[LastUpdated],");
+            procedure.AppendLine("        [ItemsForUpdate].[ForceUpdated] = [UpdateItems].[ForceUpdated]");
+            procedure.AppendLine("    FROM [ProductDirectionForUpdate] AS [ItemsForUpdate]");
+            procedure.AppendLine("    INNER JOIN @productDirections AS [UpdateItems] ON [ItemsForUpdate].[Id] = [UpdateItems].[Id];");
+            procedure.AppendLine(" ");
+            procedure.AppendLine("    INSERT INTO  [ProductDirectionEntities]");
+            procedure.AppendLine("        ([Id], [Direction], [Directory_Id], [DateOfCreation], [LastUpdated], [ForceUpdated])");
+            procedure.AppendLine("    SELECT [InsertItems].[Id], [InsertItems].[Direction], [InsertItems].[Directory_Id],");
+            procedure.AppendLine("           [InsertItems].[DateOfCreation], [InsertItems].[LastUpdated], [InsertItems].[ForceUpdated]");
+            procedure.AppendLine("    FROM @productDirections AS [InsertItems]");
+            procedure.AppendLine("    WHERE [InsertItems].[Id] NOT IN (SELECT [ProductDirectionItems].[Id]");
+            procedure.AppendLine("                                     FROM [ProductDirectionEntities] AS [ProductDirectionItems]);");
+            procedure.AppendLine(" ");
+            procedure.AppendLine("END");
+
+            return procedure.ToString();
+        }
+
+        private string CreateUpdateBrandsProcedure()
+        {
+            StringBuilder procedure = new StringBuilder();
+
+            procedure.AppendLine("CREATE PROCEDURE [dbo].[UpdateBrands]");
+            procedure.AppendLine("      @brands [dbo].[brandsTable] READONLY");
+            procedure.AppendLine("AS");
+            procedure.AppendLine("BEGIN");
+            procedure.AppendLine("--    +---------------------------------------------------+");
+            procedure.AppendLine("--    | Author:       OLEXANDR LIKHOSHVA                  |");
+            procedure.AppendLine("--    | Create date:  2018.02.26 02:32                    |");
+            procedure.AppendLine("--    | Copyright:    © 2017-2018  ALL RIGHT RESERVED     |");
+            procedure.AppendLine("--    | https://www.linkedin.com/in/olexandrlikhoshva/    |");
+            procedure.AppendLine("--    |---------------------------------------------------|");
+            procedure.AppendLine("--    | Description:  Procedure for insert or update      |");
+            procedure.AppendLine("--    |               BrandItemEntities                   |");
+            procedure.AppendLine("--    +---------------------------------------------------+");
+            procedure.AppendLine("--    SET NOCOUNT ON added to prevent extra result sets from");
+            procedure.AppendLine("--    interfering with SELECT statements.");
+            procedure.AppendLine("--    SET NOCOUNT ON;");
+            procedure.AppendLine(" ");
+            procedure.AppendLine("      WITH [BrandsForUpdate] AS (SELECT * FROM [BrandItemEntities] AS [BrandsItems]");
+            procedure.AppendLine("                                 WHERE [BrandsItems].[Id] IN (SELECT [Id] FROM @brands))");
+            procedure.AppendLine("      UPDATE [ItemsForUpdate]");
+            procedure.AppendLine("      SET [ItemsForUpdate].[Code] = [UpdateItems].[Code],");
+            procedure.AppendLine("          [ItemsForUpdate].[Name] = [UpdateItems].[Name],");
+            procedure.AppendLine("          [ItemsForUpdate].[DateOfCreation] = [UpdateItems].[DateOfCreation],");
+            procedure.AppendLine("          [ItemsForUpdate].[LastUpdated] = [UpdateItems].[LastUpdated],");
+            procedure.AppendLine("          [ItemsForUpdate].[ForceUpdated] = [UpdateItems].[ForceUpdated]");
+            procedure.AppendLine("      FROM [BrandsForUpdate] AS [ItemsForUpdate]");
+            procedure.AppendLine("      INNER JOIN @brands AS [UpdateItems] ON [ItemsForUpdate].[Id] = [UpdateItems].[Id];");
+            procedure.AppendLine(" ");
+            procedure.AppendLine("      INSERT INTO  [BrandItemEntities]");
+            procedure.AppendLine("      ([Id], [Code], [Name], [DateOfCreation], [LastUpdated], [ForceUpdated])");
+            procedure.AppendLine("      SELECT [InsertItems].[Id], [InsertItems].[Code], [InsertItems].[Name],");
+            procedure.AppendLine("             [InsertItems].[DateOfCreation], [InsertItems].[LastUpdated], [InsertItems].[ForceUpdated]");
+            procedure.AppendLine("      FROM @brands AS [InsertItems]");
+            procedure.AppendLine("      WHERE [InsertItems].[Id] NOT IN (SELECT [BrandItems].[Id] FROM [BrandItemEntities] AS [BrandItems]);");
             procedure.AppendLine(" ");
             procedure.AppendLine("END");
 
@@ -236,7 +352,7 @@ namespace DatabaseService.DataBaseContext.Initializer
                 {
                     Code = OptionName.Login,
                     Name = "User Login",
-                    Value = "k6731"
+                    Value = "k0206"
                 },
                 new OptionItemEntity
                 {

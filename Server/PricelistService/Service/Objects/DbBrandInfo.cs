@@ -1,30 +1,20 @@
 ﻿using System;
-using System.Runtime.Serialization;
+using System.Collections.Generic;
 
-namespace PricelistService.Service.Contract
+namespace PricelistService.Service.Objects
 {
-    [DataContract]
-    public class DirectoryInfo
+    public class DbBrandInfo
     {
-        [DataMember]
         public long Id { get; set; }
 
-        [DataMember]
         public Guid Code { get; set; }
 
-        [DataMember]
         public string Name { get; set; }
 
-        [DataMember]
-        public long? Parent { get; set; }
-
-        [DataMember]
         public DateTimeOffset DateOfCreation { get; set; }
 
-        [DataMember]
         public DateTimeOffset LastUpdated { get; set; }
 
-        [DataMember]
         public DateTimeOffset ForceUpdated { get; set; }
     }
 }

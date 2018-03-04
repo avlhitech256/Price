@@ -7,7 +7,7 @@ namespace Load.Service
     {
         BrandItemEntity DownLoadBrandItem(BrandInfo brandInfo);
 
-        int DownLoadBrands(Brands brands);
+        void DownLoadBrands(Brands brands);
 
         void DownLoadCatalogItem(CatalogInfo catalogInfo);
 
@@ -15,13 +15,11 @@ namespace Load.Service
 
         void DownLoadDirectoryItem(DirectoryInfo directoryInfo);
 
-        int DownLoadDirectories(Directories directories);
+        void DownLoadDirectories(Directories directories);
 
         void DownLoadPhotoItem(PhotoInfo photoInfo);
 
         int DownLoadPhotos(Photos photos);
-
-        void DownLoadProductDirectionItem(ProductDirectionInfo productDirectionInfo);
 
         void DownLoadProductDirections(ProductDirections productDirections);
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -2374,39 +2375,21 @@ namespace Load.Service.Implementation
             return typeOfPricesNomenclatureItem;
         }
 
-
-
-
-        private void CreateBrandItems(DataBaseContext dataBaseContext, 
-                                      JsonLoadData jsonLoadData, 
+        private void CreateBrandItems(DataBaseContext dataBaseContext,
+                                      JsonLoadData jsonLoadData,
                                       DateTimeOffset loadUpdateTime)
         {
             if (dataBaseContext != null && jsonLoadData?.Brands != null && jsonLoadData.Brands.Any())
             {
                 int countItems = 0;
+                List<Brand> batchOfBrands = new List<Brand>();
 
                 jsonLoadData.Brands.ForEach(
                     x =>
                     {
-                        BrandItemEntity oldBrandItem = GetBrandItem(dataBaseContext, x.UID);
+                        batchOfBrands.Add(x);
 
-                        if (oldBrandItem != null)
-                        {
-                            Update(oldBrandItem, x, loadUpdateTime);
-                            countItems++;
-                        }
-                        else
-                        {
-                            BrandItemEntity newBrandItem = Assemble(x, loadUpdateTime);
-
-                            if (newBrandItem != null)
-                            {
-                                dataBaseContext.BrandItemEntities.Add(newBrandItem);
-                                countItems++;
-                            }
-                        }
-
-                        if (countItems % 100 == 0)
+                        if (countItems % optionService.CountSendItems == 0)
                         {
                             try
                             {
@@ -2429,6 +2412,101 @@ namespace Load.Service.Implementation
                 }
             }
         }
+
+        private void UpdateBrandItems(DataBaseContext dataBaseContext,
+                                      List<Brand> batchOfBrands,
+                                      DateTimeOffset loadUpdateTime)
+        {
+            if (batchOfBrands != null && batchOfBrands.Any())
+            {
+                DataTable brandsTable = CreateBrandsTable(batchOfBrands);
+            }
+        }
+
+        private DataTable CreateBrandsTable(List<Brand> items)
+        {
+            DataTable brandsTable = new DataTable();
+
+            brandsTable.Columns.Add("Code", typeof(Guid));
+            brandsTable.Columns.Add("Name", typeof(string));
+
+            items?.ForEach(x => AddBrandsDataRow(brandsTable, x));
+
+            return brandsTable;
+        }
+
+        private void AddBrandsDataRow(DataTable brandsTable, Brand item)
+        {
+            Guid code;
+
+            if (item.UID.ConvertToGuid(out code))
+            {
+                DataRow row = brandsTable.NewRow();
+
+                row.SetField("Code", item.UID);
+                row.SetField("Name", item.Name);
+
+                brandsTable.Rows.Add(row);
+            }
+            else
+            {
+                // TODO Записать в LOG-файл что не можем распарсить код бренда
+            }
+        }
+
+
+        //private void CreateBrandItems(DataBaseContext dataBaseContext, 
+        //                              JsonLoadData jsonLoadData, 
+        //                              DateTimeOffset loadUpdateTime)
+        //{
+        //    if (dataBaseContext != null && jsonLoadData?.Brands != null && jsonLoadData.Brands.Any())
+        //    {
+        //        int countItems = 0;
+
+        //        jsonLoadData.Brands.ForEach(
+        //            x =>
+        //            {
+        //                BrandItemEntity oldBrandItem = GetBrandItem(dataBaseContext, x.UID);
+
+        //                if (oldBrandItem != null)
+        //                {
+        //                    Update(oldBrandItem, x, loadUpdateTime);
+        //                    countItems++;
+        //                }
+        //                else
+        //                {
+        //                    BrandItemEntity newBrandItem = Assemble(x, loadUpdateTime);
+
+        //                    if (newBrandItem != null)
+        //                    {
+        //                        dataBaseContext.BrandItemEntities.Add(newBrandItem);
+        //                        countItems++;
+        //                    }
+        //                }
+
+        //                if (countItems % 100 == 0)
+        //                {
+        //                    try
+        //                    {
+        //                        dataBaseContext.SaveChanges();
+        //                    }
+        //                    catch (Exception)
+        //                    {
+        //                        ;
+        //                    }
+        //                }
+        //            });
+
+        //        try
+        //        {
+        //            dataBaseContext.SaveChanges();
+        //        }
+        //        catch (Exception)
+        //        {
+        //            ;
+        //        }
+        //    }
+        //}
 
         private void Update(BrandItemEntity entity, Brand jsonItem, DateTimeOffset loadUpdateTime)
         {

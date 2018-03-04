@@ -549,7 +549,7 @@ namespace Synchronize.ViewModel
             SetProductDirectionLabel();
             ProductDirections productDirections = webService.GetProductDirections(lastUpdate);
             loadService.DownLoadProductDirections(productDirections);
-            webService.ConfirmUpdateCatalogs(productDirections.Items.Select(x => x.Id));
+            webService.ConfirmUpdateProductDirections(productDirections.Items.Select(x => x.Id));
             return productDirections.Items.Count();
         }
 
@@ -584,7 +584,9 @@ namespace Synchronize.ViewModel
         {
             SetDirectoriesLabel();
             Directories directories = webService.GetDirectories(lastUpdate);
-            return loadService.DownLoadDirectories(directories);
+            loadService.DownLoadDirectories(directories);
+            webService.ConfirmUpdateDirectories(directories.Items.Select(x => x.Id));
+            return directories.Items.Count();
         }
 
         private void SetDirectoriesLabel()
@@ -668,7 +670,9 @@ namespace Synchronize.ViewModel
         {
             SetBrandsLabel();
             Brands brands = webService.GetBrands(lastUpdate);
-            return loadService.DownLoadBrands(brands);
+            loadService.DownLoadBrands(brands);
+            webService.ConfirmUpdateBrands(brands.Items.Select(x => x.Id));
+            return brands.Items.Count();
         }
 
         private void RefreshLastUpdate()

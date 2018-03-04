@@ -9,6 +9,7 @@ using DataBase.Context.Object;
 using DataBase.Service;
 using Option.Service;
 using PricelistService.Service.Contract;
+using PricelistService.Service.Objects;
 
 namespace PricelistService.Service.Implementation
 {
@@ -71,19 +72,66 @@ namespace PricelistService.Service.Implementation
 
         private List<BrandInfo> GetBrandInfos(string login)
         {
-            List<long> brandIds = dataService.Select<SendItemsEntity>()
-                .Include(x => x.Contragent)
-                .Where(x => x.Contragent.Login == login)
-                .Where(x => x.EntityName == EntityName.BrandItemEntity)
-                .Take(optionService.CountSendItems)
-                .Select(x => x.EntityId)
-                .ToList();
+            var loginParametr = new SqlParameter();
+            loginParametr.ParameterName = "@login";
+            loginParametr.SqlDbType = SqlDbType.NVarChar;
+            loginParametr.Value = login;
+            loginParametr.Direction = ParameterDirection.Input;
 
-            List<BrandInfo> result =
-                dataService.Select<BrandItemEntity>()
-                    .Where(x => brandIds.Contains(x.Id))
-                    .Select(Assemble)
-                    .ToList();
+            var countToUpdateParametr = new SqlParameter();
+            countToUpdateParametr.ParameterName = "@countToUpdate";
+            countToUpdateParametr.SqlDbType = SqlDbType.BigInt;
+            countToUpdateParametr.Direction = ParameterDirection.Input;
+            countToUpdateParametr.Value = optionService.CountSendItems;
+
+            List<DbBrandInfo> brandInfos = null;
+
+            try
+            {
+                brandInfos = dataService.DataBaseContext.Database
+                    .SqlQuery<DbBrandInfo>("GetBrandItems @login, @countToUpdate",
+                        loginParametr, countToUpdateParametr).ToList();
+            }
+            catch (Exception e)
+            {
+                ; //TODO Записать в LOG-file ошибку
+            }
+
+            var result = new List<BrandInfo>();
+
+            if (brandInfos != null && brandInfos.Any())
+            {
+                brandInfos.ForEach(
+                    x =>
+                    {
+                        BrandInfo brandInfo = Assemble(x);
+
+                        if (brandInfo != null)
+                        {
+                            result.Add(brandInfo);
+                        }
+                    });
+            }
+
+            return result;
+        }
+
+        private BrandInfo Assemble(DbBrandInfo item)
+        {
+            BrandInfo result = null;
+
+            if (item != null)
+            {
+                result = new BrandInfo
+                {
+                    Id = item.Id,
+                    Code = item.Code,
+                    Name = item.Name,
+                    DateOfCreation = item.DateOfCreation,
+                    LastUpdated = item.LastUpdated,
+                    ForceUpdated = item.ForceUpdated
+                };
+            }
 
             return result;
         }
@@ -99,7 +147,6 @@ namespace PricelistService.Service.Implementation
                     Id = item.Id,
                     Code = item.Code,
                     Name = item.Name,
-                    CatalogId = item.CatalogItems.Select(x => x.Id).ToList(),
                     DateOfCreation = item.DateOfCreation,
                     ForceUpdated = item.ForceUpdated,
                     LastUpdated = item.LastUpdated

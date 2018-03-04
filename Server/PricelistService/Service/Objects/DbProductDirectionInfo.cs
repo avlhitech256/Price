@@ -1,28 +1,20 @@
 ﻿using System;
-using System.Runtime.Serialization;
 using Common.Data.Enum;
 
-namespace PricelistService.Service.Contract
+namespace PricelistService.Service.Objects
 {
-    [DataContract]
-    public class ProductDirectionInfo
+    public class DbProductDirectionInfo
     {
-        [DataMember]
         public long Id { get; set; }
 
-        [DataMember]
         public CommodityDirection Direction { get; set; }
 
-        [DataMember]
         public long? DirectoryId { get; set; }
 
-        [DataMember]
         public DateTimeOffset DateOfCreation { get; set; }
 
-        [DataMember]
         public DateTimeOffset LastUpdated { get; set; }
 
-        [DataMember]
         public DateTimeOffset ForceUpdated { get; set; }
     }
 }

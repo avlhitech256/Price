@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using DataBase.Context.Entities;
 
 namespace PricelistService.Service.Objects
 {

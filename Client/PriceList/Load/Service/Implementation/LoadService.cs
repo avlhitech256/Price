@@ -114,59 +114,59 @@ namespace Load.Service.Implementation
             return brand;
         }
 
-        public int DownLoadBrands(Brands brands)
+        public void DownLoadBrands(Brands brands)
         {
-            int count = 0;
-
             if (brands != null && brands.Items != null && brands.Items.Any())
             {
-                dataService.DataBaseContext.Configuration.AutoDetectChangesEnabled = false;
-                dataService.DataBaseContext.Configuration.ValidateOnSaveEnabled = false;
-
-                var entitiesToUpdate = new List<BrandItemEntity>();
-                var entitiesToInsert = new List<BrandItemEntity>();
-
-                brands.Items.Where(x => x != null).ToList().ForEach(
-                    x =>
-                    {
-                        BrandItemEntity oldBrandItem = GetBrand(x.Id);
-
-                        if (oldBrandItem != null)
-                        {
-                            Update(oldBrandItem, x, entitiesToUpdate);
-                        }
-                        else
-                        {
-                            Create(x, entitiesToInsert);
-                        }
-
-                    });
-
-                if (entitiesToInsert.Any())
+                try
                 {
-                    dataService.InsertMany(entitiesToInsert);
+                    DataTable brandsTable = CreateBrandsTable(brands.Items);
+
+                    var brandsParametr = new SqlParameter();
+                    brandsParametr.ParameterName = "@brands";
+                    brandsParametr.SqlDbType = SqlDbType.Structured;
+                    brandsParametr.TypeName = "brandsTable";
+                    brandsParametr.Value = brandsTable;
+                    brandsParametr.Direction = ParameterDirection.Input;
+
+                    dataService.DataBaseContext.Database
+                        .ExecuteSqlCommand("UpdateBrands @brands", brandsParametr);
                 }
-                else
+                catch (Exception e)
                 {
-                    dataService.DataBaseContext.SaveChanges();
+                    ;
                 }
-
-                long[] ids = entitiesToInsert
-                    .Select(x => x.Id)
-                    .Union(entitiesToUpdate
-                    .Select(x => x.Id))
-                    .Distinct()
-                    .ToArray();
-
-                webService.ConfirmUpdateBrands(ids);
-
-                count = ids.Length;
-
-                dataService.DataBaseContext.Configuration.AutoDetectChangesEnabled = true;
-                dataService.DataBaseContext.Configuration.ValidateOnSaveEnabled = true;
             }
+        }
 
-            return count;
+        private DataTable CreateBrandsTable(BrandInfo[] items)
+        {
+            DataTable brandsTable = new DataTable();
+
+            brandsTable.Columns.Add("Id", typeof(long));
+            brandsTable.Columns.Add("Code", typeof(Guid));
+            brandsTable.Columns.Add("Name", typeof(string));
+            brandsTable.Columns.Add("DateOfCreation", typeof(DateTimeOffset));
+            brandsTable.Columns.Add("LastUpdated", typeof(DateTimeOffset));
+            brandsTable.Columns.Add("ForceUpdated", typeof(DateTimeOffset));
+
+            items?.ToList().ForEach(x => AddDirectoryDataRow(brandsTable, x));
+
+            return brandsTable;
+        }
+
+        private void AddDirectoryDataRow(DataTable directoriesTable, BrandInfo item)
+        {
+            DataRow row = directoriesTable.NewRow();
+
+            row.SetField("Id", item.Id);
+            row.SetField("Code", item.Code);
+            row.SetField("Name", item.Name);
+            row.SetField("DateOfCreation", item.DateOfCreation);
+            row.SetField("LastUpdated", item.LastUpdated);
+            row.SetField("ForceUpdated", item.ForceUpdated);
+
+            directoriesTable.Rows.Add(row);
         }
 
         #endregion
@@ -267,18 +267,14 @@ namespace Load.Service.Implementation
                     linkToPhotosParametr.Value = linkToPhotoTable;
                     linkToPhotosParametr.Direction = ParameterDirection.Input;
 
-                    ids = dataService.DataBaseContext.Database
-                        .SqlQuery<long>("UpdateCatalogs @catalogs, @linkToPhotos", 
-                                        catalogsParametr, linkToPhotosParametr).ToArray();
-
+                    dataService.DataBaseContext.Database
+                        .ExecuteSqlCommand("UpdateCatalogs @catalogs, @linkToPhotos",
+                                           catalogsParametr, linkToPhotosParametr);
                 }
                 catch (Exception e)
                 {
                     ;
                 }
-
-                webService.ConfirmUpdateCatalogs(ids);
-
             }
         }
 
@@ -335,8 +331,10 @@ namespace Load.Service.Implementation
             catalogsTable.Columns.Add("DateOfCreation", typeof(DateTimeOffset));
             catalogsTable.Columns.Add("LastUpdated", typeof(DateTimeOffset));
             catalogsTable.Columns.Add("ForceUpdated", typeof(DateTimeOffset));
-            catalogsTable.Columns.Add("Brand_Id", typeof(long));
-            catalogsTable.Columns.Add("Directory_Id", typeof(long));
+            DataColumn brandIdColumn = catalogsTable.Columns.Add("Brand_Id", typeof(long));
+            brandIdColumn.AllowDBNull = true;
+            DataColumn directoryIdColumn = catalogsTable.Columns.Add("Directory_Id", typeof(long));
+            directoryIdColumn.AllowDBNull = true;
 
             items?.ToList().ForEach(x => AddCatalogDataRow(catalogsTable, x));
 
@@ -346,28 +344,28 @@ namespace Load.Service.Implementation
         private void AddCatalogDataRow(DataTable catalogsTable, CatalogInfo item)
         {
             DataRow row = catalogsTable.NewRow();
-            
-            row["Id"] = item.Id;
-            row["UID"] = item.UID;
-            row["Code"] = item.Code;
-            row["Article"] = item.Article;
-            row["Name"] = item.Name;
-            row["BrandName"] = item.BrandName;
-            row["Unit"] = item.Unit;
-            row["EnterpriceNormPack"] = item.EnterpriceNormPack;
-            row["BatchOfSales"] = item.BatchOfSales;
-            row["Balance"] = item.Balance;
-            row["Price"] = item.Price;
-            row["Currency"] = item.Currency;
-            row["Multiplicity"] = item.Multiplicity;
-            row["HasPhotos"] = item.HasPhotos;
-            row["Status"] = item.Status;
-            row["LastUpdatedStatus"] = item.LastUpdatedStatus;
-            row["DateOfCreation"] = item.DateOfCreation;
-            row["LastUpdated"] = item.LastUpdated;
-            row["ForceUpdated"] = item.ForceUpdated;
-            row["Brand_Id"] = item.BrandId;
-            row["Directory_Id"] = item.DirectoryId;
+
+            row.SetField("Id", item.Id);
+            row.SetField("UID", item.UID);
+            row.SetField("Code", item.Code);
+            row.SetField("Article", item.Article);
+            row.SetField("Name", item.Name);
+            row.SetField("BrandName", item.BrandName);
+            row.SetField("Unit", item.Unit);
+            row.SetField("EnterpriceNormPack", item.EnterpriceNormPack);
+            row.SetField("BatchOfSales", item.BatchOfSales);
+            row.SetField("Balance", item.Balance);
+            row.SetField("Price", item.Price);
+            row.SetField("Currency", item.Currency);
+            row.SetField("Multiplicity", item.Multiplicity);
+            row.SetField("HasPhotos", item.HasPhotos);
+            row.SetField("Status", item.Status);
+            row.SetField("LastUpdatedStatus", item.LastUpdatedStatus);
+            row.SetField("DateOfCreation", item.DateOfCreation);
+            row.SetField("LastUpdated", item.LastUpdated);
+            row.SetField("ForceUpdated", item.ForceUpdated);
+            row.SetField("Brand_Id", item.BrandId);
+            row.SetField("Directory_Id", item.DirectoryId);
 
             catalogsTable.Rows.Add(row);
         }
@@ -583,59 +581,62 @@ namespace Load.Service.Implementation
             dataService.DataBaseContext.Configuration.ValidateOnSaveEnabled = true;
         }
 
-        public int DownLoadDirectories(Directories directories)
+        public void DownLoadDirectories(Directories directories)
         {
-            int count = 0;
-
             if (directories != null && directories.Items != null && directories.Items.Any())
             {
-                dataService.DataBaseContext.Configuration.AutoDetectChangesEnabled = false;
-                dataService.DataBaseContext.Configuration.ValidateOnSaveEnabled = false;
-
-                List<DirectoryInfo> cacheDirectoryInfos = directories.Items.ToList();
-                var cacheDirectoryEntities = new List<DirectoryEntity>();
-                var entitiesToInsert = new List<DirectoryEntity>();
-
-                directories.Items.Where(x => x != null).ToList().ForEach(
-                    x =>
-                    {
-                        DirectoryEntity oldDirectoryItem = GetDirectory(x.Id, cacheDirectoryEntities);
-
-                        if (oldDirectoryItem != null)
-                        {
-                            Update(oldDirectoryItem, x, cacheDirectoryInfos, cacheDirectoryEntities, entitiesToInsert);
-                        }
-                        else
-                        {
-                            Create(x, cacheDirectoryInfos, cacheDirectoryEntities, entitiesToInsert);
-                        }
-
-                    });
-
-                if (entitiesToInsert.Any())
+                try
                 {
-                    dataService.InsertMany(entitiesToInsert);
+                    DataTable directoriesTable = CreateDirectoriesTable(directories.Items);
+
+                    var directoriesParametr = new SqlParameter();
+                    directoriesParametr.ParameterName = "@directories";
+                    directoriesParametr.SqlDbType = SqlDbType.Structured;
+                    directoriesParametr.TypeName = "directoriesTable";
+                    directoriesParametr.Value = directoriesTable;
+                    directoriesParametr.Direction = ParameterDirection.Input;
+
+                    dataService.DataBaseContext.Database
+                        .ExecuteSqlCommand("UpdateDirectories @directories", directoriesParametr);
                 }
-                else
+                catch (Exception e)
                 {
-                    dataService.DataBaseContext.SaveChanges();
+                    ;
                 }
-
-                long[] ids =
-                    cacheDirectoryEntities
-                        .Where(x => x != null)
-                        .Select(x => x.Id)
-                        .ToArray();
-
-                webService.ConfirmUpdateDirectories(ids);
-
-                count = ids.Length;
-
-                dataService.DataBaseContext.Configuration.AutoDetectChangesEnabled = true;
-                dataService.DataBaseContext.Configuration.ValidateOnSaveEnabled = true;
             }
+        }
 
-            return count;
+        private DataTable CreateDirectoriesTable(DirectoryInfo[] items)
+        {
+            DataTable directoriesTable = new DataTable();
+
+            directoriesTable.Columns.Add("Id", typeof(long));
+            directoriesTable.Columns.Add("Code", typeof(Guid));
+            directoriesTable.Columns.Add("Name", typeof(string));
+            DataColumn parentIdColumn = directoriesTable.Columns.Add("Parent_Id", typeof(long));
+            parentIdColumn.AllowDBNull = true;
+            directoriesTable.Columns.Add("DateOfCreation", typeof(DateTimeOffset));
+            directoriesTable.Columns.Add("LastUpdated", typeof(DateTimeOffset));
+            directoriesTable.Columns.Add("ForceUpdated", typeof(DateTimeOffset));
+
+            items?.ToList().ForEach(x => AddDirectoryDataRow(directoriesTable, x));
+
+            return directoriesTable;
+        }
+
+        private void AddDirectoryDataRow(DataTable directoriesTable, DirectoryInfo item)
+        {
+            DataRow row = directoriesTable.NewRow();
+
+            row.SetField("Id", item.Id);
+            row.SetField("Code", item.Code);
+            row.SetField("Name", item.Name);
+            row.SetField("Parent_Id", item.Parent);
+            row.SetField("DateOfCreation", item.DateOfCreation);
+            row.SetField("LastUpdated", item.LastUpdated);
+            row.SetField("ForceUpdated", item.ForceUpdated);
+
+            directoriesTable.Rows.Add(row);
         }
 
         #endregion
@@ -785,125 +786,60 @@ namespace Load.Service.Implementation
 
         #region ProductDirection
 
-        private ProductDirectionEntity GetProductDirection(long id)
-        {
-            ProductDirectionEntity productDirection = dataService.DataBaseContext.ProductDirectionEntities.Find(id);
-            return productDirection;
-        }
-
-        private ProductDirectionEntity GetProductDirectionWithLoad(long id)
-        {
-            ProductDirectionEntity productDirectionItem = GetProductDirection(id);
-
-            if (productDirectionItem == null)
-            {
-                ProductDirectionInfo productDirectionInfo = webService.GetProductDirectionInfo(id);
-
-                if (productDirectionInfo != null)
-                {
-                    DownLoadProductDirectionItem(productDirectionInfo);
-                    productDirectionItem = GetProductDirection(id);
-
-                    if (productDirectionItem != null)
-                    {
-                        webService.ConfirmUpdateProductDirections(new[] { productDirectionItem.Id });
-                    }
-                }
-            }
-
-            return productDirectionItem;
-        }
-
-        private ProductDirectionEntity Create(ProductDirectionInfo brandInfo)
-        {
-            DirectoryEntity directory = GetDirectoryWithLoad(brandInfo.Id);
-            ProductDirectionEntity brand = LoadAssembler.Assemble(brandInfo, directory);
-            return brand;
-        }
-
-        private void Update(ProductDirectionEntity brandItem, ProductDirectionInfo brandInfo)
-        {
-            brandItem.Direction = LoadAssembler.Convert(brandInfo.Direction);
-            brandItem.Directory = GetDirectoryWithLoad(brandInfo.Id);
-            brandItem.DateOfCreation = brandInfo.DateOfCreation;
-            brandItem.ForceUpdated = brandInfo.ForceUpdated;
-            brandItem.LastUpdated = brandInfo.LastUpdated;
-        }
-
-
-        public void DownLoadProductDirectionItem(ProductDirectionInfo productDirectionInfo)
-        {
-            if (productDirectionInfo != null)
-            {
-                ProductDirectionEntity oldProductDirectionItem = GetProductDirection(productDirectionInfo.Id);
-
-                if (oldProductDirectionItem != null)
-                {
-                    Update(oldProductDirectionItem, productDirectionInfo);
-                    dataService.DataBaseContext.SaveChanges();
-                    webService.ConfirmUpdateBrands(new[] { oldProductDirectionItem.Id });
-                }
-                else
-                {
-                    ProductDirectionEntity productDirectionItem = Create(productDirectionInfo);
-                    dataService.Insert(productDirectionItem);
-                    productDirectionItem = GetProductDirection(productDirectionInfo.Id);
-
-                    if (productDirectionItem != null)
-                    {
-                        webService.ConfirmUpdateBrands(new[] { productDirectionItem.Id });
-                    }
-                }
-            }
-        }
-
         public void DownLoadProductDirections(ProductDirections productDirections)
         {
             if (productDirections != null && productDirections.Items != null && productDirections.Items.Any())
             {
-                dataService.DataBaseContext.Configuration.AutoDetectChangesEnabled = false;
-                dataService.DataBaseContext.Configuration.ValidateOnSaveEnabled = false;
-
-                var entities = new List<ProductDirectionEntity>();
-                bool needToSave = true;
-
-                productDirections.Items.Where(x => x != null).ToList().ForEach(
-                    x =>
-                    {
-                        ProductDirectionEntity oldProductDirectionItem = GetProductDirection(x.Id);
-
-                        if (oldProductDirectionItem != null)
-                        {
-                            Update(oldProductDirectionItem, x);
-                        }
-                        else
-                        {
-                            entities.Add(Create(x));
-                            needToSave = false;
-                        }
-
-                    });
-
-                if (needToSave)
+                try
                 {
-                    dataService.DataBaseContext.SaveChanges();
+                    DataTable directoriesTable = CreateProductDirectionsTable(productDirections.Items);
+
+                    var productDirectionsParametr = new SqlParameter();
+                    productDirectionsParametr.ParameterName = "@productDirections";
+                    productDirectionsParametr.SqlDbType = SqlDbType.Structured;
+                    productDirectionsParametr.TypeName = "productDirectionsTable";
+                    productDirectionsParametr.Value = directoriesTable;
+                    productDirectionsParametr.Direction = ParameterDirection.Input;
+
+                    dataService.DataBaseContext.Database
+                        .ExecuteSqlCommand("UpdateProductDirections @productDirections", productDirectionsParametr);
                 }
-                else
+                catch (Exception e)
                 {
-                    dataService.InsertMany(entities);
+                    ;
                 }
-
-                long[] ids =
-                    productDirections.Items
-                        .Where(x => GetProductDirection(x.Id) != null)
-                        .Select(x => x.Id)
-                        .ToArray();
-
-                webService.ConfirmUpdateProductDirections(ids);
-
-                dataService.DataBaseContext.Configuration.AutoDetectChangesEnabled = true;
-                dataService.DataBaseContext.Configuration.ValidateOnSaveEnabled = true;
             }
+        }
+
+        private DataTable CreateProductDirectionsTable(ProductDirectionInfo[] items)
+        {
+            DataTable productDirectionsTable = new DataTable();
+
+            productDirectionsTable.Columns.Add("Id", typeof(long));
+            productDirectionsTable.Columns.Add("Direction", typeof(int));
+            DataColumn directoryIdColumn = productDirectionsTable.Columns.Add("Directory_Id", typeof(long));
+            directoryIdColumn.AllowDBNull = true;
+            productDirectionsTable.Columns.Add("DateOfCreation", typeof(DateTimeOffset));
+            productDirectionsTable.Columns.Add("LastUpdated", typeof(DateTimeOffset));
+            productDirectionsTable.Columns.Add("ForceUpdated", typeof(DateTimeOffset));
+
+            items?.ToList().ForEach(x => AddProductDirectionDataRow(productDirectionsTable, x));
+
+            return productDirectionsTable;
+        }
+
+        private void AddProductDirectionDataRow(DataTable directoriesTable, ProductDirectionInfo item)
+        {
+            DataRow row = directoriesTable.NewRow();
+
+            row.SetField("Id", item.Id);
+            row.SetField("Direction", item.Direction);
+            row.SetField("Directory_Id", item.DirectoryId);
+            row.SetField("DateOfCreation", item.DateOfCreation);
+            row.SetField("LastUpdated", item.LastUpdated);
+            row.SetField("ForceUpdated", item.ForceUpdated);
+
+            directoriesTable.Rows.Add(row);
         }
 
         #endregion
